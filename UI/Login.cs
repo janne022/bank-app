@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace bank_app.UI
 {
-    internal static class Login
+    public static class Login
     {
     }
 }

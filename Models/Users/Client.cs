@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace bank_app.Models.Users
 {
-    internal class Client : User
+    public class Client : User
     {
     }
 }

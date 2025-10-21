@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace bank_app.Managers
 {
-    internal class UserManager
+    public class UserManager
     {
     }
 }

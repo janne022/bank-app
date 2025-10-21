@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace bank_app.Models
 {
-    internal class Loan
+    public class Loan
     {
     }
 }

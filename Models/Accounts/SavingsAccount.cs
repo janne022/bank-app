@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace bank_app.Models.Accounts
 {
-    internal class SavingsAccount : Account
+    public class SavingsAccount : Account
     {
     }
 }
