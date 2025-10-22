@@ -4,11 +4,51 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using bank_app.Models.Users;
+using bank_app.Utility;
 
 namespace bank_app.Managers
 {
-    public class UserManager
+    public static class UserManager
     {
+        private static List<User> Users { get; set; } = new List<User>();
 
+        /// <summary>
+        /// Method to create new users within the bank app. Adds the newly created user to a list of all users within the application.
+        /// </summary>
+        /// <param name="userType">Enum that determines whether the user is a client or an administrator</param>
+        public static void CreateUser(UserType userType, string userId, string userName, string userPassword)
+        {
+            if (userType == UserType.Admin)
+            {
+                var admin = new Admin(userId, userName, userPassword);
+                Users.Add(admin);
+            }
+            else if (userType == UserType.Client)
+            {
+                var client = new Client(userId, userName, userPassword);
+                Users.Add(client);
+            }
+        }
+
+        /// <summary>
+        /// Removes user object from the user list, and nullifies the references of that specific object.
+        /// </summary>
+        /// <param name="userName">Name of the user object to be removed</param>
+        public static void RemoveUser(User userName)
+        {
+            Users.Remove(userName);
+            userName = null;
+        }
+
+        /// <summary>
+        /// Updates the properties of the user object
+        /// </summary>
+        /// <param name="user">the name of the user object to be changed</param>
+        public static void ChangeUserInfo(User user, string userId, string userName, string userPassword)
+        {
+            user.UserName = userName;
+            user.UserPassword = userPassword;
+            user.UserId = userId;
+        }
     }
 }
