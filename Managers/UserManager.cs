@@ -36,12 +36,17 @@ namespace bank_app.Managers
             }
         }
 
-        public static void RemoveClient()
+        /// <summary>
+        /// Removes user object from the user list, and nullifies the references of that specific object.
+        /// </summary>
+        /// <param name="userName">Name of the user object to be removed</param>
+        public static void RemoveUser(User userName)
         {
-
+            Users.Remove(userName);
+            userName = null;
         }
 
-        public static void ChangeClient()
+        public static void ChangeUserInfo()
         {
 
         }
