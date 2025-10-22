@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace bank_app.Utility
 {
-    public class UIComponent
+    public abstract class UIComponent
     {
         // Internal coordinates
         public int X {  get; set; }
@@ -17,6 +17,8 @@ namespace bank_app.Utility
         // Renders the component
         public abstract void Render();
         // Should run when user clicks component
-        public virtual void OnEnter();
+        public virtual void OnEnter()
+        {
+        }
     }
 }
