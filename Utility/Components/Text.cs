@@ -26,20 +26,20 @@ namespace bank_app.Utility.Components
         public override void Render()
         {
             int currentWidth = 0;
-
             string[] words = TextContents.Split(' ');
 
-            // Word wrap TextContents.
+            // Word wrap TextContents. +1 handles spaces.
             for (int i = 0; i < words.Length; i++)
             {
                 if ((currentWidth + words[i].Length) < PanelWidth)
                 {
                     Console.Write($"{words[i]} ");
-                    currentWidth = currentWidth + words[i].Length + 1; // Remember the space!
+                    currentWidth = currentWidth + words[i].Length + 1;
                 }
                 else
                 {
-                    Console.Write($"\n{words[i]} ");
+                    Console.SetCursorPosition(X, Y + 1);
+                    Console.Write($"{words[i]} ");
                     currentWidth = words[i].Length + 1;
                 }
             }
