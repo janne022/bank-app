@@ -12,12 +12,11 @@ namespace bank_app.Utility
         public int X {  get; set; }
         public int Y { get; set; }
 
-        public string Name { get; set; }
 
         // Renders the component
         public abstract void Render();
         // Should run when user clicks component
-        public virtual void OnEnter()
+        public virtual void Pressed()
         {
         }
     }

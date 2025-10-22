@@ -14,10 +14,11 @@ using System.Threading.Tasks;
 
 namespace bank_app.Utility.Components
 {
-    internal class InputField //: DisplayField
+    internal class InputField : UIComponent
     {
-        // public int ElementWidth could be inherited from DisplayField
-        public int ElementWidth { get; set; } = 23;
+        // TODO: public int ElementWidth could be inherited from UIComponent
+        // remove it from below when this functionality exists
+        public int ElementWidth { get; private set; } 
         public string Descriptor { get; private set; }
         public int MaxLength { get; private set; }
         public bool IsPassword { get; private set; }
@@ -38,32 +39,26 @@ namespace bank_app.Utility.Components
             IsPassword = isPassword;
             RenderedText = string.Empty;
             InputtedValue = string.Empty;
-            // Don't render on screen here
         }
 
-        //internal override void Clicked()
-        internal void Clicked()
+        public override void Pressed()
         {
-            // TODO: Set cursor to the right position.
+            Console.SetCursorPosition(X+Descriptor.Length+3, Y); // 3, because ": ["
             Console.CursorVisible = true;
             string userInputtedString = Writing();
-            RenderElement();
+            Render();
             Console.CursorVisible = false;
         }
 
-        //internal override void RenderElement()
-        internal void RenderElement()
+        public override void Render()
         {
-            /* TODO: The element renders itself in its own unique way
-             * 
-             * 
+            /* 
              * Render:     Descriptor: [_________]
-             *                       123         4   <-- extra characters
-             *                       
-             *                       
-             * Something like the below maybe?
-             * 
+             *                       123         4   <-- extra characters                    
              */
+
+            Console.SetCursorPosition(X, Y);
+
             int inputBoxWidth = ((ElementWidth - Descriptor.Length) - 4); // 4 refers to the extra characters
 
 
