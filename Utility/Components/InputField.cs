@@ -16,9 +16,8 @@ namespace bank_app.Utility.Components
 {
     internal class InputField : UIComponent
     {
-        // TODO: public int ElementWidth could be inherited from UIComponent
-        // remove it from below when this functionality exists
-        public int ElementWidth { get; private set; } 
+        // TODO: public int PanelWidth should be grabbed from somerwhere
+        public int PanelWidth { get; private set; } // <----- TODO: remove it from here when this functionality exists
         public string Descriptor { get; private set; }
         public int MaxLength { get; private set; }
         public bool IsPassword { get; private set; }
@@ -59,7 +58,7 @@ namespace bank_app.Utility.Components
 
             Console.SetCursorPosition(X, Y);
 
-            int inputBoxWidth = ((ElementWidth - Descriptor.Length) - 4); // 4 refers to the extra characters
+            int inputBoxWidth = ((PanelWidth - Descriptor.Length) - 4); // 4 refers to the extra characters
 
 
             Console.Write($"{Descriptor}: [");
