@@ -46,9 +46,15 @@ namespace bank_app.Managers
             userName = null;
         }
 
-        public static void ChangeUserInfo()
+        /// <summary>
+        /// Updates the properties of the user object
+        /// </summary>
+        /// <param name="user">the name of the user object to be changed</param>
+        public static void ChangeUserInfo(User user, string userId, string userName, string userPassword)
         {
-
+            user.UserName = userName;
+            user.UserPassword = userPassword;
+            user.UserId = userId;
         }
     }
 }
