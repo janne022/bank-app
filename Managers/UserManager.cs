@@ -4,18 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using bank_app.Models.Users;
+using bank_app.Utility;
 
 namespace bank_app.Managers
 {
-    public enum UserType
-    {
-        Admin,
-        Client
-    }
-
     public static class UserManager
     {
-        public static List<User> Users { get; set; } = new List<User>();
+        private static List<User> Users { get; set; } = new List<User>();
 
         /// <summary>
         /// Method to create new users within the bank app. Adds the newly created user to a list of all users within the application.
