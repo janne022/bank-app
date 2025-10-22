@@ -8,5 +8,6 @@ namespace bank_app.Utility.Components
 {
     public class Text : UIComponent
     {
+        public override void Render() { }
     }
 }

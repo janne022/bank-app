@@ -8,5 +8,6 @@ namespace bank_app.Utility.Components
 {
     public class InputField : UIComponent
     {
+        public override void Render() { }
     }
 }

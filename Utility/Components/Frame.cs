@@ -14,5 +14,6 @@ namespace bank_app.Utility.Components
         {
             Components = components;
         }
+        public override void Render() { }
     }
 }

@@ -8,5 +8,6 @@ namespace bank_app.Utility.Components
 {
     public class Button : UIComponent
     {
+        public override void Render() { }
     }
 }
