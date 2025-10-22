@@ -8,5 +8,9 @@ namespace bank_app.Models.Accounts
 {
     public class CheckingAccount : Account
     {
+        public CheckingAccount( Currency currency, decimal balance)
+            : base( currency, balance)
+        {
+        }
     }
 }

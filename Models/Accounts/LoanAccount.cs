@@ -8,5 +8,11 @@ namespace bank_app.Models.Accounts
 {
     public class LoanAccount : Account
     {
+       
+
+        public LoanAccount( Currency currency, decimal balance) 
+            : base( currency, balance)
+        {
+        }
     }
 }
