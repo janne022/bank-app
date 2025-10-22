@@ -14,7 +14,6 @@ namespace bank_app.Models.Users
             UserId = "ADM2947XZ";
             UserName = "admin";
             UserPassword = "chasbanken";
-            IsAdmin = true;
         }
     }
 }

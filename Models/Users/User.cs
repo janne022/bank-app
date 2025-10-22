@@ -11,7 +11,6 @@ namespace bank_app.Models.Users
         public string? UserId { get; set; }  
         public string? UserName { get; set; }
         public string? UserPassword { get; set; }
-        public bool IsAdmin { get; set; }
 
         protected User(string userId, string userName, string userPassword)
         {

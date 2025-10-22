@@ -11,7 +11,6 @@ namespace bank_app.Models.Users
         public Client(string userId, string userName, string userPassword) 
             : base(userId, userName, userPassword)
         {
-            IsAdmin = false;
         }
     }
 }
