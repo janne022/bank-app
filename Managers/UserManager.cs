@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using bank_app.Models.Users;
 
 namespace bank_app.Managers
 {
     public class UserManager
     {
+
     }
 }
