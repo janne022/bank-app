@@ -26,6 +26,7 @@ namespace bank_app.Utility.Components
         public override void Render()
         {
             int currentWidth = 0;
+            int currentLine = 0;
             string[] words = TextContents.Split(' ');
 
             // Word wrap TextContents. +1 handles spaces.
@@ -38,7 +39,8 @@ namespace bank_app.Utility.Components
                 }
                 else
                 {
-                    Console.SetCursorPosition(X, Y + 1);
+                    currentLine++;
+                    Console.SetCursorPosition(X, Y + currentLine);
                     Console.Write($"{words[i]} ");
                     currentWidth = words[i].Length + 1;
                 }
