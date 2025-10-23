@@ -8,5 +8,6 @@ namespace bank_app.Managers
 {
     public class TransactionManager
     {
+
     }
 }
