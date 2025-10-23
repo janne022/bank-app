@@ -1,4 +1,5 @@
-﻿using System;
+﻿using bank_app.Utility;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,8 @@ namespace bank_app.Models.Users
         public Guid UserId { get; set; }  = Guid.NewGuid();
         public string? UserName { get; set; }
         public string? UserPassword { get; set; }
+
+        private UserType userType {  get; set; }
 
         protected User( string userName, string userPassword)
         {
