@@ -40,28 +40,28 @@ namespace bank_app.Managers
             userName = null;
         }
 
-        /// <summary>
-        /// Attempts to authorize a user based on the provided credentials.
-        /// </summary>
-        /// <remarks>The method allows up to three attempts to validate the password. If all attempts
-        /// fail, the account status is set to <see cref="AccountStatus.Locked"/>.</remarks>
-        /// <returns>An <see cref="AccountStatus"/> value indicating the result of the authorization attempt. Returns <see
-        /// cref="AccountStatus.Open"/> if the password matches the user's stored password; otherwise, returns <see
-        /// cref="AccountStatus.Locked"/> after three failed attempts.</returns>
-        public static AccountStatus AuthorizeUser(User user, string password)
-        {
-            int timesTried = 0;
 
-            while (timesTried != 3)
+        public static User UserLogin(User user, string password)
+        {
+            if (user.FailedLoginAttempts < 3)
             {
                 if (user.UserPassword == password)
                 {
-                    return AccountStatus.Unlocked;
+                    user.CurrentAccountStatus = AccountStatus.Unlocked;
+                    return user;
                 }
-                timesTried++;
+                else
+                {
+                    user.FailedLoginAttempts++;
+                    return null;
+                }
             }
-
-            return AccountStatus.Locked;
+            else
+            {
+                user.CurrentAccountStatus = AccountStatus.Locked;
+                // Aja baja din lille lort, ditt account är locked!!!!!
+                return null;
+            }
         }
 
 
