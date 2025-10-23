@@ -13,7 +13,7 @@ namespace bank_app.Utility
         Client
     }
 
-    public enum TransactionStatus
+    public enum TransferStatus
     {
         Pending,
         Completed,
