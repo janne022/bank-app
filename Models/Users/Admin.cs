@@ -9,8 +9,8 @@ namespace bank_app.Models.Users
 {
     public class Admin : User
     {
-        public Admin(string userName, string userPassword, string email, string phoneNumber, UserType currentUserType) 
-            : base( userName, userPassword, email, phoneNumber, currentUserType)
+        public Admin(string userName, string userPassword, UserType currentUserType) 
+            : base( userName, userPassword, currentUserType)
         {
             UserName = "admin";
             UserPassword = "chasbanken";

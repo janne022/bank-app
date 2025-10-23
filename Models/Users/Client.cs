@@ -10,11 +10,15 @@ namespace bank_app.Models.Users
 {
     public class Client : User
     {
-       public List<Account> MyAccounts { get; set; } = new List<Account>();
+        public string? Email { get; set; }
+        public string? PhoneNumber { get; set; }
+        public List<Account> MyAccounts { get; set; } = new List<Account>();
 
         public Client(string userName, string userPassword, string email, string phoneNumber, UserType currentUserType) 
-            : base(userName, userPassword, email, phoneNumber, currentUserType)
+            : base(userName, userPassword, currentUserType)
         {
+            Email = email;
+            PhoneNumber = phoneNumber;
         }
     }
 }
