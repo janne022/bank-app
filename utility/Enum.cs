@@ -22,7 +22,7 @@ namespace bank_app.Utility
 
     public enum AccountStatus
     {
-        Open,
+        Unlocked,
         Locked
     }
 }
