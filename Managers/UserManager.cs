@@ -58,6 +58,7 @@ namespace bank_app.Managers
                 {
                     return AccountStatus.Open;
                 }
+                timesTried++;
             }
 
             return AccountStatus.Locked;
