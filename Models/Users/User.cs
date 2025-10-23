@@ -1,4 +1,5 @@
-﻿using System;
+﻿using bank_app.Utility;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,15 +9,16 @@ namespace bank_app.Models.Users
 {
     public abstract class User
     {
-        public string? UserId { get; set; }  
+        private Guid UserId { get; set; }  = Guid.NewGuid();
         public string? UserName { get; set; }
         public string? UserPassword { get; set; }
+        private UserType CurrentUserType {  get; set; }
 
-        protected User(string userId, string userName, string userPassword)
+        protected User( string userName, string userPassword, UserType currentUserType)
         {
-            UserId = userId;
             UserName = userName;
             UserPassword = userPassword;
+            CurrentUserType = currentUserType;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using bank_app.Utility;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,10 +9,9 @@ namespace bank_app.Models.Users
 {
     public class Admin : User
     {
-        public Admin(string userId, string userName, string userPassword) 
-            : base(userId, userName, userPassword)
+        public Admin(string userName, string userPassword, UserType currentUserType) 
+            : base( userName, userPassword, currentUserType)
         {
-            UserId = "ADM2947XZ";
             UserName = "admin";
             UserPassword = "chasbanken";
         }

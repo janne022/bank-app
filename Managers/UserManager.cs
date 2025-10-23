@@ -16,16 +16,16 @@ namespace bank_app.Managers
         /// Method to create new users within the bank app. Adds the newly created user to a list of all users within the application.
         /// </summary>
         /// <param name="userType">Enum that determines whether the user is a client or an administrator</param>
-        public static void CreateUser(UserType userType, string userId, string userName, string userPassword)
+        public static void CreateUser(UserType userType, string userId, string userName, string userPassword, string email = "", string phoneNumber = "")
         {
             if (userType == UserType.Admin)
             {
-                var admin = new Admin(userId, userName, userPassword);
+                var admin = new Admin(userName, userPassword, userType);
                 Users.Add(admin);
             }
             else if (userType == UserType.Client)
             {
-                var client = new Client(userId, userName, userPassword);
+                var client = new Client(userName, userPassword, email, phoneNumber, userType);
                 Users.Add(client);
             }
         }
@@ -44,11 +44,10 @@ namespace bank_app.Managers
         /// Updates the properties of the user object
         /// </summary>
         /// <param name="user">the name of the user object to be changed</param>
-        public static void ChangeUserInfo(User user, string userId, string userName, string userPassword)
+        public static void ChangeUserInfo(User user, string userName, string userPassword)
         {
             user.UserName = userName;
             user.UserPassword = userPassword;
-            user.UserId = userId;
         }
     }
 }
