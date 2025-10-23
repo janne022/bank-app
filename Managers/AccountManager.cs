@@ -41,12 +41,9 @@ namespace bank_app.Managers
         }
 
 
-        public static void GetAllAccounts()
+        public static List<Account> GetAllAccounts()
         {
-            foreach (var account in _accounts.Values)
-            {
-                Console.WriteLine($"Account ID: {account.Id}, Balance: {account.Balance} {account.AccountCurrency}");
-            }
+           return _accounts.Values.ToList();
         }
     }
 }
