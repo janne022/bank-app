@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
+using bank_app.Utility;
 
 namespace bank_app.Models
 {
@@ -13,15 +15,18 @@ namespace bank_app.Models
         public Account Sender { get; set; }
         public Account Reciever { get; set; }
         public decimal TransferAmount { get; set; }
+        public Currency TransferCurrency { get; set; }
         public DateTime TimeStamp { get; set; }
+        public Utility.TransactionStatus Status { get; set; }
 
-        public Transaction(Account sender, Account reciever, decimal transferAmount)
+        public Transaction(Account sender, Account reciever, decimal transferAmount, Currency transferCurrency)
         {
             TransactionId = CreateTransactionId();
             TimeStamp = DateTime.Now;
             Sender = sender;
             Reciever = reciever;
             TransferAmount = transferAmount;
+            TransferCurrency = transferCurrency;
         }
 
         public static string CreateTransactionId()
