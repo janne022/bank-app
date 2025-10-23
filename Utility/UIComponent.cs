@@ -11,6 +11,9 @@ namespace bank_app.Utility
         // Internal coordinates
         public int X {  get; set; }
         public int Y { get; set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
+        public bool IsInteractable = false;
         public UIComponent? ParentElement { get; set; }
 
 

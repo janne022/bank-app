@@ -12,14 +12,15 @@ namespace bank_app.UI
     {
         public static void Menu()
         {
-            List<UIComponent> components = new List<UIComponent>
-            {
-                new Text("Login"),
-                new InputField("Username",false,16),
+            // Create new 3x3 grid
+            Grid grid = new Grid(3, 3, Justify.Center, Align.Middle, OrderBy.Column);
+            // Add Menu with two inputfields and button inside to middle of grid
+            grid.AddGridComponent(1,1, new Menu(new List<UIComponent>{new InputField("Username",false,16),
                 new InputField("Password",true,16),
-                new Button(),
-            };
-            Grid grid = new Grid(components,10,10, Justify.Center,Align.Middle, OrderBy.Column);
+                new Button()}));
+            // Add text to middle top of grid
+            grid.AddGridComponent(0,1,new Text("Login"));
+            // Add grid to layout and set rounded border style
             Layout layout = new Layout(grid, LayoutBorder.Rounded);
             layout.Render();
         }

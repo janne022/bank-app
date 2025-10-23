@@ -9,9 +9,8 @@ namespace bank_app.Utility.Components
     // Root component that should always be at the top
     public class Layout : UIComponent
     {
-        public int Width { get; set; } = Console.WindowWidth;
-        public int Height { get; set; } = Console.WindowHeight;
-        public LayoutBorder border { get; set; }
+        // Declare variables
+        public LayoutBorder Border { get; set; }
         private string _topLeftCorner = " ";
         private string _topRightCorner = " ";
         private string _bottomLeftCorner = " ";
@@ -21,8 +20,38 @@ namespace bank_app.Utility.Components
         // Child element
         private UIComponent _rootComponent;
 
-        public Layout(UIComponent rootComponent, LayoutBorder border)
+        // Initiate Constructor. Note: width and height has 0 as initial parameter because they need to be constant, so Console.WindowWidth can't be used.
+        public Layout(UIComponent rootComponent, LayoutBorder border, int width = 0, int height = 0)
         {
+            if (width == 0)
+            {
+                Width = Console.WindowWidth - 1;
+            }
+            else
+            {
+                Width = width;
+            }
+            if (height == 0)
+            {
+                Height = Console.WindowHeight - 1;
+            }
+            else
+            {
+                Height = height;
+            }
+
+            // Set rootComponent and set its parents element to this object
+            _rootComponent = rootComponent;
+            _rootComponent.ParentElement = this;
+            _rootComponent.X++;
+            _rootComponent.Y++;
+            // If rootComponent is a grid we will take this objects height/width and change RowHeight & ColWidth for rootComponent
+            if (rootComponent is Grid grid)
+            {
+                grid.RowHeight = Height / grid.Rows;
+                grid.ColWidth = Width / grid.Cols;
+            }
+            // Chosen border style
             switch (border)
             {
                 case LayoutBorder.None:
@@ -46,7 +75,7 @@ namespace bank_app.Utility.Components
                     _topRightCorner = "┐";
                     _bottomLeftCorner = "└";
                     _bottomRightCorner = "┘";
-                    _verticalWall = "|";
+                    _verticalWall = "│";
                     _horizontalWall = "─";
                     break;
                 case LayoutBorder.Rounded:
@@ -54,7 +83,7 @@ namespace bank_app.Utility.Components
                     _topRightCorner = "╮";
                     _bottomLeftCorner = "╰";
                     _bottomRightCorner = "╯";
-                    _verticalWall = "|";
+                    _verticalWall = "│";
                     _horizontalWall = "─";
                     break;
                 case LayoutBorder.Heavy:
@@ -74,10 +103,9 @@ namespace bank_app.Utility.Components
                     _horizontalWall = "═";
                     break;
             }
-            _rootComponent = rootComponent;
-            _rootComponent.ParentElement = this;
         }
 
+        // First render the border, then the rootComponent
         public override void Render()
         {
             for (int col = 0; col < Width; col++)
