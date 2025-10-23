@@ -8,7 +8,7 @@ namespace bank_app.Models.Accounts
 {
     public abstract class Account
     {
-        public string Id { get; set; }
+        public Guid AccountID { get; set; }
 
         public Currency AccountCurrency { get; private set; }
 
@@ -21,7 +21,7 @@ namespace bank_app.Models.Accounts
         protected Account(Currency currency, decimal balance)
         {
 
-            Id = GenerateAccountId();
+            AccountID = Guid.NewGuid();
             AccountCurrency = currency;
 
             SetBalance(balance);
@@ -39,10 +39,7 @@ namespace bank_app.Models.Accounts
             }
         
         }
-        public static string GenerateAccountId()
-        {
-            return Guid.NewGuid().ToString();
-        }
+      
         public void AddTransaction(Transaction transaction)
         {
             _transactions.Add(transaction);
