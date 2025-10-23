@@ -8,13 +8,12 @@ namespace bank_app.Models.Users
 {
     public abstract class User
     {
-        public string? UserId { get; set; }  
+        public Guid UserId { get; set; }  = Guid.NewGuid();
         public string? UserName { get; set; }
         public string? UserPassword { get; set; }
 
-        protected User(string userId, string userName, string userPassword)
+        protected User( string userName, string userPassword)
         {
-            UserId = userId;
             UserName = userName;
             UserPassword = userPassword;
         }
