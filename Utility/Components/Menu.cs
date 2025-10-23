@@ -17,18 +17,13 @@ namespace bank_app.Utility.Components
 
         public int ReadOptionIndex(List<UIComponent> menuOptions)
         {
-            int originLeft = Console.CursorLeft;
-            int originTop = Console.CursorTop;
             int i = 0;
             while (true)
             {
                 for (int j = 0; j < menuOptions.Count; j++)
                 {
-                    int left = Math.Clamp(originLeft, 0, Console.BufferWidth - 1);
-                    int top = Math.Clamp(originTop + j, 0, Console.BufferHeight - 1);
-                    Console.SetCursorPosition(left, top);
-                    menuOptions[j].X = left;
-                    menuOptions[j].Y = top;
+                    menuOptions[j].X = X;
+                    menuOptions[j].Y = Y + j;
                     if (j == i)
                     {
                         // Black foreground on white background

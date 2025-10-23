@@ -21,6 +21,7 @@ namespace bank_app.Utility.Components
         public Text(string textContents)
         {
             TextContents = textContents;
+            Width = textContents.Length;
         }
 
         public override void Render()
