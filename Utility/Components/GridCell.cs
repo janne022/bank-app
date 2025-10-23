@@ -56,7 +56,7 @@ namespace bank_app.Utility.Components
                 {
                     // For row we check the previous component (if it isn't the first component) and add that much space + 1 extra to current cursor position
                     int extraWidth = 0;
-                    if (i!=0)
+                    if (i !=0 )
                     {
                         extraWidth = Components[i - 1].Width + 1;
                     }

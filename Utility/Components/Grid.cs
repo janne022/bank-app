@@ -38,7 +38,7 @@ namespace bank_app.Utility.Components
         public GridCell AddGridComponent(int rowIndex, int colIndex, UIComponent component)
         {
             // Set the component ParentElement as this grid and if the component is a grid we set the RowHeight and ColWidth to one gridcell in this grids row and column system.
-            component.ParentElement = this;
+            component.ParentElement = _grid[rowIndex, colIndex];
             if (component is Grid grid)
             {
                 grid.RowHeight = RowHeight / grid.Rows;

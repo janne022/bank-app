@@ -10,8 +10,6 @@ namespace bank_app.Utility.Components
 {
     public class Text : UIComponent
     {
-        // TODO: This component must know the width of its parent Panel.
-        public int PanelWidth { get; private set; } = 30; // <--- TODO: remove that once this isn't hardcoded!
         public string TextContents { get; private set; }
 
         /// <summary>
@@ -28,6 +26,7 @@ namespace bank_app.Utility.Components
         {
             int currentWidth = 0;
             int currentLine = 0;
+            int PanelWidth = ParentElement.Width;
             string[] words = TextContents.Split(' ');
 
             // Word wrap TextContents. +1 handles spaces.

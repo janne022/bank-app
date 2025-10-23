@@ -24,11 +24,11 @@ namespace bank_app.UI
                 new Button()}));
             // Add text to center bottom
             cell = grid.GetGridCell(0, 1);
-            cell.Justify = Justify.Center;
-            cell.Align = Align.Bottom;
-            cell.OrderBy = OrderBy.Row;
-            grid.AddGridComponent(0, 1, new Text("Login"));
-            grid.AddGridComponent(0, 1, new Text("Hey"));
+            cell.Justify = Justify.Start;
+            cell.Align = Align.Middle;
+            cell.OrderBy = OrderBy.Column;
+            //grid.AddGridComponent(0, 0, new AsciiArt(art));
+            grid.AddGridComponent(0, 1, new Text("Welcome Back to Chas Bank. Securely access your account to manage your finances, pay bills, and track your transactions."));
             // Add grid to layout and set rounded border style
             Layout layout = new Layout(grid, LayoutBorder.Rounded);
             layout.Render();
