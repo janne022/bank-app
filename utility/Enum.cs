@@ -17,6 +17,12 @@ namespace bank_app.Utility
     {
         Pending,
         Completed,
-        Failed,
+        Failed
+    }
+
+    public enum AccountStatus
+    {
+        Open,
+        Locked
     }
 }
