@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "bank-app": {
+      "commandName": "Project"
+    },
+    "bank-app-dev": {
+      "commandName": "Project",
+      "commandLineArgs": "dev"
+    }
+  }
+}

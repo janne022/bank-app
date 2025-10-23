@@ -26,4 +26,14 @@ namespace bank_app.Utility
         Column
     }
 
+    public enum LayoutBorder
+    {
+        None,
+        Ascii,
+        Square,
+        Rounded,
+        Heavy,
+        Double
+    }
+
 }

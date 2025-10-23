@@ -8,13 +8,33 @@ namespace bank_app.Utility.Components
 {
     internal class Grid : UIComponent
     {
-        List<UIComponent> Components { get; set; }
-        Grid(List<UIComponent> components, Justify justify = Justify.Start, Align align = Align.Start, OrderBy orderBy = OrderBy.Row)
+        private List<UIComponent>[,] _components { get; set; }
+        public Justify Justify { get; set; }
+        public Align Align { get; set; }
+        public OrderBy OrderBy { get; set; }
+        public int Rows { get; set; }
+        public int Cols { get; set; }
+        public Grid(List<UIComponent> components, int rows, int columns, Justify justify = Justify.Start, Align align = Align.Top, OrderBy orderBy = OrderBy.Row)
         {
-            Components = components;
+            Rows = rows;
+            Cols = columns;
+            Justify = justify;
+            Align = align;
+            OrderBy = orderBy;
+            _components = new List<UIComponent>[rows,columns];
+
+            // Initialize each cell with an empty list
+            for (int r = 0; r < rows; r++)
+            {
+                for (int c = 0; c < columns; c++)
+                {
+                    _components[r, c] = new List<UIComponent>();
+                }
+            }
         }
         public override void Render()
         {
+
         }
     }
 }
