@@ -15,9 +15,9 @@ namespace bank_app.Utility
 
     public enum Align
     {
-        Start,
-        Center,
-        End
+        Top,
+        Middle,
+        Bottom
     }
 
     public enum OrderBy
