@@ -1,4 +1,5 @@
-﻿using System;
+﻿using bank_app.Utility;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,8 +9,8 @@ namespace bank_app.Models.Users
 {
     public class Client : User
     {
-        public Client(string userName, string userPassword) 
-            : base(userName, userPassword)
+        public Client(string userName, string userPassword, string email, string phoneNumber, UserType currentUserType) 
+            : base(userName, userPassword, email, phoneNumber, currentUserType)
         {
         }
     }
