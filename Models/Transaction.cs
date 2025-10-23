@@ -13,18 +13,18 @@ namespace bank_app.Models
     {
         public string? TransactionId { get; set; }
         public Account Sender { get; set; }
-        public Account Reciever { get; set; }
+        public Account Receiver { get; set; }
         public decimal TransferAmount { get; set; }
         public Currency TransferCurrency { get; set; }
         public DateTime TimeStamp { get; set; }
         public Utility.TransactionStatus Status { get; set; }
 
-        public Transaction(Account sender, Account reciever, decimal transferAmount, Currency transferCurrency)
+        public Transaction(Account sender, Account receiver, decimal transferAmount, Currency transferCurrency)
         {
             TransactionId = CreateTransactionId();
             TimeStamp = DateTime.Now;
             Sender = sender;
-            Reciever = reciever;
+            Receiver = receiver;
             TransferAmount = transferAmount;
             TransferCurrency = transferCurrency;
         }
