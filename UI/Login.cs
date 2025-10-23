@@ -28,7 +28,7 @@ namespace bank_app.UI
             cell.Align = Align.Middle;
             cell.OrderBy = OrderBy.Row;
             grid.AddGridComponent(0, 1, new Text("Login"));
-            grid.AddGridComponent(0, 1, new Text("Hello"));
+            grid.AddGridComponent(0, 1, new Text("Hey"));
             // Add grid to layout and set rounded border style
             Layout layout = new Layout(grid, LayoutBorder.Rounded);
             layout.Render();

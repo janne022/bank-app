@@ -26,6 +26,7 @@ namespace bank_app.Utility.Components
         {
             for (int i = 0; i < Components.Count; i++)
             {
+                // Changes coordinate of current component depending on Justify and Alignment chosen
                 switch (Justify)
                 {
                     case Justify.Start:
@@ -50,9 +51,15 @@ namespace bank_app.Utility.Components
                         Components[i].Y = Y + Height;
                         break;
                 }
+                // Render either via
                 if (OrderBy == OrderBy.Row)
                 {
-                    Console.SetCursorPosition(Components[i].X + (i + Components[i].Width), Components[i].Y);
+                    int extraWidth = 0;
+                    if (i!=0)
+                    {
+                        extraWidth = Components[i - 1].Width + 1;
+                    }
+                    Console.SetCursorPosition(Components[i].X + extraWidth, Components[i].Y);
                 }
                 else if (OrderBy == OrderBy.Column)
                 {
