@@ -12,4 +12,11 @@ namespace bank_app.Utility
         Admin,
         Client
     }
+
+    public enum TransferStatus
+    {
+        Pending,
+        Completed,
+        Failed,
+    }
 }
