@@ -56,7 +56,7 @@ namespace bank_app.Managers
             {
                 if (user.UserPassword == password)
                 {
-                    return AccountStatus.Open;
+                    return AccountStatus.Unlocked;
                 }
                 timesTried++;
             }
