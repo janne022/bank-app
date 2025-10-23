@@ -54,15 +54,17 @@ namespace bank_app.Utility.Components
         }
         public override void Render()
         {
+            // Get max columns and max rows cursor can move to
             int bufferW = Console.BufferWidth;
             int bufferH = Console.BufferHeight;
-            // Start by rendering every component that isnt interactable
+            // Start by rendering every component that isnt interactable. This is done because the Interactable components will automatically pause the process.
             for (int r = 0; r < _grid.GetLength(0); r++)
             {
                 for (int c = 0; c < _grid.GetLength(1); c++)
                 {
                     if (!_grid[r, c].Components.Any(component => component.IsInteractable))
                     {
+                        // Make sure we are not over max rows and columns by returning a value between 0 and buffer -1
                         int left = Math.Clamp((c * ColWidth) + X, 0, bufferW - 1);
                         int top = Math.Clamp((r * RowHeight) + Y, 0, bufferH - 1);
                         _grid[r, c].X = left;
@@ -73,13 +75,14 @@ namespace bank_app.Utility.Components
                 }
             }
 
-            // Render all components that are interactable
+            // Render all components that are interactable. First component will render and next component will render once first has had its intended interaction
             for (int r = 0; r < _grid.GetLength(0); r++)
             {
                 for (int c = 0; c < _grid.GetLength(1); c++)
                 {
                     if (_grid[r, c].Components.Any(component => component.IsInteractable))
                     {
+                        // Make sure we are not over max rows and columns by returning a value between 0 and buffer -1
                         int left = Math.Clamp(c * ColWidth, 0, bufferW - 1);
                         int top = Math.Clamp(r * RowHeight, 0, bufferH - 1);
                         _grid[r, c].X = left;

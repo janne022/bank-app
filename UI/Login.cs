@@ -14,7 +14,7 @@ namespace bank_app.UI
         {
             // Create new 3x3 grid
             Grid grid = new Grid(3, 3);
-            // Add Menu with two inputfields and button inside to middle of grid
+            // Add Menu with two inputfields and button inside to center middle of grid. Note: Button is currently not finished, so it won't be rendered
             GridCell cell = grid.GetGridCell(1, 1);
             cell.Justify = Justify.Center;
             cell.Align = Align.Middle;
@@ -22,10 +22,10 @@ namespace bank_app.UI
             grid.AddGridComponent(1,1, new Menu(new List<UIComponent>{new InputField("Username",false,16),
                 new InputField("Password",true,16),
                 new Button()}));
-            // Add text to middle top of grid
+            // Add text to center bottom
             cell = grid.GetGridCell(0, 1);
             cell.Justify = Justify.Center;
-            cell.Align = Align.Middle;
+            cell.Align = Align.Bottom;
             cell.OrderBy = OrderBy.Row;
             grid.AddGridComponent(0, 1, new Text("Login"));
             grid.AddGridComponent(0, 1, new Text("Hey"));

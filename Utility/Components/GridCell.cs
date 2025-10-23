@@ -51,9 +51,10 @@ namespace bank_app.Utility.Components
                         Components[i].Y = Y + Height;
                         break;
                 }
-                // Render either via
+                // Render either via Row or Column
                 if (OrderBy == OrderBy.Row)
                 {
+                    // For row we check the previous component (if it isn't the first component) and add that much space + 1 extra to current cursor position
                     int extraWidth = 0;
                     if (i!=0)
                     {
