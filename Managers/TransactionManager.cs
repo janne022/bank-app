@@ -13,6 +13,7 @@ namespace bank_app.Managers
     {
         /// <summary>
         /// Performs a transfer of selected balance amount between two Account objects.
+        /// Returns the Transaction object for success validation. 
         /// </summary>
         public Transaction Transfer(Account sender, Account receiver, decimal amount)
         {
@@ -46,6 +47,17 @@ namespace bank_app.Managers
             }
 
             return transaction;
+
+
+            /*For later use in UI when a transaction is performed:
+             * - When a transaction is created using transaction manager,
+             *   use transaction.Status to check if transfer was completed
+             *   or not. 
+             *   Example: if (transaction.Status == TransferStatus.Completed)
+             *   same applies to check if transfer has failed.
+             *   
+             *   A Transaction object should only be created with the Transfer method!
+             */
         }
     }
 }
