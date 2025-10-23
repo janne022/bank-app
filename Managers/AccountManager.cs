@@ -10,13 +10,13 @@ namespace bank_app.Managers
 {
     public static class AccountManager
     {
-        private static Dictionary<string, Account> _accounts = new Dictionary<string, Account>();
+        private static Dictionary<Guid, Account> _accounts = new Dictionary<Guid ,Account>();
 
         public static void CreateAccount(Account account)
         {
             if (account != null)
             {
-                bool added = _accounts.TryAdd(account.Id, account);
+                bool added = _accounts.TryAdd(account.AccountID, account);
                 if (!added)
                 {
                     Console.WriteLine("Account with the same ID already exists.");
@@ -34,10 +34,10 @@ namespace bank_app.Managers
             return _accounts.Count;
         }
 
-        public static bool RemoveAccount(string id)
+        public static bool RemoveAccount(Guid accountID)
         {
 
-            return _accounts.Remove(id);
+            return _accounts.Remove(accountID);
         }
 
 

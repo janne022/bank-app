@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace bank_app.Models
 {
-   public enum Currency
+    public enum Currency
     {
         USD,  //Dollar
         EUR,  //Euro
@@ -17,6 +17,16 @@ namespace bank_app.Models
         CHF,  //Swiss Franc
         CNY,  //Chinese Yuan
         SEK,  //Swedish Krona
-        NZD   //New Zealand Dollar
+        NZD,  //New Zealand Dollar
+        SLC   // Slava Coin
+    }
+
+
+    public enum Status
+    {
+        Active,
+       
+        Closed,
+
     }
 }
