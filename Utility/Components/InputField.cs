@@ -21,7 +21,6 @@ namespace bank_app.Utility.Components
         public string Descriptor { get; private set; }
         public int MaxLength { get; private set; }
         public bool IsPassword { get; private set; }
-        public string RenderedText { get; private set; }
         public string InputtedValue { private get; set; }
 
 
@@ -36,18 +35,21 @@ namespace bank_app.Utility.Components
             Descriptor = descriptor;
             MaxLength = maxLength;
             IsPassword = isPassword;
-            RenderedText = string.Empty;
             InputtedValue = string.Empty;
         }
 
         public override void Pressed()
         {
-            Console.SetCursorPosition(X+Descriptor.Length+3, Y); // 3, because ": ["
-            Console.CursorVisible = true;
-            string userInputtedString = Writing();
+            InputtedValue = string.Empty;
             Render();
+            Console.SetCursorPosition(X + Descriptor.Length + 3, Y); // 3, because ": ["
+            Console.CursorVisible = true;
+            InputtedValue = Writing();
+            Value = InputtedValue;
+            //Render();
             Console.CursorVisible = false;
         }
+
 
         public override void Render()
         {
@@ -58,19 +60,20 @@ namespace bank_app.Utility.Components
 
             Console.SetCursorPosition(X, Y);
 
-            int inputBoxWidth = ((ParentElement.Width - Descriptor.Length) - 4); // 4 refers to the extra characters
-
+            int inputBoxWidth = ((ParentElement!.Width - Descriptor.Length) - 4); // 4 refers to the extra characters
 
             Console.Write($"{Descriptor}: [");
-            if (String.IsNullOrEmpty(InputtedValue)) // If user hasn't inputted anything yet.
+
+            // Start out by filling the input box with underscores.
+            for (int i = 0; i < inputBoxWidth; i++)
             {
-                for (int i = 0; i < inputBoxWidth; i++)
-                {
-                    Console.Write("_");
-                }
+                Console.Write("_");
             }
-            else // User has made input.
+
+            // If the user has inputted data before.
+            if (!String.IsNullOrEmpty(InputtedValue))
             {
+                Console.SetCursorPosition(X + Descriptor.Length + 3, Y);
                 if (IsPassword)
                 {
                     for (int i = 0; i < inputBoxWidth; i++)
@@ -80,11 +83,14 @@ namespace bank_app.Utility.Components
                 }
                 else
                 {
-                    string contentsOfInputBox = (InputtedValue ?? "").PadRight(inputBoxWidth).Substring(0, inputBoxWidth);
+                    string contentsOfInputBox =
+                        (InputtedValue ?? "")
+                        .PadRight(inputBoxWidth, '_') // Pad possible empty spaces in the input field with underscores
+                        .Substring(0, inputBoxWidth); // If the inputted string is too long, truncate it
                     Console.Write(contentsOfInputBox);
                 }
             }
-            Console.Write("]");
+                Console.Write("]");
         }
 
 
@@ -99,6 +105,7 @@ namespace bank_app.Utility.Components
         {
             string userInput = "";
             int characters = 0;
+            bool isEscaping = false;
             bool isInputting = true;
             while (isInputting)
             {
@@ -110,6 +117,11 @@ namespace bank_app.Utility.Components
                         {
                             isInputting = false;
                         }
+                        break;
+
+                    case ConsoleKey.Escape:
+                        isEscaping = true;
+                        isInputting = false;
                         break;
 
                     case ConsoleKey.Backspace:
@@ -139,6 +151,10 @@ namespace bank_app.Utility.Components
                                 {
                                     Console.Write("*");
                                 }
+                                else
+                                {
+                                    Console.Write(pressed.KeyChar);
+                                }
                             }
                             else
                             {
@@ -148,9 +164,15 @@ namespace bank_app.Utility.Components
                         break;
                 }
             }
-            InputtedValue = userInput;
-            Value = userInput;
-            return userInput;
+
+            if (isEscaping)
+            {
+                return string.Empty;
+            }
+            else
+            {
+                return userInput;
+            }
         }
     }
 }
