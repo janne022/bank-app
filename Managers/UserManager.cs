@@ -50,7 +50,6 @@ namespace bank_app.Managers
                 if (user.UserPassword == inputPassword)
                 {
                     user.FailedLoginAttempts = 0;
-                    user.CurrentAccountStatus = AccountStatus.Unlocked;
                 }
                 else
                 {
@@ -78,7 +77,5 @@ namespace bank_app.Managers
             user.UserName = userName;
             user.UserPassword = userPassword;
         }
-
-      
     }
 }
