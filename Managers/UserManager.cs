@@ -18,16 +18,16 @@ namespace bank_app.Managers
         /// Method to create new users within the bank app. Adds the newly created user to a list of all users within the application.
         /// </summary>
         /// <param name="userType">Enum that determines whether the user is a client or an administrator</param>
-        public static void CreateUser(UserType userType, string userName, string userPassword, string email = "", string phoneNumber = "")
+        public static void CreateUser(string userName, string userPassword, UserType userType, string email = "", string phoneNumber = "")
         {
-            if (userType == UserType.Admin)
+            if (userType is UserType.Admin)
             {
-                var admin = new Admin(userName, userPassword, userType);
+                var admin = new Admin(userName, userPassword);
                 Users.Add(admin);
             }
-            else if (userType == UserType.Client)
+            else if (userType is UserType.Client)
             {
-                var client = new Client(userName, userPassword, email, phoneNumber, userType);
+                var client = new Client(userName, userPassword, email, phoneNumber);
                 Users.Add(client);
             }
         }

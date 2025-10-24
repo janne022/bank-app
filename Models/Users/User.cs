@@ -13,15 +13,12 @@ namespace bank_app.Models.Users
         private Guid UserId { get; set; }  = Guid.NewGuid();
         public string? UserName { get; set; }
         public string? UserPassword { get; set; }
-        public UserType CurrentUserType {  get; set; }
         public int FailedLoginAttempts { get; set; } = 0;
         public AccountStatus CurrentAccountStatus { get; set; }
 
-        protected User( string userName, string userPassword, UserType currentUserType)
+        protected User( string userName, string userPassword)
         {
             UserName = userName;
-            CurrentUserType = currentUserType;
-
             UserPassword = PasswordHasher.Hash(userPassword);
         }
     }
