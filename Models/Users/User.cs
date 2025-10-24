@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using bank_app.utility;
 
 namespace bank_app.Models.Users
 {
@@ -19,8 +20,9 @@ namespace bank_app.Models.Users
         protected User( string userName, string userPassword, UserType currentUserType)
         {
             UserName = userName;
-            UserPassword = userPassword;
             CurrentUserType = currentUserType;
+
+            UserPassword = PasswordHasher.Hash(userPassword);
         }
     }
 }
