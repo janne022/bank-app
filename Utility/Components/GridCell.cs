@@ -27,13 +27,14 @@ namespace bank_app.Utility.Components
             for (int i = 0; i < Components.Count; i++)
             {
                 // Changes coordinate of current component depending on Justify and Alignment chosen
+                // TODO: Coordinate should change depending on 
                 switch (Justify)
                 {
                     case Justify.Start:
                         Components[i].X = X;
                         break;
                     case Justify.Center:
-                        Components[i].X = X + (Width / 2);
+                        Components[i].X = X + (Width / 2) - (Components[i].Width / 2);
                         break;
                     case Justify.End:
                         Components[i].X = X + Width;
@@ -48,7 +49,7 @@ namespace bank_app.Utility.Components
                         Components[i].Y = Y + (Height / 2);
                         break;
                     case Align.Bottom:
-                        Components[i].Y = Y + Height;
+                        Components[i].Y = Y;
                         break;
                 }
                 // Render either via Row or Column

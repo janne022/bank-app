@@ -9,6 +9,7 @@ namespace bank_app.Utility.Components
     public class Menu : UIComponent
     {
         private List<UIComponent> _components;
+        private object[] args;
         public Menu(List<UIComponent> components)
         {
             IsInteractable = true;
@@ -17,6 +18,15 @@ namespace bank_app.Utility.Components
 
         public int ReadOptionIndex(List<UIComponent> menuOptions)
         {
+            int argsCount = 0;
+            for (int j = 0; j < menuOptions.Count; j++)
+            {
+                if (menuOptions[j] is not Button)
+                {
+                    argsCount++;
+                }
+            }
+            args = new object[argsCount];
             int i = 0;
             while (true)
             {
@@ -53,6 +63,14 @@ namespace bank_app.Utility.Components
                         break;
                     case ConsoleKey.Enter:
                         menuOptions[i].Pressed();
+                        if (menuOptions[i] is not Button)
+                        {
+                            args[i] = menuOptions[i].Value;
+                        }
+                        else if (menuOptions[i] is Button button)
+                        {
+                            button.Pressed(args);
+                        }
                         break;
 
                 }

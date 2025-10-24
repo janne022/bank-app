@@ -11,6 +11,7 @@ namespace bank_app.Utility.Components
     public class Text : UIComponent
     {
         public string TextContents { get; private set; }
+        private string[] _words;
 
         /// <summary>
         /// Text components only contain text.
@@ -19,7 +20,7 @@ namespace bank_app.Utility.Components
         public Text(string textContents)
         {
             TextContents = textContents;
-            Width = textContents.Length;
+            _words = textContents.Split(' ');
         }
 
         public override void Render()
@@ -27,22 +28,21 @@ namespace bank_app.Utility.Components
             int currentWidth = 0;
             int currentLine = 0;
             int PanelWidth = ParentElement.Width;
-            string[] words = TextContents.Split(' ');
 
             // Word wrap TextContents. +1 handles spaces.
-            for (int i = 0; i < words.Length; i++)
+            for (int i = 0; i < _words.Length; i++)
             {
-                if ((currentWidth + words[i].Length) < PanelWidth)
+                if ((currentWidth + _words[i].Length) < PanelWidth)
                 {
-                    Console.Write($"{words[i]} ");
-                    currentWidth = currentWidth + words[i].Length + 1;
+                    Console.Write($"{_words[i]} ");
+                    currentWidth = currentWidth + _words[i].Length + 1;
                 }
                 else
                 {
                     currentLine++;
                     Console.SetCursorPosition(X, Y + currentLine);
-                    Console.Write($"{words[i]} ");
-                    currentWidth = words[i].Length + 1;
+                    Console.Write($"{_words[i]} ");
+                    currentWidth = _words[i].Length + 1;
                 }
             }
         }

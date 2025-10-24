@@ -14,6 +14,7 @@ namespace bank_app.Utility
         public int Width { get; set; }
         public int Height { get; set; }
         public bool IsInteractable = false;
+        public object Value { get; set; }
         public UIComponent? ParentElement { get; set; }
 
 

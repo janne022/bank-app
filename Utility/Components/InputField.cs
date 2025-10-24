@@ -148,6 +148,7 @@ namespace bank_app.Utility.Components
                         break;
                 }
             }
+            Value = userInput;
             return userInput;
         }
     }
