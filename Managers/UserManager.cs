@@ -40,30 +40,34 @@ namespace bank_app.Managers
             userName = null;
         }
 
-
-        public static User UserLogin(User user, string password)
+        /// <summary>
+        /// Attempts to authorize a user by verifying the provided password.
+        /// </summary>
+        public static void Authorization(User user, string inputPassword)
         {
             if (user.FailedLoginAttempts < 3)
             {
-                if (user.UserPassword == password)
+                if (user.UserPassword == inputPassword)
                 {
+                    user.FailedLoginAttempts = 0;
                     user.CurrentAccountStatus = AccountStatus.Unlocked;
-                    return user;
                 }
                 else
                 {
                     user.FailedLoginAttempts++;
-                    return null;
                 }
             }
             else
             {
                 user.CurrentAccountStatus = AccountStatus.Locked;
-                // Aja baja din lille lort, ditt account är locked!!!!!
-                return null;
+                // You have entered the wrong password 3 times, and thusly locked your account. Contact the bank to get your login unlocked.
             }
         }
 
+        public static void UnlockAccount(User user)
+        {
+            user.CurrentAccountStatus = AccountStatus.Unlocked;
+        }
 
         /// <summary>
         /// Updates the properties of the user object
@@ -74,5 +78,7 @@ namespace bank_app.Managers
             user.UserName = userName;
             user.UserPassword = userPassword;
         }
+
+      
     }
 }
