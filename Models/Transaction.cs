@@ -19,6 +19,16 @@ namespace bank_app.Models
         public DateTime TimeStamp { get; set; }
         public TransferStatus Status { get; set; }
 
+        public Transaction(Account sender, Account receiver, decimal transferAmount)
+        {
+            TransactionId = Guid.NewGuid();
+            TimeStamp = DateTime.Now;
+            Sender = sender;
+            Receiver = receiver;
+            TransferAmount = transferAmount;
+        }
+
+        //Overloaded constructor for other currencies. Feature not implemented yet. 
         public Transaction(Account sender, Account receiver, decimal transferAmount, Currency transferCurrency)
         {
             TransactionId = Guid.NewGuid();
