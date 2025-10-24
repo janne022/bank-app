@@ -88,6 +88,11 @@ namespace bank_app.Managers
             return null;
         }
 
+        public static void Logout()
+        {
+            // UI needed to develop
+        }
+
 
         /// <summary>
         /// Updates the properties of the user object
