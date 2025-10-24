@@ -12,6 +12,7 @@ namespace bank_app.UI
     {
         public static void Menu()
         {
+            Console.CursorVisible = false;
             // Create new 3x3 grid
             Grid grid = new Grid(3, 3);
             // Add Menu with two inputfields and button inside to center middle of grid. Note: Button is currently not finished, so it won't be rendered
