@@ -13,6 +13,8 @@ namespace bank_app.Models.Users
         public string? UserName { get; set; }
         public string? UserPassword { get; set; }
         private UserType CurrentUserType {  get; set; }
+        public int FailedLoginAttempts { get; set; } = 0;
+        public AccountStatus CurrentAccountStatus { get; set; }
 
         protected User( string userName, string userPassword, UserType currentUserType)
         {

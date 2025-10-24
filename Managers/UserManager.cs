@@ -41,6 +41,34 @@ namespace bank_app.Managers
         }
 
         /// <summary>
+        /// Attempts to authorize a user by verifying the provided password.
+        /// </summary>
+        public static void Authorization(User user, string inputPassword)
+        {
+            if (user.FailedLoginAttempts < 3)
+            {
+                if (user.UserPassword == inputPassword)
+                {
+                    user.FailedLoginAttempts = 0;
+                }
+                else
+                {
+                    user.FailedLoginAttempts++;
+                }
+            }
+            else
+            {
+                user.CurrentAccountStatus = AccountStatus.Locked;
+                // You have entered the wrong password 3 times, and thusly locked your account. Contact the bank to get your login unlocked.
+            }
+        }
+
+        public static void UnlockAccount(User user)
+        {
+            user.CurrentAccountStatus = AccountStatus.Unlocked;
+        }
+
+        /// <summary>
         /// Updates the properties of the user object
         /// </summary>
         /// <param name="user">the name of the user object to be changed</param>
