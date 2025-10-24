@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using bank_app.Models.Users;
@@ -43,22 +44,25 @@ namespace bank_app.Managers
         /// <summary>
         /// Attempts to authorize a user by verifying the provided password.
         /// </summary>
-        public static void Authorization(User user, string inputPassword)
+        public static bool Authorization(User user, string inputPassword)
         {
-            if (user.FailedLoginAttempts < 3)
+            if (user.FailedLoginAttempts < 3 && user.CurrentAccountStatus == AccountStatus.Unlocked)
             {
                 if (user.UserPassword == inputPassword)
                 {
                     user.FailedLoginAttempts = 0;
+                    return true;
                 }
                 else
                 {
                     user.FailedLoginAttempts++;
+                    return false;
                 }
             }
             else
             {
                 user.CurrentAccountStatus = AccountStatus.Locked;
+                return false;
                 // You have entered the wrong password 3 times, and thusly locked your account. Contact the bank to get your login unlocked.
             }
         }
@@ -67,6 +71,28 @@ namespace bank_app.Managers
         {
             user.CurrentAccountStatus = AccountStatus.Unlocked;
         }
+
+        public static User? Login(string userName, string password)
+        {
+            // Loops through all made users in the program...
+            foreach (var user in Users)
+            {
+                // if the username input matches any of the existing users' names... AND they are authorized to login AND the password is correct...
+                if (user.UserName == userName && Authorization(user, password))
+                {
+                    // ...return that specific user
+                    return user;
+                }
+            }
+            // ...and if no user matches the name, password or the user is not authorized to login: return nothing.
+            return null;
+        }
+
+        public static void Logout()
+        {
+            // UI needed to develop
+        }
+
 
         /// <summary>
         /// Updates the properties of the user object
