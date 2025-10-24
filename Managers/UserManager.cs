@@ -45,7 +45,7 @@ namespace bank_app.Managers
         /// </summary>
         public static void Authorization(User user, string inputPassword)
         {
-            if (user.FailedLoginAttempts < 3)
+            if (user.FailedLoginAttempts < 3 && user.CurrentAccountStatus == AccountStatus.Unlocked)
             {
                 if (user.UserPassword == inputPassword)
                 {
@@ -67,6 +67,21 @@ namespace bank_app.Managers
         {
             user.CurrentAccountStatus = AccountStatus.Unlocked;
         }
+
+        public static void Login(string userName, string password)
+        {
+            // Loops through all made users in the program...
+            foreach (var user in Users)
+            {
+                // if the username input matches any of the existing users' names...
+                if (user.UserName == userName)
+                {
+                    // check if password is correct AND the account is unlocked
+                    Authorization(user, password);
+                }
+            }
+        }
+
 
         /// <summary>
         /// Updates the properties of the user object
