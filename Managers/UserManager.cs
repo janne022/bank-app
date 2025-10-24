@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using bank_app.Models.Users;
+using bank_app.utility;
 using bank_app.Utility;
 
 namespace bank_app.Managers
@@ -48,7 +49,7 @@ namespace bank_app.Managers
         {
             if (user.FailedLoginAttempts < 3 && user.CurrentAccountStatus == AccountStatus.Unlocked)
             {
-                if (user.UserPassword == inputPassword)
+                if (PasswordHasher.VerifyPassword(inputPassword, user.UserPassword))
                 {
                     user.FailedLoginAttempts = 0;
                     return true;
