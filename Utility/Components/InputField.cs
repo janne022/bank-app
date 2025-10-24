@@ -58,7 +58,7 @@ namespace bank_app.Utility.Components
 
             Console.SetCursorPosition(X, Y);
 
-            int inputBoxWidth = ((PanelWidth - Descriptor.Length) - 4); // 4 refers to the extra characters
+            int inputBoxWidth = ((ParentElement.Width - Descriptor.Length) - 4); // 4 refers to the extra characters
 
 
             Console.Write($"{Descriptor}: [");
@@ -148,6 +148,7 @@ namespace bank_app.Utility.Components
                         break;
                 }
             }
+            InputtedValue = userInput;
             Value = userInput;
             return userInput;
         }

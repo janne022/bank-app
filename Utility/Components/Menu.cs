@@ -10,10 +10,15 @@ namespace bank_app.Utility.Components
     {
         private List<UIComponent> _components;
         private object[] args;
-        public Menu(List<UIComponent> components)
+        public Menu(List<UIComponent> components, int width = 20)
         {
             IsInteractable = true;
             _components = components;
+            Width = width;
+            foreach (var item in components)
+            {
+                item.ParentElement = this;
+            }
         }
 
         public int ReadOptionIndex(List<UIComponent> menuOptions)
