@@ -19,6 +19,7 @@ namespace bank_app.Models.Accounts
             SetOverdraftLimit(overdraftLimit);
 
         }
+
         public void UpdateOverdraftLimit(decimal limit)
         {
             SetOverdraftLimit(limit);
@@ -75,5 +76,15 @@ namespace bank_app.Models.Accounts
             return amount>0 &&  Balance - amount>= -OverdraftLimit;
         }
 
+        //Method which can be add to the system, we can use bool if we want to check success or failure of the operation
+        public void SetMoneyFromATM(decimal amount)
+        {
+            if (amount <= 0)
+            {
+                Console.WriteLine("Amount must be positive.");
+                return;
+            }
+            UpdateBalance(amount);
+        }
     }
 }

@@ -9,25 +9,25 @@ namespace bank_app.Models.Accounts
 {
     public class LoanAccount : Account
     {
-        public decimal InterestRate { get; set; }
 
-        public decimal Principal { get; set; }
-
+        public decimal InterestRate { get; set; } //% per annum
         public bool IsDisbusrsed { get; set; }
 
         public Status Status { get; set; } = Status.Active;
         public DateOnly LastInterestAppliedPeriod { get; set; }
 
-
+        private List<Loan> loans = new List<Loan>();
+        public IReadOnlyList<Loan> Loans => loans;
         public LoanAccount(Currency currency, decimal balance, decimal interestRate)
             : base(currency, balance)
         {
             InterestRate = interestRate < 0 ? 0 : interestRate;
 
-            Principal = 0;
         }
 
        
+
+
 
     }
 }

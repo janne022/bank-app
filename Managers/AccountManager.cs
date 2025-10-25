@@ -45,5 +45,9 @@ namespace bank_app.Managers
         {
            return _accounts.Values.ToList();
         }
+
+        //Loan Accounts Logic
+
+       
     }
 }
