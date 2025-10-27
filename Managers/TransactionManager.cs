@@ -26,7 +26,7 @@ namespace bank_app.Managers
             try
             {
                 //Fails transaction if amount is greater than account balance
-                if (!sender.CanWithdraw(amount))
+                if (amount > sender.Balance)
                 {
                     transaction.Status = TransferStatus.Failed;
                     return transaction;
@@ -34,10 +34,8 @@ namespace bank_app.Managers
 
                 //Performs transaction, adds transaction to account transaction
                 //list and marks transaction as completed. 
-                sender.Withdraw(amount);
-                receiver.Deposit(amount);
-                sender.AddTransaction(transaction);
-                receiver.AddTransaction(transaction);
+                sender.ApplyTransaction(TransactionType.Withdrawal, amount, transaction);
+                receiver.ApplyTransaction(TransactionType.Deposit, amount, transaction);
                 transaction.Status = TransferStatus.Completed;
             }
 
