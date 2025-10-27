@@ -8,7 +8,7 @@ namespace bank_app.Models.Accounts
 {
     public abstract class Account
     {
-        public Guid AccountID { get; set; }
+        public Guid AccountID { get; private set; }
 
         public Currency AccountCurrency { get; private set; }
 
@@ -23,64 +23,42 @@ namespace bank_app.Models.Accounts
 
             AccountID = Guid.NewGuid();
             AccountCurrency = currency;
-
-            SetBalance(balance);
-            _transactions = new List<Transaction>();
-        }
-        public void SetBalance(decimal amount)
-        {
-            if (amount < 0)
-            {
-                Balance = 0;
-            }
-            else
-            {
-                Balance = amount;
-            }
-        
+            Balance = balance< 0 ? 0 : balance;
+           
         }
       
-        public void AddTransaction(Transaction transaction)
+        public void ApplyTransaction(TransactionType transactionType, decimal amount, Transaction transaction) //This will be  change just to "Transaction transaction" later
         {
+            if (!CanApply(transaction))
+            {
+                Console.WriteLine("This transaction cannot be applied.");
+                return;
+            }
+
+            switch (transactionType)
+            {
+                case TransactionType.Deposit:
+                   Balance+= amount;
+                    break;
+                case TransactionType.Withdrawal:
+                    Balance-= amount;
+                    break;
+                default:
+                    Console.WriteLine("This transaction type doest not an option");
+                    break;
+            }
             _transactions.Add(transaction);
-        }
 
-        public void UpdateBalance(decimal amount)
-        {
-            Balance += amount;
         }
 
 
-        public bool Deposit(decimal amount)
-        {
+        public abstract bool CanApply(Transaction transaction);
 
-            if (amount > 0)
-            {
-                Balance += amount;
-                return true;
-            }
-            else
-            {
+        
 
-                return false;
-            }
-        }
-        public virtual void Withdraw(decimal amount)
-        {
-            if (CanWithdraw(amount))
-            {
-                Balance -= amount;
-            }
-            else
-            {
-                Console.WriteLine("Impossible to do thatr");
-            }
-        }
+        
 
-        public virtual bool CanWithdraw(decimal amount)
-        {
-            return Balance >= amount;
-        }
+
 
 
     }

@@ -29,4 +29,15 @@ namespace bank_app.Models
         Closed,
 
     }
+
+
+    public enum TransactionType
+    {
+        Deposit,
+        Withdrawal,
+       
+    }
+
+   
+
 }

@@ -8,5 +8,6 @@ namespace bank_app.Models
 {
     public class Transaction
     {
+        public TransactionType TransactionType { get; internal set; }
     }
 }

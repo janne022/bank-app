@@ -8,83 +8,38 @@ namespace bank_app.Models.Accounts
 {
     public class CheckingAccount : Account
     {
-
+        //Monthly fee is the fee charged every month for maintaining the account, and logic will be implemented in Account Manager
         public decimal MonthlyFee { get; private set; }
-        public decimal OverdraftLimit { get; private set; }
+        //Overdrat limist is the maximum negative balance allowed 
+        public decimal OverdraftLimit { get; private set; } 
+
+
         public CheckingAccount(Currency currency, decimal balance, decimal monthlyFee, decimal overdraftLimit)
             : base(currency, balance)
         {
-
-            SetMonthlyFee(monthlyFee);
-            SetOverdraftLimit(overdraftLimit);
-
+           OverdraftLimit = overdraftLimit > 0 ? 0 : overdraftLimit;
+           MonthlyFee = monthlyFee < 0 ? 0 : monthlyFee;
         }
 
-        public void UpdateOverdraftLimit(decimal limit)
+        //This method is looking to see if the transaction can be applied based on the type of transaction and the current balance and overdraft limit.
+        public override bool CanApply(Transaction transaction)
         {
-            SetOverdraftLimit(limit);
-        }
-        public void UpdateMonthlyFee(decimal fee)
-        {
-            SetMonthlyFee(fee);
-        }
-
-        public void SetMonthlyFee(decimal fee)
-        {
-            MonthlyFee = fee < 0 ? 0 : fee;
-
-        }
-
-        public void SetOverdraftLimit(decimal limit)
-        {
-            OverdraftLimit = limit < 0 ? 0 : limit;
-        }
-
-        public bool ApplyMonthlyFee()
-        {
-            if (CanWithdraw(MonthlyFee))
+            decimal amount = 0; //This will be change with transaction.Amount later
+            if (transaction.TransactionType == TransactionType.Deposit)
             {
-                UpdateBalance(-MonthlyFee);
                 return true;
             }
+
+            if (transaction.TransactionType == TransactionType.Withdrawal)
+            {
+                return Balance - amount /*This will be change with transaction.Amount later */ >= -OverdraftLimit;
+            }
+
+
+
             return false;
         }
 
-
-        public override void Withdraw(decimal amount)
-        {
-            if (amount<=0)
-            {
-                Console.WriteLine("Withdrawal amount must be positive.");
-                return;
-
-            }
-
-
-            if (CanWithdraw(amount))
-            {
-                UpdateBalance(-amount);
-            }
-            else
-            {
-                Console.WriteLine("Withdrawal would exceed overdraft limit.");
-            }
-        }
-
-        public override bool CanWithdraw(decimal amount)
-        {
-            return amount>0 &&  Balance - amount>= -OverdraftLimit;
-        }
-
-        //Method which can be add to the system, we can use bool if we want to check success or failure of the operation
-        public void SetMoneyFromATM(decimal amount)
-        {
-            if (amount <= 0)
-            {
-                Console.WriteLine("Amount must be positive.");
-                return;
-            }
-            UpdateBalance(amount);
-        }
+       
     }
 }
