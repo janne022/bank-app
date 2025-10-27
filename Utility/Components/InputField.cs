@@ -52,13 +52,14 @@ namespace bank_app.Utility.Components
 
         public override void Measure(int parentWidth, int parentHeight)
         {
-            Width = parentWidth + Descriptor.Length + 4;
+            Width = parentWidth;
+            Height = 1;
         }
 
 
         public override void Render()
         {
-            /* 
+            /*                        inputBoxWidth
              * Render:     Descriptor: [_________]
              *                       123         4   <-- extra characters                    
              */
