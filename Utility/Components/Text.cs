@@ -21,6 +21,12 @@ namespace bank_app.Utility.Components
         {
             TextContents = textContents;
             _words = textContents.Split(' ');
+            // Split textContents into string[] with new index for every row
+        }
+        // 
+        public override void Measure(int parentWidth, int parentHeight)
+        {
+            // Look for longest index in words[] and set height and width
         }
 
         public override void Render()

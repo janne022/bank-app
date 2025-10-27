@@ -28,6 +28,7 @@ namespace bank_app.Utility.Components
             {
                 // Changes coordinate of current component depending on Justify and Alignment chosen
                 // TODO: Coordinate should change depending on 
+                Components[i].Measure(Width, Height);
                 switch (Justify)
                 {
                     case Justify.Start:

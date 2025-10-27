@@ -24,5 +24,9 @@ namespace bank_app.Utility
         public virtual void Pressed()
         {
         }
+        public virtual void Measure(int parentWidth, int parentHeight)
+        {
+
+        }
     }
 }
