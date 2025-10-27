@@ -47,22 +47,13 @@ namespace bank_app.Managers
             return transaction;
         }
 
-        /*For later use in UI when a transaction is performed:
-         * - When a transaction is created using transaction manager,
-         *   use transaction.Status to check if transfer was completed
-         *   or not. 
-         *   Example: if (transaction.Status == TransferStatus.Completed)
-         *   same applies to check if transfer has failed.
-         *   
-         *   A Transaction object should only be created with the Transfer method!
-         */
-
-
         /// <summary>
         /// Processes all transactions that have been pending for at least 15 minutes.
+        /// Only works together with a timer that calls the method ex. every minute while
+        /// application is running. 
         /// </summary>
         public void ProcessPendingTransactions()
-            {
+        {
             //Finds all transaction that are still "pending" and have waited for >= 15 minutes
             var transactionToProcess = allTransactions
                 .Where(t => t.Status == TransferStatus.Pending &&
@@ -90,7 +81,9 @@ namespace bank_app.Managers
                     transaction.Status = TransferStatus.Failed;
                 }
             }
+
+            //This function will only work if being continously called by a timer (ex. every minute)
        
-    }
+        }
     }
 }
