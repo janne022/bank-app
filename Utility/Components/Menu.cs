@@ -10,52 +10,96 @@ namespace bank_app.Utility.Components
     {
         private List<UIComponent> _components;
         private object[] args;
-        public Menu(List<UIComponent> components, int width = 20)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Menu"/> that renders and handles
+        /// keyboard navigation for a list of child <see cref="UIComponent"/>s.
+        /// </summary>
+        /// <param name="components">
+        /// The child components to display inside the menu, in render/navigation order.
+        /// The menu sets itself as each child's <see cref="UIComponent.ParentElement"/>.
+        /// </param>
+        /// <param name="order">
+        /// Intended layout ordering for the menu items (row or column). Rendering currently
+        /// behaves as a column list; this parameter is reserved for future layout behavior.
+        /// </param>
+        /// <remarks>
+        /// The menu is interactive by default. It highlights the currently selected item and
+        /// supports Up/Down arrow navigation and Enter to activate the selected component.
+        /// When a non-<see cref="Button"/> component is activated, its <see cref="UIComponent.Value"/>
+        /// is captured internally. When a <see cref="Button"/> is activated, all captured values
+        /// are passed to the button via <c>Pressed(object[] args)</c>.
+        /// </remarks>
+        public Menu(List<UIComponent> components, OrderBy order = OrderBy.Column)
         {
+            // Set variables
             IsInteractable = true;
             _components = components;
-            Width = width;
+
+            // Make this object a parent to all child objects
             foreach (var item in components)
             {
                 item.ParentElement = this;
             }
-        }
-
-        public int ReadOptionIndex(List<UIComponent> menuOptions)
-        {
+            // Check how many objects that are not buttons to see how many arguments we are passing if there is a button inside Menu
             int argsCount = 0;
-            for (int j = 0; j < menuOptions.Count; j++)
+            for (int j = 0; j < components.Count; j++)
             {
-                if (menuOptions[j] is not Button)
+                if (components[j] is not Button)
                 {
                     argsCount++;
                 }
             }
             args = new object[argsCount];
+        }
+        public override void Measure(int parentWidth, int parentHeight)
+        {
+            int largestWidth = 0;
+            int largestHeight = 0;
+            // get largest width of object and
+            for (int i = 0; i < _components.Count; i++)
+            {
+                if (_components[i].Width > largestWidth)
+                {
+                    largestWidth = _components[i].Width;
+                }
+                if (_components[i].Height > largestHeight)
+                {
+                    largestHeight = _components[i].Height;
+                }
+            }
+            Width = largestWidth;
+            Height = largestHeight;
+        }
+
+        public override void Render()
+        {
+            // Holds a menu in a while loop
             int i = 0;
             while (true)
             {
-                for (int j = 0; j < menuOptions.Count; j++)
+                // Render every object after eachother. If selected object is the one we are rendering, we highlight it
+                for (int j = 0; j < _components.Count; j++)
                 {
-                    menuOptions[j].X = X;
-                    menuOptions[j].Y = Y + j;
+                    _components[j].X = X;
+                    _components[j].Y = Y + j;
                     if (j == i)
                     {
                         // Black foreground on white background
                         Console.Write($"\u001b[30;47m");
-                        menuOptions[j].Render();
+                        _components[j].Render();
                         Console.Write("\u001b[0m");
                     }
                     else
                     {
-                        menuOptions[j].Render();
+                        _components[j].Render();
                     }
                 }
+                // Read key and if user presses up or down we add or subtract from i. If user presses Enter we run the components pressed method.
                 ConsoleKey key = Console.ReadKey(true).Key;
                 switch (key)
                 {
                     case ConsoleKey.DownArrow:
-                        if (i < menuOptions.Count - 1)
+                        if (i < _components.Count - 1)
                         {
                             i++;
                         }
@@ -67,24 +111,19 @@ namespace bank_app.Utility.Components
                         }
                         break;
                     case ConsoleKey.Enter:
-                        menuOptions[i].Pressed();
-                        if (menuOptions[i] is not Button)
+                        _components[i].Pressed();
+                        // If component is not a button we set the args index to be the value inside the component. If it is a button we run the pressed method for button with the current args.
+                        if (_components[i] is not Button)
                         {
-                            args[i] = menuOptions[i].Value;
+                            args[i] = _components[i].Value;
                         }
-                        else if (menuOptions[i] is Button button)
+                        else if (_components[i] is Button button)
                         {
                             button.Pressed(args);
                         }
                         break;
-
                 }
             }
-        }
-
-        public override void Render()
-        {
-            ReadOptionIndex(_components);
         }
     }
 }
