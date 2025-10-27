@@ -128,12 +128,9 @@ namespace bank_app.Utility.Components
                         if (characters > 0)
                         {
                             userInput = userInput.Substring(0, userInput.Length - 1);
-                            if (IsPassword)
-                            {
-                                Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop);
-                                Console.Write(" ");
-                                Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop);
-                            }
+                            Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop);
+                            Console.Write("_");
+                            Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop);
                             characters--;
                         }
                         break;
