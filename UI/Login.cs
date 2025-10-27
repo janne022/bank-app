@@ -38,7 +38,7 @@ namespace bank_app.UI
         public static void LoginFunction(string username, string password)
         {
             Console.Clear();
-            Console.WriteLine($"I GOT YOUR LOGIN: {username} and {password}");
+            Console.WriteLine($"Username: {username}, Password:{password}");
             Console.ReadLine();
         }
     }
