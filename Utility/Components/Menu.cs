@@ -29,11 +29,12 @@ namespace bank_app.Utility.Components
         /// is captured internally. When a <see cref="Button"/> is activated, all captured values
         /// are passed to the button via <c>Pressed(object[] args)</c>.
         /// </remarks>
-        public Menu(List<UIComponent> components, OrderBy order = OrderBy.Column)
+        public Menu(List<UIComponent> components, OrderBy order = OrderBy.Column, int width = 30)
         {
             // Set variables
             IsInteractable = true;
             _components = components;
+            Width = width;
 
             // Make this object a parent to all child objects
             foreach (var item in components)
@@ -50,25 +51,6 @@ namespace bank_app.Utility.Components
                 }
             }
             args = new object[argsCount];
-        }
-        public override void Measure(int parentWidth, int parentHeight)
-        {
-            int largestWidth = 0;
-            int largestHeight = 0;
-            // get largest width of object and
-            for (int i = 0; i < _components.Count; i++)
-            {
-                if (_components[i].Width > largestWidth)
-                {
-                    largestWidth = _components[i].Width;
-                }
-                if (_components[i].Height > largestHeight)
-                {
-                    largestHeight = _components[i].Height;
-                }
-            }
-            Width = largestWidth;
-            Height = largestHeight;
         }
 
         public override void Render()
