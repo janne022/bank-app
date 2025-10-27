@@ -1,22 +1,25 @@
-﻿using System;
+﻿using bank_app.Utility;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using bank_app.utility;
 
 namespace bank_app.Models.Users
 {
     public abstract class User
     {
-        public string? UserId { get; set; }  
+        private Guid UserId { get; set; }  = Guid.NewGuid();
         public string? UserName { get; set; }
         public string? UserPassword { get; set; }
+        public int FailedLoginAttempts { get; set; } = 0;
+        public AccountStatus CurrentAccountStatus { get; set; }
 
-        protected User(string userId, string userName, string userPassword)
+        protected User( string userName, string userPassword)
         {
-            UserId = userId;
             UserName = userName;
-            UserPassword = userPassword;
+            UserPassword = PasswordHasher.Hash(userPassword);
         }
     }
 }
