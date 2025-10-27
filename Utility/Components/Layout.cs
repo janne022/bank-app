@@ -143,6 +143,7 @@ namespace bank_app.Utility.Components
                     }
                 }
             }
+            _rootComponent.Measure(Width, Height);
             _rootComponent.Render();
         }
     }

@@ -22,7 +22,7 @@ namespace bank_app.UI
             cell.OrderBy = OrderBy.Column;
             grid.AddGridComponent(1,1, new Menu(new List<UIComponent>{new InputField("Username",false,16),
                 new InputField("Password",true,16),
-                new Button(LoginFunction, "Login")}, 30));
+                new Button(LoginFunction, "Login")}));
             // Add text to center bottom
             cell = grid.GetGridCell(0, 1);
             cell.Justify = Justify.Center;
@@ -31,7 +31,7 @@ namespace bank_app.UI
             //grid.AddGridComponent(0, 0, new AsciiArt(art));
             grid.AddGridComponent(0, 1, new Text("Welcome Back to Chas Bank. Securely access your account to manage your finances, pay bills, and track your transactions."));
             // Add grid to layout and set rounded border style
-            Layout layout = new Layout(grid, LayoutBorder.Heavy);
+            Layout layout = new Layout(grid, LayoutBorder.Heavy, width: 30, height: 30);
             layout.Render();
         }
 
