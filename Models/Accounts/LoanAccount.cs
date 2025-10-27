@@ -9,25 +9,39 @@ namespace bank_app.Models.Accounts
 {
     public class LoanAccount : Account
     {
-        public decimal InterestRate { get; set; }
 
-        public decimal Principal { get; set; }
+        public decimal InterestRate { get; private set; } //% per annum
+       
+        public decimal CreditLimit { get; private set; }
 
-        public bool IsDisbusrsed { get; set; }
+        //This will be implemented in the User data model
+        //private List<Loan> loans = new List<Loan>();
+        //public IReadOnlyList<Loan> Loans => loans;
 
-        public Status Status { get; set; } = Status.Active;
-        public DateOnly LastInterestAppliedPeriod { get; set; }
-
-
-        public LoanAccount(Currency currency, decimal balance, decimal interestRate)
+        public LoanAccount(Currency currency, decimal balance, decimal interestRate, decimal creditLimit)
             : base(currency, balance)
         {
             InterestRate = interestRate < 0 ? 0 : interestRate;
+            CreditLimit = creditLimit < 0 ? 0 : creditLimit;
 
-            Principal = 0;
         }
 
-       
+        public override bool CanApply(Transaction transaction)
+        {
+            decimal amount = 0; //This will be change with transaction.Amount later
+            if (transaction.TransactionType == TransactionType.Deposit)
+            {
+                return true;
+            }
 
+            if (transaction.TransactionType == TransactionType.Withdrawal)
+            {
+                return Balance - amount /*This will be change with transaction.Amount later */ >= -CreditLimit;
+            }
+
+
+
+            return false;
+        }
     }
 }

@@ -11,6 +11,7 @@ namespace bank_app.Models
 {
     public class Transaction
     {
+        public TransactionType TransactionType { get; internal set; }
         public Guid TransactionId = Guid.NewGuid();
         public Account Sender { get; set; }
         public Account Receiver { get; set; }
