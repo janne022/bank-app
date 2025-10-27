@@ -50,6 +50,11 @@ namespace bank_app.Utility.Components
             Console.CursorVisible = false;
         }
 
+        public override void Measure(int parentWidth, int parentHeight)
+        {
+            Width = parentWidth + Descriptor.Length + 4;
+        }
+
 
         public override void Render()
         {
