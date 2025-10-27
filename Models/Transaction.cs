@@ -11,7 +11,7 @@ namespace bank_app.Models
 {
     public class Transaction
     {
-        public Guid TransactionId { get; set; }
+        public Guid TransactionId = Guid.NewGuid();
         public Account Sender { get; set; }
         public Account Receiver { get; set; }
         public decimal TransferAmount { get; set; }
@@ -21,7 +21,6 @@ namespace bank_app.Models
 
         public Transaction(Account sender, Account receiver, decimal transferAmount)
         {
-            TransactionId = Guid.NewGuid();
             TimeStamp = DateTime.Now;
             Sender = sender;
             Receiver = receiver;

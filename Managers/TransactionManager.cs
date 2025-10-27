@@ -11,6 +11,7 @@ namespace bank_app.Managers
 {
     public class TransactionManager
     {
+        static List<Transaction> allTransactions = new List<Transaction>();
         /// <summary>
         /// Performs a transfer of selected balance amount between two Account objects.
         /// Returns the Transaction object for success validation. 
@@ -46,6 +47,7 @@ namespace bank_app.Managers
                 throw;
             }
 
+            allTransactions.Add(transaction);
             return transaction;
 
 
