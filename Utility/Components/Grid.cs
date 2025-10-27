@@ -14,6 +14,15 @@ namespace bank_app.Utility.Components
         public int Cols { get; set; }
         public int RowHeight { get; set; }
         public int ColWidth { get; set; }
+        /// <summary>
+        /// A console UI layout container that divides its available area into a 2D matrix of <see cref="GridCell"/>s.
+        /// Each cell hosts one or more <see cref="UIComponent"/>s. Indexing is 0-based and ordered as [row, column].
+        /// </summary>
+        /// <remarks>
+        /// - When measured, the grid sizes itself to its parent and computes <see cref="RowHeight"/> and <see cref="ColWidth"/> per cell.
+        /// - Adding a nested <see cref="Grid"/> into a cell will automatically set the nested grid's row/column sizes
+        ///   to match the host cell's dimensions.
+        /// </remarks>
         public Grid(int rows, int columns)
         {
             Rows = rows;
@@ -32,6 +41,23 @@ namespace bank_app.Utility.Components
                     gridCell.Height = RowHeight;
                     gridCell.Width = ColWidth;
                     _grid[r, c] = gridCell;
+                }
+            }
+        }
+        public override void Measure(int parentWidth, int parentHeight)
+        {
+            // Use parentelement to get row height and col width
+            Width = ParentElement.Width;
+            Height = ParentElement.Height;
+            RowHeight = Height / Rows;
+            ColWidth = Width / Cols;
+            // Initialize each cell with an empty list
+            for (int r = 0; r < Rows; r++)
+            {
+                for (int c = 0; c < Cols; c++)
+                {
+                    _grid[r,c].Height = RowHeight;
+                    _grid[r,c].Width = ColWidth;
                 }
             }
         }
