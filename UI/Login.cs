@@ -31,7 +31,7 @@ namespace bank_app.UI
             //grid.AddGridComponent(0, 0, new AsciiArt(art));
             grid.AddGridComponent(0, 1, new Text("Welcome Back to Chas Bank. Securely access your account to manage your finances, pay bills, and track your transactions."));
             // Add grid to layout and set rounded border style
-            Layout layout = new Layout(grid, LayoutBorder.Heavy, width: 30, height: 30);
+            Layout layout = new Layout(grid, LayoutBorder.Heavy);
             layout.Render();
         }
 
