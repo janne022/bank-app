@@ -12,6 +12,8 @@ namespace bank_app.Utility.Components
     {
         public string TextContents { get; private set; }
         private string[] _words;
+        private List<string> _renderableContents;
+        private int _totalLines;
 
         /// <summary>
         /// Text components only contain text.
@@ -21,16 +23,10 @@ namespace bank_app.Utility.Components
         {
             TextContents = textContents;
             _words = textContents.Split(' ');
+            _renderableContents = new List<string>();
             // Split textContents into string[] with new index for every row
-        }
-        // 
-        public override void Measure(int parentWidth, int parentHeight)
-        {
-            // Look for longest index in words[] and set height and width
-        }
 
-        public override void Render()
-        {
+
             int currentWidth = 0;
             int currentLine = 0;
             int PanelWidth = ParentElement.Width;
@@ -40,17 +36,39 @@ namespace bank_app.Utility.Components
             {
                 if ((currentWidth + _words[i].Length) < PanelWidth)
                 {
-                    Console.Write($"{_words[i]} ");
+                    _renderableContents.Add($"{_words[i]} ");
+                    //Console.Write($"{_words[i]} ");
                     currentWidth = currentWidth + _words[i].Length + 1;
                 }
                 else
                 {
                     currentLine++;
-                    Console.SetCursorPosition(X, Y + currentLine);
-                    Console.Write($"{_words[i]} ");
+                    //Console.SetCursorPosition(X, Y + currentLine);
+                    _renderableContents.Add($"\n{_words[i]} ");
+                    //Console.Write($"{_words[i]} ");
                     currentWidth = _words[i].Length + 1;
                 }
+                _totalLines = currentLine;
             }
+        }
+        
+        public override void Measure(int parentWidth, int parentHeight)
+        {
+            // Look for longest index in words[] and set height and width
+            for (int i = 0; i < _renderableContents.Count; i++)
+            {
+                if (_renderableContents[i].Length > Width)
+                {
+                    Width = _renderableContents[i].Length;
+                }
+            }
+
+            Height = _totalLines;
+        }
+
+        public override void Render()
+        {
+
         }
     }
 }
