@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
 
-namespace bank_app.utility
+namespace bank_app.Utility
 {
     public static class PasswordHasher
     {

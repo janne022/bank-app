@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using bank_app.Models.Users;
-using bank_app.utility;
+using bank_app.Utility;
 using bank_app.Utility;
 
 namespace bank_app.Managers
