@@ -20,6 +20,13 @@ namespace bank_app.Utility
         Bottom
     }
 
+    public enum TextAlign
+    {
+        Left,
+        Center,
+        Right
+    }
+
     public enum OrderBy
     {
         Row,
