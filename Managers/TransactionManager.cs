@@ -61,7 +61,7 @@ namespace bank_app.Managers
         /// <summary>
         /// Processes all transactions that have been pending for at least 15 minutes.
         /// </summary>
-        public void ProcessTransaction()
+        public void ProcessPendingTransactions()
             {
             //Finds all transaction that are still "pending" and have waited for >= 15 minutes
             var transactionToProcess = allTransactions
@@ -76,7 +76,7 @@ namespace bank_app.Managers
                     if (transaction.TransferAmount > transaction.Sender.Balance)
                     {
                         transaction.Status = TransferStatus.Failed;
-                        
+                        continue;
                     }
 
                     //Performs the transaction and marks it as completed
