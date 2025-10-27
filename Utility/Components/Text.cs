@@ -5,14 +5,17 @@ using System.Linq;
 using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace bank_app.Utility.Components
 {
     public class Text : UIComponent
     {
         public string TextContents { get; private set; }
+        private TextAlign _textAlign;
         private string[] _words;
-        private List<string> _renderableContents;
+        private List<string> _fullLines;
+        private List<string> _thisLine;
         private int _totalLines;
 
         /// <summary>
@@ -23,43 +26,20 @@ namespace bank_app.Utility.Components
         {
             TextContents = textContents;
             _words = textContents.Split(' ');
-            _renderableContents = new List<string>();
+            _fullLines = new List<string>();
+            _thisLine = new List<string>();
             // Split textContents into string[] with new index for every row
-
-
-            int currentWidth = 0;
-            int currentLine = 0;
-            int PanelWidth = ParentElement.Width;
-
-            // Word wrap TextContents. +1 handles spaces.
-            for (int i = 0; i < _words.Length; i++)
-            {
-                if ((currentWidth + _words[i].Length) < PanelWidth)
-                {
-                    _renderableContents.Add($"{_words[i]} ");
-                    //Console.Write($"{_words[i]} ");
-                    currentWidth = currentWidth + _words[i].Length + 1;
-                }
-                else
-                {
-                    currentLine++;
-                    //Console.SetCursorPosition(X, Y + currentLine);
-                    _renderableContents.Add($"\n{_words[i]} ");
-                    //Console.Write($"{_words[i]} ");
-                    currentWidth = _words[i].Length + 1;
-                }
-                _totalLines = currentLine;
-            }
         }
         
         public override void Measure(int parentWidth, int parentHeight)
         {
+            WrapIntoLines();
             // Look for longest index in words[] and set height and width
-            for (int i = 0; i < _renderableContents.Count; i++)
+            for (int i = 0; i < _fullLines.Count; i++)
             {
-                if (_renderableContents[i].Length > Width)
+                if (_fullLines[i].Length > Width)
                 {
-                    Width = _renderableContents[i].Length;
+                    Width = _fullLines[i].Length;
                 }
             }
 
@@ -68,7 +48,98 @@ namespace bank_app.Utility.Components
 
         public override void Render()
         {
+            int line = 0;
+            int leftMargin = 0;
+            int PanelWidth = ParentElement.Width;
 
+            switch (_textAlign)
+            {
+                case TextAlign.Left:
+                    foreach (string element in _fullLines)
+                    {
+                        Console.SetCursorPosition(X, Y + line);
+                        line = PrintElement(element, line);
+                    }
+                    break;
+
+                case TextAlign.Center:
+                    foreach (string element in _fullLines)
+                    {
+                        leftMargin = ((PanelWidth - element.Length) / 2);
+                        Console.SetCursorPosition(X, Y + line);
+
+                        for (int i = 1; i < leftMargin; i++)
+                        {
+                            Console.Write(" ");
+                        }
+
+                        line = PrintElement(element, line);
+                    }
+                    break;
+
+                case TextAlign.Right:
+                    foreach (string element in _fullLines)
+                    {
+                        leftMargin = (PanelWidth - element.Length);
+                        Console.SetCursorPosition(X, Y + line);
+
+                        for (int i = 1; i < leftMargin; i++)
+                        {
+                            Console.Write(" ");
+                        }
+
+                        line = PrintElement(element, line);
+                    }
+                    break;
+            }
+        }
+
+        private static int PrintElement(string element, int line)
+        {
+            Console.Write(element);
+            line++;
+            return line;
+        }
+
+        private void WrapIntoLines()
+        {
+            int currentWidth = 0;
+            int currentLine = 1;
+            int PanelWidth = ParentElement.Width;
+
+            // Word wrap TextContents. +1 handles spaces.
+            for (int i = 0; i < _words.Length; i++)
+            {
+                string word = _words[i];
+
+                if ((currentWidth + _words[i].Length) < PanelWidth)
+                {
+                    _thisLine.Add($"{word}");
+                    //Console.Write($"{_words[i]} ");
+                    currentWidth += _words[i].Length + 1;
+                    //if (i + 1 < _words.Length)
+                    //{
+                    //    _fullLines.Add(string.Join(" ", _thisLine));
+                    //}
+                }
+                else
+                {
+
+                    //Console.SetCursorPosition(X, Y + currentLine);
+                    _fullLines.Add(string.Join(" ", _thisLine));
+                    _thisLine.Clear();
+                    //Console.Write($"{_words[i]} ");
+
+                    currentLine++;
+                    _thisLine.Add($"{word}");
+                    currentWidth = _words[i].Length + 1;
+                    if (i + 1 == _words.Length)
+                    {
+                        _fullLines.Add(string.Join(" ", _thisLine));
+                    }
+                }                
+            }
+            _totalLines = currentLine;
         }
     }
 }
