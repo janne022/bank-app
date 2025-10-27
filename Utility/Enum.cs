@@ -43,4 +43,23 @@ namespace bank_app.Utility
         Double
     }
 
+
+    public enum UserType
+    {
+        Admin,
+        Client
+    }
+
+    public enum TransferStatus
+    {
+        Pending,
+        Completed,
+        Failed
+    }
+
+    public enum AccountStatus
+    {
+        Unlocked,
+        Locked
+    }
 }
