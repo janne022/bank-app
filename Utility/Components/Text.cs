@@ -22,13 +22,14 @@ namespace bank_app.Utility.Components
         /// Text components only contain text.
         /// </summary>
         /// <param name="textContents">The text to be displayed in the component.</param>
-        public Text(string textContents)
+        /// <param name="textContents">Left/Center/Right alignment of text.</param>
+        public Text(string textContents, TextAlign textAlign = TextAlign.Left)
         {
             TextContents = textContents;
             _words = textContents.Split(' ');
             _fullLines = new List<string>();
             _thisLine = new List<string>();
-            // Split textContents into string[] with new index for every row
+            _textAlign = textAlign;
         }
         
         public override void Measure(int parentWidth, int parentHeight)
