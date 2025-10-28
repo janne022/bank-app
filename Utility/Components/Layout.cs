@@ -19,10 +19,12 @@ namespace bank_app.Utility.Components
         private string _horizontalWall = " ";
         // Child element
         private UIComponent _rootComponent;
+        public string TopText { get; set; }
 
         // Initiate Constructor. Note: width and height has 0 as initial parameter because they need to be constant, so Console.WindowWidth can't be used.
-        public Layout(UIComponent rootComponent, LayoutBorder border, int width = 0, int height = 0)
+        public Layout(UIComponent rootComponent, LayoutBorder border, string topText = "", int width = 0, int height = 0)
         {
+            TopText = topText;
             if (width == 0)
             {
                 Width = Console.WindowWidth - 1;
@@ -142,6 +144,11 @@ namespace bank_app.Utility.Components
                 }
             }
             _rootComponent.Measure(Width, Height);
+            if (!String.IsNullOrEmpty(TopText))
+            {
+                Console.SetCursorPosition(X + (Width/2) - (TopText.Length/2),Y);
+                Console.Write(TopText);
+            }
             _rootComponent.X = X + (Width/2) - (_rootComponent.Width/2);
             _rootComponent.Y = Y + (Height / 2) - (_rootComponent.Height / 2); ;
             _rootComponent.Render();

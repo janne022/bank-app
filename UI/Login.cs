@@ -22,7 +22,7 @@ namespace bank_app.UI
             cell.OrderBy = OrderBy.Column;
             grid.AddGridComponent(1,1, new Layout(new Menu(new List<UIComponent>{new InputField("Username",false,16),
                 new InputField("Password",true,16),
-                new Button(LoginFunction, "Login")}), LayoutBorder.Rounded,40,10));
+                new Button(LoginFunction, "Login")}), LayoutBorder.Rounded,"Login",40,10));
             // Add text to center bottom
             cell = grid.GetGridCell(0, 1);
             cell.Justify = Justify.Center;
