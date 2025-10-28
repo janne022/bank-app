@@ -35,6 +35,7 @@ namespace bank_app.Utility.Components
             IsInteractable = true;
             _components = components;
             Width = width;
+            Height = components.Count;
 
             // Make this object a parent to all child objects
             foreach (var item in components)
@@ -52,7 +53,6 @@ namespace bank_app.Utility.Components
             }
             args = new object[argsCount];
         }
-
         public override void Render()
         {
             // Holds a menu in a while loop

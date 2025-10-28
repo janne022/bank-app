@@ -43,8 +43,6 @@ namespace bank_app.Utility.Components
             // Set rootComponent and set its parents element to this object
             _rootComponent = rootComponent;
             _rootComponent.ParentElement = this;
-            _rootComponent.X++;
-            _rootComponent.Y++;
             // If rootComponent is a grid we will take this objects height/width and change RowHeight & ColWidth for rootComponent
             if (rootComponent is Grid grid)
             {
@@ -144,6 +142,8 @@ namespace bank_app.Utility.Components
                 }
             }
             _rootComponent.Measure(Width, Height);
+            _rootComponent.X = X + (Width/2) - (_rootComponent.Width/2);
+            _rootComponent.Y = Y + (Height / 2) - (_rootComponent.Height / 2); ;
             _rootComponent.Render();
         }
     }

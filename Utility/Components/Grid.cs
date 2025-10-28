@@ -47,8 +47,8 @@ namespace bank_app.Utility.Components
         public override void Measure(int parentWidth, int parentHeight)
         {
             // Use parentelement to get row height and col width
-            Width = ParentElement.Width;
-            Height = ParentElement.Height;
+            Width = ParentElement.Width - 2;
+            Height = ParentElement.Height - 2;
             RowHeight = Height / Rows;
             ColWidth = Width / Cols;
             // Initialize each cell with an empty list
