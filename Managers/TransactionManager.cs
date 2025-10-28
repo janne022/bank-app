@@ -16,7 +16,7 @@ namespace bank_app.Managers
         /// Performs a transfer of selected balance amount between two Account objects.
         /// Returns the Transaction object for success validation. 
         /// </summary>
-        public Transaction Transfer(Account sender, Account receiver, decimal amount)
+        public Transaction CreateNewTransaction(Account sender, Account receiver, decimal amount)
         {
             var transaction = new Transaction(sender, receiver, amount)
             {
@@ -48,16 +48,14 @@ namespace bank_app.Managers
         }
 
         /// <summary>
-        /// Processes all transactions that have been pending for at least 15 minutes.
-        /// Only works together with a timer that calls the method ex. every minute while
-        /// application is running. 
+        /// Method that performs the actual transaction, credits the sender account and debits the receiver account. 
+        /// This method should be performed every 15 minutes in Main method with a timer. 
         /// </summary>
         public void ProcessPendingTransactions()
         {
-            //Finds all transaction that are still "pending" and have waited for >= 15 minutes
+            //Finds all transaction that are still "pending"
             var transactionToProcess = allTransactions
-                .Where(t => t.Status == TransferStatus.Pending &&
-                    (DateTime.Now - t.TimeStamp).TotalMinutes >= 15).ToList();
+                .Where(t => t.Status == TransferStatus.Pending).ToList();
 
             foreach (var transaction in transactionToProcess)
             {
@@ -81,9 +79,6 @@ namespace bank_app.Managers
                     transaction.Status = TransferStatus.Failed;
                 }
             }
-
-            //This function will only work if being continously called by a timer (ex. every minute)
-       
         }
     }
 }
