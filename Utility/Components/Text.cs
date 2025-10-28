@@ -9,6 +9,9 @@ using System.Xml.Linq;
 
 namespace bank_app.Utility.Components
 {
+    /// <summary>
+    /// Text UIComponent. Displays supplied text on screen.
+    /// </summary>
     public class Text : UIComponent
     {
         public string TextContents { get; private set; }
@@ -19,7 +22,7 @@ namespace bank_app.Utility.Components
         private int _totalLines;
 
         /// <summary>
-        /// Text components only contain text.
+        /// Text UIComponent constructor. Text components only contain text and are not interactable.
         /// </summary>
         /// <param name="textContents">The text to be displayed in the component.</param>
         /// <param name="textContents">Left/Center/Right alignment of text.</param>
@@ -108,7 +111,6 @@ namespace bank_app.Utility.Components
             int currentLine = 1;
             int PanelWidth = ParentElement!.Width;
 
-            // Word wrap TextContents. +1 handles spaces.
             for (int i = 0; i < _words.Length; i++)
             {
                 string word = _words[i];
@@ -116,24 +118,15 @@ namespace bank_app.Utility.Components
                 if ((currentWidth + _words[i].Length) < PanelWidth)
                 {
                     _thisLine.Add($"{word}");
-                    //Console.Write($"{_words[i]} ");
                     currentWidth += _words[i].Length + 1;
-                    //if (i + 1 < _words.Length)
-                    //{
-                    //    _fullLines.Add(string.Join(" ", _thisLine));
-                    //}
                 }
                 else
                 {
-
-                    //Console.SetCursorPosition(X, Y + currentLine);
                     _fullLines.Add(string.Join(" ", _thisLine));
                     _thisLine.Clear();
-                    //Console.Write($"{_words[i]} ");
-
                     currentLine++;
                     _thisLine.Add($"{word}");
-                    currentWidth = _words[i].Length + 1;
+                    currentWidth = _words[i].Length + 1; // Space character
                     if (i + 1 == _words.Length)
                     {
                         _fullLines.Add(string.Join(" ", _thisLine));

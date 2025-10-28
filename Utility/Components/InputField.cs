@@ -14,22 +14,24 @@ using System.Threading.Tasks;
 
 namespace bank_app.Utility.Components
 {
+    /// <summary>
+    /// InputField UIComponent. Prompts user for input.
+    /// </summary>
     internal class InputField : UIComponent
     {
-        // TODO: public int PanelWidth should be grabbed from somerwhere
-        public int PanelWidth { get; private set; } // <----- TODO: remove it from here when this functionality exists
+        private int PanelWidth { get; set; }
         public string Descriptor { get; private set; }
         public int MaxLength { get; private set; }
         public bool IsPassword { get; private set; }
-        public string InputtedValue { private get; set; }
+        public string InputtedValue { get; private set; }
 
 
         /// <summary>
-        /// TextInputField components have a descriptor and an input field.
+        /// InputField UIComponent constructor. InputFields have a descriptor and an input field.
         /// </summary>
         /// <param name="descriptor">The text before the user's input field.</param>
         /// <param name="isPassword">Whether the input field is a password.</param>
-        /// <param name="maxLength">The amount of bytes allowed in the input field.</param>
+        /// <param name="maxLength">The amount of characters allowed in the input field.</param>
         public InputField(string descriptor, bool isPassword, int maxLength)
         {
             Descriptor = descriptor;
@@ -46,7 +48,6 @@ namespace bank_app.Utility.Components
             Console.CursorVisible = true;
             InputtedValue = Writing();
             Value = InputtedValue;
-            //Render();
             Console.CursorVisible = false;
         }
 

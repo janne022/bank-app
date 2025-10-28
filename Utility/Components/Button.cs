@@ -9,20 +9,33 @@ using System.Xml.Linq;
 
 namespace bank_app.Utility.Components
 {
+    /// <summary>
+    /// Button UIComponent. Performs actions on page.
+    /// </summary>
     public class Button : UIComponent
     {
         public string Text { get; private set; }
         public Delegate Delegate { get; set; }
-        public Action<Button>? PressEvent { get; set; }
-        private Justify ButtonJustify;
+        public Action<Button>? MethodRunner { get; set; }
+        private Justify Alignment;
 
+        /// <summary>
+        /// Button UIComponent constructor.
+        /// </summary>
+        /// <param name="delegation">The method to run on button press.</param>
+        /// <param name="text">The text displayed on the button.</param>
+        /// <param name="justify">Whether the button should be displayed aligned left, right or center.</param>
         public Button(Delegate delegation, string text, Justify justify = Justify.Center)
         {
             Text = text;
             Delegate = delegation;
-            ButtonJustify = justify;
+            Alignment = justify;
         }
         
+        /// <summary>
+        /// Press (on Enter key) button functionality with passed arguments.
+        /// </summary>
+        /// <param name="args">Object array sent as arguments</param>
         public void Pressed(params object[] args)
         {
             Delegate.DynamicInvoke(args);
@@ -35,12 +48,13 @@ namespace bank_app.Utility.Components
                                         // 12          34
         }
 
+        /// <summary>
+        /// Press (on Enter key) button functionality with no passed arguments.
+        /// Usage: myButton.MethodRunner = myButton => myObject.myMethod();
+        /// </summary>
         public override void Pressed()
         {
-            // How to set what the button does:
-            // myButton.PressEvent = myButton => myText.Render();
-            // myButton.Pressed();
-            PressEvent?.Invoke(this);
+            MethodRunner?.Invoke(this);
         }
 
         public override void Render()
@@ -55,7 +69,7 @@ namespace bank_app.Utility.Components
         private int SetMargin()
         {
             int leftMargin = 0;
-            switch (ButtonJustify)
+            switch (Alignment)
             {
                 case Justify.Start:
                     leftMargin = 0;
