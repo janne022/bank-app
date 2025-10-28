@@ -51,7 +51,7 @@ namespace bank_app.Managers
         /// Method that performs the actual transaction, credits the sender account and debits the receiver account. 
         /// This method should be performed every 15 minutes in Main method with a timer. 
         /// </summary>
-        public void ProcessPendingTransactions()
+        public static void ProcessPendingTransactions()
         {
             //Finds all transaction that are still "pending"
             var transactionToProcess = allTransactions
