@@ -16,6 +16,9 @@ namespace bank_app.Utility.UI.Components
         private string _bottomRightCorner = " ";
         private string _verticalWall = " ";
         private string _horizontalWall = " ";
+        private ColourFG _borderColour;
+        private ColourBG _backgroundColour;
+
         // Child element
         private UIComponent _rootComponent;
         public string TopText { get; set; }
@@ -39,8 +42,10 @@ namespace bank_app.Utility.UI.Components
         /// During rendering, the child component is measured and centered within the layout. The selected border style determines
         /// which corner and wall glyphs are used. The <paramref name="topText"/> is written on the top border if provided.
         /// </remarks>
-        public Layout(UIComponent rootComponent, LayoutBorder border, string topText = "", int width = 0, int height = 0)
+        public Layout(UIComponent rootComponent, LayoutBorder border, string topText = "", int width = 0, int height = 0, ColourFG borderColour = ColourFG.Reset, ColourBG backgroundColour = ColourBG.Reset)
         {
+            _borderColour = borderColour;
+            _backgroundColour = backgroundColour;
             TopText = topText;
             if (width == 0)
             {
@@ -132,31 +137,31 @@ namespace bank_app.Utility.UI.Components
                     Console.SetCursorPosition(col + X, row + Y);
                     if (col == 0 && row == 0)
                     {
-                        Console.Write(_topLeftCorner);
+                        ColourManager.Write(_topLeftCorner, _borderColour);
                     }
                     else if (col == Width - 1 && row == 0)
                     {
-                        Console.Write(_topRightCorner);
+                        ColourManager.Write(_topRightCorner,_borderColour);
                     }
                     else if (col == 0 && row == Height - 1)
                     {
-                        Console.Write(_bottomLeftCorner);
+                        ColourManager.Write(_bottomLeftCorner,_borderColour);
                     }
                     else if (col == Width - 1 && row == Height - 1)
                     {
-                        Console.Write(_bottomRightCorner);
+                        ColourManager.Write(_bottomRightCorner,_borderColour);
                     }
                     else if (col == 0 || col == Width - 1)
                     {
-                        Console.Write(_verticalWall);
+                        ColourManager.Write(_verticalWall,_borderColour);
                     }
                     else if (row == Height - 1 || row == 0)
                     {
-                        Console.Write(_horizontalWall);
+                        ColourManager.Write(_horizontalWall,_borderColour);
                     }
                     else
                     {
-                        Console.Write(' ');
+                        ColourManager.Write(" ", background: _backgroundColour);
                     }
                 }
             }
