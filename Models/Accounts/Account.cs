@@ -9,9 +9,7 @@ namespace bank_app.Models.Accounts
     public abstract class Account
     {
         public Guid AccountID { get; private set; }
-
         public Currency AccountCurrency { get; private set; }
-
         public decimal Balance { get; private set; }
 
         private readonly List<Transaction> _transactions = new List<Transaction>();
@@ -20,14 +18,12 @@ namespace bank_app.Models.Accounts
 
         protected Account(Currency currency, decimal balance)
         {
-
             AccountID = Guid.NewGuid();
             AccountCurrency = currency;
             Balance = balance< 0 ? 0 : balance;
-           
         }
       
-        public void ApplyTransaction(TransactionType transactionType, decimal amount, Transaction transaction) //This will be  change just to "Transaction transaction" later
+        public void ApplyTransaction(Transaction transaction) //This will be  change just to "Transaction transaction" later
         {
             if (!CanApply(transaction))
             {
@@ -35,13 +31,13 @@ namespace bank_app.Models.Accounts
                 return;
             }
 
-            switch (transactionType)
+            switch (transaction.TransactionType)
             {
                 case TransactionType.Deposit:
-                    Balance+= amount;
+                    Balance+= transaction.TransferAmount;
                     break;
                 case TransactionType.Withdrawal:
-                    Balance-= amount;
+                    Balance-= transaction.TransferAmount;
                     break;
                 default:
                     Console.WriteLine("This transaction type is not an option");

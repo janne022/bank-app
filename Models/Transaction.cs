@@ -13,17 +13,16 @@ namespace bank_app.Models
     {
         public Guid TransactionId = Guid.NewGuid();
         public DateTime TimeStamp = DateTime.Now;
-        public Account Sender { get; set; }
-        public Account Receiver { get; set; }
+        public Guid SenderId { get; set; }
+        public Guid ReceiverId { get; set; }
         public decimal TransferAmount { get; set; }
-        public Currency TransferCurrency { get; set; }
         public TransferStatus Status { get; set; }
         public TransactionType TransactionType { get; internal set; }
 
-        public Transaction(Account sender, Account receiver, decimal transferAmount)
+        public Transaction(Guid senderId, Guid receiverId, decimal transferAmount)
         {
-            Sender = sender;
-            Receiver = receiver;
+            SenderId = senderId;
+            ReceiverId = receiverId;
             TransferAmount = transferAmount;
         }
     }

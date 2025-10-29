@@ -69,8 +69,8 @@ namespace bank_app.Managers
                     }
 
                     //Performs the transaction and marks it as completed
-                    transaction.Sender.ApplyTransaction(TransactionType.Withdrawal, transaction.TransferAmount, transaction);
-                    transaction.Receiver.ApplyTransaction(TransactionType.Deposit, transaction.TransferAmount, transaction);
+                    transaction.Sender.ApplyTransaction(transaction);
+                    transaction.Receiver.ApplyTransaction(transaction);
                     transaction.Status = TransferStatus.Completed;
                 }
 

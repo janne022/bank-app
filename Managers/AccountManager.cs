@@ -61,6 +61,25 @@ namespace bank_app.Managers
 			return true;
 		}
 
+        public static void Deposit(Guid accountId)
+        {
+            var account = GetOrThrow(accountId);
+        }
+
+        public static void Withdraw(Guid accountId)
+        {
+            var account = GetOrThrow(accountId);
+        }
+
+        public static Account GetOrThrow(Guid id)
+        {
+            if(!_accounts.TryGetValue(id, out var acc))
+            {
+                throw new InvalidOperationException();
+            }
+            return acc;
+        }
+
         /// <summary>
         /// Returns the number of accounts currently tracked.
         /// </summary>
