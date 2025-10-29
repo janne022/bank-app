@@ -20,8 +20,6 @@ namespace bank_app.Managers
         /// </summary>
         public static bool CreateAccount(Currency currency, decimal balance, AccountType accountType)
         {
-          
-
             // Construct the account using a switch expression for clarity.
             Account newAccount = accountType switch
             {
@@ -61,6 +59,9 @@ namespace bank_app.Managers
 			return true;
 		}
 
+        /// <summary>
+        /// Adds balance to account using unique identifier and data from transaction.
+        /// </summary>
         public static void Deposit(Guid accountId, Transaction transaction)
         {
             transaction.TransactionType = TransactionType.Deposit;
@@ -68,6 +69,9 @@ namespace bank_app.Managers
             account.ApplyTransaction(transaction);
         }
 
+        /// <summary>
+        /// Deducts balance from account using unique identifier and data from transaction.
+        /// </summary>
         public static void Withdraw(Guid accountId, Transaction transaction)
         {
             transaction.TransactionType = TransactionType.Withdrawal;
@@ -75,6 +79,9 @@ namespace bank_app.Managers
             account.ApplyTransaction(transaction);
         }
 
+        /// <summary>
+        /// Retrieves and returns an account from the account list using a unique identifier (Guid).
+        /// </summary>
         public static Account GetOrThrow(Guid id)
         {
             if(!_accounts.TryGetValue(id, out var acc))
@@ -107,7 +114,5 @@ namespace bank_app.Managers
         {
             return _accounts.Values.ToList();
         }
-
-        // Additional account-related logic may go here.
     }
 }

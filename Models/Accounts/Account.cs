@@ -15,14 +15,12 @@ namespace bank_app.Models.Accounts
         private readonly List<Transaction> _transactions = new List<Transaction>();
         public IReadOnlyList<Transaction> Transactions => _transactions;
 
-
         protected Account(Currency currency, decimal balance)
         {
             AccountID = Guid.NewGuid();
             AccountCurrency = currency;
             Balance = balance< 0 ? 0 : balance;
         }
-
         public void ApplyTransaction(Transaction transaction)
         {
             if (!CanApply(transaction))
@@ -43,18 +41,12 @@ namespace bank_app.Models.Accounts
                     Console.WriteLine("This transaction type is not an option");
                     break;
             }
+
             _transactions.Add(transaction);
 
         }
 
         public abstract bool CanApply(Transaction transaction);
-
-        
-
-        
-
-
-
 
     }
 }

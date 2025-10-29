@@ -12,9 +12,10 @@ namespace bank_app.Managers
     public class TransactionManager
     {
         static List<Transaction> allTransactions = new List<Transaction>();
+
         /// <summary>
-        /// Performs a transfer of selected balance amount between two Account objects.
-        /// Returns the Transaction object for success validation. 
+        /// Creates a new transaction object, marks it as PENDING and adds the transaction object
+        /// to the transaction list containing all bank transactions. 
         /// </summary>
         public Transaction CreateNewTransaction(Guid senderId, Guid receiverId, decimal amount)
         {
@@ -40,7 +41,7 @@ namespace bank_app.Managers
 
         /// <summary>
         /// Method that performs the actual transaction, credits the sender account and debits the receiver account. 
-        /// This method should be performed every 15 minutes in Main method with a timer. 
+        /// This method should be performed every 15 minutes using a timer. 
         /// </summary>
         public static void ProcessPendingTransactions()
         {
