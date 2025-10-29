@@ -92,8 +92,6 @@ namespace bank_app.Utility.UI.Components
 
             ColourManager.Set(_descriptorTextColour);
             ColourManager.Set(_descriptorBGColour);
-            //ColourManager.Write(Descriptor, _descriptorTextColour, _descriptorBGColour);
-            //ColourManager.Write(": [", _descriptorTextColour, _descriptorBGColour);
             Console.Write($"{Descriptor}: [");
             ColourManager.Set(ColourFG.Reset);
             ColourManager.Set(ColourBG.Reset);
@@ -126,7 +124,6 @@ namespace bank_app.Utility.UI.Components
                 }
             }
             ColourManager.Write("]", _descriptorTextColour, _descriptorBGColour);
-            //Console.Write("]");
         }
 
 
@@ -166,7 +163,6 @@ namespace bank_app.Utility.UI.Components
                             userInput = userInput.Substring(0, userInput.Length - 1);
                             Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop);
                             ColourManager.Write("_", _inputBoxTextColour, _inputBoxBackgroundColour);
-                            //Console.Write("_");
                             Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop);
                             characters--;
                         }
@@ -184,12 +180,10 @@ namespace bank_app.Utility.UI.Components
                                 if (IsPassword)
                                 {
                                     ColourManager.Write("*", _inputBoxTextColour, _inputBoxBackgroundColour);
-                                    //Console.Write("*");
                                 }
                                 else
                                 {
                                     ColourManager.Write(pressed.KeyChar.ToString(), _inputBoxTextColour, _inputBoxBackgroundColour);
-                                    //Console.Write(pressed.KeyChar);
                                 }
                             }
                             else
