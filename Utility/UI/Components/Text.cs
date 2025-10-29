@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace bank_app.Utility.Components
+namespace bank_app.Utility.UI.Components
 {
     /// <summary>
     /// Text UIComponent. Displays supplied text on screen.
@@ -68,7 +68,7 @@ namespace bank_app.Utility.Components
                 case TextAlign.Center:
                     foreach (string element in _fullLines)
                     {
-                        leftMargin = ((PanelWidth - element.Length) / 2);
+                        leftMargin = (PanelWidth - element.Length) / 2;
                         Console.SetCursorPosition(X, Y + line);
 
                         for (int i = 1; i < leftMargin; i++)
@@ -83,7 +83,7 @@ namespace bank_app.Utility.Components
                 case TextAlign.Right:
                     foreach (string element in _fullLines)
                     {
-                        leftMargin = (PanelWidth - element.Length);
+                        leftMargin = PanelWidth - element.Length;
                         Console.SetCursorPosition(X, Y + line);
 
                         for (int i = 1; i < leftMargin; i++)
@@ -114,7 +114,7 @@ namespace bank_app.Utility.Components
             {
                 string word = _words[i];
 
-                if ((currentWidth + _words[i].Length) < PanelWidth)
+                if (currentWidth + _words[i].Length < PanelWidth)
                 {
                     _thisLine.Add($"{word}");
                     currentWidth += _words[i].Length + 1;

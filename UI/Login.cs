@@ -1,10 +1,6 @@
 ﻿using bank_app.Utility;
-using bank_app.Utility.Components;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using bank_app.Utility.UI;
+using bank_app.Utility.UI.Components;
 
 namespace bank_app.UI
 {
@@ -26,7 +22,7 @@ namespace bank_app.UI
             // Add text to center bottom
             cell = grid.GetGridCell(0, 1);
             cell.Justify = Justify.Center;
-            cell.Align = Align.Top;
+            cell.Align = Align.Middle;
             cell.OrderBy = OrderBy.Column;
             //grid.AddGridComponent(0, 0, new AsciiArt(art));
             grid.AddGridComponent(0, 1, new AsciiArt("Assets/Ascii/bank.txt"));

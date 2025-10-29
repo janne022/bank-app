@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace bank_app.Utility.Components
+namespace bank_app.Utility.UI.Components
 {
     /// <summary>
     /// Button UIComponent. Performs actions on page.
@@ -44,7 +44,7 @@ namespace bank_app.Utility.Components
         public override void Measure()
         {
             Height = 1;
-            Width = (Text.Length + 4);  // [ ButtonText ]
+            Width = Text.Length + 4;  // [ ButtonText ]
                                         // 12          34
         }
 
@@ -76,11 +76,11 @@ namespace bank_app.Utility.Components
                     break;
 
                 case Justify.Center:
-                    leftMargin = ((ParentElement!.Width - Text.Length) / 2);
+                    leftMargin = (ParentElement!.Width - Text.Length) / 2;
                     break;
 
                 case Justify.End:
-                    leftMargin = (ParentElement!.Width - Text.Length);
+                    leftMargin = ParentElement!.Width - Text.Length;
                     break;
             }
             return leftMargin;
