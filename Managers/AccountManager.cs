@@ -18,7 +18,7 @@ namespace bank_app.Managers
         /// Creates an account of the specified type, registers it internally, and returns it.
         /// Throws ArgumentException for invalid inputs.
         /// </summary>
-        public static Account CreateAccount(Currency currency, decimal balance, AccountType accountType)
+        public static bool CreateAccount(Currency currency, decimal balance, AccountType accountType)
         {
           
 
@@ -52,8 +52,14 @@ namespace bank_app.Managers
             // Using the indexer simplifies handling rare Guid collisions by overwriting the same key.
             _accounts[newAccount.AccountID] = newAccount;
 
-            return newAccount;
-        }
+            if (newAccount==null)
+            {
+                
+            return false;
+            }
+
+			return true;
+		}
 
         /// <summary>
         /// Returns the number of accounts currently tracked.
