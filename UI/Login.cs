@@ -26,10 +26,10 @@ namespace bank_app.UI
             // Add text to center bottom
             cell = grid.GetGridCell(0, 1);
             cell.Justify = Justify.Center;
-            cell.Align = Align.Middle;
+            cell.Align = Align.Top;
             cell.OrderBy = OrderBy.Column;
             //grid.AddGridComponent(0, 0, new AsciiArt(art));
-            grid.AddGridComponent(0, 1, new Text("Welcome Back to Chas Bank. Securely access your account to manage your finances, pay bills, and track your transactions."));
+            grid.AddGridComponent(0, 1, new AsciiArt("Assets/Ascii/bank.txt"));
             // Add grid to layout and set rounded border style
             Layout layout = new Layout(grid, LayoutBorder.Heavy);
             layout.Render();
