@@ -168,9 +168,9 @@ namespace bank_app.Utility.UI
         /// Directly prints coloured text on screen, resetting afterwards.
         /// </summary>
         /// <param name="text">Text to be printed on screen</param>
-        /// <param name="foreground">Foreground colour</param>
-        /// <param name="background">Background colour</param>
-        public static void Write(string text, ColourFG foreground, ColourBG background)
+        /// <param name="foreground">Foreground colour. Default is reset</param>
+        /// <param name="background">Background colour. Default is reset</param>
+        public static void Write(string text, ColourFG foreground = ColourFG.Reset, ColourBG background = ColourBG.Reset)
         {
             string colourFG = Return(foreground);
             string colourBG = Return(background);
