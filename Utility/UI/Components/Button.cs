@@ -18,6 +18,9 @@ namespace bank_app.Utility.UI.Components
         public Delegate Delegate { get; set; }
         public Action<Button>? MethodRunner { get; set; }
         private Justify Alignment;
+        private ColourFG _textColour;
+        private ColourBG _buttonColour;
+
 
         /// <summary>
         /// Button UIComponent constructor.
@@ -25,11 +28,15 @@ namespace bank_app.Utility.UI.Components
         /// <param name="delegation">The method to run on button press.</param>
         /// <param name="text">The text displayed on the button.</param>
         /// <param name="justify">Whether the button should be displayed aligned left, right or center.</param>
-        public Button(Delegate delegation, string text, Justify justify = Justify.Center)
+        /// <param name="textColour">Colour of text. Default to the terminal's default.</param>
+        /// <param name="buttonColour">Colour of the button itself. Default to the terminal's default.</param>
+        public Button(Delegate delegation, string text, Justify justify = Justify.Center, ColourFG textColour = ColourFG.Reset, ColourBG buttonColour = ColourBG.Reset)
         {
             Text = text;
             Delegate = delegation;
             Alignment = justify;
+            _textColour = textColour;
+            _buttonColour = buttonColour;
         }
         
         /// <summary>
@@ -62,8 +69,9 @@ namespace bank_app.Utility.UI.Components
             int leftMargin = SetMargin();
 
             Console.SetCursorPosition(X+leftMargin, Y);
-            
-            Console.Write($"[ {Text} ]");
+            Console.Write("[");
+            ColourManager.Write($" {Text} ", ColourFG.BlueBright, ColourBG.Green);
+            Console.Write("]");
         }
 
         private int SetMargin()
