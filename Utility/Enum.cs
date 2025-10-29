@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace bank_app.Utility
 {
-    public enum Justify
+    public enum AccountStatus
     {
-        Start,
-        Center,
-        End
+        Unlocked,
+        Locked
     }
 
     public enum Align
@@ -20,11 +19,43 @@ namespace bank_app.Utility
         Bottom
     }
 
-    public enum TextAlign
+    public enum Colour
     {
-        Left,
-        Center,
-        Right
+        fullReset,
+        bgReset,
+        bgBlack,
+        bgBlackBright,
+        bgBlue,
+        bgBlueBright,
+        bgCyan,
+        bgCyanBright,
+        bgGreen,
+        bgGreenBright,
+        bgMagenta,
+        bgMagentaBright,
+        bgRed, 
+        bgRedBright,
+        bgWhite,
+        bgWhiteBright,
+        bgYellow,
+        bgYellowBright,
+        fgReset,
+        fgBlack,
+        fgBlackBright,
+        fgBlue,
+        fgBlueBright,
+        fgCyan,
+        fgCyanBright,
+        fgGreen,
+        fgGreenBright,
+        fgMagenta,
+        fgMagentaBright,
+        fgRed,
+        fgRedBright,
+        fgWhite,
+        fgWhiteBright,
+        fgYellow,
+        fgYellowBright
     }
 
     public enum OrderBy
@@ -43,11 +74,18 @@ namespace bank_app.Utility
         Double
     }
 
-
-    public enum UserType
+    public enum Justify
     {
-        Admin,
-        Client
+        Start,
+        Center,
+        End
+    }
+
+    public enum TextAlign
+    {
+        Left,
+        Center,
+        Right
     }
 
     public enum TransferStatus
@@ -57,9 +95,9 @@ namespace bank_app.Utility
         Failed
     }
 
-    public enum AccountStatus
+    public enum UserType
     {
-        Unlocked,
-        Locked
+        Admin,
+        Client
     }
 }
