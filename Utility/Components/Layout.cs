@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace bank_app.Utility.Components
 {
-    // Root component that should always be at the top
     public class Layout : UIComponent
     {
         // Declare variables
