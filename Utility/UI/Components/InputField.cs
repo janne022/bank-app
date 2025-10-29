@@ -27,7 +27,7 @@ namespace bank_app.Utility.UI.Components
         private ColourFG _descriptorTextColour;
         private ColourFG _inputBoxTextColour;
         private ColourBG _descriptorBGColour;
-        private ColourBG _inputBoxBackgroundColour;
+        private ColourBG _inputBoxBGColour;
 
 
 
@@ -40,10 +40,10 @@ namespace bank_app.Utility.UI.Components
         /// <param name="descriptorTextColour">Text colour for descriptor</param>
         /// <param name="descriptorBGColour">Background colour for descriptor</param>
         /// <param name="inputBoxTextColour">Text colour for input box</param>
-        /// <param name="inputBoxColourBG">Background colour for input box</param>
+        /// <param name="inputBoxBGColour">Background colour for input box</param>
         public InputField(string descriptor, bool isPassword, int maxLength,
             ColourFG descriptorTextColour = ColourFG.Reset, ColourBG descriptorBGColour = ColourBG.Reset,
-            ColourFG inputBoxTextColour = ColourFG.Reset, ColourBG inputBoxColourBG = ColourBG.Reset)
+            ColourFG inputBoxTextColour = ColourFG.Reset, ColourBG inputBoxBGColour = ColourBG.Reset)
         {
             Descriptor = descriptor;
             MaxLength = maxLength;
@@ -52,7 +52,7 @@ namespace bank_app.Utility.UI.Components
             _descriptorTextColour = descriptorTextColour;
             _descriptorBGColour = descriptorBGColour;
             _inputBoxTextColour = inputBoxTextColour;
-            _inputBoxBackgroundColour = inputBoxColourBG;
+            _inputBoxBGColour = inputBoxBGColour;
         }
 
         public override void Pressed()
@@ -99,7 +99,7 @@ namespace bank_app.Utility.UI.Components
             // Start out by filling the input box with underscores.
             for (int i = 0; i < inputBoxWidth; i++)
             {
-                ColourManager.Write("_", _inputBoxTextColour, _inputBoxBackgroundColour);
+                ColourManager.Write("_", _inputBoxTextColour, _inputBoxBGColour);
             }
 
             // If the user has inputted data before.
@@ -110,7 +110,7 @@ namespace bank_app.Utility.UI.Components
                 {
                     for (int i = 0; i < inputBoxWidth; i++)
                     {
-                        ColourManager.Write("*", _inputBoxTextColour, _inputBoxBackgroundColour);
+                        ColourManager.Write("*", _inputBoxTextColour, _inputBoxBGColour);
                     }
                 }
                 else
@@ -119,7 +119,7 @@ namespace bank_app.Utility.UI.Components
                         (InputtedValue ?? "")
                         .PadRight(inputBoxWidth, '_') // Pad possible empty spaces in the input field with underscores
                         .Substring(0, inputBoxWidth); // If the inputted string is too long, truncate it
-                    ColourManager.Write(contentsOfInputBox, _inputBoxTextColour, _inputBoxBackgroundColour);
+                    ColourManager.Write(contentsOfInputBox, _inputBoxTextColour, _inputBoxBGColour);
                     //Console.Write(contentsOfInputBox);
                 }
             }
@@ -162,7 +162,7 @@ namespace bank_app.Utility.UI.Components
                         {
                             userInput = userInput.Substring(0, userInput.Length - 1);
                             Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop);
-                            ColourManager.Write("_", _inputBoxTextColour, _inputBoxBackgroundColour);
+                            ColourManager.Write("_", _inputBoxTextColour, _inputBoxBGColour);
                             Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop);
                             characters--;
                         }
@@ -179,11 +179,11 @@ namespace bank_app.Utility.UI.Components
                                 characters++;
                                 if (IsPassword)
                                 {
-                                    ColourManager.Write("*", _inputBoxTextColour, _inputBoxBackgroundColour);
+                                    ColourManager.Write("*", _inputBoxTextColour, _inputBoxBGColour);
                                 }
                                 else
                                 {
-                                    ColourManager.Write(pressed.KeyChar.ToString(), _inputBoxTextColour, _inputBoxBackgroundColour);
+                                    ColourManager.Write(pressed.KeyChar.ToString(), _inputBoxTextColour, _inputBoxBGColour);
                                 }
                             }
                             else
