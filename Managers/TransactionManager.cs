@@ -16,7 +16,7 @@ namespace bank_app.Managers
         /// Performs a transfer of selected balance amount between two Account objects.
         /// Returns the Transaction object for success validation. 
         /// </summary>
-        public Transaction Transfer(Account sender, Account receiver, decimal amount)
+        public Transaction CreateNewTransaction(Account sender, Account receiver, decimal amount)
         {
             var transaction = new Transaction(sender, receiver, amount)
             {
@@ -32,11 +32,9 @@ namespace bank_app.Managers
                     return transaction;
                 }
 
-                //Performs transaction, adds transaction to account transaction
-                //list and marks transaction as completed. 
-                sender.ApplyTransaction(TransactionType.Withdrawal, amount, transaction);
-                receiver.ApplyTransaction(TransactionType.Deposit, amount, transaction);
-                transaction.Status = TransferStatus.Completed;
+                /*Adds the pending transaction to the transactionlist for tracking. Transaction must be
+                  completed by ProcessTransaction method */
+                allTransactions.Add(transaction);
             }
 
             catch (Exception)
@@ -45,19 +43,42 @@ namespace bank_app.Managers
                 throw;
             }
 
-            allTransactions.Add(transaction);
+            
             return transaction;
+        }
 
+        /// <summary>
+        /// Method that performs the actual transaction, credits the sender account and debits the receiver account. 
+        /// This method should be performed every 15 minutes in Main method with a timer. 
+        /// </summary>
+        public static void ProcessPendingTransactions()
+        {
+            //Finds all transaction that are still "pending"
+            var transactionToProcess = allTransactions
+                .Where(t => t.Status == TransferStatus.Pending).ToList();
 
-            /*For later use in UI when a transaction is performed:
-             * - When a transaction is created using transaction manager,
-             *   use transaction.Status to check if transfer was completed
-             *   or not. 
-             *   Example: if (transaction.Status == TransferStatus.Completed)
-             *   same applies to check if transfer has failed.
-             *   
-             *   A Transaction object should only be created with the Transfer method!
-             */
+            foreach (var transaction in transactionToProcess)
+            {
+                try
+                {
+                    //Makes one more check to make sure sender balance has not changed 
+                    if (transaction.TransferAmount > transaction.Sender.Balance)
+                    {
+                        transaction.Status = TransferStatus.Failed;
+                        continue;
+                    }
+
+                    //Performs the transaction and marks it as completed
+                    transaction.Sender.ApplyTransaction(TransactionType.Withdrawal, transaction.TransferAmount, transaction);
+                    transaction.Receiver.ApplyTransaction(TransactionType.Deposit, transaction.TransferAmount, transaction);
+                    transaction.Status = TransferStatus.Completed;
+                }
+
+                catch (Exception)
+                {
+                    transaction.Status = TransferStatus.Failed;
+                }
+            }
         }
     }
 }
