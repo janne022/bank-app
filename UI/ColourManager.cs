@@ -138,7 +138,7 @@ namespace bank_app.UI
                 case Colour.fgYellowBright:
                     return "\u001b[93m";
 
-                default:
+                default: // Full colour reset
                     return "\u001b[0m";
             }
         }
