@@ -21,7 +21,7 @@ namespace bank_app.Models.Accounts
             AccountCurrency = currency;
             Balance = balance< 0 ? 0 : balance;
         }
-        public void ApplyTransaction(Transaction transaction)
+        internal void ApplyTransaction(Transaction transaction)
         {
             if (!CanApply(transaction))
             {
@@ -45,7 +45,7 @@ namespace bank_app.Models.Accounts
 
         }
 
-        public abstract bool CanApply(Transaction transaction);
+        protected abstract bool CanApply(Transaction transaction);
 
     }
 }
