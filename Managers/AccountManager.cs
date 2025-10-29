@@ -20,10 +20,7 @@ namespace bank_app.Managers
         /// </summary>
         public static Account CreateAccount(Currency currency, decimal balance, AccountType accountType)
         {
-            if (currency == null)
-            {
-                throw new ArgumentNullException(nameof(currency));
-            }
+          
 
             // Construct the account using a switch expression for clarity.
             Account newAccount = accountType switch
