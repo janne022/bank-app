@@ -19,43 +19,46 @@ namespace bank_app.Utility
         Bottom
     }
 
-    public enum Colour
+    public enum ColourFG
     {
-        fullReset,
-        bgReset,
-        bgBlack,
-        bgBlackBright,
-        bgBlue,
-        bgBlueBright,
-        bgCyan,
-        bgCyanBright,
-        bgGreen,
-        bgGreenBright,
-        bgMagenta,
-        bgMagentaBright,
-        bgRed, 
-        bgRedBright,
-        bgWhite,
-        bgWhiteBright,
-        bgYellow,
-        bgYellowBright,
-        fgReset,
-        fgBlack,
-        fgBlackBright,
-        fgBlue,
-        fgBlueBright,
-        fgCyan,
-        fgCyanBright,
-        fgGreen,
-        fgGreenBright,
-        fgMagenta,
-        fgMagentaBright,
-        fgRed,
-        fgRedBright,
-        fgWhite,
-        fgWhiteBright,
-        fgYellow,
-        fgYellowBright
+        Reset,
+        Black,
+        BlackBright,
+        Blue,
+        BlueBright,
+        Cyan,
+        CyanBright,
+        Green,
+        GreenBright,
+        Magenta,
+        MagentaBright,
+        Red,
+        RedBright,
+        White,
+        WhiteBright,
+        Yellow,
+        YellowBright
+    }
+
+    public enum ColourBG
+    {
+        Reset,
+        Black,
+        BlackBright,
+        Blue,
+        BlueBright,
+        Cyan,
+        CyanBright,
+        Green,
+        GreenBright,
+        Magenta,
+        MagentaBright,
+        Red,
+        RedBright,
+        White,
+        WhiteBright,
+        Yellow,
+        YellowBright,
     }
 
     public enum OrderBy

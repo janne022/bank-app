@@ -2,6 +2,7 @@
 using bank_app.Utility;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,132 +15,168 @@ namespace bank_app.Utility.UI
     internal static class ColourManager
     {
         /// <summary>
-        /// Sets the console's ANSI colour directly.
+        /// Sets the console's foreground ANSI colour directly.
         /// </summary>
         /// <param name="choice">Enum representing a colour</param>
-        public static void Set(Colour choice)
+        public static void Set(ColourFG choice)
         {
             string colour = Return(choice);
             Console.Write(colour);
         }
 
         /// <summary>
-        /// Returns the requested ANSI colour code.
+        /// Sets the console's background ANSI colour directly.
+        /// </summary>
+        /// <param name="choice">Enum representing a colour</param>
+        public static void Set(ColourBG choice)
+        {
+            string colour = Return(choice);
+            Console.Write(colour);
+        }
+
+        /// <summary>
+        /// Returns the requested foreground ANSI colour code.
         /// </summary>
         /// <param name="choice">Enum representing a colour</param>
         /// <returns>ANSI colour code as string</returns>
-        public static string Return(Colour choice)
+        public static string Return(ColourFG choice)
         {
             switch (choice)
             {
-                case Colour.fullReset:
-                    return "\u001b[0m";
-
-                case Colour.bgReset:
-                    return "\u001b[49m";
-
-                case Colour.bgBlack:
-                    return "\u001b[40m";
-
-                case Colour.bgBlackBright:
-                    return "\u001b[100m";
-
-                case Colour.bgBlue:
-                    return "\u001b[44m";
-
-                case Colour.bgBlueBright:
-                    return "\u001b[104m";
-
-                case Colour.bgCyan:
-                    return "\u001b[46m";
-
-                case Colour.bgCyanBright:
-                    return "\u001b[106m";
-
-                case Colour.bgGreen:
-                    return "\u001b[42m";
-
-                case Colour.bgGreenBright:
-                    return "\u001b[102m";
-
-                case Colour.bgMagenta:
-                    return "\u001b[45m";
-
-                case Colour.bgMagentaBright:
-                    return "\u001b[105m";
-
-                case Colour.bgRed:
-                    return "\u001b[41m";
-
-                case Colour.bgRedBright:
-                    return "\u001b[101m";
-
-                case Colour.bgWhite:
-                    return "\u001b[47m";
-
-                case Colour.bgWhiteBright:
-                    return "\u001b[107m";
-
-                case Colour.bgYellow:
-                    return "\u001b[43m";
-
-                case Colour.bgYellowBright:
-                    return "\u001b[103m";
-
-                case Colour.fgReset:
+                case ColourFG.Reset:
                     return "\u001b[39m";
 
-                case Colour.fgBlack:
+                case ColourFG.Black:
                     return "\u001b[30m";
 
-                case Colour.fgBlackBright:
+                case ColourFG.BlackBright:
                     return "\u001b[90m";
 
-                case Colour.fgBlue:
+                case ColourFG.Blue:
                     return "\u001b[34m";
 
-                case Colour.fgBlueBright:
+                case ColourFG.BlueBright:
                     return "\u001b[94m";
 
-                case Colour.fgCyan:
+                case ColourFG.Cyan:
                     return "\u001b[36m";
 
-                case Colour.fgCyanBright:
+                case ColourFG.CyanBright:
                     return "\u001b[96m";
 
-                case Colour.fgGreen:
+                case ColourFG.Green:
                     return "\u001b[32m";
 
-                case Colour.fgGreenBright:
+                case ColourFG.GreenBright:
                     return "\u001b[92m";
 
-                case Colour.fgMagenta:
+                case ColourFG.Magenta:
                     return "\u001b[35m";
 
-                case Colour.fgMagentaBright:
+                case ColourFG.MagentaBright:
                     return "\u001b[95m";
 
-                case Colour.fgRed:
+                case ColourFG.Red:
                     return "\u001b[31m";
 
-                case Colour.fgRedBright:
+                case ColourFG.RedBright:
                     return "\u001b[91m";
 
-                case Colour.fgWhite:
+                case ColourFG.White:
                     return "\u001b[37m";
 
-                case Colour.fgWhiteBright:
+                case ColourFG.WhiteBright:
                     return "\u001b[97m";
 
-                case Colour.fgYellow:
+                case ColourFG.Yellow:
                     return "\u001b[33m";
 
-                case Colour.fgYellowBright:
+                case ColourFG.YellowBright:
                     return "\u001b[93m";
 
-                default: // Full colour reset
+                default: // Same as ColourFG.Reset
                     return "\u001b[0m";
             }
+        }
+
+        /// <summary>
+        /// Returns the requested background ANSI colour code.
+        /// </summary>
+        /// <param name="choice">Enum representing a colour</param>
+        /// <returns>ANSI colour code as string</returns>
+        public static string Return(ColourBG choice)
+        {
+            switch (choice)
+            {
+                case ColourBG.Reset:
+                    return "\u001b[49m";
+
+                case ColourBG.Black:
+                    return "\u001b[40m";
+
+                case ColourBG.BlackBright:
+                    return "\u001b[100m";
+
+                case ColourBG.Blue:
+                    return "\u001b[44m";
+
+                case ColourBG.BlueBright:
+                    return "\u001b[104m";
+
+                case ColourBG.Cyan:
+                    return "\u001b[46m";
+
+                case ColourBG.CyanBright:
+                    return "\u001b[106m";
+
+                case ColourBG.Green:
+                    return "\u001b[42m";
+
+                case ColourBG.GreenBright:
+                    return "\u001b[102m";
+
+                case ColourBG.Magenta:
+                    return "\u001b[45m";
+
+                case ColourBG.MagentaBright:
+                    return "\u001b[105m";
+
+                case ColourBG.Red:
+                    return "\u001b[41m";
+
+                case ColourBG.RedBright:
+                    return "\u001b[101m";
+
+                case ColourBG.White:
+                    return "\u001b[47m";
+
+                case ColourBG.WhiteBright:
+                    return "\u001b[107m";
+
+                case ColourBG.Yellow:
+                    return "\u001b[43m";
+
+                case ColourBG.YellowBright:
+                    return "\u001b[103m";
+
+                default: // Same as ColourBG.Reset
+                    return "\u001b[49m";
+            }
+        }
+
+        /// <summary>
+        /// Directly prints coloured text on screen, resetting afterwards.
+        /// </summary>
+        /// <param name="text">Text to be printed on screen</param>
+        /// <param name="foreground">Foreground colour</param>
+        /// <param name="background">Background colour</param>
+        public static void Write(string text, ColourFG foreground, ColourBG background)
+        {
+            string colourFG = Return(foreground);
+            string colourBG = Return(background);
+            string resetFG = Return(ColourFG.Reset);
+            string resetBG = Return(ColourBG.Reset);
+            Console.Write($"{foreground}{background}{text}{resetFG}{resetBG}");
         }
     }
 }
