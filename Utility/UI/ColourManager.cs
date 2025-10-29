@@ -95,7 +95,7 @@ namespace bank_app.Utility.UI
                     return "\u001b[93m";
 
                 default: // Same as ColourFG.Reset
-                    return "\u001b[0m";
+                    return "\u001b[39m";
             }
         }
 
