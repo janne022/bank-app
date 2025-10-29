@@ -24,6 +24,11 @@ namespace bank_app.Utility.Components
             Width = _lines[0].Length;
         }
 
+        public override void Measure()
+        {
+            
+        }
+
         public override void Render()
         {
             for (int i = 0; i < _lines.Length; i++)

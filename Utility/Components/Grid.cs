@@ -44,23 +44,28 @@ namespace bank_app.Utility.Components
                 }
             }
         }
-        public override void Measure(int parentWidth, int parentHeight)
+        public override void Measure()
         {
-            // Use parentelement to get row height and col width
-            Width = ParentElement.Width - 2;
-            Height = ParentElement.Height - 2;
-            RowHeight = Height / Rows;
-            ColWidth = Width / Cols;
-            // Initialize each cell with an empty list
-            for (int r = 0; r < Rows; r++)
+            if (ParentElement != null)
             {
-                for (int c = 0; c < Cols; c++)
+                // Use parentelement to get row height and col width
+                Width = ParentElement.Width - 2;
+                Height = ParentElement.Height - 2;
+                RowHeight = Height / Rows;
+                ColWidth = Width / Cols;
+                // Initialize each cell with an empty list
+                for (int r = 0; r < Rows; r++)
                 {
-                    _grid[r,c].Height = RowHeight;
-                    _grid[r,c].Width = ColWidth;
+                    for (int c = 0; c < Cols; c++)
+                    {
+                        _grid[r, c].Height = RowHeight;
+                        _grid[r, c].Width = ColWidth;
+                    }
                 }
             }
         }
+
+        // Adds a component to a GridCell
         public GridCell AddGridComponent(int rowIndex, int colIndex, UIComponent component)
         {
             // Set the component ParentElement as this grid and if the component is a grid we set the RowHeight and ColWidth to one gridcell in this grids row and column system.
@@ -74,6 +79,8 @@ namespace bank_app.Utility.Components
             _grid[rowIndex, colIndex].Components.Add(component);
             return _grid[rowIndex, colIndex];
         }
+
+        // Gets a GridCell
         public GridCell GetGridCell(int rowIndex, int colIndex)
         {
             return _grid[rowIndex, colIndex];

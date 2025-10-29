@@ -51,10 +51,13 @@ namespace bank_app.Utility.Components
             Console.CursorVisible = false;
         }
 
-        public override void Measure(int parentWidth, int parentHeight)
+        public override void Measure()
         {
-            Width = parentWidth;
-            Height = 1;
+            if (ParentElement != null)
+            {
+                Width = ParentElement.Width;
+                Height = 1;
+            }
         }
 
 
@@ -66,8 +69,11 @@ namespace bank_app.Utility.Components
              */
 
             Console.SetCursorPosition(X, Y);
-
-            int inputBoxWidth = ((ParentElement!.Width - Descriptor.Length) - 4); // 4 refers to the extra characters
+            int inputBoxWidth = (Descriptor.Length - 4);// 4 refers to the extra characters
+            if (ParentElement != null)
+            {
+                inputBoxWidth = (ParentElement.Width - Descriptor.Length - 4);
+            }
 
             Console.Write($"{Descriptor}: [");
 

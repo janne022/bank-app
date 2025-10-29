@@ -8,25 +8,35 @@ namespace bank_app.Utility
 {
     public abstract class UIComponent
     {
-        // Internal coordinates
+        // Declaring variables
         public int X {  get; set; }
         public int Y { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
         public bool IsInteractable = false;
-        public object Value { get; set; }
+        public object? Value { get; set; }
         public UIComponent? ParentElement { get; set; }
 
 
-        // Renders the component
+        /// <summary>
+        /// Render should be used when displaying the component to the console
+        /// </summary>
         public abstract void Render();
-        // Should run when user clicks component
-        public virtual void Pressed()
+
+        /// <summary>
+        /// Measure is an optional method used when setting the components width and height based on its parent width and height.
+        /// It is used because C# required the creation of child components before parent objects
+        /// </summary>
+        public virtual void Measure()
         {
         }
-        public virtual void Measure(int parentWidth, int parentHeight)
-        {
 
+        /// <summary>
+        /// Pressed is a optional method used whenever a user is clicking inside another interactable component.
+        /// </summary>
+        /// 
+        public virtual void Pressed()
+        {
         }
     }
 }

@@ -41,7 +41,7 @@ namespace bank_app.Utility.Components
             Delegate.DynamicInvoke(args);
         }
 
-        public void Measure()
+        public override void Measure()
         {
             Height = 1;
             Width = (Text.Length + 4);  // [ ButtonText ]
