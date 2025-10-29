@@ -25,8 +25,7 @@ namespace bank_app.Models.Accounts
         {
             if (!CanApply(transaction))
             {
-                Console.WriteLine("This transaction cannot be applied.");
-                return;
+                throw new InvalidOperationException("Transaction cannot be applied");
             }
 
             switch (transaction.TransactionType)
