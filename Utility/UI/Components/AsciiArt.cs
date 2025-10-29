@@ -47,7 +47,7 @@ namespace bank_app.Utility.UI.Components
             for (int i = 0; i < _lines.Length; i++)
             {
                 Console.SetCursorPosition(X, Y + i);
-                Console.Write(_lines[i]);
+                ColourManager.Write(_lines[i]);
             }
         }
     }

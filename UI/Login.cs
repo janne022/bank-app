@@ -18,13 +18,12 @@ namespace bank_app.UI
             cell.OrderBy = OrderBy.Column;
             grid.AddGridComponent(1,1, new Layout(new Menu(new List<UIComponent>{new InputField("Username",false,16),
                 new InputField("Password",true,16),
-                new Button(LoginFunction, "Login")}), LayoutBorder.Rounded,"Login",40,10));
+                new Button(LoginFunction, "Login")}), LayoutBorder.Rounded,"Login",40,10, ColourFG.Yellow));
             // Add text to center bottom
             cell = grid.GetGridCell(0, 1);
             cell.Justify = Justify.Center;
             cell.Align = Align.Middle;
             cell.OrderBy = OrderBy.Column;
-            //grid.AddGridComponent(0, 0, new AsciiArt(art));
             grid.AddGridComponent(0, 1, new AsciiArt("Assets/Ascii/bank.txt"));
             // Add grid to layout and set rounded border style
             Layout layout = new Layout(grid, LayoutBorder.Heavy);
