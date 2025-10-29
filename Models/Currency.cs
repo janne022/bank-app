@@ -37,7 +37,13 @@ namespace bank_app.Models
         Withdrawal,
        
     }
+    public enum AccountType
+    {
+        Checking,
+        Savings,
+        Loan,
 
-   
+    }
+
 
 }
