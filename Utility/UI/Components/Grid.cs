@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace bank_app.Utility.Components
+namespace bank_app.Utility.UI.Components
 {
     internal class Grid : UIComponent
     {
@@ -98,8 +98,8 @@ namespace bank_app.Utility.Components
                     if (!_grid[r, c].Components.Any(component => component.IsInteractable))
                     {
                         // Make sure we are not over max rows and columns by returning a value between 0 and buffer -1
-                        int left = Math.Clamp((c * ColWidth) + X, 0, bufferW - 1);
-                        int top = Math.Clamp((r * RowHeight) + Y, 0, bufferH - 1);
+                        int left = Math.Clamp(c * ColWidth + X, 0, bufferW - 1);
+                        int top = Math.Clamp(r * RowHeight + Y, 0, bufferH - 1);
                         _grid[r, c].X = left;
                         _grid[r, c].Y = top;
                         Console.SetCursorPosition(left, top);

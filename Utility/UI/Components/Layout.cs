@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace bank_app.Utility.Components
+namespace bank_app.Utility.UI.Components
 {
     public class Layout : UIComponent
     {
@@ -161,13 +161,13 @@ namespace bank_app.Utility.Components
                 }
             }
             _rootComponent.Measure();
-            if (!String.IsNullOrEmpty(TopText))
+            if (!string.IsNullOrEmpty(TopText))
             {
-                Console.SetCursorPosition(X + (Width/2) - (TopText.Length/2),Y);
+                Console.SetCursorPosition(X + Width/2 - TopText.Length/2,Y);
                 Console.Write(TopText);
             }
-            _rootComponent.X = X + (Width/2) - (_rootComponent.Width/2);
-            _rootComponent.Y = Y + (Height / 2) - (_rootComponent.Height / 2);
+            _rootComponent.X = X + Width/2 - _rootComponent.Width/2;
+            _rootComponent.Y = Y + Height / 2 - _rootComponent.Height / 2;
             _rootComponent.Render();
         }
     }

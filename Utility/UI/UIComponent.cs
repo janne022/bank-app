@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace bank_app.Utility
+namespace bank_app.Utility.UI
 {
     public abstract class UIComponent
     {

@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace bank_app.Utility.Components
+namespace bank_app.Utility.UI.Components
 {
     // Currently does not render 100% correctly in terms of cursorposition
     public class AsciiArt : UIComponent

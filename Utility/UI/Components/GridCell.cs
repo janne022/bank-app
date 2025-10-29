@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace bank_app.Utility.Components
+namespace bank_app.Utility.UI.Components
 {
     public class GridCell : UIComponent
     {
@@ -38,7 +38,7 @@ namespace bank_app.Utility.Components
                         Components[i].X = X;
                         break;
                     case Justify.Center:
-                        Components[i].X = X + ((Width / 2) - (Components[i].Width / 2));
+                        Components[i].X = X + (Width / 2 - Components[i].Width / 2);
                         break;
                     case Justify.End:
                         Components[i].X = X + Width;
@@ -50,7 +50,7 @@ namespace bank_app.Utility.Components
                         Components[i].Y = Y;
                         break;
                     case Align.Middle:
-                        Components[i].Y = Y + (Height / 2);
+                        Components[i].Y = Y + Height / 2;
                         break;
                     case Align.Bottom:
                         Components[i].Y = Y + Height;

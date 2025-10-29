@@ -12,7 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace bank_app.Utility.Components
+namespace bank_app.Utility.UI.Components
 {
     /// <summary>
     /// InputField UIComponent. Prompts user for input.
@@ -69,10 +69,10 @@ namespace bank_app.Utility.Components
              */
 
             Console.SetCursorPosition(X, Y);
-            int inputBoxWidth = (Descriptor.Length - 4);// 4 refers to the extra characters
+            int inputBoxWidth = Descriptor.Length - 4;// 4 refers to the extra characters
             if (ParentElement != null)
             {
-                inputBoxWidth = (ParentElement.Width - Descriptor.Length - 4);
+                inputBoxWidth = ParentElement.Width - Descriptor.Length - 4;
             }
 
             Console.Write($"{Descriptor}: [");
@@ -84,7 +84,7 @@ namespace bank_app.Utility.Components
             }
 
             // If the user has inputted data before.
-            if (!String.IsNullOrEmpty(InputtedValue))
+            if (!string.IsNullOrEmpty(InputtedValue))
             {
                 Console.SetCursorPosition(X + Descriptor.Length + 3, Y);
                 if (IsPassword)
@@ -126,7 +126,7 @@ namespace bank_app.Utility.Components
                 switch (pressed.Key)
                 {
                     case ConsoleKey.Enter:
-                        if (!String.IsNullOrEmpty(userInput))
+                        if (!string.IsNullOrEmpty(userInput))
                         {
                             isInputting = false;
                         }
