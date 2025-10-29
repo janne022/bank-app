@@ -1,8 +1,14 @@
+﻿using bank_app.UI;
+
 ﻿using bank_app.Managers;
 internal class Program
 {
     private static async Task Main(string[] args)
     {
+        // Set the console to use UTF8 encoding to allow for more colors and characters
+        Console.OutputEncoding = System.Text.Encoding.UTF8;
+        Console.InputEncoding = System.Text.Encoding.UTF8;
+        Login.Menu();
         var timer = new PeriodicTimer(TimeSpan.FromMinutes(15));
 
         while (await timer.WaitForNextTickAsync())
