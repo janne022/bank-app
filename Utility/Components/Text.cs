@@ -34,7 +34,7 @@ namespace bank_app.Utility.Components
             _textAlign = textAlign;
         }
         
-        public override void Measure(int parentWidth, int parentHeight)
+        public override void Measure()
         {
             WrapIntoLines();
             // Look for longest index in words[] and set height and width

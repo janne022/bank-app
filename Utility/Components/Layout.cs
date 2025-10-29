@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace bank_app.Utility.Components
 {
-    // Root component that should always be at the top
     public class Layout : UIComponent
     {
         // Declare variables
@@ -21,7 +20,25 @@ namespace bank_app.Utility.Components
         private UIComponent _rootComponent;
         public string TopText { get; set; }
 
-        // Initiate Constructor. Note: width and height has 0 as initial parameter because they need to be constant, so Console.WindowWidth can't be used.
+        /// <summary>
+        /// Creates a layout container that optionally draws a border and hosts a single root UI component.
+        /// </summary>
+        /// <param name="rootComponent">
+        /// The child component to render inside the layout. Its <see cref="UIComponent.ParentElement"/> is set to this layout.
+        /// If the component is a Grid, its row and column sizes are computed from the layout size.
+        /// </param>
+        /// <param name="border">The border style to draw around the layout bounds.</param>
+        /// <param name="topText">Optional text centered on the top border row.</param>
+        /// <param name="width">
+        /// Explicit layout width in characters. If 0, defaults to Console.WindowWidth - 1 to fit the current console.
+        /// </param>
+        /// <param name="height">
+        /// Explicit layout height in characters. If 0, defaults to Console.WindowHeight - 1 to fit the current console.
+        /// </param>
+        /// <remarks>
+        /// During rendering, the child component is measured and centered within the layout. The selected border style determines
+        /// which corner and wall glyphs are used. The <paramref name="topText"/> is written on the top border if provided.
+        /// </remarks>
         public Layout(UIComponent rootComponent, LayoutBorder border, string topText = "", int width = 0, int height = 0)
         {
             TopText = topText;
@@ -143,7 +160,7 @@ namespace bank_app.Utility.Components
                     }
                 }
             }
-            _rootComponent.Measure(Width, Height);
+            _rootComponent.Measure();
             if (!String.IsNullOrEmpty(TopText))
             {
                 Console.SetCursorPosition(X + (Width/2) - (TopText.Length/2),Y);

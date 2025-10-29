@@ -9,11 +9,15 @@ namespace bank_app.Utility.Components
 {
     public class GridCell : UIComponent
     {
+        // Declare variables
         public List<UIComponent> Components { get; set; }
         public Justify Justify { get; set; }
         public Align Align { get; set; }
         public OrderBy OrderBy { get; set; }
 
+        /// <summary>
+        /// Gridcell represents a a cell within a grid. Initiates a new empty list of UIComponent and sets default values for Justify, Align, OrderBy
+        /// </summary>
         public GridCell()
         {
             Justify = Justify.Start;
@@ -27,7 +31,7 @@ namespace bank_app.Utility.Components
             for (int i = 0; i < Components.Count; i++)
             {
                 // Changes coordinate of current component depending on Justify and Alignment chosen
-                Components[i].Measure(Width, Height);
+                Components[i].Measure();
                 switch (Justify)
                 {
                     case Justify.Start:

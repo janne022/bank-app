@@ -38,13 +38,13 @@ namespace bank_app.Models.Accounts
             switch (transactionType)
             {
                 case TransactionType.Deposit:
-                   Balance+= amount;
+                    Balance+= amount;
                     break;
                 case TransactionType.Withdrawal:
                     Balance-= amount;
                     break;
                 default:
-                    Console.WriteLine("This transaction type doest not an option");
+                    Console.WriteLine("This transaction type is not an option");
                     break;
             }
             _transactions.Add(transaction);

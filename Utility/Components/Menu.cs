@@ -53,6 +53,7 @@ namespace bank_app.Utility.Components
             }
             args = new object[argsCount];
         }
+
         public override void Render()
         {
             // Holds a menu in a while loop
