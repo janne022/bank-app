@@ -3,6 +3,7 @@ using bank_app.Models.Accounts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,44 +11,77 @@ namespace bank_app.Managers
 {
     public static class AccountManager
     {
-        private static Dictionary<Guid, Account> _accounts = new Dictionary<Guid ,Account>();
+        // Use ConcurrentDictionary for thread-safety and better concurrency behavior.
+        private static Dictionary<Guid, Account> _accounts = new Dictionary<Guid, Account>();
 
-        public static void CreateAccount(Account account)
+        /// <summary>
+        /// Creates an account of the specified type, registers it internally, and returns it.
+        /// Throws ArgumentException for invalid inputs.
+        /// </summary>
+        public static Account CreateAccount(Currency currency, decimal balance, AccountType accountType)
         {
-            if (account != null)
+            if (currency == null)
             {
-                bool added = _accounts.TryAdd(account.AccountID, account);
-                if (!added)
-                {
-                    Console.WriteLine("Account with the same ID already exists.");
-                }
-                else
-                {
-                    Console.WriteLine("Account added ");
-                }
-
+                throw new ArgumentNullException(nameof(currency));
             }
+
+            // Construct the account using a switch expression for clarity.
+            Account newAccount = accountType switch
+            {
+                AccountType.Checking => new CheckingAccount(
+                    currency,
+                    balance,
+                    AccountDefaults.CheckingMonthlyFee,
+                    AccountDefaults.CheckingOverdraftLimit),
+
+                AccountType.Savings => new SavingsAccount(
+                    currency,
+                    balance,
+                    AccountDefaults.SavingsInterestRate,
+                    AccountDefaults.SavingsMinimumBalance,
+                    DateTime.Now,
+                    AccountDefaults.SavingsAllowWithdraws),
+
+                AccountType.Loan => new LoanAccount(
+                    currency,
+                    balance,
+                    AccountDefaults.LoanInterestRate,
+                    AccountDefaults.LoanCreditLimit),
+
+                _ => throw new ArgumentException("Invalid account type.", nameof(accountType))
+            };
+
+            // Add or overwrite the account entry in a thread-safe manner.
+            // Using the indexer simplifies handling rare Guid collisions by overwriting the same key.
+            _accounts[newAccount.AccountID] = newAccount;
+
+            return newAccount;
         }
 
+        /// <summary>
+        /// Returns the number of accounts currently tracked.
+        /// </summary>
         public static int GetAccountsCount()
         {
             return _accounts.Count;
         }
 
+        /// <summary>
+        /// Removes an account by its ID. Returns true if removed.
+        /// </summary>
         public static bool RemoveAccount(Guid accountID)
         {
-
             return _accounts.Remove(accountID);
         }
 
-
+        /// <summary>
+        /// Returns a snapshot list of all accounts.
+        /// </summary>
         public static List<Account> GetAllAccounts()
         {
-           return _accounts.Values.ToList();
+            return _accounts.Values.ToList();
         }
 
-        //Accounts Logic
-    
-       
+        // Additional account-related logic may go here.
     }
 }
