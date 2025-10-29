@@ -11,7 +11,7 @@ namespace bank_app.Managers
 {
     public class TransactionManager
     {
-        static List<Transaction> allTransactions = new List<Transaction>();
+        private static List<Transaction> allTransactions = new List<Transaction>();
 
         /// <summary>
         /// Creates a new transaction object, marks it as PENDING and adds the transaction object
