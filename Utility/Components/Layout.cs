@@ -167,7 +167,7 @@ namespace bank_app.Utility.Components
                 Console.Write(TopText);
             }
             _rootComponent.X = X + (Width/2) - (_rootComponent.Width/2);
-            _rootComponent.Y = Y + (Height / 2) - (_rootComponent.Height / 2); ;
+            _rootComponent.Y = Y + (Height / 2) - (_rootComponent.Height / 2);
             _rootComponent.Render();
         }
     }
