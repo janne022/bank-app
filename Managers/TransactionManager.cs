@@ -12,13 +12,14 @@ namespace bank_app.Managers
     public class TransactionManager
     {
         static List<Transaction> allTransactions = new List<Transaction>();
+        static List<Transaction> tempTransactions = new List<Transaction>();
         /// <summary>
         /// Performs a transfer of selected balance amount between two Account objects.
         /// Returns the Transaction object for success validation. 
         /// </summary>
-        public Transaction CreateNewTransaction(Account sender, Account receiver, decimal amount)
+        public Transaction CreateNewTransaction(Guid senderId, Guid receiverId, decimal amount)
         {
-            var transaction = new Transaction(sender, receiver, amount)
+            var transaction = new Transaction(senderId, receiverId, amount)
             {
                 Status = TransferStatus.Pending
             };
@@ -45,7 +46,7 @@ namespace bank_app.Managers
 
             
             return transaction;
-        }
+        }   
 
         /// <summary>
         /// Method that performs the actual transaction, credits the sender account and debits the receiver account. 

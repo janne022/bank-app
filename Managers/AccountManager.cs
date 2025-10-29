@@ -61,14 +61,18 @@ namespace bank_app.Managers
 			return true;
 		}
 
-        public static void Deposit(Guid accountId)
+        public static void Deposit(Guid accountId, Transaction transaction)
         {
+            transaction.TransactionType = TransactionType.Deposit;
             var account = GetOrThrow(accountId);
+            account.ApplyTransaction(transaction);
         }
 
-        public static void Withdraw(Guid accountId)
+        public static void Withdraw(Guid accountId, Transaction transaction)
         {
+            transaction.TransactionType = TransactionType.Withdrawal;
             var account = GetOrThrow(accountId);
+            account.ApplyTransaction(transaction);
         }
 
         public static Account GetOrThrow(Guid id)
