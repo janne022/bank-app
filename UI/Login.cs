@@ -26,7 +26,7 @@ namespace bank_app.UI
             // Add text to center bottom
             cell = grid.GetGridCell(0, 1);
             cell.Justify = Justify.Center;
-            cell.Align = Align.Top;
+            cell.Align = Align.Middle;
             cell.OrderBy = OrderBy.Column;
             //grid.AddGridComponent(0, 0, new AsciiArt(art));
             grid.AddGridComponent(0, 1, new AsciiArt("Assets/Ascii/bank.txt"));

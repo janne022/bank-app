@@ -39,7 +39,7 @@ namespace bank_app.Utility.Components
             }
             // Set height and width
             Width = longestLine;
-            Height = _lines.Length;
+            Height = cleanedLines.Length;
         }
 
         public override void Render()

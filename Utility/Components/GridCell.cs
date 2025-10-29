@@ -50,7 +50,7 @@ namespace bank_app.Utility.Components
                         Components[i].Y = Y;
                         break;
                     case Align.Middle:
-                        Components[i].Y = Y + ((Height / 2) - (Components[i].Height / 2));
+                        Components[i].Y = Y + (Height / 2);
                         break;
                     case Align.Bottom:
                         Components[i].Y = Y + Height;
