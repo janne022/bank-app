@@ -176,7 +176,7 @@ namespace bank_app.Utility.UI
             string colourBG = Return(background);
             string resetFG = Return(ColourFG.Reset);
             string resetBG = Return(ColourBG.Reset);
-            Console.Write($"{foreground}{background}{text}{resetFG}{resetBG}");
+            Console.Write($"{colourFG}{colourBG}{text}{resetFG}{resetBG}");
         }
     }
 }
