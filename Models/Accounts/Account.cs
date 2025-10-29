@@ -45,7 +45,7 @@ namespace bank_app.Models.Accounts
 
         }
 
-        protected abstract bool CanApply(Transaction transaction);
+        public abstract bool CanApply(Transaction transaction);
 
     }
 }
