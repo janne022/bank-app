@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection.PortableExecutable;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -14,7 +15,6 @@ namespace bank_app.Utility.Components
     /// </summary>
     public class Text : UIComponent
     {
-        public string TextContents { get; private set; }
         private TextAlign _textAlign;
         private string[] _words;
         private List<string> _fullLines;
@@ -28,7 +28,6 @@ namespace bank_app.Utility.Components
         /// <param name="textContents">Left/Center/Right alignment of text.</param>
         public Text(string textContents, TextAlign textAlign = TextAlign.Left)
         {
-            TextContents = textContents;
             _words = textContents.Split(' ');
             _fullLines = new List<string>();
             _thisLine = new List<string>();
@@ -119,6 +118,7 @@ namespace bank_app.Utility.Components
                 {
                     _thisLine.Add($"{word}");
                     currentWidth += _words[i].Length + 1;
+                    HandleIfLastWord(i);
                 }
                 else
                 {
@@ -127,13 +127,18 @@ namespace bank_app.Utility.Components
                     currentLine++;
                     _thisLine.Add($"{word}");
                     currentWidth = _words[i].Length + 1; // Space character
-                    if (i + 1 == _words.Length)
-                    {
-                        _fullLines.Add(string.Join(" ", _thisLine));
-                    }
+                    HandleIfLastWord(i);
                 }                
             }
             _totalLines = currentLine;
+        }
+
+        private void HandleIfLastWord(int i)
+        {
+            if (i + 1 == _words.Length)
+            {
+                _fullLines.Add(string.Join(" ", _thisLine));
+            }
         }
     }
 }
