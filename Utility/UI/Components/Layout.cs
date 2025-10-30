@@ -141,23 +141,23 @@ namespace bank_app.Utility.UI.Components
                     }
                     else if (col == Width - 1 && row == 0)
                     {
-                        ColourManager.Write(_topRightCorner,_borderColour);
+                        ColourManager.Write(_topRightCorner, _borderColour);
                     }
                     else if (col == 0 && row == Height - 1)
                     {
-                        ColourManager.Write(_bottomLeftCorner,_borderColour);
+                        ColourManager.Write(_bottomLeftCorner, _borderColour);
                     }
                     else if (col == Width - 1 && row == Height - 1)
                     {
-                        ColourManager.Write(_bottomRightCorner,_borderColour);
+                        ColourManager.Write(_bottomRightCorner, _borderColour);
                     }
                     else if (col == 0 || col == Width - 1)
                     {
-                        ColourManager.Write(_verticalWall,_borderColour);
+                        ColourManager.Write(_verticalWall, _borderColour);
                     }
                     else if (row == Height - 1 || row == 0)
                     {
-                        ColourManager.Write(_horizontalWall,_borderColour);
+                        ColourManager.Write(_horizontalWall, _borderColour);
                     }
                     else
                     {
@@ -168,10 +168,10 @@ namespace bank_app.Utility.UI.Components
             _rootComponent.Measure();
             if (!string.IsNullOrEmpty(TopText))
             {
-                Console.SetCursorPosition(X + Width/2 - TopText.Length/2,Y);
+                Console.SetCursorPosition(X + Width / 2 - TopText.Length / 2, Y);
                 Console.Write(TopText);
             }
-            _rootComponent.X = X + Width/2 - _rootComponent.Width/2;
+            _rootComponent.X = X + Width / 2 - _rootComponent.Width / 2;
             _rootComponent.Y = Y + Height / 2 - _rootComponent.Height / 2;
             _rootComponent.Render();
         }

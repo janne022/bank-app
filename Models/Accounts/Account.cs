@@ -19,7 +19,7 @@ namespace bank_app.Models.Accounts
         {
             AccountID = Guid.NewGuid();
             AccountCurrency = currency;
-            Balance = balance< 0 ? 0 : balance;
+            Balance = balance < 0 ? 0 : balance;
         }
         internal void ApplyTransaction(Transaction transaction)
         {
@@ -31,10 +31,10 @@ namespace bank_app.Models.Accounts
             switch (transaction.TransactionType)
             {
                 case TransactionType.Deposit:
-                    Balance+= transaction.TransferAmount;
+                    Balance += transaction.TransferAmount;
                     break;
                 case TransactionType.Withdrawal:
-                    Balance-= transaction.TransferAmount;
+                    Balance -= transaction.TransferAmount;
                     break;
                 default:
                     Console.WriteLine("This transaction type is not an option");

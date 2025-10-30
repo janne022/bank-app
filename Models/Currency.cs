@@ -25,7 +25,7 @@ namespace bank_app.Models
     public enum Status
     {
         Active,
-       
+
         Closed,
 
     }

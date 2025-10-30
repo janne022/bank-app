@@ -15,9 +15,9 @@ namespace bank_app.Models.Accounts
         //Last date when interest was applied
         public DateTime LastInterestDate { get; private set; }
         //Indicates whether withdrawals are allowed
-        public bool AllowWithdrawals { get; private set; } 
+        public bool AllowWithdrawals { get; private set; }
 
-        public SavingsAccount(Currency currency, decimal balance, decimal interestRate, decimal minimalBalance,DateTime lastInterestDate, bool allowWithdrawals)
+        public SavingsAccount(Currency currency, decimal balance, decimal interestRate, decimal minimalBalance, DateTime lastInterestDate, bool allowWithdrawals)
             : base(currency, balance)
         {
             InterestRate = interestRate < 0 ? 0 : interestRate;
@@ -28,7 +28,7 @@ namespace bank_app.Models.Accounts
 
         public override bool CanApply(Transaction transaction)
         {
-           
+
             if (transaction.TransactionType == TransactionType.Deposit)
             {
                 return true;
@@ -52,21 +52,21 @@ namespace bank_app.Models.Accounts
 
         public decimal CalculateInterest(int days)
         {
-            if (Balance<=0 || InterestRate<=0)
+            if (Balance <= 0 || InterestRate <= 0)
             {
                 return 0;
             }
 
 
-            decimal annualRate= InterestRate / 100m;
-            decimal fractionalRate= days / 365m;
-            decimal interest= Balance * annualRate * fractionalRate;
+            decimal annualRate = InterestRate / 100m;
+            decimal fractionalRate = days / 365m;
+            decimal interest = Balance * annualRate * fractionalRate;
             return interest;
         }
 
         public void ApplyInterest(int days)
         {
-           
+
             decimal interest = CalculateInterest(days);
             if (interest > 0)
             {

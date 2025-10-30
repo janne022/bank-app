@@ -38,7 +38,7 @@ namespace bank_app.Utility.UI.Components
             _textColour = textColour;
             _buttonColour = buttonColour;
         }
-        
+
         /// <summary>
         /// Press (on Enter key) button functionality with passed arguments.
         /// </summary>
@@ -52,7 +52,7 @@ namespace bank_app.Utility.UI.Components
         {
             Height = 1;
             Width = Text.Length + 4;  // [ ButtonText ]
-                                        // 12          34
+                                      // 12          34
         }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace bank_app.Utility.UI.Components
         {
             int leftMargin = SetMargin();
 
-            Console.SetCursorPosition(X+leftMargin, Y);
+            Console.SetCursorPosition(X + leftMargin, Y);
             Console.Write("[");
             ColourManager.Write($" {Text} ", ColourFG.BlueBright, ColourBG.Green);
             Console.Write("]");

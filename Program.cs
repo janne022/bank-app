@@ -1,6 +1,6 @@
 ﻿using bank_app.UI;
 
-﻿using bank_app.Managers;
+using bank_app.Managers;
 internal class Program
 {
     private static void Main(string[] args)

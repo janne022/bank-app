@@ -9,7 +9,7 @@ namespace bank_app.Utility.UI
     public abstract class UIComponent
     {
         // Declaring variables
-        public int X {  get; set; }
+        public int X { get; set; }
         public int Y { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
