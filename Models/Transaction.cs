@@ -16,14 +16,16 @@ namespace bank_app.Models
         public Guid SenderId { get; private set; }
         public Guid ReceiverId { get; private set; }
         public decimal TransferAmount { get; private set; }
+        public Currency Currency { get; private set     ; }
         public TransferStatus Status { get; set; }
         public TransactionType TransactionType { get; internal set; }
 
-        public Transaction(Guid senderId, Guid receiverId, decimal transferAmount)
+        public Transaction(Guid senderId, Guid receiverId, decimal transferAmount, Currency currency)
         {
             SenderId = senderId;
             ReceiverId = receiverId;
             TransferAmount = transferAmount;
+            Currency = currency;
         }
     }
 }
