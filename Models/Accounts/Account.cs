@@ -10,7 +10,7 @@ namespace bank_app.Models.Accounts
     {
         public Guid AccountID { get; private set; }
         public Currency AccountCurrency { get; private set; }
-        public decimal Balance { get; private set; }
+        public decimal Balance { get; private set; } //Balance is set in SEK
 
         private readonly List<Transaction> _transactions = new List<Transaction>();
         public IReadOnlyList<Transaction> Transactions => _transactions;
@@ -21,7 +21,7 @@ namespace bank_app.Models.Accounts
             AccountCurrency = currency;
             Balance = balance < 0 ? 0 : balance;
         }
-        internal void ApplyTransaction(Transaction transaction)
+        internal void ApplyTransaction(Transaction transaction, decimal amount)
         {
             if (!CanApply(transaction))
             {
@@ -31,10 +31,10 @@ namespace bank_app.Models.Accounts
             switch (transaction.TransactionType)
             {
                 case TransactionType.Deposit:
-                    Balance += transaction.TransferAmount;
+                    Balance += amount;
                     break;
                 case TransactionType.Withdrawal:
-                    Balance -= transaction.TransferAmount;
+                    Balance -= amount;
                     break;
                 default:
                     Console.WriteLine("This transaction type is not an option");

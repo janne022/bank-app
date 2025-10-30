@@ -35,5 +35,7 @@ namespace bank_app.Models
             decimal exchangeRate = _ratesToSEK[currencyTo];
             return amount * exchangeRate;
         }
+
+
     }
 }
