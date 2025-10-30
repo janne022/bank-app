@@ -1,24 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using bank_app.Models.Users;
-using bank_app.Utility;
+﻿using bank_app.Models.Users;
 using bank_app.Utility;
 
 namespace bank_app.Managers
 {
     public static class UserManager
     {
-        private static List<User> Users { get; set; } = new List<User>();
+        private static List<User> Users { get; } = new List<User>();
 
         /// <summary>
         /// Method to create new users within the bank app. Adds the newly created user to a list of all users within the application.
         /// </summary>
         /// <param name="userType">Enum that determines whether the user is a client or an administrator</param>
-        public static void CreateUser(string userName, string userPassword, UserType userType, string email = "", string phoneNumber = "")
+        internal static void CreateUser(string userName, string userPassword, UserType userType, string email = "", string phoneNumber = "")
         {
             if (userType is UserType.Admin)
             {
@@ -36,16 +29,15 @@ namespace bank_app.Managers
         /// Removes user object from the user list, and nullifies the references of that specific object.
         /// </summary>
         /// <param name="userName">Name of the user object to be removed</param>
-        public static void RemoveUser(User userName)
+        internal static void RemoveUser(User userName)
         {
             Users.Remove(userName);
-            userName = null;
         }
 
         /// <summary>
         /// Attempts to authorize a user by verifying the provided password.
         /// </summary>
-        public static bool Authorization(User user, string inputPassword)
+        internal static bool Authorization(User user, string inputPassword)
         {
             if (user.FailedLoginAttempts < 3 && user.CurrentAccountStatus == AccountStatus.Unlocked)
             {
@@ -68,12 +60,12 @@ namespace bank_app.Managers
             }
         }
 
-        public static void UnlockAccount(User user)
+        internal static void UnlockAccount(User user)
         {
             user.CurrentAccountStatus = AccountStatus.Unlocked;
         }
 
-        public static User? Login(string userName, string password)
+        internal static User? Login(string userName, string password)
         {
             // Loops through all made users in the program...
             foreach (var user in Users)
@@ -89,7 +81,7 @@ namespace bank_app.Managers
             return null;
         }
 
-        public static void Logout()
+        internal static void Logout()
         {
             // UI needed to develop
         }
@@ -99,7 +91,7 @@ namespace bank_app.Managers
         /// Updates the properties of the user object
         /// </summary>
         /// <param name="user">the name of the user object to be changed</param>
-        public static void ChangeUserInfo(User user, string userName, string userPassword)
+        internal static void ChangeUserInfo(User user, string userName, string userPassword)
         {
             user.UserName = userName;
             user.UserPassword = userPassword;
