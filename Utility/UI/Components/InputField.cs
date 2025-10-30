@@ -98,10 +98,8 @@ namespace bank_app.Utility.UI.Components
             ColourManager.Write($"{Descriptor}: [", _descriptorTextColour, _descriptorBGColour);
 
             // Start out by filling the input box with underscores.
-            for (int i = 0; i < inputBoxWidth; i++)
-            {
-                ColourManager.Write("_", _inputBoxTextColour, _inputBoxBGColour);
-            }
+            DrawUnderscores(0, inputBoxWidth);
+
 
             // If the user has inputted data before.
             if (!string.IsNullOrEmpty(InputtedValue))
@@ -119,11 +117,7 @@ namespace bank_app.Utility.UI.Components
                     if (InputtedValue.Length < inputBoxWidth)
                     {
                         ColourManager.Write(InputtedValue, _userInputColour, _inputBoxBGColour);
-
-                        for (int i = InputtedValue.Length; i < inputBoxWidth; i++)
-                        {
-                            ColourManager.Write("_", _inputBoxTextColour, _inputBoxBGColour);
-                        }
+                        DrawUnderscores(InputtedValue.Length, inputBoxWidth);
                     }
                     else
                     {
@@ -212,6 +206,14 @@ namespace bank_app.Utility.UI.Components
             else
             {
                 return userInput;
+            }
+        }
+
+        private void DrawUnderscores(int startingPosition, int endingPosition)
+        {
+            for (int i = startingPosition; i < endingPosition; i++)
+            {
+                ColourManager.Write("_", _inputBoxTextColour, _inputBoxBGColour);
             }
         }
     }
