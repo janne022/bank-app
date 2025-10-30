@@ -9,23 +9,31 @@ using System.Threading.Tasks;
 
 namespace bank_app.UI
 {
-    public class PageManager
+    public static class PageManager
     {
-        private readonly Dictionary<PageType, Page> _pageDictionary = new()
+        // Dictionary containing all pages that exist
+        private static readonly Dictionary<PageType, Page> _pageDictionary = new()
         {
             {PageType.Login,  new Login()},
             {PageType.ClientDashboard,  new ClientDashboard()},
             {PageType.AdminDashboard,  new AdminDashboard()}
         };
-        public void SwitchPage(PageType page, User user)
+
+        // Used for switching to a specific page
+        private static void SwitchPage(PageType page, User user)
         {
             Console.Clear();
-            _pageDictionary[page].LoadPage(user);
+            var selectedPage = _pageDictionary[page];
+            selectedPage.OnSwitchPageRequest += OnSwitchPage;
+            selectedPage.LoadPage(user);
         }
-
-        public void Start(PageType firstPage, User user)
+        private static void OnSwitchPage(PageType firstPage, User user)
         {
-            _pageDictionary[firstPage].OnSwitchPageRequest += SwitchPage;
+            SwitchPage(firstPage, user);
+        }
+        // Initial start to load the first page and subscribe SwitchPage to first pages event
+        public static void Start(PageType firstPage, User user)
+        {
             SwitchPage(firstPage, user);
         }
     }

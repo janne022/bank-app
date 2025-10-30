@@ -1,4 +1,5 @@
 ﻿using bank_app.Models.Users;
+using bank_app.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace bank_app.UI.Pages
         {
             Console.WriteLine("Welcome Client!");
             Console.ReadLine();
+            RequestPageChange(PageType.Login, user);
         }
     }
 }

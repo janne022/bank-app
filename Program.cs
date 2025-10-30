@@ -14,8 +14,7 @@ internal class Program
         Task.Run(BackgroundThread);
 
         // Start the first User Interface page
-        PageManager pageManager = new PageManager();
-        pageManager.Start(PageType.Login, new Client("none","none","none","none"));
+        PageManager.Start(PageType.Login, new Client("none","none","none","none"));
     }
     private static async Task BackgroundThread()
     {
