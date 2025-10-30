@@ -13,16 +13,6 @@
 
 
         public Loan(Guid userId, decimal principal, decimal annualRate, DateTime startDate)
-        public decimal Principal { get; set; }
-
-        public int Term { get; set; }
-
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
-
-
-
-        public Loan(decimal interest, decimal principal, int term, DateTime startDate, DateTime endDate)
         {
             LoanId = Guid.NewGuid();
             UserId = userId;
