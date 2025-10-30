@@ -42,8 +42,8 @@ namespace bank_app.Utility.UI.Components
         /// <param name="inputBoxTextColour">Text colour for input box</param>
         /// <param name="inputBoxBGColour">Background colour for input box</param>
         public InputField(string descriptor, bool isPassword, int maxLength,
-            ColourFG descriptorTextColour = ColourFG.Reset, ColourBG descriptorBGColour = ColourBG.Reset,
-            ColourFG inputBoxTextColour = ColourFG.Reset, ColourBG inputBoxBGColour = ColourBG.Reset)
+            ColourFG descriptorTextColour = ColourFG.None, ColourBG descriptorBGColour = ColourBG.None,
+            ColourFG inputBoxTextColour = ColourFG.None, ColourBG inputBoxBGColour = ColourBG.None)
         {
             Descriptor = descriptor;
             MaxLength = maxLength;
@@ -93,8 +93,16 @@ namespace bank_app.Utility.UI.Components
             ColourManager.Set(_descriptorTextColour);
             ColourManager.Set(_descriptorBGColour);
             Console.Write($"{Descriptor}: [");
-            ColourManager.Set(ColourFG.Reset);
-            ColourManager.Set(ColourBG.Reset);
+
+            if (_descriptorTextColour != ColourFG.None || _inputBoxTextColour != ColourFG.None)
+            {
+                ColourManager.Set(ColourFG.Reset);
+            }
+
+            if (_descriptorBGColour != ColourBG.None || _inputBoxBGColour != ColourBG.None)
+            { 
+                ColourManager.Set(ColourBG.Reset);
+            }
 
             // Start out by filling the input box with underscores.
             for (int i = 0; i < inputBoxWidth; i++)
