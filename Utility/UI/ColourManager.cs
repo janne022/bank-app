@@ -180,8 +180,27 @@ namespace bank_app.Utility.UI
         {
             string colourFG = Return(foreground);
             string colourBG = Return(background);
-            string resetFG = Return(ColourFG.Reset);
-            string resetBG = Return(ColourBG.Reset);
+
+            string resetFG = string.Empty;
+            if (foreground == ColourFG.None)
+            {
+                resetFG = Return(ColourFG.None);
+            }
+            else
+            {
+                resetFG = Return(ColourFG.Reset);
+
+            }
+
+            string resetBG = string.Empty;
+            if (background == ColourBG.None)
+            {
+                resetBG = Return(ColourBG.None);
+            }
+            else
+            {
+                resetBG = Return(ColourBG.Reset);
+            }
             Console.Write($"{colourFG}{colourBG}{text}{resetFG}{resetBG}");
         }
     }
