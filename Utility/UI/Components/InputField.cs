@@ -45,9 +45,9 @@ namespace bank_app.Utility.UI.Components
         /// <param name="inputBoxBGColour">Background colour for input box</param>
         /// <param name="userInputColour">Text colour for the user's inputted text</param>
         public InputField(string descriptor, bool isPassword, int maxLength,
-            ColourFG descriptorTextColour = ColourFG.Green, ColourBG descriptorBGColour = ColourBG.None,
-            ColourFG inputBoxTextColour = ColourFG.Magenta, ColourBG inputBoxBGColour = ColourBG.None,
-            ColourFG userInputColour = ColourFG.Yellow)
+            ColourFG descriptorTextColour = ColourFG.None, ColourBG descriptorBGColour = ColourBG.None,
+            ColourFG inputBoxTextColour = ColourFG.None, ColourBG inputBoxBGColour = ColourBG.None,
+            ColourFG userInputColour = ColourFG.None)
         {
             Descriptor = descriptor;
             MaxLength = maxLength;
