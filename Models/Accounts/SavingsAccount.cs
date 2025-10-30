@@ -1,4 +1,5 @@
-﻿using System;
+﻿using bank_app.Utility;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -66,14 +67,30 @@ namespace bank_app.Models.Accounts
 
         public void ApplyInterest(int days)
         {
+            if (days <= 0)
+            {
+                return;
+            }
+           
 
             decimal interest = CalculateInterest(days);
-            if (interest > 0)
+          
+            if (interest <=0)
             {
-                //var tx= new Transaction(TransactionType.Deposit, interest, currentDate, "Interest Payment");
-                //ApplyTransaction(tx);
-                LastInterestDate = DateTime.Now;
+                return;
             }
+
+            interest=Math.Round(interest, 2, MidpointRounding.AwayFromZero);
+            //We use this.AccountID for both sender and receiver since interest is being added to the same account, because we calculate interest based on current balance.
+            var interestTransaction = new Transaction(this.AccountID, this.AccountID, interest)
+            {
+                TransactionType = TransactionType.Deposit,
+                Status = TransferStatus.Completed
+            };
+
+            ApplyTransaction(interestTransaction);
+
+            LastInterestDate = LastInterestDate.AddDays(days);
         }
     }
 }
