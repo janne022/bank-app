@@ -120,7 +120,6 @@ namespace bank_app.Utility.UI.Components
                         .PadRight(inputBoxWidth, '_') // Pad possible empty spaces in the input field with underscores
                         .Substring(0, inputBoxWidth); // If the inputted string is too long, truncate it
                     ColourManager.Write(contentsOfInputBox, _inputBoxTextColour, _inputBoxBGColour);
-                    //Console.Write(contentsOfInputBox);
                 }
             }
             ColourManager.Write("]", _descriptorTextColour, _descriptorBGColour);
