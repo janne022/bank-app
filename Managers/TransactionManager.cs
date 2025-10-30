@@ -17,9 +17,9 @@ namespace bank_app.Managers
         /// Creates a new transaction object, marks it as PENDING and adds the transaction object
         /// to the transaction list containing all bank transactions. 
         /// </summary>
-        public Transaction CreateNewTransaction(Guid senderId, Guid receiverId, decimal amount)
+        public Transaction CreateNewTransaction(Guid senderId, Guid receiverId, decimal amount, Currency currency)
         {
-            var transaction = new Transaction(senderId, receiverId, amount)
+            var transaction = new Transaction(senderId, receiverId, amount, currency)
             {
                 Status = TransferStatus.Pending
             };
