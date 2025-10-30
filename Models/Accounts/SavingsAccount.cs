@@ -88,7 +88,7 @@ namespace bank_app.Models.Accounts
                 Status = TransferStatus.Completed
             };
 
-            ApplyTransaction(interestTransaction);
+            ApplyTransaction(interestTransaction, interest);
 
             LastInterestDate = LastInterestDate.AddDays(days);
         }
