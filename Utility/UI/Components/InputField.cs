@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Reflection.PortableExecutable;
 
 namespace bank_app.Utility.UI.Components
 {
@@ -28,6 +29,7 @@ namespace bank_app.Utility.UI.Components
         private ColourFG _inputBoxTextColour;
         private ColourBG _descriptorBGColour;
         private ColourBG _inputBoxBGColour;
+        private ColourFG _userInputColour;
 
 
 
@@ -41,9 +43,11 @@ namespace bank_app.Utility.UI.Components
         /// <param name="descriptorBGColour">Background colour for descriptor</param>
         /// <param name="inputBoxTextColour">Text colour for input box</param>
         /// <param name="inputBoxBGColour">Background colour for input box</param>
+        /// <param name="userInputColour">Text colour for the user's inputted text</param>
         public InputField(string descriptor, bool isPassword, int maxLength,
-            ColourFG descriptorTextColour = ColourFG.Reset, ColourBG descriptorBGColour = ColourBG.Reset,
-            ColourFG inputBoxTextColour = ColourFG.Reset, ColourBG inputBoxBGColour = ColourBG.Reset)
+            ColourFG descriptorTextColour = ColourFG.None, ColourBG descriptorBGColour = ColourBG.None,
+            ColourFG inputBoxTextColour = ColourFG.None, ColourBG inputBoxBGColour = ColourBG.None,
+            ColourFG userInputColour = ColourFG.None)
         {
             Descriptor = descriptor;
             MaxLength = maxLength;
@@ -53,6 +57,7 @@ namespace bank_app.Utility.UI.Components
             _descriptorBGColour = descriptorBGColour;
             _inputBoxTextColour = inputBoxTextColour;
             _inputBoxBGColour = inputBoxBGColour;
+            _userInputColour = userInputColour;
         }
 
         public override void Pressed()
@@ -90,17 +95,11 @@ namespace bank_app.Utility.UI.Components
                 inputBoxWidth = ParentElement.Width - Descriptor.Length - 4;
             }
 
-            ColourManager.Set(_descriptorTextColour);
-            ColourManager.Set(_descriptorBGColour);
-            Console.Write($"{Descriptor}: [");
-            ColourManager.Set(ColourFG.Reset);
-            ColourManager.Set(ColourBG.Reset);
+            ColourManager.Write($"{Descriptor}: [", _descriptorTextColour, _descriptorBGColour);
 
             // Start out by filling the input box with underscores.
-            for (int i = 0; i < inputBoxWidth; i++)
-            {
-                ColourManager.Write("_", _inputBoxTextColour, _inputBoxBGColour);
-            }
+            DrawUnderscores(0, inputBoxWidth);
+
 
             // If the user has inputted data before.
             if (!string.IsNullOrEmpty(InputtedValue))
@@ -110,18 +109,24 @@ namespace bank_app.Utility.UI.Components
                 {
                     for (int i = 0; i < inputBoxWidth; i++)
                     {
-                        ColourManager.Write("*", _inputBoxTextColour, _inputBoxBGColour);
+                        ColourManager.Write("*", _userInputColour, _inputBoxBGColour);
                     }
                 }
                 else
                 {
-                    string contentsOfInputBox =
-                        (InputtedValue ?? "")
-                        .PadRight(inputBoxWidth, '_') // Pad possible empty spaces in the input field with underscores
-                        .Substring(0, inputBoxWidth); // If the inputted string is too long, truncate it
-                    ColourManager.Write(contentsOfInputBox, _inputBoxTextColour, _inputBoxBGColour);
+                    if (InputtedValue.Length < inputBoxWidth)
+                    {
+                        ColourManager.Write(InputtedValue, _userInputColour, _inputBoxBGColour);
+                        DrawUnderscores(InputtedValue.Length, inputBoxWidth);
+                    }
+                    else
+                    {
+                        ColourManager.Write(InputtedValue[..Math.Min(InputtedValue.Length, inputBoxWidth)],
+                            _userInputColour, _inputBoxBGColour);
+                    }
                 }
             }
+            Console.SetCursorPosition(X + Descriptor.Length + inputBoxWidth + 3, Y);
             ColourManager.Write("]", _descriptorTextColour, _descriptorBGColour);
         }
 
@@ -178,11 +183,11 @@ namespace bank_app.Utility.UI.Components
                                 characters++;
                                 if (IsPassword)
                                 {
-                                    ColourManager.Write("*", _inputBoxTextColour, _inputBoxBGColour);
+                                    ColourManager.Write("*", _userInputColour, _inputBoxBGColour);
                                 }
                                 else
                                 {
-                                    ColourManager.Write(pressed.KeyChar.ToString(), _inputBoxTextColour, _inputBoxBGColour);
+                                    ColourManager.Write(pressed.KeyChar.ToString(), _userInputColour, _inputBoxBGColour);
                                 }
                             }
                             else
@@ -201,6 +206,14 @@ namespace bank_app.Utility.UI.Components
             else
             {
                 return userInput;
+            }
+        }
+
+        private void DrawUnderscores(int startingPosition, int endingPosition)
+        {
+            for (int i = startingPosition; i < endingPosition; i++)
+            {
+                ColourManager.Write("_", _inputBoxTextColour, _inputBoxBGColour);
             }
         }
     }

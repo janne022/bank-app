@@ -30,7 +30,7 @@ namespace bank_app.Utility.UI.Components
         /// <param name="justify">Whether the button should be displayed aligned left, right or center.</param>
         /// <param name="textColour">Colour of text. Default to the terminal's default.</param>
         /// <param name="buttonColour">Colour of the button itself. Default to the terminal's default.</param>
-        public Button(IInvokable invokable, string text, Justify justify = Justify.Center, ColourFG textColour = ColourFG.Reset, ColourBG buttonColour = ColourBG.Reset)
+        public Button(Delegate delegation, string text, Justify justify = Justify.Center, ColourFG textColour = ColourFG.None, ColourBG buttonColour = ColourBG.None)
         {
             Text = text;
             _invokable = invokable;
@@ -70,7 +70,7 @@ namespace bank_app.Utility.UI.Components
 
             Console.SetCursorPosition(X + leftMargin, Y);
             Console.Write("[");
-            ColourManager.Write($" {Text} ", ColourFG.BlueBright, ColourBG.Green);
+            ColourManager.Write($" {Text} ", _textColour, _buttonColour);
             Console.Write("]");
         }
 
