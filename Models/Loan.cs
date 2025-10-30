@@ -13,7 +13,7 @@ namespace bank_app.Models
         public readonly decimal interestRate = 0.05m;
         public decimal Interest { get; set; }
 
-        public decimal Principal{ get; set; }
+        public decimal Principal { get; set; }
 
         public int Term { get; set; }
 
@@ -22,7 +22,7 @@ namespace bank_app.Models
 
 
 
-        public Loan(decimal interest, decimal principal, int term, DateTime startDate,DateTime endDate)
+        public Loan(decimal interest, decimal principal, int term, DateTime startDate, DateTime endDate)
         {
             Interest = interest;
             Principal = principal;
@@ -33,7 +33,7 @@ namespace bank_app.Models
 
 
 
-        
+
 
     }
 }
