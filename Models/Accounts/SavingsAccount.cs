@@ -1,4 +1,5 @@
-﻿using System;
+﻿using bank_app.Utility;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,9 +16,9 @@ namespace bank_app.Models.Accounts
         //Last date when interest was applied
         public DateTime LastInterestDate { get; private set; }
         //Indicates whether withdrawals are allowed
-        public bool AllowWithdrawals { get; private set; } 
+        public bool AllowWithdrawals { get; private set; }
 
-        public SavingsAccount(Currency currency, decimal balance, decimal interestRate, decimal minimalBalance,DateTime lastInterestDate, bool allowWithdrawals)
+        public SavingsAccount(Currency currency, decimal balance, decimal interestRate, decimal minimalBalance, DateTime lastInterestDate, bool allowWithdrawals)
             : base(currency, balance)
         {
             InterestRate = interestRate < 0 ? 0 : interestRate;
@@ -28,7 +29,7 @@ namespace bank_app.Models.Accounts
 
         public override bool CanApply(Transaction transaction)
         {
-           
+
             if (transaction.TransactionType == TransactionType.Deposit)
             {
                 return true;
@@ -52,28 +53,43 @@ namespace bank_app.Models.Accounts
 
         public decimal CalculateInterest(int days)
         {
-            if (Balance<=0 || InterestRate<=0)
+            if (Balance <= 0 || InterestRate <= 0)
             {
                 return 0;
             }
 
 
-            decimal annualRate= InterestRate / 100m;
-            decimal fractionalRate= days / 365m;
-            decimal interest= Balance * annualRate * fractionalRate;
+            decimal annualRate = InterestRate / 100m;
+            decimal fractionalRate = days / 365m;
+            decimal interest = Balance * annualRate * fractionalRate;
             return interest;
         }
 
         public void ApplyInterest(int days)
         {
+            if (days <= 0)
+            {
+                return;
+            }
            
             decimal interest = CalculateInterest(days);
-            if (interest > 0)
+          
+            if (interest <=0)
             {
-                //var tx= new Transaction(TransactionType.Deposit, interest, currentDate, "Interest Payment");
-                //ApplyTransaction(tx);
-                LastInterestDate = DateTime.Now;
+                return;
             }
+
+            interest=Math.Round(interest, 2, MidpointRounding.AwayFromZero);
+            //We use this.AccountID for both sender and receiver since interest is being added to the same account, because we calculate interest based on current balance.
+            var interestTransaction = new Transaction(this.AccountID, this.AccountID, interest)
+            {
+                TransactionType = TransactionType.Deposit,
+                Status = TransferStatus.Completed
+            };
+
+            ApplyTransaction(interestTransaction);
+
+            LastInterestDate = LastInterestDate.AddDays(days);
         }
     }
 }
