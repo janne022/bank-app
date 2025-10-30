@@ -28,7 +28,7 @@ namespace bank_app.Models.Accounts
 
         public override bool CanApply(Transaction transaction)
         {
-            decimal amount = 0; //This will be change with transaction.Amount later
+         
             if (transaction.TransactionType == TransactionType.Deposit)
             {
                 return true;
@@ -36,7 +36,7 @@ namespace bank_app.Models.Accounts
 
             if (transaction.TransactionType == TransactionType.Withdrawal)
             {
-                return Balance - amount /*This will be change with transaction.Amount later */ >= -CreditLimit;
+                return Balance - transaction.TransferAmount /*This will be change with transaction.Amount later */ >= -CreditLimit;
             }
 
 

@@ -28,7 +28,7 @@ namespace bank_app.Models.Accounts
 
         public override bool CanApply(Transaction transaction)
         {
-            decimal amount = 0;
+           
             if (transaction.TransactionType == TransactionType.Deposit)
             {
                 return true;
@@ -41,7 +41,7 @@ namespace bank_app.Models.Accounts
                     return false;
                 }
 
-                return Balance - amount >= MinimumBalance;
+                return Balance - transaction.TransferAmount >= MinimumBalance;
             }
 
 
