@@ -5,13 +5,15 @@ using bank_app.Utility.UI;
 using bank_app.Utility.UI.Components;
 using bank_app.Utility.UI.Invokables;
 
-namespace bank_app.UI
+namespace bank_app.UI.Pages
 {
-    public static class Login
+    public class Login : Page
     {
-        public static void Menu()
+        public override void LoadPage(User user)
         {
             Console.CursorVisible = false;
+            // Temporary seed data
+            UserManager.CreateUser("janne","jan",UserType.Client);
             // Create a new Invokable object with the method that is going to run once the 'Login' button is pressed
             var loginInvoke = new Invokable<string, string>(LoginHandler);
             // Create new 3x3 grid
@@ -35,12 +37,20 @@ namespace bank_app.UI
             layout.Render();
         }
 
-        private static void LoginHandler(string username, string password)
+        private void LoginHandler(string username, string password)
         {
             User? user = UserManager.Login(username, password);
             if (user != null)
             {
                 // Login successful, switch page and give feedback
+                if (user is Client client)
+                {
+                    RequestPageChange(PageType.ClientDashboard, client);
+                }
+                else if (user is Admin admin)
+                {
+                    RequestPageChange(PageType.AdminDashboard, admin);
+                }
             }
             else
             {
