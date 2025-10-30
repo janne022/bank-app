@@ -25,6 +25,11 @@ namespace bank_app.Models.Accounts
         public override bool CanApply(Transaction transaction)
         {
 
+            if (transaction == null || transaction.TransferAmount <= 0)
+            {
+                return false;
+            }
+
             if (transaction.TransactionType == TransactionType.Deposit)
             {
                 return true;

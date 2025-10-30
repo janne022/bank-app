@@ -1,5 +1,6 @@
 ﻿using bank_app.Models;
 using bank_app.Models.Accounts;
+using bank_app.Models.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,18 +19,18 @@ namespace bank_app.Managers
         /// Creates an account of the specified type, registers it internally, and returns it.
         /// Throws ArgumentException for invalid inputs.
         /// </summary>
-        public static bool CreateAccount(Currency currency, decimal balance, AccountType accountType)
+        public static bool CreateAccount(Guid ownerID, Currency currency, decimal balance, AccountType accountType)
         {
             // Construct the account using a switch expression for clarity.
             Account newAccount = accountType switch
             {
-                AccountType.Checking => new CheckingAccount(
+                AccountType.CheckingAcc => new CheckingAccount(
                     currency,
                     balance,
                     AccountDefaults.CheckingMonthlyFee,
                     AccountDefaults.CheckingOverdraftLimit),
 
-                AccountType.Savings => new SavingsAccount(
+                AccountType.SavingsAcc => new SavingsAccount(
                     currency,
                     balance,
                     AccountDefaults.SavingsInterestRate,
@@ -37,10 +38,9 @@ namespace bank_app.Managers
                     DateTime.Now,
                     AccountDefaults.SavingsAllowWithdraws),
 
-                AccountType.Loan => new LoanAccount(
-                    currency,
-                    balance,
-                    AccountDefaults.LoanInterestRate,
+                AccountType.LoanAcc => new LoanAccount(
+                    ownerID,
+                    currency,           
                     AccountDefaults.LoanCreditLimit),
 
                 _ => throw new ArgumentException("Invalid account type.", nameof(accountType))
@@ -57,6 +57,11 @@ namespace bank_app.Managers
             }
 
             return true;
+        }
+
+        internal static void AddAccount(Account accountToAdd)
+        {
+            _accounts[accountToAdd.AccountID] = accountToAdd;
         }
 
 
@@ -88,6 +93,15 @@ namespace bank_app.Managers
             return _accounts.Count;
         }
 
+
+        public static Account? GetAccountById(Guid id)
+        {
+            if (_accounts.TryGetValue(id, out Account? account))
+            {
+                return account;
+            }
+            return null;
+        }
 
         //Methods for Deposit and Withdraw to update Balance
         /// </summary>
@@ -121,9 +135,5 @@ namespace bank_app.Managers
         }
 
 
-
-
-
-        
     }
 }

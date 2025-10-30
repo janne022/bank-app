@@ -1,0 +1,89 @@
+﻿using bank_app.Models;
+using bank_app.Models.Accounts;
+using bank_app.Utility;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace bank_app.Managers
+{
+    internal class LoanManager
+    {
+
+        private readonly List<Loan> _loans = new List<Loan>();
+
+
+        public Loan DisburseLoan(Guid userId, decimal principal, Currency currency)
+        {
+
+            ValidateLoanLimit(userId);
+
+            var loanAccount = GetOrCreateLoanAccount(userId, currency);
+
+            var loan=new Loan(userId, principal,AccountDefaults.LoanInterestRate, DateTime.Now);
+            _loans.Add(loan);
+
+            var transaction = CreateLoanTransaction(loanAccount, principal);
+            loanAccount.ApplyTransaction(transaction);
+
+            return loan;
+
+        }
+
+        public LoanAccount GetOrCreateLoanAccount(Guid userId, Currency currency)
+        {
+            var loanAccount = AccountManager.GetAllAccounts()
+                .OfType<LoanAccount>()
+                .FirstOrDefault(acc => acc.OwnerId == userId);
+
+            if (loanAccount == null)
+            {
+                loanAccount = new LoanAccount(
+                    userId,
+                    currency,
+                    AccountDefaults.LoanCreditLimit
+                );
+
+
+
+                AccountManager.AddAccount(loanAccount);
+
+            }
+
+            return loanAccount;
+        }
+        private void ValidateLoanLimit(Guid userId)
+        {
+            int activeLoanCount = _loans.Count(l => l.UserId == userId && l.IsActive);
+
+            if (activeLoanCount >= AccountDefaults.MaxLoansPerUser)
+            {
+                throw new InvalidOperationException(
+                    $"User {userId} has reached the maximum number of active loans ({AccountDefaults.MaxLoansPerUser}).");
+            }
+        }
+
+        private Transaction CreateLoanTransaction(LoanAccount loanAccount, decimal principal)
+        {
+            if (principal <= 0)
+                throw new ArgumentOutOfRangeException(nameof(principal), "Loan amount must be positive.");
+
+            var transaction = new Transaction(
+                loanAccount.AccountID,
+                loanAccount.AccountID,
+                principal)
+            {
+                TransactionType = TransactionType.Withdrawal,
+                Status = TransferStatus.Completed,
+                
+            };
+
+           
+            return transaction;
+        }
+
+
+    }
+}
