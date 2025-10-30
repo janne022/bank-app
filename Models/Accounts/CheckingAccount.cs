@@ -24,7 +24,7 @@ namespace bank_app.Models.Accounts
         //This method is looking to see if the transaction can be applied based on the type of transaction and the current balance and overdraft limit.
         public override bool CanApply(Transaction transaction)
         {
-            decimal amount = 0; //This will be change with transaction.Amount later
+           
             if (transaction.TransactionType == TransactionType.Deposit)
             {
                 return true;
@@ -32,7 +32,7 @@ namespace bank_app.Models.Accounts
 
             if (transaction.TransactionType == TransactionType.Withdrawal)
             {
-                return Balance - amount /*This will be change with transaction.Amount later */ >= -OverdraftLimit;
+                return Balance - transaction.TransferAmount /*This will be change with transaction.Amount later */ >= -OverdraftLimit;
             }
 
 
