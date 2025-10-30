@@ -90,19 +90,7 @@ namespace bank_app.Utility.UI.Components
                 inputBoxWidth = ParentElement.Width - Descriptor.Length - 4;
             }
 
-            ColourManager.Set(_descriptorTextColour);
-            ColourManager.Set(_descriptorBGColour);
-            Console.Write($"{Descriptor}: [");
-
-            if (_descriptorTextColour != ColourFG.None || _inputBoxTextColour != ColourFG.None)
-            {
-                ColourManager.Set(ColourFG.Reset);
-            }
-
-            if (_descriptorBGColour != ColourBG.None || _inputBoxBGColour != ColourBG.None)
-            { 
-                ColourManager.Set(ColourBG.Reset);
-            }
+            ColourManager.Write($"{Descriptor}: [", _descriptorTextColour, _descriptorBGColour);
 
             // Start out by filling the input box with underscores.
             for (int i = 0; i < inputBoxWidth; i++)
