@@ -35,7 +35,6 @@ namespace bank_app.Models
     {
         Deposit,
         Withdrawal,
-       
     }
     public enum AccountType
     {
