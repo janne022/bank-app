@@ -53,9 +53,10 @@ namespace bank_app.Managers
             {
                 try
                 {
-                    //Checks if sender has enough funds in account to perform transaction
                     var senderAccount = AccountManager.GetOrThrow(transaction.SenderId);
                     var receiverAccount = AccountManager.GetOrThrow(transaction.ReceiverId);
+
+                    //Checks if sender has enough funds in account to perform transaction
                     if (senderAccount.Balance < transaction.TransferAmount)
                     {
                         transaction.Status = TransferStatus.Failed;
@@ -79,6 +80,7 @@ namespace bank_app.Managers
                         transactionAmount = CurrencyExchange.ExchangeFromSek(transactionAmount, receiverAccount.AccountCurrency);
                     }
 
+                    //Performs the deposit to receivers account in receiver accounts local currency which will be saved in "transactionAmount". 
                     AccountManager.Deposit(transaction.ReceiverId, transaction, transactionAmount);
                     transaction.Status = TransferStatus.Completed;
                 }

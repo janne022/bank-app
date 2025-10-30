@@ -21,6 +21,10 @@ namespace bank_app.Models.Accounts
             AccountCurrency = currency;
             Balance = balance < 0 ? 0 : balance;
         }
+
+        /// <summary>
+        /// Method that adds or subtracts balance in accounts local currency, while also saving all transactions made into a List. 
+        /// </summary>
         internal void ApplyTransaction(Transaction transaction, decimal amount)
         {
             if (!CanApply(transaction))

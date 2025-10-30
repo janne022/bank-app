@@ -59,7 +59,6 @@ namespace bank_app.Managers
             return true;
         }
 
-
         /// <summary>
         /// Removes an account by its ID. Returns true if removed.
         /// </summary>
@@ -76,10 +75,6 @@ namespace bank_app.Managers
             return _accounts.Values.ToList();
         }
 
-
-        /// <summary>
-        /// Adds balance to account using unique identifier and data from transaction.
-
         /// <summary>
         /// Returns the number of accounts currently tracked.
         /// </summary>
@@ -88,9 +83,10 @@ namespace bank_app.Managers
             return _accounts.Count;
         }
 
-
-        //Methods for Deposit and Withdraw to update Balance
+        /// <summary>
+        /// Adds balance to an account using data from a transaction object. 
         /// </summary>
+        /// <param name="accountId">The unique identifier (Guid) for an Account object</param>
         public static void Deposit(Guid accountId, Transaction transaction, decimal amount)
         {
             transaction.TransactionType = TransactionType.Deposit;
@@ -99,8 +95,9 @@ namespace bank_app.Managers
         }
 
         /// <summary>
-        /// Deducts balance from account using unique identifier and data from transaction.
+        /// Decucts balance to an account using data from a transaction object.
         /// </summary>
+        /// /// <param name="accountId">The unique identifier (Guid) for an Account object</param>
         public static void Withdraw(Guid accountId, Transaction transaction, decimal amount)
         {
             transaction.TransactionType = TransactionType.Withdrawal;
