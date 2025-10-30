@@ -70,7 +70,7 @@ namespace bank_app.Utility.UI.Components
 
             Console.SetCursorPosition(X + leftMargin, Y);
             Console.Write("[");
-            ColourManager.Write($" {Text} ", ColourFG.BlueBright, ColourBG.Green);
+            ColourManager.Write($" {Text} ", _textColour, _buttonColour);
             Console.Write("]");
         }
 
