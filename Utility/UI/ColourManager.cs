@@ -43,6 +43,9 @@ namespace bank_app.Utility.UI
         {
             switch (choice)
             {
+                case ColourFG.None:
+                    return string.Empty;
+
                 case ColourFG.Reset:
                     return "\u001b[39m";
 
@@ -108,6 +111,9 @@ namespace bank_app.Utility.UI
         {
             switch (choice)
             {
+                case ColourBG.None:
+                    return string.Empty;
+
                 case ColourBG.Reset:
                     return "\u001b[49m";
 
@@ -170,7 +176,7 @@ namespace bank_app.Utility.UI
         /// <param name="text">Text to be printed on screen</param>
         /// <param name="foreground">Foreground colour. Default is reset</param>
         /// <param name="background">Background colour. Default is reset</param>
-        public static void Write(string text, ColourFG foreground = ColourFG.Reset, ColourBG background = ColourBG.Reset)
+        public static void Write(string text, ColourFG foreground = ColourFG.None, ColourBG background = ColourBG.None)
         {
             string colourFG = Return(foreground);
             string colourBG = Return(background);
