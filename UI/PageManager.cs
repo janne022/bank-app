@@ -18,23 +18,56 @@ namespace bank_app.UI
             {PageType.ClientDashboard,  new ClientDashboard()},
             {PageType.AdminDashboard,  new AdminDashboard()}
         };
+        private static bool _isRunning = true;
+        private static Page? _nextPage;
+        private static Page? _currentPage;
+        private static User? _currentUser;
 
-        // Used for switching to a specific page
-        private static void SwitchPage(PageType page, User user)
+        /// <summary>
+        /// Switches to specified page
+        /// </summary>
+        /// <param name="page">Chosen page to switch to</param>
+        public static void SwitchPage(PageType page, User user)
         {
-            Console.Clear();
-            var selectedPage = _pageDictionary[page];
-            selectedPage.OnSwitchPageRequest += OnSwitchPage;
-            selectedPage.LoadPage(user);
+            _nextPage = _pageDictionary[page];
         }
-        private static void OnSwitchPage(PageType firstPage, User user)
+
+        /// <summary>
+        /// Switches the user forwarded to each page
+        /// </summary>
+        /// <param name="user">Specified user to forward</param>
+        public static void SwitchUser(User user)
         {
-            SwitchPage(firstPage, user);
+            _currentUser = user;
         }
-        // Initial start to load the first page and subscribe SwitchPage to first pages event
-        public static void Start(PageType firstPage, User user)
+
+        /// <summary>
+        /// Stops the application loop
+        /// </summary>
+        public static void Stop()
         {
-            SwitchPage(firstPage, user);
+            _isRunning = false;
+        }
+
+        /// <summary>
+        /// Starts the application loop, initializing the user and loading the specified start page.
+        /// </summary>
+        /// <remarks>The method runs a continuous loop, monitoring and loading pages as needed. The
+        /// application  will remain in this loop until PageManager.Stop() runs</remarks>
+        /// <param name="startPage">The initial page to load when the application starts.</param>
+        public static void Start(PageType startPage)
+        {
+            _nextPage = _pageDictionary[startPage];
+            while (_isRunning)
+            {
+                if (_currentPage != _nextPage)
+                {
+                    Console.Clear();
+                    _currentPage = _nextPage;
+                    _currentPage?.LoadPage(_currentUser);
+                }
+                Thread.Sleep(100);
+            }
         }
     }
 }

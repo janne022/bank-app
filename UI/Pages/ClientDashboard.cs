@@ -12,9 +12,10 @@ namespace bank_app.UI.Pages
     {
         public override void LoadPage(User user)
         {
-            Console.WriteLine("Welcome Client!");
-            Console.ReadLine();
-            RequestPageChange(PageType.Login, user);
+            if (user is Client client)
+            {
+                
+            }
         }
     }
 }

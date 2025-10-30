@@ -11,8 +11,10 @@ namespace bank_app.UI.Pages
     {
         public override void LoadPage(User user)
         {
-            Console.WriteLine("Welcome Admin!");
-            Console.ReadLine();
+            if (user is Admin admin)
+            {
+                
+            }
         }
     }
 }
