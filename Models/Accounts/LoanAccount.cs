@@ -11,7 +11,7 @@ namespace bank_app.Models.Accounts
     {
 
         public decimal InterestRate { get; private set; } //% per annum
-       
+
         public decimal CreditLimit { get; private set; }
 
         //This will be implemented in the User data model
@@ -28,7 +28,7 @@ namespace bank_app.Models.Accounts
 
         public override bool CanApply(Transaction transaction)
         {
-         
+
             if (transaction.TransactionType == TransactionType.Deposit)
             {
                 return true;
