@@ -50,16 +50,16 @@ namespace bank_app.Managers
             // Using the indexer simplifies handling rare Guid collisions by overwriting the same key.
             _accounts[newAccount.AccountID] = newAccount;
 
-            if (newAccount==null)
+            if (newAccount == null)
             {
-                
-            return false;
+
+                return false;
             }
 
-			return true;
-		}
+            return true;
+        }
 
-   
+
         /// <summary>
         /// Removes an account by its ID. Returns true if removed.
         /// </summary>

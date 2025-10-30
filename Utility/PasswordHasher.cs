@@ -21,7 +21,7 @@ namespace bank_app.Utility
         /// <remarks>Uses a cryptographic random number generator to create a salt and applies
         /// the PBKDF2 algorithm with SHA-256 to derive a secure hash.</remarks>
         /// <returns>A string containing the iteration count, salt, and hash, each encoded in Base64 and separated by periods.</returns>
-        public static string Hash(string password)
+        internal static string Hash(string password)
         {
             // generates and stores 32 random bytes.
             byte[] salt = RandomNumberGenerator.GetBytes(_SaltSize);
@@ -49,7 +49,7 @@ namespace bank_app.Utility
         /// <param name="password">The password to verify.</param>
         /// <param name="storedHash">The stored hash to compare against, expected to be in the format "iterations.salt.hash".</param>
         /// <returns><see langword="true"/> if the password matches the stored hash; otherwise, <see langword="false"/>.</returns>
-        public static bool VerifyPassword(string password, string storedHash)
+        internal static bool VerifyPassword(string password, string storedHash)
         {
             // split the string into an array of strings consisting of [iteration] [salt] [hash]
             string[]? parts = storedHash.Split(".");

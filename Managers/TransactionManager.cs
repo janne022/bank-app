@@ -35,9 +35,9 @@ namespace bank_app.Managers
             {
                 transaction.Status = TransferStatus.Failed;
                 throw;
-            }          
+            }
             return transaction;
-        }   
+        }
 
         /// <summary>
         /// Method that performs the actual transaction, credits the sender account and debits the receiver account. 
@@ -55,12 +55,12 @@ namespace bank_app.Managers
                 {
                     //Checks if sender has enough funds in account to perform transaction
                     var senderAccount = AccountManager.GetOrThrow(transaction.SenderId);
-                    if(senderAccount.Balance < transaction.TransferAmount)
+                    if (senderAccount.Balance < transaction.TransferAmount)
                     {
                         transaction.Status = TransferStatus.Failed;
                         continue;
                     }
-                    
+
                     //Performs the transaction and marks it as completed
                     AccountManager.Withdraw(transaction.SenderId, transaction);
                     AccountManager.Deposit(transaction.ReceiverId, transaction);
