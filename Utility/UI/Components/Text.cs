@@ -61,7 +61,7 @@ namespace bank_app.Utility.Components
         {
             int line = 0;
             int leftMargin = 0;
-            int PanelWidth = ParentElement!.Width;
+            int PanelWidth = ParentComponent!.Width;
 
             switch (_textAlign)
             {
@@ -116,7 +116,7 @@ namespace bank_app.Utility.Components
         {
             int currentWidth = 0;
             int currentLine = 1;
-            int PanelWidth = ParentElement!.Width;
+            int PanelWidth = ParentComponent!.Width;
 
             for (int i = 0; i < _words.Length; i++)
             {

@@ -60,7 +60,7 @@ namespace bank_app.Utility.UI.Components
             _userInputColour = userInputColour;
         }
 
-        public override void Pressed()
+        public override (int, int) Pressed()
         {
             InputtedValue = string.Empty;
             Render();
@@ -69,13 +69,14 @@ namespace bank_app.Utility.UI.Components
             InputtedValue = Writing();
             Value = InputtedValue;
             Console.CursorVisible = false;
+            return (0, 0);
         }
 
         public override void Measure()
         {
-            if (ParentElement != null)
+            if (ParentComponent != null)
             {
-                Width = ParentElement.Width;
+                Width = ParentComponent.Width;
                 Height = 1;
             }
         }
@@ -90,9 +91,9 @@ namespace bank_app.Utility.UI.Components
 
             Console.SetCursorPosition(X, Y);
             int inputBoxWidth = Descriptor.Length - 4;// 4 refers to the extra characters
-            if (ParentElement != null)
+            if (ParentComponent != null)
             {
-                inputBoxWidth = ParentElement.Width - Descriptor.Length - 4;
+                inputBoxWidth = ParentComponent.Width - Descriptor.Length - 4;
             }
 
             ColourManager.Write($"{Descriptor}: [", _descriptorTextColour, _descriptorBGColour);
