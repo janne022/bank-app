@@ -105,4 +105,11 @@ namespace bank_app.Utility
         Admin,
         Client
     }
+
+    public enum UpOrDown
+    {
+        Up,
+        Down
+    }
+
 }
