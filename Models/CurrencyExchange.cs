@@ -24,5 +24,15 @@ namespace bank_app.Models
             {Currency.NZD, 0.18m },
             {Currency.SLC, 0.000004m }
         };
+        public static decimal ExchangeToSek(decimal amount, Currency currencyFrom, Currency sek = Currency.SEK)
+        {
+            decimal exchangeRate = _ratesToSEK[currencyFrom];
+            return amount / exchangeRate;
+        }
+        public static decimal ExchangeFromSek(decimal amount, Currency currencyTo, Currency sek = Currency.SEK)
+        {
+            decimal exchangeRate = _ratesToSEK[currencyTo];
+            return amount * exchangeRate;
+        }
     }
 }
