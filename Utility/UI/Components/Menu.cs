@@ -103,6 +103,7 @@ namespace bank_app.Utility.UI.Components
                         else if (_components[i] is Button button)
                         {
                             button.Pressed(args);
+                            return;
                         }
                         break;
                 }
