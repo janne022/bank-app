@@ -12,19 +12,22 @@ namespace bank_app.Managers
         /// </summary>
         /// <param name="userType">Enum that determines whether the user is a client or an administrator</param>
 
-        internal static void CreateUser(string userName, string userPassword, UserType userType, string email = "", string phoneNumber = "")
+        internal static User CreateUser(string userName, string userPassword, UserType userType, string email = "", string phoneNumber = "")
         {
             if (userType is UserType.Admin)
             {
                 var admin = new Admin(userName, userPassword);
                 Users.Add(admin);
+                return admin;
             }
             else if (userType is UserType.Client)
             {
                 var client = new Client(userName, userPassword, email, phoneNumber);
                 Users.Add(client);
+                return client;
             }
 
+            return null;
         }
 
         /// <summary>
