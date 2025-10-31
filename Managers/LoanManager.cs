@@ -22,7 +22,7 @@ namespace bank_app.Managers
             {
                 throw new InvalidOperationException("Loan denied: exceeds allowed limit.");
             }
-           
+
 
             var loanAccount = GetOrCreateLoanAccount(userId, currency);
 
@@ -60,19 +60,21 @@ namespace bank_app.Managers
         }
         private bool ValidateLoanLimit(Guid userId, decimal requestedAmount)
         {
-
+           
 
             decimal totalBalance = AccountManager.GetAllAccounts()
                                    .Where(account => account.OwnerId == userId && account is not LoanAccount)
                                    .Sum(account => account.Balance);
             if (totalBalance <= 0)
             {
-                throw new InvalidOperationException("User has no active deposit accounts to support a loan request.");
+               throw new InvalidOperationException("User has no active deposit accounts to support a loan request.");
             }
+
+            decimal existingDebt = _loans.Where(loan => loan.UserId == userId && loan.IsActive).Sum(loan => loan.OutstandingPrincipal);
 
             decimal maxAllowed = Math.Round(totalBalance * 5, 2);
 
-            if (requestedAmount > maxAllowed)
+            if ((requestedAmount +existingDebt)> maxAllowed)
             {
                 return false;
             }

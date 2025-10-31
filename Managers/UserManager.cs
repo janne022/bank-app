@@ -42,7 +42,7 @@ namespace bank_app.Managers
             if (user.FailedLoginAttempts < 3 && user.CurrentAccountStatus == AccountStatus.Unlocked)
             {
                 if (PasswordHasher.VerifyPassword(inputPassword, user.UserPassword))
-                {
+                { 
                     user.FailedLoginAttempts = 0;
                     return true;
                 }
