@@ -14,6 +14,8 @@ namespace bank_app.Utility.UI.Components
         public int Cols { get; set; }
         public int RowHeight { get; set; }
         public int ColWidth { get; set; }
+        List<GridCell> _interactableGridCells = new List<GridCell>();
+        GridCell? _currentGridCell = null;
         /// <summary>
         /// A console UI layout container that divides its available area into a 2D matrix of <see cref="GridCell"/>s.
         /// Each cell hosts one or more <see cref="UIComponent"/>s. Indexing is 0-based and ordered as [row, column].
@@ -87,53 +89,53 @@ namespace bank_app.Utility.UI.Components
         }
         private GridCell FindClosestGridCell(List<GridCell> gridCells, GridCell currentCell, int dX, int dY)
         {
-            var candidates = gridCells.Where(cells =>
+            var candidates = gridCells.Where(cell =>
             {
-                if (cells == currentCell)
+                if (cell == currentCell)
                 {
                     return false;
                 }
-                int diffX = currentCell.X - cells.X;
-                int diffY = currentCell.Y - cells.Y;
 
-                // Down direction
-                if (diffX < 0 && dX == 1)
+                // Find out if cell is to the right/left or above/below the currentCell
+                int dx = cell.X - currentCell.X;
+                int dy = cell.Y - currentCell.Y;
+
+                // Left
+                if (dY == -1)
                 {
-                    return true;
+                    return dx < 0;
                 }
-                // Up direction
-                else if (diffX > 0 && dX == -1)
+                // Right
+                else if (dY == 1)
                 {
-                    return true;
+                    return dx > 0;
                 }
-                // Right direction
-                if (diffY < 0 && dY == 1)
+                // Up
+                if (dX == -1)
                 {
-                    return true;
+                    return dy < 0;
                 }
-                // Left direction
-                else if (diffY > 0 && dY == -1)
+                // Down
+                else if (dX == 1)
                 {
-                    return true;
+                    return dy > 0;
                 }
+
                 return false;
-
             });
 
-            var closest = candidates.OrderBy(cells =>
+            var closest = candidates.OrderBy(cell =>
             {
-                int dxDist = cells.X - currentCell.X;
-                int dyDist = cells.Y - currentCell.Y;
-
-                return (dxDist * dxDist) + (dyDist * dyDist);
+                int dx = cell.X - currentCell.X;
+                int dy = cell.Y - currentCell.Y;
+                return (dx * dx) + (dy * dy);
             }).FirstOrDefault();
+
             return closest;
         }
         public override (int, int) Pressed()
         {
-            List<GridCell> interactableGridCells = new List<GridCell>();
-            GridCell? currentGridCell = null;
-            GridCell? cellBuffer = null;
+            GridCell? _cellBuffer = null;
             // Add any GridCells that has an interactable component inside it
             for (int r = 0; r < _grid.GetLength(0); r++)
             {
@@ -141,29 +143,29 @@ namespace bank_app.Utility.UI.Components
                 {
                     if (_grid[r, c].Components.Any(component => component.IsInteractable))
                     {
-                        interactableGridCells.Add(_grid[r, c]);
+                        _interactableGridCells.Add(_grid[r, c]);
                     }
                 }
             }
-            if (interactableGridCells.Count > 0)
+            if (_interactableGridCells.Count > 0 && _currentGridCell == null)
             {
-                currentGridCell = interactableGridCells[0];
+                _currentGridCell = _interactableGridCells[0];
             }
-            if (currentGridCell != null)
+            if (_currentGridCell != null)
             {
                 while (true)
                 {
                     // Press the Gridcell
-                    (int,int) coordinates = currentGridCell.Pressed();
-                    cellBuffer = FindClosestGridCell(interactableGridCells,currentGridCell,coordinates.Item1, coordinates.Item2);
-                    if (cellBuffer == null)
+                    (int,int) coordinates = _currentGridCell.Pressed();
+                    _cellBuffer = FindClosestGridCell(_interactableGridCells,_currentGridCell,coordinates.Item1, coordinates.Item2);
+                    if (_cellBuffer == null)
                     {
                         return coordinates;
                     }
                     else
                     {
-                        currentGridCell.Render();
-                        currentGridCell = cellBuffer;
+                        _currentGridCell.Render();
+                        _currentGridCell = _cellBuffer;
                     }
                 }
             }
