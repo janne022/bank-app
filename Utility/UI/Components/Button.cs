@@ -59,9 +59,10 @@ namespace bank_app.Utility.UI.Components
         /// Press (on Enter key) button functionality with no passed arguments.
         /// Usage: myButton.MethodRunner = myButton => myObject.myMethod();
         /// </summary>
-        public override void Pressed()
+        public override (int, int) Pressed()
         {
             MethodRunner?.Invoke(this);
+            return (0, 0);
         }
 
         public override void Render()
@@ -84,11 +85,11 @@ namespace bank_app.Utility.UI.Components
                     break;
 
                 case Justify.Center:
-                    leftMargin = (ParentElement!.Width - Text.Length) / 2;
+                    leftMargin = (ParentComponent!.Width - Text.Length) / 2;
                     break;
 
                 case Justify.End:
-                    leftMargin = ParentElement!.Width - Text.Length;
+                    leftMargin = ParentComponent!.Width - Text.Length;
                     break;
             }
             return leftMargin;

@@ -15,7 +15,7 @@ namespace bank_app.Utility.UI
         public int Height { get; set; }
         public bool IsInteractable = false;
         public object? Value { get; set; }
-        public UIComponent? ParentElement { get; set; }
+        public UIComponent? ParentComponent { get; set; }
 
 
         /// <summary>
@@ -35,8 +35,9 @@ namespace bank_app.Utility.UI
         /// Pressed is a optional method used whenever a user is clicking inside another interactable component.
         /// </summary>
         /// 
-        public virtual void Pressed()
+        public virtual (int, int) Pressed()
         {
+            return (0, 0);
         }
     }
 }

@@ -31,8 +31,18 @@ namespace bank_app.UI.Pages
             cell.OrderBy = OrderBy.Column;
             grid.AddGridComponent(0, 1, new AsciiArt("Assets/Ascii/bank.txt"));
             // Add grid to layout and set rounded border style
+
+
+
+            grid.AddGridComponent(1, 2, new Layout(new Menu(new List<UIComponent>{new InputField("Username",false,16),
+                new InputField("Password",true,16),
+                new Button(loginInvoke, "Login")}), LayoutBorder.Rounded, "Login", 40, 10, ColourFG.Yellow));
             Layout layout = new(grid, LayoutBorder.Heavy);
             layout.Render();
+            while (true)
+            {
+                layout.Pressed();
+            }
         }
 
         private void LoginHandler(string username, string password)

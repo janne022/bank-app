@@ -16,7 +16,7 @@ namespace bank_app.Utility.UI.Components
         /// </summary>
         /// <param name="components">
         /// The child components to display inside the menu, in render/navigation order.
-        /// The menu sets itself as each child's <see cref="UIComponent.ParentElement"/>.
+        /// The menu sets itself as each child's <see cref="UIComponent.ParentComponent"/>.
         /// </param>
         /// <param name="order">
         /// Intended layout ordering for the menu items (row or column). Rendering currently
@@ -40,7 +40,7 @@ namespace bank_app.Utility.UI.Components
             // Make this object a parent to all child objects
             foreach (var item in components)
             {
-                item.ParentElement = this;
+                item.ParentComponent = this;
             }
             // Check how many objects that are not buttons to see how many arguments we are passing if there is a button inside Menu
             int argsCount = 0;
@@ -54,7 +54,7 @@ namespace bank_app.Utility.UI.Components
             args = new object[argsCount];
         }
 
-        public override void Render()
+        public override (int, int) Pressed()
         {
             // Holds a menu in a while loop
             int i = 0;
@@ -86,13 +86,25 @@ namespace bank_app.Utility.UI.Components
                         {
                             i++;
                         }
+                        else
+                        {
+                            return (1, 0);
+                        }
                         break;
                     case ConsoleKey.UpArrow:
                         if (i > 0)
                         {
                             i--;
                         }
+                        else
+                        {
+                            return (-1, 0);
+                        }
                         break;
+                    case ConsoleKey.RightArrow:
+                        return (0, 1);
+                    case ConsoleKey.LeftArrow:
+                        return (0, -1);
                     case ConsoleKey.Enter:
                         _components[i].Pressed();
                         // If component is not a button we set the args index to be the value inside the component. If it is a button we run the pressed method for button with the current args.
@@ -107,6 +119,16 @@ namespace bank_app.Utility.UI.Components
                         }
                         break;
                 }
+            }
+        }
+
+        public override void Render()
+        {
+            for (int j = 0; j < _components.Count; j++)
+            {
+                _components[j].X = X;
+                _components[j].Y = Y + j;
+                _components[j].Render();
             }
         }
     }
