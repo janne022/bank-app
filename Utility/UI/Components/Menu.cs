@@ -10,6 +10,7 @@ namespace bank_app.Utility.UI.Components
     {
         private List<UIComponent> _components;
         private object[] args;
+        private int _index = 0;
         /// <summary>
         /// Initializes a new instance of the <see cref="Menu"/> that renders and handles
         /// keyboard navigation for a list of child <see cref="UIComponent"/>s.
@@ -57,7 +58,6 @@ namespace bank_app.Utility.UI.Components
         public override (int, int) Pressed()
         {
             // Holds a menu in a while loop
-            int i = 0;
             while (true)
             {
                 // Render every object after eachother. If selected object is the one we are rendering, we highlight it
@@ -65,7 +65,7 @@ namespace bank_app.Utility.UI.Components
                 {
                     _components[j].X = X;
                     _components[j].Y = Y + j;
-                    if (j == i)
+                    if (j == _index)
                     {
                         // Black foreground on white background
                         Console.Write($"\u001b[30;47m");
@@ -82,9 +82,9 @@ namespace bank_app.Utility.UI.Components
                 switch (key)
                 {
                     case ConsoleKey.DownArrow:
-                        if (i < _components.Count - 1)
+                        if (_index < _components.Count - 1)
                         {
-                            i++;
+                            _index++;
                         }
                         else
                         {
@@ -92,9 +92,9 @@ namespace bank_app.Utility.UI.Components
                         }
                         break;
                     case ConsoleKey.UpArrow:
-                        if (i > 0)
+                        if (_index > 0)
                         {
-                            i--;
+                            _index--;
                         }
                         else
                         {
@@ -106,13 +106,13 @@ namespace bank_app.Utility.UI.Components
                     case ConsoleKey.LeftArrow:
                         return (0, -1);
                     case ConsoleKey.Enter:
-                        _components[i].Pressed();
+                        _components[_index].Pressed();
                         // If component is not a button we set the args index to be the value inside the component. If it is a button we run the pressed method for button with the current args.
-                        if (_components[i] is not Button)
+                        if (_components[_index] is not Button)
                         {
-                            args[i] = _components[i].Value;
+                            args[_index] = _components[_index].Value;
                         }
-                        else if (_components[i] is Button button)
+                        else if (_components[_index] is Button button)
                         {
                             button.Pressed(args);
                         }
