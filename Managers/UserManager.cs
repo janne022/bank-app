@@ -71,16 +71,16 @@ namespace bank_app.Managers
             user.UpdateAccountStatus(AccountStatus.Unlocked);
         }
 
-        internal static User? Login(string userName, string password)
+        internal static User? Login(User user, string password)
         {
             // Loops through all made users in the program...
-            foreach (var user in Users)
+            foreach (var u in Users)
             {
-                // if the username input matches any of the existing users' names... AND they are authorized to login AND the password is correct...
-                if (user.UserName == userName && Authorization(user, password))
+                // if the user id input matches any of the existing users' ids... AND they are authorized to login AND the password is correct...
+                if (u.UserId == user.UserId && Authorization(user, password))
                 {
                     // ...return that specific user
-                    return user;
+                    return u;
                 }
             }
             // ...and if no user matches the name, password or the user is not authorized to login: return nothing.
@@ -89,7 +89,7 @@ namespace bank_app.Managers
 
         internal static void Logout()
         {
-            // UI needed to develop
+            // UI needed to develop - change page to login page
         }
 
 
