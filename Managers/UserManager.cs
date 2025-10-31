@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using bank_app.Models.Users;
-using bank_app.Utility;
+﻿using bank_app.Models.Users;
 using bank_app.Utility;
 
 namespace bank_app.Managers
@@ -55,18 +48,18 @@ namespace bank_app.Managers
             {
                 if (PasswordHasher.VerifyPassword(inputPassword, user.UserPassword))
                 {
-                    user.FailedLoginAttempts = 0;
+                    user.updateLoginAttempts(0);
                     return true;
                 }
                 else
                 {
-                    user.FailedLoginAttempts++;
+                    user.updateLoginAttempts(1);
                     return false;
                 }
             }
             else
             {
-                user.CurrentAccountStatus = AccountStatus.Locked;
+                user.updateAccountStatus(AccountStatus.Locked);
                 return false;
                 // You have entered the wrong password 3 times, and thusly locked your account. Contact the bank to get your login unlocked.
             }
@@ -74,7 +67,7 @@ namespace bank_app.Managers
 
         public static void UnlockAccount(User user)
         {
-            user.CurrentAccountStatus = AccountStatus.Unlocked;
+            user.updateAccountStatus(AccountStatus.Unlocked);
         }
 
         public static User? Login(string userName, string password)
@@ -103,10 +96,9 @@ namespace bank_app.Managers
         /// Updates the properties of the user object
         /// </summary>
         /// <param name="user">the name of the user object to be changed</param>
-        public static void ChangeUserInfo(User user, string userName, string userPassword)
+        public static void ChangeUserInfo(User user, string typeOfChange, string change)
         {
-            user.UserName = userName;
-            user.UserPassword = userPassword;
+            user.updateUserInfo(typeOfChange, change);
         }
     }
 }
