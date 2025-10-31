@@ -18,17 +18,17 @@ namespace bank_app.Models.Users
 
 
         // private setters
-        private void setUserName(string name)
+        private void SetUserName(string name)
         {
             UserName = name;
         }
 
-        private void setPassword(string password)
+        private void SetPassword(string password)
         {
             UserPassword = PasswordHasher.Hash(password);
         }
 
-        private void setLoginAttempts(int attempts)
+        private void SetLoginAttempts(int attempts)
         {
             if (attempts == 1)
             {
@@ -41,7 +41,7 @@ namespace bank_app.Models.Users
 
         }
 
-        private void setAccountStatus(AccountStatus accountStatus)
+        private void SetAccountStatus(AccountStatus accountStatus)
         {
             CurrentAccountStatus = accountStatus;
         }
@@ -49,28 +49,28 @@ namespace bank_app.Models.Users
 
         // public methods to access private setters
 
-        public void updateUserInfo(string type, string change)
+        public void UpdateUserInfo(string type, string change)
         {
             switch (type)
             {
                 case "name":
-                    setUserName(change);
+                    SetUserName(change);
                     break;
 
                 case "password":
-                    setPassword(change);
+                    SetPassword(change);
                     break;
             }
         }
 
-        public void updateLoginAttempts(int change)
+        public void UpdateLoginAttempts(int change)
         {
-            setLoginAttempts(change);
+            SetLoginAttempts(change);
         }
 
-        public void updateAccountStatus(AccountStatus newStatus)
+        public void UpdateAccountStatus(AccountStatus newStatus)
         {
-            setAccountStatus(newStatus);
+            SetAccountStatus(newStatus);
         }
     }
 }

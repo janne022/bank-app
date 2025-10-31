@@ -45,18 +45,18 @@ namespace bank_app.Managers
             {
                 if (PasswordHasher.VerifyPassword(inputPassword, user.UserPassword))
                 {
-                    user.updateLoginAttempts(0);
+                    user.UpdateLoginAttempts(0);
                     return true;
                 }
                 else
                 {
-                    user.updateLoginAttempts(1);
+                    user.UpdateLoginAttempts(1);
                     return false;
                 }
             }
             else
             {
-                user.updateAccountStatus(AccountStatus.Locked);
+                user.UpdateAccountStatus(AccountStatus.Locked);
                 return false;
                 // You have entered the wrong password 3 times, and thusly locked your account. Contact the bank to get your login unlocked.
             }
@@ -64,7 +64,7 @@ namespace bank_app.Managers
 
         internal static void UnlockAccount(User user)
         {
-            user.updateAccountStatus(AccountStatus.Unlocked);
+            user.UpdateAccountStatus(AccountStatus.Unlocked);
         }
 
         internal static User? Login(string userName, string password)
@@ -95,7 +95,7 @@ namespace bank_app.Managers
         /// <param name="user">the name of the user object to be changed</param>
         public static void ChangeUserInfo(User user, string typeOfChange, string change)
         {
-            user.updateUserInfo(typeOfChange, change);
+            user.UpdateUserInfo(typeOfChange, change);
         }
     }
 }

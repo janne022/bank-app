@@ -23,28 +23,28 @@ namespace bank_app.Models.Users
 
 
         // private setters
-        private void setEmail(string email)
+        private void SetEmail(string email)
         {
             Email = email;
         }
 
-        private void setPhoneNumber(string phoneNumber)
+        private void SetPhoneNumber(string phoneNumber)
         {
             PhoneNumber = phoneNumber;
         }
 
         // public methods to reach private setters
 
-        public void updateContactInfo(string type, string change)
+        public void UpdateContactInfo(string type, string change)
         {
             switch (type)
             {
                 case "email":
-                    setEmail(change);
+                    SetEmail(change);
                     break;
 
                 case "number":
-                    setPhoneNumber(change);
+                    SetPhoneNumber(change);
                     break;
             }
         }
