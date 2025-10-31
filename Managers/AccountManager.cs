@@ -50,17 +50,46 @@ namespace bank_app.Managers
             // Using the indexer simplifies handling rare Guid collisions by overwriting the same key.
             _accounts[newAccount.AccountID] = newAccount;
 
-            if (newAccount==null)
+            if (newAccount == null)
             {
-                
-            return false;
+
+                return false;
             }
 
-			return true;
-		}
+            return true;
+        }
+
+
+        /// <summary>
+        /// Removes an account by its ID. Returns true if removed.
+        /// </summary>
+        public static bool RemoveAccount(Guid accountID)
+        {
+            return _accounts.Remove(accountID);
+        }
+
+        /// <summary>
+        /// Returns a snapshot list of all accounts.
+        /// </summary>
+        public static List<Account> GetAllAccounts()
+        {
+            return _accounts.Values.ToList();
+        }
+
 
         /// <summary>
         /// Adds balance to account using unique identifier and data from transaction.
+
+        /// <summary>
+        /// Returns the number of accounts currently tracked.
+        /// </summary>
+        public static int GetAccountsCount()
+        {
+            return _accounts.Count;
+        }
+
+
+        //Methods for Deposit and Withdraw to update Balance
         /// </summary>
         public static void Deposit(Guid accountId, Transaction transaction)
         {
@@ -84,35 +113,17 @@ namespace bank_app.Managers
         /// </summary>
         public static Account GetOrThrow(Guid id)
         {
-            if(!_accounts.TryGetValue(id, out var acc))
+            if (!_accounts.TryGetValue(id, out var acc))
             {
                 throw new InvalidOperationException();
             }
             return acc;
         }
 
-        /// <summary>
-        /// Returns the number of accounts currently tracked.
-        /// </summary>
-        public static int GetAccountsCount()
-        {
-            return _accounts.Count;
-        }
 
-        /// <summary>
-        /// Removes an account by its ID. Returns true if removed.
-        /// </summary>
-        public static bool RemoveAccount(Guid accountID)
-        {
-            return _accounts.Remove(accountID);
-        }
 
-        /// <summary>
-        /// Returns a snapshot list of all accounts.
-        /// </summary>
-        public static List<Account> GetAllAccounts()
-        {
-            return _accounts.Values.ToList();
-        }
+
+
+        
     }
 }

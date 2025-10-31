@@ -15,44 +15,44 @@ namespace bank_app.Utility.UI.Components
     public class Button : UIComponent
     {
         public string Text { get; private set; }
-        public Delegate Delegate { get; set; }
+        private readonly IInvokable _invokable;
         public Action<Button>? MethodRunner { get; set; }
         private Justify Alignment;
         private ColourFG _textColour;
         private ColourBG _buttonColour;
-
+        
 
         /// <summary>
         /// Button UIComponent constructor.
         /// </summary>
-        /// <param name="delegation">The method to run on button press.</param>
+        /// <param name="invokable">Needs to be an Invokable class object with the method you want to run</param>
         /// <param name="text">The text displayed on the button.</param>
         /// <param name="justify">Whether the button should be displayed aligned left, right or center.</param>
         /// <param name="textColour">Colour of text. Default to the terminal's default.</param>
         /// <param name="buttonColour">Colour of the button itself. Default to the terminal's default.</param>
-        public Button(Delegate delegation, string text, Justify justify = Justify.Center, ColourFG textColour = ColourFG.Reset, ColourBG buttonColour = ColourBG.Reset)
+        public Button(IInvokable invokable, string text, Justify justify = Justify.Center, ColourFG textColour = ColourFG.None, ColourBG buttonColour = ColourBG.None)
         {
             Text = text;
-            Delegate = delegation;
+            _invokable = invokable;
             Alignment = justify;
             _textColour = textColour;
             _buttonColour = buttonColour;
         }
-        
+
         /// <summary>
         /// Press (on Enter key) button functionality with passed arguments.
         /// </summary>
         /// <param name="args">Object array sent as arguments</param>
         public void Pressed(params object[] args)
         {
-            Delegate.DynamicInvoke(args);
+            _invokable.Invoke(args);
         }
 
         public override void Measure()
         {
             Height = 1;
             Width = Text.Length + 4;  // [ ButtonText ]
-                                        // 12          34
+                                      // 12          34
         }
 
         /// <summary>
@@ -68,9 +68,9 @@ namespace bank_app.Utility.UI.Components
         {
             int leftMargin = SetMargin();
 
-            Console.SetCursorPosition(X+leftMargin, Y);
+            Console.SetCursorPosition(X + leftMargin, Y);
             Console.Write("[");
-            ColourManager.Write($" {Text} ", ColourFG.BlueBright, ColourBG.Green);
+            ColourManager.Write($" {Text} ", _textColour, _buttonColour);
             Console.Write("]");
         }
 

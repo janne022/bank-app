@@ -1,9 +1,5 @@
 ﻿using bank_app.UI;
-
-﻿using bank_app.Managers;
-using bank_app.Models.Users;
-using bank_app.Utility;
-using bank_app.Models;
+using bank_app.Managers;
 internal class Program
 {
     private static void Main(string[] args)
@@ -13,12 +9,6 @@ internal class Program
         Console.InputEncoding = System.Text.Encoding.UTF8;
         // Starts the async method inside a background thread that needs to run without getting blocked from ex. UI
         Task.Run(BackgroundThread);
-
-        // ----------------------------------- TEST ------------------------------------- //
-
-
-
-        // --------------------------------- TEST OVER ---------------------------------- //
 
         // Start the first User Interface page
         Login.Menu();

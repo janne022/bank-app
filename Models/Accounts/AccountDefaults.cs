@@ -17,7 +17,7 @@ namespace bank_app.Models.Accounts
         public const decimal SavingsInterestRate = 5m;
         public const decimal SavingsMinimumBalance = 100m;
         public const bool SavingsAllowWithdraws = true;
- 
+
 
         // Loan
         public const decimal LoanInterestRate = 7m;
