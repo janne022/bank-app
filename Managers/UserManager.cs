@@ -46,6 +46,7 @@ namespace bank_app.Managers
                 if (PasswordHasher.VerifyPassword(inputPassword, user.UserPassword))
                 {
                     user.UpdateLoginAttempts(0);
+
                     return true;
                 }
                 else

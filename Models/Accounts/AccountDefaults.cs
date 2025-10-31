@@ -10,6 +10,9 @@ namespace bank_app.Models.Accounts
     {
         //This class holds default values for different account types
         // Checking
+
+
+     
         public const decimal CheckingMonthlyFee = 10m;
         public const decimal CheckingOverdraftLimit = 500m;
 
@@ -22,6 +25,7 @@ namespace bank_app.Models.Accounts
         // Loan
         public const decimal LoanInterestRate = 7m;
         public const decimal LoanCreditLimit = 1000m;
+        public const int MaxLoansPerUser = 5;
 
     }
 }
