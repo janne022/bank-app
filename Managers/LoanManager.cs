@@ -30,7 +30,7 @@ namespace bank_app.Managers
             _loans.Add(loan);
 
             var transaction = CreateLoanTransaction(loanAccount, principal);
-            loanAccount.ApplyTransaction(transaction);
+            loanAccount.ApplyTransaction(transaction, principal);
 
             return loan;
 
