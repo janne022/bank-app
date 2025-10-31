@@ -10,16 +10,17 @@ namespace bank_app.Models.Users
 {
     public abstract class User
     {
-        private Guid UserId { get; set; }  = Guid.NewGuid();
+        private Guid UserId { get; }  = Guid.NewGuid();
         public string? UserName { get; set; }
-        public string? UserPassword { get; set; }
+
+        private string? UserPassword { get; set; };
         public int FailedLoginAttempts { get; set; } = 0;
         public AccountStatus CurrentAccountStatus { get; set; }
 
         protected User( string userName, string userPassword)
         {
             UserName = userName;
-            UserPassword = PasswordHasher.Hash(userPassword);
+            _UserPassword = PasswordHasher.Hash(userPassword);
         }
     }
 }
