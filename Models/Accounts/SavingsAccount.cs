@@ -18,8 +18,8 @@ namespace bank_app.Models.Accounts
         //Indicates whether withdrawals are allowed
         public bool AllowWithdrawals { get; private set; }
 
-        public SavingsAccount(Currency currency, decimal balance, decimal interestRate, decimal minimalBalance, DateTime lastInterestDate, bool allowWithdrawals)
-            : base(currency, balance)
+        public SavingsAccount(Currency currency, decimal balance, Guid ownerId,decimal interestRate, decimal minimalBalance, DateTime lastInterestDate, bool allowWithdrawals)
+            : base(currency, balance, ownerId)
         {
             InterestRate = interestRate < 0 ? 0 : interestRate;
             MinimumBalance = minimalBalance < 0 ? 0 : minimalBalance;

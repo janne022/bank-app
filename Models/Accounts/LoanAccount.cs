@@ -9,14 +9,14 @@ namespace bank_app.Models.Accounts
 {
     public class LoanAccount : Account
     {
-        public Guid OwnerId { get; private set; }
+        
         public decimal CreditLimit { get; private set; }
 
-        public LoanAccount(Guid ownerId,Currency currency,  decimal creditLimit)
-            : base(currency, 0)
+        public LoanAccount(Currency currency, Guid ownerId, decimal creditLimit)
+            : base(currency, 0, ownerId)
         {
            
-            OwnerId = ownerId;
+          
             CreditLimit = creditLimit < 0 ? throw new ArgumentOutOfRangeException(nameof(creditLimit), "Credit limit cannot be negative.") : creditLimit;
 
         }

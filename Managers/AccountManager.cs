@@ -27,20 +27,22 @@ namespace bank_app.Managers
                 AccountType.CheckingAcc => new CheckingAccount(
                     currency,
                     balance,
+                    ownerID,
                     AccountDefaults.CheckingMonthlyFee,
                     AccountDefaults.CheckingOverdraftLimit),
 
                 AccountType.SavingsAcc => new SavingsAccount(
                     currency,
                     balance,
+                    ownerID,
                     AccountDefaults.SavingsInterestRate,
                     AccountDefaults.SavingsMinimumBalance,
                     DateTime.Now,
                     AccountDefaults.SavingsAllowWithdraws),
 
                 AccountType.LoanAcc => new LoanAccount(
-                    ownerID,
                     currency,           
+                    ownerID,
                     AccountDefaults.LoanCreditLimit),
 
                 _ => throw new ArgumentException("Invalid account type.", nameof(accountType))

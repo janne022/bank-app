@@ -18,11 +18,15 @@ namespace bank_app.Managers
         public Loan DisburseLoan(Guid userId, decimal principal, Currency currency)
         {
 
-            ValidateLoanLimit(userId);
+            if (!ValidateLoanLimit(userId, principal))
+            {
+                throw new InvalidOperationException("Loan denied: exceeds allowed limit.");
+            }
+           
 
             var loanAccount = GetOrCreateLoanAccount(userId, currency);
 
-            var loan=new Loan(userId, principal,AccountDefaults.LoanInterestRate, DateTime.Now);
+            var loan = new Loan(userId, principal, AccountDefaults.LoanInterestRate, DateTime.Now);
             _loans.Add(loan);
 
             var transaction = CreateLoanTransaction(loanAccount, principal);
@@ -41,8 +45,8 @@ namespace bank_app.Managers
             if (loanAccount == null)
             {
                 loanAccount = new LoanAccount(
-                    userId,
                     currency,
+                    userId,
                     AccountDefaults.LoanCreditLimit
                 );
 
@@ -54,15 +58,25 @@ namespace bank_app.Managers
 
             return loanAccount;
         }
-        private void ValidateLoanLimit(Guid userId)
+        private bool ValidateLoanLimit(Guid userId, decimal requestedAmount)
         {
-            int activeLoanCount = _loans.Count(l => l.UserId == userId && l.IsActive);
 
-            if (activeLoanCount >= AccountDefaults.MaxLoansPerUser)
+
+            decimal totalBalance = AccountManager.GetAllAccounts()
+                                   .Where(account => account.OwnerId == userId && account is not LoanAccount)
+                                   .Sum(account => account.Balance);
+            if (totalBalance <= 0)
             {
-                throw new InvalidOperationException(
-                    $"User {userId} has reached the maximum number of active loans ({AccountDefaults.MaxLoansPerUser}).");
+                throw new InvalidOperationException("User has no active deposit accounts to support a loan request.");
             }
+
+            decimal maxAllowed = Math.Round(totalBalance * 5, 2);
+
+            if (requestedAmount > maxAllowed)
+            {
+                return false;
+            }
+            return true;
         }
 
         private Transaction CreateLoanTransaction(LoanAccount loanAccount, decimal principal)
@@ -77,10 +91,10 @@ namespace bank_app.Managers
             {
                 TransactionType = TransactionType.Withdrawal,
                 Status = TransferStatus.Completed,
-                
+
             };
 
-           
+
             return transaction;
         }
 
