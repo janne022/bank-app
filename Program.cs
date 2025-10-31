@@ -1,6 +1,6 @@
 ﻿using bank_app.UI;
-
 using bank_app.Managers;
+
 internal class Program
 {
     private static void Main(string[] args)
@@ -12,7 +12,7 @@ internal class Program
         Task.Run(BackgroundThread);
 
         // Start the first User Interface page
-        Login.Menu();
+        PageManager.Start(PageType.Login);
     }
     private static async Task BackgroundThread()
     {

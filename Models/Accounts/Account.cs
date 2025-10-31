@@ -10,16 +10,17 @@ namespace bank_app.Models.Accounts
     {
         public Guid AccountID { get; private set; }
         public Currency AccountCurrency { get; private set; }
-        public decimal Balance { get; private set; } //Balance is set in SEK
-
+        public decimal Balance { get; private set; }
+        public Guid OwnerId { get; private set; }
         private readonly List<Transaction> _transactions = new List<Transaction>();
         public IReadOnlyList<Transaction> Transactions => _transactions;
 
-        protected Account(Currency currency, decimal balance)
+        protected Account(Currency currency, decimal balance, Guid ownerId)
         {
             AccountID = Guid.NewGuid();
             AccountCurrency = currency;
             Balance = balance < 0 ? 0 : balance;
+            OwnerId = ownerId;
         }
 
         /// <summary>

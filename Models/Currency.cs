@@ -32,9 +32,10 @@ namespace bank_app.Models
     }
     public enum AccountType
     {
-        Checking,
-        Savings,
-        Loan,
+        CheckingAcc,
+        SavingsAcc,
+        LoanAcc,
+
     }
 
 
