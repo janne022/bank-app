@@ -10,17 +10,73 @@ namespace bank_app.Models.Users
 {
     public abstract class User
     {
-        private Guid UserId { get; }  = Guid.NewGuid();
-        public string? UserName { get; set; }
+        public Guid UserId { get; private set; } = Guid.NewGuid();
+        public string? UserName { get; private set; }
+        public string? UserPassword { get; private set; }
+        public int FailedLoginAttempts { get; private set; } = 0;
+        public AccountStatus CurrentAccountStatus { get; private set; }
 
-        private string? UserPassword { get; set; };
-        public int FailedLoginAttempts { get; set; } = 0;
-        public AccountStatus CurrentAccountStatus { get; set; }
-
-        protected User( string userName, string userPassword)
+        public User(string userName, string userPassword)
         {
             UserName = userName;
-            _UserPassword = PasswordHasher.Hash(userPassword);
+            UserPassword = PasswordHasher.Hash(userPassword);
+        }
+
+
+        // private setters
+        private void setUserName(string name)
+        {
+            UserName = name;
+        }
+
+        private void setPassword(string password)
+        {
+            UserPassword = PasswordHasher.Hash(password);
+        }
+
+        private void setLoginAttempts(int attempts)
+        {
+            if (attempts == 1)
+            {
+                FailedLoginAttempts += 1;
+            }
+            else if (attempts == 0)
+            {
+                FailedLoginAttempts = 0;
+            }
+
+        }
+
+        private void setAccountStatus(AccountStatus accountStatus)
+        {
+            CurrentAccountStatus = accountStatus;
+        }
+
+
+        // public methods to access private setters
+
+        public void updateUserInfo(string type, string change)
+        {
+            switch (type)
+            {
+                case "name":
+                    setUserName(change);
+                    break;
+
+                case "password":
+                    setPassword(change);
+                    break;
+            }
+        }
+
+        public void updateLoginAttempts(int change)
+        {
+            setLoginAttempts(change);
+        }
+
+        public void updateAccountStatus(AccountStatus newStatus)
+        {
+            setAccountStatus(newStatus);
         }
     }
 }
