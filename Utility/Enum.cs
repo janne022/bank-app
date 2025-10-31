@@ -69,6 +69,13 @@ namespace bank_app.Utility
         Column
     }
 
+    public enum PageType
+    {
+        Login,
+        AdminDashboard,
+        ClientDashboard
+    }
+
     public enum LayoutBorder
     {
         None,

@@ -1,38 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace bank_app.Models
+﻿namespace bank_app.Models
 {
     public class Loan
     {
-
-        public readonly decimal interestRate = 0.05m;
-        public decimal Interest { get; set; }
-
+        public Guid LoanId { get; }
+        public Guid UserId { get; set; }
         public decimal Principal { get; set; }
-
-        public int Term { get; set; }
-
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
-
+        public decimal OutStandingPrincipal { get; set; }
+        public decimal AccruedInterest { get; set; }
+        public decimal AnnualRate { get; set; }
+        public DateTime LastAccrualDate { get; set; }
 
 
-        public Loan(decimal interest, decimal principal, int term, DateTime startDate, DateTime endDate)
+
+        public Loan(Guid userId, decimal principal, decimal annualRate, DateTime startDate)
         {
-            Interest = interest;
+            LoanId = Guid.NewGuid();
+            UserId = userId;
             Principal = principal;
-            Term = term;
-            StartDate = startDate;
-            EndDate = endDate;
+            OutStandingPrincipal = principal;
+            AnnualRate = annualRate;
+            LastAccrualDate = startDate;
+
+
         }
-
-
-
 
 
     }

@@ -156,11 +156,11 @@ namespace bank_app.Utility.UI.Components
                 while (true)
                 {
                     // Press the Gridcell
-                    (int,int) coordinates = _currentGridCell.Pressed();
-                    _cellBuffer = FindClosestGridCell(_interactableGridCells,_currentGridCell,coordinates.Item1, coordinates.Item2);
+                    (int,int) directionInt = _currentGridCell.Pressed();
+                    _cellBuffer = FindClosestGridCell(_interactableGridCells,_currentGridCell,directionInt.Item1, directionInt.Item2);
                     if (_cellBuffer == null)
                     {
-                        return coordinates;
+                        return directionInt;
                     }
                     else
                     {
