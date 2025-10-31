@@ -14,7 +14,8 @@ namespace bank_app.UI.Pages
         {
             if (user is Client client)
             {
-                
+                Console.WriteLine("Välkommen till dashboard: " + client.UserName);
+                Console.ReadLine();
             }
         }
     }

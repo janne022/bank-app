@@ -9,9 +9,11 @@ namespace bank_app.UI.Pages
 {
     public class Login : Page
     {
+        bool continueRunning = true;
         public override void LoadPage(User user)
         {
             Console.CursorVisible = false;
+            UserManager.CreateUser("janne", "jan", UserType.Client);
             // Create a new Invokable object with the method that is going to run once the 'Login' button is pressed
             var loginInvoke = new Invokable<string, string>(LoginHandler);
             // Create new 3x3 grid
@@ -39,7 +41,7 @@ namespace bank_app.UI.Pages
                 new Button(loginInvoke, "Login")}), LayoutBorder.Rounded, "Login", 40, 10, ColourFG.Yellow));
             Layout layout = new(grid, LayoutBorder.Heavy);
             layout.Render();
-            while (true)
+            while (continueRunning)
             {
                 layout.Pressed();
             }
@@ -60,6 +62,7 @@ namespace bank_app.UI.Pages
                 {
                     PageManager.SwitchPage(PageType.AdminDashboard, admin);
                 }
+                continueRunning = false;
             }
             else
             {
