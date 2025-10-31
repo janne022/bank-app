@@ -79,6 +79,7 @@ namespace bank_app.Managers
                         transactionAmount = CurrencyExchange.ExchangeFromSek(transactionAmount, receiverAccount.AccountCurrency);
                     }
 
+                    //Performs the deposit to receivers account in receiver accounts local currency which will be saved in "transactionAmount". 
                     AccountManager.Deposit(transaction.ReceiverId, transaction, transactionAmount);
                     transaction.Status = TransferStatus.Completed;
                 }
