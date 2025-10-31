@@ -57,11 +57,11 @@ namespace bank_app.Utility.UI.Components
                     case ConsoleKey.Escape:
                         return (0, 0);
 
-                    case ConsoleKey.PageUp:
+                    case ConsoleKey.UpArrow:
                         Scroll(UpOrDown.Up);
                         break;
 
-                    case ConsoleKey.PageDown:
+                    case ConsoleKey.DownArrow:
                         Scroll(UpOrDown.Down);
                         break;
                 }
@@ -76,19 +76,34 @@ namespace bank_app.Utility.UI.Components
 
         public void Scroll(UpOrDown direction)
         {
-            //Console.Clear(); // TAKE THIS AWAY AFTER TESTING OMG
 
+            int allEntries = FeedContents.Count;
 
-            if (direction == UpOrDown.Up && _pastEntries > 0)
+            if (direction == UpOrDown.Up)
             {
-                _pastEntries--;
-                _currentIndex--;
+                if (_currentIndex > 0)
+                {
+                    _currentIndex--;
+
+                    // Scroll if need be
+                    if (_currentIndex < _pastEntries)
+                    {
+                        _pastEntries--;
+                    }
+                }
             }
 
-            if (direction == UpOrDown.Down && _pastEntries < FeedContents.Count - FeedLines)
+            if (direction == UpOrDown.Down)
             {
-                _pastEntries++;
-                _currentIndex++;
+                if (_currentIndex < allEntries - 1)
+                {
+                    _currentIndex++;
+
+                    if (_currentIndex >= _pastEntries + FeedLines)
+                    {
+                        _pastEntries++;
+                    }
+                }
             }
 
         }
@@ -127,7 +142,7 @@ namespace bank_app.Utility.UI.Components
                     .Take(FeedLines);
                                
                 
-                Console.WriteLine($"{"Name",-15}{"Phone Number",-15}{"Email",-25}");
+                Console.WriteLine($"{"  Name",-15}{"Phone Number",-15}{"Email",-25}");
                 for (int i = 0; i < 50; i++)
                 {
                     ColourManager.Write("─", ColourFG.None, ColourBG.None);
@@ -147,14 +162,8 @@ namespace bank_app.Utility.UI.Components
                                 client.Email
                             }
                         );
-                         
                     }
-                    //ColourManager.Write($"{client.UserName,-15}{client.PhoneNumber,-15}{client.Email,-25}\n", ColourFG.None, ColourBG.None);
                 }
-
-                
-
-
             }
 
             HandleFeed(displayFeed);
@@ -182,38 +191,31 @@ namespace bank_app.Utility.UI.Components
         }
 
 
-        //// Black foreground on white background
-        //Console.Write($"\u001b[30;47m");
-        //                _components[j].Render();
-        //Console.Write("\u001b[0m");
-
         private void HandleFeed(List<string[]> displayFeed)
         {
             for (int i = 0; i < displayFeed.Count; i++)
             {
-                if (_currentIndex == 0 && i == 0)
+                int allEntries = _pastEntries + i;
+
+                if (allEntries == _currentIndex)
                 {
                     ColourManager.Set(ColourBG.White);
                     ColourManager.Set(ColourFG.Black);
+                    ColourManager.Write($"-> {displayFeed[i][0],-13}{displayFeed[i][1],-15}{displayFeed[i][2],-25}\n",
+                        ColourFG.None, ColourBG.None);
                 }
                 else
                 {
                     ColourManager.Set(ColourBG.Reset);
                     ColourManager.Set(ColourFG.Reset);
+                    ColourManager.Write($"   {displayFeed[i][0],-13}{displayFeed[i][1],-15}{displayFeed[i][2],-25}\n", 
+                        ColourFG.None, ColourBG.None);
                 }
-                    ColourManager.Write($"{displayFeed[i][0],-15}{displayFeed[i][1],-15}{displayFeed[i][2],-25}\n", ColourFG.None, ColourBG.None);
             }
-            //foreach (var item in displayFeed)
-            //{
-            //    ColourManager.Write($"{item[0],-15}{item[1],-15}{item[2],-25}\n", ColourFG.None, ColourBG.None);
-            //}
-
-            ColourManager.Write($"\n{_pastEntries + 1}-{Math.Min(_pastEntries + FeedLines, FeedContents.Count)} of {FeedContents.Count} {_objectType}s.", ColourFG.None, ColourBG.None);
-        }
-
-        private void DrawCurrentFeedBox(List<string[]> displayFeed)
-        {
-            
+            ColourManager.Set(ColourBG.Reset);
+            ColourManager.Set(ColourFG.Reset);
+            ColourManager.Write($"\n{_pastEntries + 1}-{Math.Min(_pastEntries + FeedLines, FeedContents.Count)} " +
+                $"of {FeedContents.Count} {_objectType}s.", ColourFG.None, ColourBG.None);
         }
     }
 }
