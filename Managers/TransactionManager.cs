@@ -55,15 +55,31 @@ namespace bank_app.Managers
                 {
                     //Checks if sender has enough funds in account to perform transaction
                     var senderAccount = AccountManager.GetOrThrow(transaction.SenderId);
+                    var receiverAccount = AccountManager.GetOrThrow(transaction.ReceiverId);
                     if (senderAccount.Balance < transaction.TransferAmount)
                     {
                         transaction.Status = TransferStatus.Failed;
                         continue;
                     }
 
-                    //Performs the transaction and marks it as completed
-                    AccountManager.Withdraw(transaction.SenderId, transaction);
-                    AccountManager.Deposit(transaction.ReceiverId, transaction);
+                    //First the method performs a withdrawal of the sender accounts local currency
+                    AccountManager.Withdraw(transaction.SenderId, transaction, transaction.TransferAmount);
+
+                    decimal transactionAmount = transaction.TransferAmount;
+
+                    //Checks to see if sender account is in other currency than base currency SEK and in that case exchanges it to SEK and saves it to transactionAmount. 
+                    if (senderAccount.AccountCurrency != Currency.SEK)
+                    {
+                        transactionAmount = CurrencyExchange.ExchangeToSek(transactionAmount, senderAccount.AccountCurrency);
+                    }
+
+                    //Checks to see if receiver account is in other currency than base currency SEK and in that case exchanges it from SEK to accounts local currency. 
+                    if (receiverAccount.AccountCurrency != Currency.SEK)
+                    {
+                        transactionAmount = CurrencyExchange.ExchangeFromSek(transactionAmount, receiverAccount.AccountCurrency);
+                    }
+
+                    AccountManager.Deposit(transaction.ReceiverId, transaction, transactionAmount);
                     transaction.Status = TransferStatus.Completed;
                 }
 

@@ -22,7 +22,7 @@ namespace bank_app.Models.Accounts
             Balance = balance < 0 ? 0 : balance;
             OwnerId = ownerId;
         }
-        internal void ApplyTransaction(Transaction transaction)
+        internal void ApplyTransaction(Transaction transaction, decimal amount)
         {
             if (!CanApply(transaction))
             {
@@ -32,10 +32,10 @@ namespace bank_app.Models.Accounts
             switch (transaction.TransactionType)
             {
                 case TransactionType.Deposit:
-                    Balance += transaction.TransferAmount;
+                    Balance += amount;
                     break;
                 case TransactionType.Withdrawal:
-                    Balance -= transaction.TransferAmount;
+                    Balance -= amount;
                     break;
                 default:
                     Console.WriteLine("This transaction type is not an option");
