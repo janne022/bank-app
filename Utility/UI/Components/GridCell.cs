@@ -50,9 +50,9 @@ namespace bank_app.Utility.UI.Components
                     }
                     if (i == index)
                     {
-                        if (Components[i] is Layout || Components[i] is Grid || Components[i] is Menu)
+                        if (Components[i].IsInteractable)
                         {
-                            Components[i].Pressed();
+                            return Components[i].Pressed();
                         }
                         else
                         {
@@ -70,6 +70,7 @@ namespace bank_app.Utility.UI.Components
                 ConsoleKey key = Console.ReadKey(true).Key;
                 switch (key)
                 {
+                    // TODO: add controls for moving between interactable components in same gridcell
                     case ConsoleKey.DownArrow:
                         return (1, 0);
                     case ConsoleKey.UpArrow:
