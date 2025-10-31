@@ -11,6 +11,7 @@ namespace bank_app.Managers
         /// Method to create new users within the bank app. Adds the newly created user to a list of all users within the application.
         /// </summary>
         /// <param name="userType">Enum that determines whether the user is a client or an administrator</param>
+
         internal static void CreateUser(string userName, string userPassword, UserType userType, string email = "", string phoneNumber = "")
         {
             if (userType is UserType.Admin)
@@ -23,6 +24,7 @@ namespace bank_app.Managers
                 var client = new Client(userName, userPassword, email, phoneNumber);
                 Users.Add(client);
             }
+
         }
 
         /// <summary>
@@ -42,19 +44,19 @@ namespace bank_app.Managers
             if (user.FailedLoginAttempts < 3 && user.CurrentAccountStatus == AccountStatus.Unlocked)
             {
                 if (PasswordHasher.VerifyPassword(inputPassword, user.UserPassword))
-                { 
-                    user.FailedLoginAttempts = 0;
+                {
+                    user.UpdateLoginAttempts(0);
                     return true;
                 }
                 else
                 {
-                    user.FailedLoginAttempts++;
+                    user.UpdateLoginAttempts(1);
                     return false;
                 }
             }
             else
             {
-                user.CurrentAccountStatus = AccountStatus.Locked;
+                user.UpdateAccountStatus(AccountStatus.Locked);
                 return false;
                 // You have entered the wrong password 3 times, and thusly locked your account. Contact the bank to get your login unlocked.
             }
@@ -62,7 +64,7 @@ namespace bank_app.Managers
 
         internal static void UnlockAccount(User user)
         {
-            user.CurrentAccountStatus = AccountStatus.Unlocked;
+            user.UpdateAccountStatus(AccountStatus.Unlocked);
         }
 
         internal static User? Login(string userName, string password)
@@ -91,10 +93,9 @@ namespace bank_app.Managers
         /// Updates the properties of the user object
         /// </summary>
         /// <param name="user">the name of the user object to be changed</param>
-        internal static void ChangeUserInfo(User user, string userName, string userPassword)
+        public static void ChangeUserInfo(User user, string typeOfChange, string change)
         {
-            user.UserName = userName;
-            user.UserPassword = userPassword;
+            user.UpdateUserInfo(typeOfChange, change);
         }
     }
 }

@@ -21,6 +21,7 @@ namespace bank_app.Utility
 
     public enum ColourFG
     {
+        None,
         Reset,
         Black,
         BlackBright,
@@ -42,6 +43,7 @@ namespace bank_app.Utility
 
     public enum ColourBG
     {
+        None,
         Reset,
         Black,
         BlackBright,
@@ -65,6 +67,13 @@ namespace bank_app.Utility
     {
         Row,
         Column
+    }
+
+    public enum PageType
+    {
+        Login,
+        AdminDashboard,
+        ClientDashboard
     }
 
     public enum LayoutBorder

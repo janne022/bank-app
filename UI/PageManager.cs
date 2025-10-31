@@ -1,0 +1,73 @@
+﻿using bank_app.Models.Users;
+using bank_app.UI.Pages;
+using bank_app.Utility;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace bank_app.UI
+{
+    public static class PageManager
+    {
+        // Dictionary containing all pages that exist
+        private static readonly Dictionary<PageType, Page> _pageDictionary = new()
+        {
+            {PageType.Login,  new Login()},
+            {PageType.ClientDashboard,  new ClientDashboard()},
+            {PageType.AdminDashboard,  new AdminDashboard()}
+        };
+        private static bool _isRunning = true;
+        private static Page? _nextPage;
+        private static Page? _currentPage;
+        private static User? _currentUser;
+
+        /// <summary>
+        /// Switches to specified page
+        /// </summary>
+        /// <param name="page">Chosen page to switch to</param>
+        public static void SwitchPage(PageType page, User user)
+        {
+            _nextPage = _pageDictionary[page];
+        }
+
+        /// <summary>
+        /// Switches the user forwarded to each page
+        /// </summary>
+        /// <param name="user">Specified user to forward</param>
+        public static void SwitchUser(User user)
+        {
+            _currentUser = user;
+        }
+
+        /// <summary>
+        /// Stops the application loop
+        /// </summary>
+        public static void Stop()
+        {
+            _isRunning = false;
+        }
+
+        /// <summary>
+        /// Starts the application loop, initializing the user and loading the specified start page.
+        /// </summary>
+        /// <remarks>The method runs a continuous loop, monitoring and loading pages as needed. The
+        /// application  will remain in this loop until PageManager.Stop() runs</remarks>
+        /// <param name="startPage">The initial page to load when the application starts.</param>
+        public static void Start(PageType startPage)
+        {
+            _nextPage = _pageDictionary[startPage];
+            while (_isRunning)
+            {
+                if (_currentPage != _nextPage)
+                {
+                    Console.Clear();
+                    _currentPage = _nextPage;
+                    _currentPage?.LoadPage(_currentUser);
+                }
+                Thread.Sleep(100);
+            }
+        }
+    }
+}
