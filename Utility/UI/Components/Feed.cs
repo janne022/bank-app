@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices.ObjectiveC;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
@@ -15,6 +17,7 @@ namespace bank_app.Utility.UI.Components
         private int FeedLines;
         private int FeedColumns;
         private int _pastEntries;
+        private string _objectType;
         private int _currentIndex;
 
         public Feed(List<T> listOfObjects, int lines, int columns)
@@ -23,6 +26,16 @@ namespace bank_app.Utility.UI.Components
             FeedLines = lines;
             FeedColumns = columns;
             _pastEntries = 0;
+
+            if (listOfObjects is List<Client>)
+            {
+                _objectType = "client";
+            }
+            if (listOfObjects is List<Transaction>)
+            {
+                _objectType = "transaction";
+            }
+
             Width = 50;
             Height = 3;
             X = 0;
@@ -64,14 +77,18 @@ namespace bank_app.Utility.UI.Components
         public void Scroll(UpOrDown direction)
         {
             //Console.Clear(); // TAKE THIS AWAY AFTER TESTING OMG
+
+
             if (direction == UpOrDown.Up && _pastEntries > 0)
             {
                 _pastEntries--;
+                _currentIndex--;
             }
 
             if (direction == UpOrDown.Down && _pastEntries < FeedContents.Count - FeedLines)
             {
                 _pastEntries++;
+                _currentIndex++;
             }
 
         }
@@ -88,16 +105,28 @@ namespace bank_app.Utility.UI.Components
                 _pastEntries = startingNumber;
             }
 
-            string objectType = string.Empty;
+            /*  Thoughts for the future: 
+            *
+            *   Save object properties into a List for use generically?
+            *   Could be an idea to be able to get away from needing to
+            *   write so much code over and over.
+            * 
+            *   For now, testing continues with Clients.
+            */
+
+
+            // displayFeed[object][property]
+            List<string[]> displayFeed = new List<string[]>();
 
             if (FeedContents is List<Client> clients)
             {
-                objectType = "client";
 
                 Console.SetCursorPosition(0, 0);
                 var relevantClients = clients
                     .Skip(_pastEntries)
                     .Take(FeedLines);
+                               
+                
                 Console.WriteLine($"{"Name",-15}{"Phone Number",-15}{"Email",-25}");
                 for (int i = 0; i < 50; i++)
                 {
@@ -106,14 +135,30 @@ namespace bank_app.Utility.UI.Components
                 Console.WriteLine(new string('─', 50));
                 foreach (var client in relevantClients)
                 {
-                    ColourManager.Write($"{client.UserName,-15}{client.PhoneNumber,-15}{client.Email,-25}\n", ColourFG.None, ColourBG.None);
+                    if (!String.IsNullOrEmpty(client.UserName) &&
+                        !String.IsNullOrEmpty(client.PhoneNumber) &&
+                        !String.IsNullOrEmpty(client.Email)
+                    )
+                    {
+                        displayFeed.Add(new string[]
+                            {
+                                client.UserName,
+                                client.PhoneNumber,
+                                client.Email
+                            }
+                        );
+                         
+                    }
+                    //ColourManager.Write($"{client.UserName,-15}{client.PhoneNumber,-15}{client.Email,-25}\n", ColourFG.None, ColourBG.None);
                 }
 
-
-                ColourManager.Write($"\n{_pastEntries + 1}-{Math.Min(_pastEntries + FeedLines, clients.Count)} of {clients.Count} {objectType}s.", ColourFG.None, ColourBG.None);
+                
 
 
             }
+
+            HandleFeed(displayFeed);
+
 
             //if (FeedContents is List<Transaction> transactions)
             //{
@@ -123,7 +168,7 @@ namespace bank_app.Utility.UI.Components
             //        .Skip(_pastEntries)
             //        .Take(FeedLines);
             //    Console.Write($"{"Name",-15}{"Phone Number",-15}{"Email",-25}");
-                
+
             //    Console.Write(new string('─', 50));
             //    foreach (var transaction in relevantTransactions)
             //    {
@@ -134,6 +179,41 @@ namespace bank_app.Utility.UI.Components
             //    ColourManager.Write($"\n{_pastEntries + 1}-{Math.Min(_pastEntries + FeedLines, transactions.Count)} of {transactions.Count} {objectType}s.", ColourFG.None, ColourBG.None);
 
             //}
+        }
+
+
+        //// Black foreground on white background
+        //Console.Write($"\u001b[30;47m");
+        //                _components[j].Render();
+        //Console.Write("\u001b[0m");
+
+        private void HandleFeed(List<string[]> displayFeed)
+        {
+            for (int i = 0; i < displayFeed.Count; i++)
+            {
+                if (_currentIndex == 0 && i == 0)
+                {
+                    ColourManager.Set(ColourBG.White);
+                    ColourManager.Set(ColourFG.Black);
+                }
+                else
+                {
+                    ColourManager.Set(ColourBG.Reset);
+                    ColourManager.Set(ColourFG.Reset);
+                }
+                    ColourManager.Write($"{displayFeed[i][0],-15}{displayFeed[i][1],-15}{displayFeed[i][2],-25}\n", ColourFG.None, ColourBG.None);
+            }
+            //foreach (var item in displayFeed)
+            //{
+            //    ColourManager.Write($"{item[0],-15}{item[1],-15}{item[2],-25}\n", ColourFG.None, ColourBG.None);
+            //}
+
+            ColourManager.Write($"\n{_pastEntries + 1}-{Math.Min(_pastEntries + FeedLines, FeedContents.Count)} of {FeedContents.Count} {_objectType}s.", ColourFG.None, ColourBG.None);
+        }
+
+        private void DrawCurrentFeedBox(List<string[]> displayFeed)
+        {
+            
         }
     }
 }
