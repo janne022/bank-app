@@ -27,9 +27,13 @@ namespace bank_app.UI
         /// Switches to specified page
         /// </summary>
         /// <param name="page">Chosen page to switch to</param>
-        public static void SwitchPage(PageType page, User user)
+        public static void SwitchPage(PageType page)
         {
             _nextPage = _pageDictionary[page];
+            if (_currentPage != null)
+            {
+                _currentPage.ContinueRunning = false;
+            }
         }
 
         /// <summary>
@@ -64,7 +68,8 @@ namespace bank_app.UI
                 {
                     Console.Clear();
                     _currentPage = _nextPage;
-                    _currentPage?.LoadPage(_currentUser);
+                    _currentPage.ContinueRunning = true;
+                    _currentPage?.DisplayPage(_currentUser);
                 }
                 Thread.Sleep(100);
             }
