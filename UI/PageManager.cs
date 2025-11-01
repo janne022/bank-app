@@ -16,6 +16,10 @@ namespace bank_app.UI
         {
             {PageType.Login,  new Login()},
             {PageType.ClientDashboard,  new ClientDashboard()},
+            {PageType.Transfer,  new Transfer()},
+            {PageType.Transaction,  new Transaction()},
+            {PageType.Account,  new Account()},
+            {PageType.Loan,  new Loan()},
             {PageType.AdminDashboard,  new AdminDashboard()}
         };
         private static bool _isRunning = true;

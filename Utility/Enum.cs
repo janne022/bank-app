@@ -73,7 +73,11 @@ namespace bank_app.Utility
     {
         Login,
         AdminDashboard,
-        ClientDashboard
+        ClientDashboard,
+        Transfer,
+        Transaction,
+        Account,
+        Loan
     }
 
     public enum LayoutBorder

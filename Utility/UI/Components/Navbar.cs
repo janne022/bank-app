@@ -30,8 +30,6 @@ namespace bank_app.Utility.UI.Components
                 // Render every object after eachother. If selected object is the one we are rendering, we highlight it
                 for (int j = 0; j < Items.Count; j++)
                 {
-                    Items[j].X = X + j + Items[j].Width;
-                    Items[j].Y = Y;
                     if (j == _index)
                     {
                         // Black foreground on white background
@@ -84,7 +82,7 @@ namespace bank_app.Utility.UI.Components
             for (int j = 0; j < Items.Count; j++)
             {
                 Items[j].Measure();
-                Items[j].X = X + j + Items[j].Width;
+                Items[j].X = X + (j * Items[j].Width);
                 Items[j].Y = Y;
                 Items[j].Render();
             }

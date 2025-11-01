@@ -17,7 +17,7 @@ namespace bank_app.UI.Pages
         internal override UIComponent LoadPage()
         {
             Console.CursorVisible = false;
-            var navbar = new Navbar(new List<NavbarItem> { new NavbarItem("Home", PageType.Login), new NavbarItem("Transfer", PageType.AdminDashboard) });
+            var navbar = new Navbar(new List<NavbarItem> { new NavbarItem("Home", PageType.ClientDashboard), new NavbarItem("Transfer", PageType.AdminDashboard), new NavbarItem("Transaction", PageType.AdminDashboard), new NavbarItem("Account", PageType.AdminDashboard), new NavbarItem("Loan", PageType.AdminDashboard) });
             // Create a new Invokable object with the method that is going to run once the 'Login' button is pressed
             // Create new 3x3 grid
             Grid grid = new Grid(3, 3);
