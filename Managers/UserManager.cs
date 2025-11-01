@@ -42,6 +42,8 @@ namespace bank_app.Managers
         /// <summary>
         /// Attempts to authorize a user by verifying the provided password.
         /// </summary>
+        /// 
+        //Elvira kolla om du vill ändra den metoden
         internal static bool Authorization(User user, string inputPassword)
         {
             if (user.FailedLoginAttempts < 3 && user.CurrentAccountStatus == AccountStatus.Unlocked)
@@ -70,23 +72,38 @@ namespace bank_app.Managers
         {
             user.UpdateAccountStatus(AccountStatus.Unlocked);
         }
+      
+        //This method can be deleted if you want 
+        //internal static User? Login(User user, string password)
+        //{
+        //    // Loops through all made users in the program...
+        //    foreach (var u in Users)
+        //    {
+        //        // if the user id input matches any of the existing users' ids... AND they are authorized to login AND the password is correct...
+        //        if (u.UserId == user.UserId && Authorization(user, password))
+        //        {
+        //            // ...return that specific user
+        //            return u;
+        //        }
+        //    }
+        //    // ...and if no user matches the name, password or the user is not authorized to login: return nothing.
+        //    return null;
+        //}
 
-        internal static User? Login(User user, string password)
+
+        //New Method to Login user with User Id
+        internal static User? Login(Guid userId, string password)
         {
-            // Loops through all made users in the program...
-            foreach (var u in Users)
-            {
-                // if the user id input matches any of the existing users' ids... AND they are authorized to login AND the password is correct...
-                if (u.UserId == user.UserId && Authorization(user, password))
-                {
-                    // ...return that specific user
-                    return u;
-                }
-            }
-            // ...and if no user matches the name, password or the user is not authorized to login: return nothing.
-            return null;
-        }
+            
+           var user= Users.FirstOrDefault(u => u.UserId == userId && Authorization(u, password));
 
+            if (user==null)
+            {
+                return null;
+            }
+
+            return user;
+        }
         internal static void Logout()
         {
             // UI needed to develop - change page to login page
