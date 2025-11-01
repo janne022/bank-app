@@ -20,7 +20,7 @@ namespace bank_app.UI.Pages
             // Create new 3x3 grid
             Grid grid = new Grid(3, 3);
             grid.AddGridComponent(0, 1, navbar);
-            grid.AddGridComponent(1, 1, new Text("Transaction"));
+            grid.AddGridComponent(1, 1, new Text("Transfer"));
             // Add grid to layout and set rounded border style
             return new Layout(grid, LayoutBorder.Heavy);
         }

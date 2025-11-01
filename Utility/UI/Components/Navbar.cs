@@ -1,4 +1,5 @@
-﻿using System;
+﻿using bank_app.UI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -15,6 +16,7 @@ namespace bank_app.Utility.UI.Components
         {
             IsInteractable = true;
             Items = items;
+            _index = Items.FindIndex(item => item.PageType == PageManager.GetCurrentPageType());
         }
 
         public void AddNavbarItem(NavbarItem item)

@@ -26,6 +26,7 @@ namespace bank_app.UI
         private static Page? _nextPage;
         private static Page? _currentPage;
         private static User? _currentUser;
+        private static PageType _currentPageType;
 
         /// <summary>
         /// Switches to specified page
@@ -34,10 +35,16 @@ namespace bank_app.UI
         public static void SwitchPage(PageType page)
         {
             _nextPage = _pageDictionary[page];
+            _currentPageType = page;
             if (_currentPage != null)
             {
                 _currentPage.ContinueRunning = false;
             }
+        }
+
+        public static PageType GetCurrentPageType()
+        {
+            return _currentPageType;
         }
 
         /// <summary>
@@ -66,6 +73,7 @@ namespace bank_app.UI
         public static void Start(PageType startPage)
         {
             _nextPage = _pageDictionary[startPage];
+            _currentPageType = startPage;
             while (_isRunning)
             {
                 if (_currentPage != _nextPage)
