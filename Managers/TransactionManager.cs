@@ -54,7 +54,7 @@ namespace bank_app.Managers
                 try
                 {
                     //Checks if sender has enough funds in account to perform transaction
-                    var senderAccount = AccountManager.GetOrThrow(transaction.SenderId);
+                    var senderAccount = AccountManager.GetAccountById(transaction.SenderId);
                     if (senderAccount.Balance < transaction.TransferAmount)
                     {
                         transaction.Status = TransferStatus.Failed;
