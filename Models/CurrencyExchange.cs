@@ -34,5 +34,42 @@ namespace bank_app.Models
             decimal exchangeRate = _ratesToSEK[currencyTo];
             return amount * exchangeRate;
         }
+
+        /// <summary>
+        /// Updates the exchange rate of a chosen currency in the currency list based on the base currency SEK.
+        /// This method is meant to be used by Admin user to update current exchange rates. 
+        /// </summary>
+        /// <param name="currency">The chosen currency to update exchange rate of</param>
+        /// <param name="rateToSek">The chosen exchange rate of that currency based on base rate (SEK)</param>
+        public static void UpdateRate(Currency currency, decimal rateToSek)
+        {
+            if (currency == Currency.SEK)
+            {
+                throw new ArgumentException("Cannot change the base rate (SEK)");
+            }
+
+            if (rateToSek <= 0)
+            {
+                throw new ArgumentException("Exchange rate must be more than 0");
+            }
+
+            _ratesToSEK[currency] = rateToSek;
+        }
+
+        /// <summary>
+        /// Method to be used by UI to display all current rates based on the base rate.
+        /// </summary>
+        public static Dictionary<Currency, decimal> GetAllRates()
+        {
+            return new Dictionary<Currency, decimal>(_ratesToSEK);
+        }
+
+        /// <summary>
+        /// Method to be used by UI to display current rate of a chosen currency based on the base rate. 
+        /// </summary>
+        public static decimal GetRate(Currency currency)
+        {
+            return _ratesToSEK[currency];
+        }
     }
 }
