@@ -12,19 +12,22 @@ namespace bank_app.Managers
         /// </summary>
         /// <param name="userType">Enum that determines whether the user is a client or an administrator</param>
 
-        internal static void CreateUser(string userName, string userPassword, UserType userType, string email = "", string phoneNumber = "")
+        internal static User CreateUser(string userName, string userPassword, UserType userType, string email = "", string phoneNumber = "")
         {
             if (userType is UserType.Admin)
             {
                 var admin = new Admin(userName, userPassword);
                 Users.Add(admin);
+                return admin;
             }
             else if (userType is UserType.Client)
             {
                 var client = new Client(userName, userPassword, email, phoneNumber);
                 Users.Add(client);
+                return client;
             }
 
+            return null;
         }
 
         /// <summary>
@@ -46,6 +49,7 @@ namespace bank_app.Managers
                 if (PasswordHasher.VerifyPassword(inputPassword, user.UserPassword))
                 {
                     user.UpdateLoginAttempts(0);
+
                     return true;
                 }
                 else
@@ -67,16 +71,16 @@ namespace bank_app.Managers
             user.UpdateAccountStatus(AccountStatus.Unlocked);
         }
 
-        internal static User? Login(string userName, string password)
+        internal static User? Login(User user, string password)
         {
             // Loops through all made users in the program...
-            foreach (var user in Users)
+            foreach (var u in Users)
             {
-                // if the username input matches any of the existing users' names... AND they are authorized to login AND the password is correct...
-                if (user.UserName == userName && Authorization(user, password))
+                // if the user id input matches any of the existing users' ids... AND they are authorized to login AND the password is correct...
+                if (u.UserId == user.UserId && Authorization(user, password))
                 {
                     // ...return that specific user
-                    return user;
+                    return u;
                 }
             }
             // ...and if no user matches the name, password or the user is not authorized to login: return nothing.
@@ -85,7 +89,7 @@ namespace bank_app.Managers
 
         internal static void Logout()
         {
-            // UI needed to develop
+            // UI needed to develop - change page to login page
         }
 
 

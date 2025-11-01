@@ -83,6 +83,26 @@ namespace bank_app.Managers
             return _accounts.Values.ToList();
         }
 
+        // Overload method to only return accounts of a specific user
+        public static List<Account> GetAllAccounts(User user)
+        {
+            List<Account> specificUserAccounts = new List<Account>();
+
+            // Loops through the account list, and checks the inputted user's ID with the accounts saved userIDs...
+            foreach(var account in _accounts.Where(a => a.Value.OwnerId == user.UserId))
+            {
+                //... And adds those accounts to a list of accounts
+                specificUserAccounts.Add(account.Value);
+            }
+
+            // finally returns list of that user's accounts
+            return specificUserAccounts;
+        }
+
+
+        /// <summary>
+        /// Adds balance to account using unique identifier and data from transaction.
+
         /// <summary>
         /// Returns the number of accounts currently tracked.
         /// </summary>
