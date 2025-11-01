@@ -79,11 +79,13 @@ namespace bank_app.Utility.UI.Components
 
         public override void Render()
         {
+            int totalWidth = 0;
             for (int j = 0; j < Items.Count; j++)
             {
                 Items[j].Measure();
-                Items[j].X = X + (j * Items[j].Width);
+                Items[j].X = X + totalWidth;
                 Items[j].Y = Y;
+                totalWidth += Items[j].Width + 1;
                 Items[j].Render();
             }
         }
