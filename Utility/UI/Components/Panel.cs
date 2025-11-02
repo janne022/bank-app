@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace bank_app.Utility.UI.Components
 {
-    public class Layout : UIComponent
+    public class Panel : UIComponent
     {
         // Declare variables
         public LayoutBorder Border { get; set; }
@@ -42,7 +42,7 @@ namespace bank_app.Utility.UI.Components
         /// During rendering, the child component is measured and centered within the layout. The selected border style determines
         /// which corner and wall glyphs are used. The <paramref name="topText"/> is written on the top border if provided.
         /// </remarks>
-        public Layout(UIComponent rootComponent, LayoutBorder border, string topText = "", int width = 0, int height = 0, ColourFG borderColour = ColourFG.Reset, ColourBG backgroundColour = ColourBG.Reset)
+        public Panel(UIComponent rootComponent, LayoutBorder border, string topText = "", int width = 0, int height = 0, ColourFG borderColour = ColourFG.Reset, ColourBG backgroundColour = ColourBG.Reset)
         {
             _borderColour = borderColour;
             _backgroundColour = backgroundColour;

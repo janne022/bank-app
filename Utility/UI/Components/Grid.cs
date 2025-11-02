@@ -9,15 +9,15 @@ namespace bank_app.Utility.UI.Components
     internal class Grid : UIComponent
     {
         // Row is first index, Column is second index
-        private GridCell[,] _grid { get; set; }
+        private Flexbox[,] _grid { get; set; }
         public int Rows { get; set; }
         public int Cols { get; set; }
         public int RowHeight { get; set; }
         public int ColWidth { get; set; }
-        List<GridCell> _interactableGridCells = new List<GridCell>();
-        GridCell? _currentGridCell = null;
+        List<Flexbox> _interactableGridCells = new List<Flexbox>();
+        Flexbox? _currentGridCell = null;
         /// <summary>
-        /// A console UI layout container that divides its available area into a 2D matrix of <see cref="GridCell"/>s.
+        /// A console UI layout container that divides its available area into a 2D matrix of <see cref="Flexbox"/>s.
         /// Each cell hosts one or more <see cref="UIComponent"/>s. Indexing is 0-based and ordered as [row, column].
         /// </summary>
         /// <remarks>
@@ -29,7 +29,7 @@ namespace bank_app.Utility.UI.Components
         {
             Rows = rows;
             Cols = columns;
-            _grid = new GridCell[rows, columns];
+            _grid = new Flexbox[rows, columns];
             // Since we cant be sure grid has a parent, assume default height and width of console size. Parent can change childs rowheight and colwidth
             RowHeight = Console.WindowHeight / rows;
             ColWidth = Console.WindowWidth / columns;
@@ -38,7 +38,7 @@ namespace bank_app.Utility.UI.Components
             {
                 for (int c = 0; c < columns; c++)
                 {
-                    GridCell gridCell = new GridCell();
+                    Flexbox gridCell = new Flexbox();
                     gridCell.ParentComponent = this;
                     gridCell.Height = RowHeight;
                     gridCell.Width = ColWidth;
@@ -68,26 +68,18 @@ namespace bank_app.Utility.UI.Components
         }
 
         // Adds a component to a GridCell
-        public GridCell AddGridComponent(int rowIndex, int colIndex, UIComponent component)
+        public Flexbox AddGridComponent(int rowIndex, int colIndex, UIComponent component)
         {
-            // Set the component ParentElement as this grid and if the component is a grid we set the RowHeight and ColWidth to one gridcell in this grids row and column system.
-            component.ParentComponent = _grid[rowIndex, colIndex];
-            if (component is Grid grid)
-            {
-                grid.RowHeight = RowHeight / grid.Rows;
-                grid.ColWidth = ColWidth / grid.Cols;
-            }
-            // Add component to the specified row and column index
-            _grid[rowIndex, colIndex].Components.Add(component);
+            _grid[rowIndex, colIndex].AddFlexComponent(component);
             return _grid[rowIndex, colIndex];
         }
 
         // Gets a GridCell
-        public GridCell GetGridCell(int rowIndex, int colIndex)
+        public Flexbox GetGridCell(int rowIndex, int colIndex)
         {
             return _grid[rowIndex, colIndex];
         }
-        private GridCell FindClosestGridCell(List<GridCell> gridCells, GridCell currentCell, int dX, int dY)
+        private Flexbox FindClosestGridCell(List<Flexbox> gridCells, Flexbox currentCell, int dX, int dY)
         {
             var candidates = gridCells.Where(cell =>
             {
@@ -135,7 +127,7 @@ namespace bank_app.Utility.UI.Components
         }
         public override (int, int) Pressed()
         {
-            GridCell? _cellBuffer = null;
+            Flexbox? _cellBuffer = null;
             // Add any GridCells that has an interactable component inside it
             for (int r = 0; r < _grid.GetLength(0); r++)
             {

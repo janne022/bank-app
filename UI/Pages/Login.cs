@@ -17,11 +17,11 @@ namespace bank_app.UI.Pages
             // Create new 3x3 grid
             Grid grid = new Grid(3, 3);
             // Add Menu with two inputfields and button inside to center middle of grid. Note: Button is currently not finished, so it won't be rendered
-            GridCell cell = grid.GetGridCell(1, 1);
+            Flexbox cell = grid.GetGridCell(1, 1);
             cell.Justify = Justify.Center;
             cell.Align = Align.Middle;
             cell.OrderBy = OrderBy.Column;
-            grid.AddGridComponent(1, 1, new Layout(new Form(new List<UIComponent>{new InputField("Username",false,16),
+            grid.AddGridComponent(1, 1, new Panel(new Form(new List<UIComponent>{new InputField("Username",false,16),
                 new InputField("Password",true,16),
                 new Button(loginInvoke, "Login")}), LayoutBorder.Rounded, "Login", 40, 10, ColourFG.Yellow));
             // Add text to center bottom
@@ -31,7 +31,7 @@ namespace bank_app.UI.Pages
             cell.OrderBy = OrderBy.Column;
             grid.AddGridComponent(0, 1, new AsciiArt("Assets/Ascii/bank.txt"));
             // Add grid to layout and set rounded border style
-            return new Layout(grid, LayoutBorder.Heavy);
+            return new Panel(grid, LayoutBorder.Heavy);
         }
 
         private void LoginHandler(string username, string password)

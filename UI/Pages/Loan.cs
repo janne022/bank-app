@@ -22,7 +22,7 @@ namespace bank_app.UI.Pages
             grid.AddGridComponent(0, 1, navbar);
             grid.AddGridComponent(1, 1, new Text("Loan"));
             // Add grid to layout and set rounded border style
-            return new Layout(grid, LayoutBorder.Heavy);
+            return new Panel(grid, LayoutBorder.Heavy);
         }
     }
 }
