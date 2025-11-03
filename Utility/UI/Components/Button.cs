@@ -37,6 +37,7 @@ namespace bank_app.Utility.UI.Components
             Alignment = justify;
             _textColour = textColour;
             _buttonColour = buttonColour;
+            IsInteractable = true;
         }
 
         /// <summary>
