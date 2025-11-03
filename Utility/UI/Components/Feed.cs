@@ -131,15 +131,15 @@ namespace bank_app.Utility.UI.Components
 
 
             // displayFeed[object][property]
-            List<string[]> displayFeed = new List<string[]>();
+            //List<string[]> displayFeed = new List<string[]>();
 
-            if (FeedContents is List<Client> clients)
-            {
+            //if (FeedContents is List<Client> clients)
+            //{
 
                 Console.SetCursorPosition(0, 0);
-                var relevantClients = clients
-                    .Skip(_pastEntries)
-                    .Take(FeedLines);
+                //var relevantLines = 
+                //    .Skip(_pastEntries)
+                //    .Take(FeedLines);
                                
                 
                 Console.WriteLine($"{"  Name",-15}{"Phone Number",-15}{"Email",-25}");
@@ -148,22 +148,22 @@ namespace bank_app.Utility.UI.Components
                     ColourManager.Write("─", ColourFG.None, ColourBG.None);
                 }
                 Console.WriteLine(new string('─', 50));
-                foreach (var client in relevantClients)
-                {
-                    if (!String.IsNullOrEmpty(client.UserName) &&
-                        !String.IsNullOrEmpty(client.PhoneNumber) &&
-                        !String.IsNullOrEmpty(client.Email)
-                    )
-                    {
-                        displayFeed.Add(new string[]
-                            {
-                                client.UserName,
-                                client.PhoneNumber,
-                                client.Email
-                            }
-                        );
-                    }
-                }
+                //foreach (var client in relevantClients)
+                //{
+                //    if (!String.IsNullOrEmpty(client.UserName) &&
+                //        !String.IsNullOrEmpty(client.PhoneNumber) &&
+                //        !String.IsNullOrEmpty(client.Email)
+                //    )
+                //    {
+                //        displayFeed.Add(new string[]
+                //            {
+                //                client.UserName,
+                //                client.PhoneNumber,
+                //                client.Email
+                //            }
+                //        );
+                //    }
+                //}
             }
 
             PresentFeed(displayFeed);
