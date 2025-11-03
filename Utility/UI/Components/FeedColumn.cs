@@ -56,20 +56,34 @@ namespace bank_app.Utility.UI.Components
                     actualWidth = entry.Length;
                 }
             }
+            int extraMargin = 2; // 2 margin to the right to look good in multi-column view
+            Width = actualWidth + extraMargin;
 
-            Width = actualWidth + 2; // 2 margin to the right to look good in multi-column view
 
+            // Header  Header2 | - - - - - - -  +1
+            // ----------------| - - - - - - -  +2
+            // Entry   Entry   |----\     
+            // Entry   Entry   |--------- _scrollHeight
+            // Entry   Entry   |----/
+            // ---             | - - - - - - -  +3
+            // Footer          | - - - - - - -  +4
 
             int actualHeight = _scrollHeight;
-                                                // Header  Header2 | - - - - - - -  +1
-            if (_displayHeader)                 // ----------------| - - - - - - -  +2
-            {                                   // Entry   Entry   |----\     
-                actualHeight += 2;              // Entry   Entry   |--------- _scrollHeight
-            }                                   // Entry   Entry   |----/
-                                                // ---             | - - - - - - -  +3
-            if (_displayFooter)                 // Footer          | - - - - - - -  +4
+
+            if (_displayHeader)                 
+            {                                   
+                int headerText = 1;             
+                int headerSpacer = 1;           
+                actualHeight += headerText;     
+                actualHeight += headerSpacer;   
+            }                                   
+                                                
+            if (_displayFooter)                 
             {
-                actualHeight += 2;   
+                int footerText = 1;
+                int footerSpacer = 1;
+                actualHeight += footerText;
+                actualHeight += footerSpacer;
             }
 
             Height = actualHeight;
