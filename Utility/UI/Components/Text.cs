@@ -63,6 +63,7 @@ namespace bank_app.Utility.Components
         public void UpdateText(string newText)
         {
             _words = newText.Split(' ');
+            Measure();
         }
 
         public override void Render()
