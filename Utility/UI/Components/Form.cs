@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace bank_app.Utility.UI.Components
 {
-    public class Menu : UIComponent
+    public class Form : UIComponent
     {
         private List<UIComponent> _components;
         private object[] args;
         private int _index = 0;
         /// <summary>
-        /// Initializes a new instance of the <see cref="Menu"/> that renders and handles
+        /// Initializes a new instance of the <see cref="Form"/> that renders and handles
         /// keyboard navigation for a list of child <see cref="UIComponent"/>s.
         /// </summary>
         /// <param name="components">
@@ -30,7 +30,7 @@ namespace bank_app.Utility.UI.Components
         /// is captured internally. When a <see cref="Button"/> is activated, all captured values
         /// are passed to the button via <c>Pressed(object[] args)</c>.
         /// </remarks>
-        public Menu(List<UIComponent> components, OrderBy order = OrderBy.Column, int width = 30)
+        public Form(List<UIComponent> components, OrderBy order = OrderBy.Column, int width = 30)
         {
             // Set variables
             IsInteractable = true;

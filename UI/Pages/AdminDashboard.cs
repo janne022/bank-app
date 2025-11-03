@@ -1,4 +1,7 @@
 ﻿using bank_app.Models.Users;
+using bank_app.Utility;
+using bank_app.Utility.UI;
+using bank_app.Utility.UI.Components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,12 +12,10 @@ namespace bank_app.UI.Pages
 {
     public class AdminDashboard : Page
     {
-        public override void LoadPage(User user)
+
+        internal override UIComponent LoadPage()
         {
-            if (user is Admin admin)
-            {
-                
-            }
+            throw new NotImplementedException();
         }
     }
 }

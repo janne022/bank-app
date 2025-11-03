@@ -44,7 +44,10 @@ namespace bank_app.Utility.Components
 
         public override void Measure()
         {
-            WrapIntoLines();
+            if (_fullLines.Count == 0)
+            {
+                WrapIntoLines();
+            }
             // Look for longest index in words[] and set height and width
             for (int i = 0; i < _fullLines.Count; i++)
             {

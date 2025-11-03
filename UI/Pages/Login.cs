@@ -9,21 +9,19 @@ namespace bank_app.UI.Pages
 {
     public class Login : Page
     {
-        bool continueRunning = true;
-        public override void LoadPage(User user)
+        internal override UIComponent LoadPage()
         {
-            Console.CursorVisible = false;
-            UserManager.CreateUser("janne", "jan", UserType.Client);
+            UserManager.CreateUser("janne","jan",UserType.Client);
             // Create a new Invokable object with the method that is going to run once the 'Login' button is pressed
             var loginInvoke = new Invokable<string, string>(LoginHandler);
             // Create new 3x3 grid
             Grid grid = new Grid(3, 3);
             // Add Menu with two inputfields and button inside to center middle of grid. Note: Button is currently not finished, so it won't be rendered
-            GridCell cell = grid.GetGridCell(1, 1);
+            Flexbox cell = grid.GetGridCell(1, 1);
             cell.Justify = Justify.Center;
             cell.Align = Align.Middle;
             cell.OrderBy = OrderBy.Column;
-            grid.AddGridComponent(1, 1, new Layout(new Menu(new List<UIComponent>{new InputField("Username",false,16),
+            grid.AddGridComponent(1, 1, new Panel(new Form(new List<UIComponent>{new InputField("Username",false,16),
                 new InputField("Password",true,16),
                 new Button(loginInvoke, "Login")}), LayoutBorder.Rounded, "Login", 40, 10, ColourFG.Yellow));
             // Add text to center bottom
@@ -33,18 +31,7 @@ namespace bank_app.UI.Pages
             cell.OrderBy = OrderBy.Column;
             grid.AddGridComponent(0, 1, new AsciiArt("Assets/Ascii/bank.txt"));
             // Add grid to layout and set rounded border style
-
-
-
-            grid.AddGridComponent(1, 2, new Layout(new Menu(new List<UIComponent>{new InputField("Username",false,16),
-                new InputField("Password",true,16),
-                new Button(loginInvoke, "Login")}), LayoutBorder.Rounded, "Login", 40, 10, ColourFG.Yellow));
-            Layout layout = new(grid, LayoutBorder.Heavy);
-            layout.Render();
-            while (continueRunning)
-            {
-                layout.Pressed();
-            }
+            return new Panel(grid, LayoutBorder.Heavy);
         }
 
         private void LoginHandler(string username, string password)
@@ -54,15 +41,14 @@ namespace bank_app.UI.Pages
             {
                 PageManager.SwitchUser(user);
                 // Login successful, switch page and give feedback
-                if (user is Client client)
+                if (user is Client)
                 {
-                    PageManager.SwitchPage(PageType.ClientDashboard, client);
+                    PageManager.SwitchPage(PageType.ClientDashboard);
                 }
-                else if (user is Admin admin)
+                else if (user is Admin)
                 {
-                    PageManager.SwitchPage(PageType.AdminDashboard, admin);
+                    PageManager.SwitchPage(PageType.AdminDashboard);
                 }
-                continueRunning = false;
             }
             else
             {
