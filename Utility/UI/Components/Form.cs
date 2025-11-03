@@ -9,7 +9,7 @@ namespace bank_app.Utility.UI.Components
 {
     public class Form : UIComponent
     {
-        private List<UIComponent> _components;
+        private List<FormItem> _components;
         private object[] args;
         private int _index = 0;
         public ColourFG SelectionFG { get; set; }
@@ -39,7 +39,7 @@ namespace bank_app.Utility.UI.Components
         {
             // Set variables
             IsInteractable = true;
-            _components = components;
+            _components = new List<FormItem>();
             Width = width;
             Height = components.Count;
             SelectionFG = selectionFG;
@@ -50,19 +50,26 @@ namespace bank_app.Utility.UI.Components
             // Make this object a parent to all child objects
             foreach (var item in components)
             {
-                item.ParentComponent = this;
+                var formItem = new FormItem(item, true);
+                formItem.ParentComponent = this;
+                _components.Add(formItem);
             }
-            SubmitButton.ParentComponent = this;
-            ErrorText.ParentComponent = this;
-            // Check how many objects that are not buttons to see how many arguments we are passing if there is a button inside Menu
+            var formItemButton = new FormItem(SubmitButton, false);
+            formItemButton.ParentComponent = this;
+            _components.Add(formItemButton);
+            var formItemText = new FormItem(ErrorText, false);
+            formItemText.ParentComponent = this;
+            _components.Add(formItemText);
             int argsCount = 0;
-            for (int j = 0; j < components.Count; j++)
+            for (int j = 0; j < _components.Count; j++)
             {
-                argsCount++;
+                if (_components[j].IsFormValue)
+                {
+                    argsCount++;
+                }
             }
             args = new object[argsCount];
-            _components.Add(SubmitButton);
-            _components.Add(ErrorText);
+
         }
 
         public override (int, int) Pressed()
@@ -126,22 +133,23 @@ namespace bank_app.Utility.UI.Components
                     case ConsoleKey.Enter:
                         _components[_index].Pressed();
                         // If component is not a button we set the args index to be the value inside the component. If it is a button we run the pressed method for button with the current args.
-                        if (_components[_index] is not Button)
+                        if (_components[_index].IsFormValue == true)
                         {
-                                args[_index] = _components[_index].Value;
+                            args[_index] = _components[_index].Component.Value;
                         }
-                        else if (_components[_index] == SubmitButton)
+                        else if (_components[_index].Component == SubmitButton)
                         {
-                            bool success = _components.All(component => component.Value != null);
+                            bool success = _components.TakeWhile(formItem => formItem.IsFormValue).All(component => component.Component.Value != null);
                             if (success)
                             {
+                                ErrorText.UpdateText(" ");
                                 SubmitButton.Pressed(args);
                             }
                             else
                             {
                                 ErrorText.UpdateText("Error: Fill out entire form");
                             }
-                            return (0,0);
+                            return (0, 0);
                         }
                         break;
                 }
@@ -163,10 +171,7 @@ namespace bank_app.Utility.UI.Components
                 _components[j].X = X;
                 _components[j].Y = Y;
                 totalHeight += _components[j].Height;
-                if (j != 0)
-                {
-                    _components[j].Y += totalHeight - 1;
-                }
+                _components[j].Y += totalHeight - 2;
                 _components[j].Render();
             }
         }
