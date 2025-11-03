@@ -37,6 +37,8 @@ namespace bank_app.UI.Pages
         //Just changed User to Guid userId
         private void LoginHandler(string userId, string password)
         {
+            Console.WriteLine(userId);
+            Console.WriteLine(password);
             User? u = UserManager.Login(userId, password);
             if (u != null)
             {
@@ -54,6 +56,7 @@ namespace bank_app.UI.Pages
             else
             {
                 // Login not successful, give feedback
+                Console.WriteLine("you failed brother");
             }
         }
     }

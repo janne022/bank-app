@@ -3,7 +3,7 @@
     public class Loan
     {
         public Guid LoanId { get; }
-        public Guid UserId { get; private set; }
+        public string UserId { get; private set; }
         //Original amount borrowed
         public decimal Principal { get; private set; }
         //How much is left to pay
@@ -15,7 +15,7 @@
 
         public bool IsActive => OutstandingPrincipal > 0 || AccruedInterest > 0;
 
-        public Loan(Guid userId, decimal principal, decimal annualRate, DateTime startDate)
+        public Loan(string userId, decimal principal, decimal annualRate, DateTime startDate)
         {
 
 

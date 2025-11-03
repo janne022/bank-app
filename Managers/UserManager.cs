@@ -6,6 +6,11 @@ namespace bank_app.Managers
     public static class UserManager
     {
         private static List<User> Users { get; } = new List<User>();
+        public static List<string> UserIds { get; } = new List<string>();
+
+
+ 
+
 
         /// <summary>
         /// Method to create new users within the bank app. Adds the newly created user to a list of all users within the application.
@@ -43,7 +48,7 @@ namespace bank_app.Managers
         {
             foreach (var user in Users)
             {
-                if(user.UserId.ToString() == userID)
+                if (user.UserId.ToString() == userID)
                 {
                     return user;
                 }
@@ -55,8 +60,6 @@ namespace bank_app.Managers
         /// <summary>
         /// Attempts to authorize a user by verifying the provided password.
         /// </summary>
-        /// 
-        //Elvira kolla om du vill ändra den metoden
         internal static bool Authorization(string userID, string inputPassword)
         {
             var user = GetUser(userID);
@@ -71,7 +74,6 @@ namespace bank_app.Managers
                 }
                 else
                 {
-                    user.UpdateLoginAttempts(1);
                     return false;
                 }
             }
@@ -87,38 +89,78 @@ namespace bank_app.Managers
         {
             user.UpdateAccountStatus(AccountStatus.Unlocked);
         }
-      
-        //This method can be deleted if you want 
-        //internal static User? Login(User user, string password)
-        //{
-        //    // Loops through all made users in the program...
-        //    foreach (var u in Users)
-        //    {
-        //        // if the user id input matches any of the existing users' ids... AND they are authorized to login AND the password is correct...
-        //        if (u.UserId == user.UserId && Authorization(user, password))
-        //        {
-        //            // ...return that specific user
-        //            return u;
-        //        }
-        //    }
-        //    // ...and if no user matches the name, password or the user is not authorized to login: return nothing.
-        //    return null;
-        //}
 
-
-        //New Method to Login user with User Id
-        internal static User? Login(string userId, string password)
+        internal static User? Login(string userName, string password)
         {
-            
-           var user= Users.FirstOrDefault(u => u.UserId.ToString() == userId && Authorization(u.UserId.ToString(), password));
+            List<User> sameNameList = new List<User>();
 
-            if (user==null)
+
+            // Loops through all made users in the program...
+            foreach (var u in Users)
             {
-                return null;
+                // if more than one user in the app has the same name i.e. several Eriks...
+                if (u.UserId == userName)
+                {
+                    //...add them to a local list.
+                    sameNameList.Add(u);
+                }
+
+                //... if there is only one person with that name...
+                if (sameNameList.Count == 1)
+                {
+                    // try and authorize. If it also is the correct password...
+                    if (Authorization(u.UserId.ToString(), password))
+                    {
+                        // ...return that specific user
+                        return u;
+                    }
+                    else
+                    {
+                        u.UpdateLoginAttempts(1);
+                        return null;
+                    }
+                }
+                // if there are several people with the same name i.e. several Eriks...
+                else if (sameNameList.Count > 1)
+                {
+                    //... loop through these people and...
+                    foreach (var sameNameUser in sameNameList)
+                    {
+                        //...if they match with the correct password...
+                        if (Authorization(sameNameUser.UserId.ToString(), password))
+                        {
+                            // return
+                            return sameNameUser;
+                        }
+                    }
+
+
+                }
+                else
+                {
+                    return null;
+                }
+
             }
 
-            return user;
+            // ...and if no user matches the name, password or the user is not authorized to login: return nothing.
+            return null;
         }
+
+
+        ////New Method to Login user with User Id
+        //internal static User? Login(string userId, string password)
+        //{
+
+        //    var user = Users.FirstOrDefault(u => u.UserId.ToString() == userId && Authorization(u.UserId.ToString(), password));
+
+        //    if (user == null)
+        //    {
+        //        return null;
+        //    }
+
+        //    return user;
+        //}
         internal static void Logout()
         {
             // UI needed to develop - change page to login page

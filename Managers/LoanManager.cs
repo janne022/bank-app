@@ -15,7 +15,7 @@ namespace bank_app.Managers
         private readonly List<Loan> _loans = new List<Loan>();
 
 
-        public Loan DisburseLoan(Guid userId, decimal principal, Currency currency)
+        public Loan DisburseLoan(string userId, decimal principal, Currency currency)
         {
 
             if (!ValidateLoanLimit(userId, principal))
@@ -36,7 +36,7 @@ namespace bank_app.Managers
 
         }
 
-        public LoanAccount GetOrCreateLoanAccount(Guid userId, Currency currency)
+        public LoanAccount GetOrCreateLoanAccount(string userId, Currency currency)
         {
             var loanAccount = AccountManager.GetAllAccounts(userId)
                 .OfType<LoanAccount>()
@@ -58,7 +58,7 @@ namespace bank_app.Managers
 
             return loanAccount;
         }
-        private bool ValidateLoanLimit(Guid userId, decimal requestedAmount)
+        private bool ValidateLoanLimit(string userId, decimal requestedAmount)
         {
 
 

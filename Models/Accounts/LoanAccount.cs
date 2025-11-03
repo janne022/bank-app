@@ -12,7 +12,7 @@ namespace bank_app.Models.Accounts
         
         public decimal CreditLimit { get; private set; }
 
-        public LoanAccount(Currency currency, Guid ownerId, decimal creditLimit)
+        public LoanAccount(Currency currency, string ownerId, decimal creditLimit)
             : base(currency, 0, ownerId)
         {
            

@@ -1,10 +1,11 @@
-﻿using bank_app.Utility;
+﻿using bank_app.Managers;
+using bank_app.Utility;
 
 namespace bank_app.Models.Users
 {
     public abstract class User
     {
-        public Guid UserId { get; private set; } = Guid.NewGuid();
+        public string UserId { get; private set; }
         public string? UserName { get; private set; }
         public string? UserPassword { get; private set; }
         public int FailedLoginAttempts { get; private set; } = 0;
@@ -12,7 +13,7 @@ namespace bank_app.Models.Users
 
         public User(string userName, string userPassword)
         {
-            UserName = userName;
+            UpdateUserId(userName);
             UserPassword = PasswordHasher.Hash(userPassword);
         }
 
@@ -21,6 +22,11 @@ namespace bank_app.Models.Users
         private void SetUserName(string name)
         {
             UserName = name;
+        }
+
+        private void SetUserId(string userId)
+        {
+            UserId = userId;
         }
 
         private void SetPassword(string password)
@@ -40,7 +46,6 @@ namespace bank_app.Models.Users
             }
 
         }
-
         private void SetAccountStatus(AccountStatus accountStatus)
         {
             CurrentAccountStatus = accountStatus;
@@ -48,6 +53,21 @@ namespace bank_app.Models.Users
 
 
         // public methods to access private setters
+
+        public bool UpdateUserId(string userId)
+        {
+            if (UserManager.UserIds.Contains(userId))
+            {
+                return false;
+            }
+            else
+            {
+                UserManager.UserIds.Remove(UserId);
+                SetUserId(userId);
+                UserManager.UserIds.Add(UserId);
+                return true;
+            }
+        }
 
         public void UpdateUserInfo(string type, string change)
         {
