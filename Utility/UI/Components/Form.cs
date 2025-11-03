@@ -1,4 +1,5 @@
-﻿using System;
+﻿using bank_app.Utility.Components;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,7 @@ namespace bank_app.Utility.UI.Components
         public ColourFG SelectionFG { get; set; }
         public ColourBG SelectionBG { get; set; }
         public Button SubmitButton { get; set; }
+        public Text ErrorText { get; set; }
         /// <summary>
         /// Initializes a new instance of the <see cref="Form"/> that renders and handles
         /// keyboard navigation for a list of child <see cref="UIComponent"/>s.
@@ -33,7 +35,7 @@ namespace bank_app.Utility.UI.Components
         /// is captured internally. When a <see cref="Button"/> is activated, all captured values
         /// are passed to the button via <c>Pressed(object[] args)</c>.
         /// </remarks>
-        public Form(List<UIComponent> components, Button submitButton, OrderBy order = OrderBy.Column, int width = 30, ColourFG selectionFG = ColourFG.Black, ColourBG selectionBG = ColourBG.White)
+        public Form(List<UIComponent> components, Button submitButton, int width = 30, ColourFG selectionFG = ColourFG.Black, ColourBG selectionBG = ColourBG.White)
         {
             // Set variables
             IsInteractable = true;
@@ -43,23 +45,24 @@ namespace bank_app.Utility.UI.Components
             SelectionFG = selectionFG;
             SelectionBG = selectionBG;
             SubmitButton = submitButton;
-
+            ErrorText = new Text("", textColour: ColourFG.RedBright);
 
             // Make this object a parent to all child objects
             foreach (var item in components)
             {
                 item.ParentComponent = this;
             }
+            SubmitButton.ParentComponent = this;
+            ErrorText.ParentComponent = this;
             // Check how many objects that are not buttons to see how many arguments we are passing if there is a button inside Menu
             int argsCount = 0;
             for (int j = 0; j < components.Count; j++)
             {
-                if (components[j] is not Button)
-                {
-                    argsCount++;
-                }
+                argsCount++;
             }
             args = new object[argsCount];
+            _components.Add(SubmitButton);
+            _components.Add(ErrorText);
         }
 
         public override (int, int) Pressed()
@@ -79,6 +82,7 @@ namespace bank_app.Utility.UI.Components
                         ColourManager.Set(SelectionBG);
                         _components[j].Render();
                         ColourManager.Set(ColourBG.Reset);
+                        ColourManager.Set(ColourFG.Reset);
                     }
                     else
                     {
@@ -92,7 +96,11 @@ namespace bank_app.Utility.UI.Components
                     case ConsoleKey.DownArrow:
                         if (_index < _components.Count - 1)
                         {
-                            _index++;
+                            int newIndex = _components.FindIndex(component => component.IsInteractable && _components.IndexOf(component) > _index);
+                            if (newIndex != -1)
+                            {
+                                _index = newIndex;
+                            }
                         }
                         else
                         {
@@ -102,7 +110,11 @@ namespace bank_app.Utility.UI.Components
                     case ConsoleKey.UpArrow:
                         if (_index > 0)
                         {
-                            _index--;
+                            int newIndex = _components.FindIndex(component => component.IsInteractable && _components.IndexOf(component) < _index);
+                            if (newIndex != -1)
+                            {
+                                _index = newIndex;
+                            }
                         }
                         else
                         {
@@ -118,11 +130,19 @@ namespace bank_app.Utility.UI.Components
                         // If component is not a button we set the args index to be the value inside the component. If it is a button we run the pressed method for button with the current args.
                         if (_components[_index] is not Button)
                         {
-                            args[_index] = _components[_index].Value;
+                                args[_index] = _components[_index].Value;
                         }
-                        else if (_components[_index] is Button button)
+                        else if (_components[_index] == SubmitButton)
                         {
-                            button.Pressed(args);
+                            bool success = _components.All(component => component.Value != null);
+                            if (success)
+                            {
+                                SubmitButton.Pressed(args);
+                            }
+                            else
+                            {
+                                ErrorText.UpdateText("Error: Fill out entire form");
+                            }
                             return (0,0);
                         }
                         break;
