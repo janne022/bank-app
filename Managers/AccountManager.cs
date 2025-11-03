@@ -112,14 +112,22 @@ namespace bank_app.Managers
             return _accounts.Count;
         }
 
-
-        public static Account? GetAccountById(Guid id)
+        public static IReadOnlyList<Transaction> PrintAllAccountTransactions(Guid id)
         {
-            if (_accounts.TryGetValue(id, out Account? account))
+            var account = GetAccountById(id);
+            return account.Transactions;
+        }
+
+        /// <summary>
+        /// Returns account object from account list based on the unique account id (Guid)
+        /// </summary>
+        public static Account GetAccountById(Guid id)
+        {
+            if (!_accounts.TryGetValue(id, out var account))
             {
-                return account;
+                throw new InvalidOperationException();
             }
-            return null;
+            return account;
         }
 
         /// <summary>
@@ -129,7 +137,7 @@ namespace bank_app.Managers
         public static void Deposit(Guid accountId, Transaction transaction, decimal amount)
         {
             transaction.TransactionType = TransactionType.Deposit;
-            var account = GetOrThrow(accountId);
+            var account = GetAccountById(accountId);
             account.ApplyTransaction(transaction, amount);
         }
 
@@ -140,22 +148,8 @@ namespace bank_app.Managers
         public static void Withdraw(Guid accountId, Transaction transaction, decimal amount)
         {
             transaction.TransactionType = TransactionType.Withdrawal;
-            var account = GetOrThrow(accountId);
+            var account = GetAccountById(accountId);
             account.ApplyTransaction(transaction, amount);
         }
-
-        /// <summary>
-        /// Retrieves and returns an account from the account list using a unique identifier (Guid).
-        /// </summary>
-        public static Account GetOrThrow(Guid id)
-        {
-            if (!_accounts.TryGetValue(id, out var acc))
-            {
-                throw new InvalidOperationException();
-            }
-            return acc;
-        }
-
-
     }
 }
