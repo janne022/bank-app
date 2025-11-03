@@ -50,7 +50,7 @@ namespace bank_app.Managers
 
             // Add or overwrite the account entry in a thread-safe manner.
             // Using the indexer simplifies handling rare Guid collisions by overwriting the same key.
-            _accounts[newAccount.AccountID] = newAccount;
+            _accounts[ownerID] = newAccount;
 
             if (newAccount == null)
             {
@@ -61,9 +61,10 @@ namespace bank_app.Managers
             return true;
         }
 
-        internal static void AddAccount(Account accountToAdd)
+        internal static bool AddAccount(Account accountToAdd)
         {
-            _accounts[accountToAdd.AccountID] = accountToAdd;
+         
+           return  _accounts.TryAdd(accountToAdd.AccountID, accountToAdd);
         }
 
 
@@ -78,9 +79,9 @@ namespace bank_app.Managers
         /// <summary>
         /// Returns a snapshot list of all accounts.
         /// </summary>
-        public static List<Account> GetAllAccounts()
+        public static List<Account> GetAllAccounts(Guid ownerId)
         {
-            return _accounts.Values.ToList();
+            return _accounts.Values.Where(account=>account.OwnerId==ownerId).ToList();
         }
 
         // Overload method to only return accounts of a specific user
@@ -129,23 +130,26 @@ namespace bank_app.Managers
             return account;
         }
 
-        //Methods for Deposit and Withdraw to update Balance
+        /// <summary>
+        /// Adds balance to an account using data from a transaction object. 
         /// </summary>
-        public static void Deposit(Guid accountId, Transaction transaction)
+        /// <param name="accountId">The unique identifier (Guid) for an Account object</param>
+        public static void Deposit(Guid accountId, Transaction transaction, decimal amount)
         {
             transaction.TransactionType = TransactionType.Deposit;
-            var account = GetAccountById(accountId);
-            account.ApplyTransaction(transaction);
+            var account = GetOrThrow(accountId);
+            account.ApplyTransaction(transaction, amount);
         }
 
         /// <summary>
         /// Deducts balance from account using unique identifier and data from transaction.
         /// </summary>
-        public static void Withdraw(Guid accountId, Transaction transaction)
+        /// /// /// <param name="accountId">The unique identifier (Guid) for an Account object</param>
+        public static void Withdraw(Guid accountId, Transaction transaction, decimal amount)
         {
             transaction.TransactionType = TransactionType.Withdrawal;
-            var account = GetAccountById(accountId);
-            account.ApplyTransaction(transaction);
+            var account = GetOrThrow(accountId);
+            account.ApplyTransaction(transaction, amount);
         }
     }
 }

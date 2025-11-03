@@ -30,7 +30,7 @@ namespace bank_app.Managers
             _loans.Add(loan);
 
             var transaction = CreateLoanTransaction(loanAccount, principal);
-            loanAccount.ApplyTransaction(transaction);
+            loanAccount.ApplyTransaction(transaction, principal);
 
             return loan;
 
@@ -38,9 +38,9 @@ namespace bank_app.Managers
 
         public LoanAccount GetOrCreateLoanAccount(Guid userId, Currency currency)
         {
-            var loanAccount = AccountManager.GetAllAccounts()
+            var loanAccount = AccountManager.GetAllAccounts(userId)
                 .OfType<LoanAccount>()
-                .FirstOrDefault(acc => acc.OwnerId == userId);
+                .FirstOrDefault();
 
             if (loanAccount == null)
             {
@@ -60,21 +60,27 @@ namespace bank_app.Managers
         }
         private bool ValidateLoanLimit(Guid userId, decimal requestedAmount)
         {
-           
 
-            decimal totalBalance = AccountManager.GetAllAccounts()
-                                   .Where(account => account.OwnerId == userId && account is not LoanAccount)
+
+            decimal totalBalance = AccountManager.GetAllAccounts(userId)
+                                   .Where(account => account is not LoanAccount)
                                    .Sum(account => account.Balance);
             if (totalBalance <= 0)
             {
-               throw new InvalidOperationException("User has no active deposit accounts to support a loan request.");
+
+                return false;
             }
 
             decimal existingDebt = _loans.Where(loan => loan.UserId == userId && loan.IsActive).Sum(loan => loan.OutstandingPrincipal);
 
+            if (existingDebt <= 0)
+            {
+                return false;
+            }
+
             decimal maxAllowed = Math.Round(totalBalance * 5, 2);
 
-            if ((requestedAmount +existingDebt)> maxAllowed)
+            if ((requestedAmount + existingDebt) > maxAllowed)
             {
                 return false;
             }
