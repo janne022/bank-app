@@ -11,7 +11,7 @@ namespace bank_app.Models.Users
         public int FailedLoginAttempts { get; private set; } = 0;
         public AccountStatus CurrentAccountStatus { get; private set; }
 
-        public User(string userName, string userPassword)
+        public User(string userName, string userPassword, string email, string phoneNumber, string legalName)
         {
             UpdateUserId(userName);
             UserPassword = PasswordHasher.Hash(userPassword);
