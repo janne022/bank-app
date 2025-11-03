@@ -142,12 +142,12 @@ namespace bank_app.Utility.UI.Components
                             bool success = _components.TakeWhile(formItem => formItem.IsFormValue).All(component => component.Component.Value != null);
                             if (success)
                             {
-                                ErrorText.UpdateText(" ");
+                                UpdateErrorMessage(" ");
                                 SubmitButton.Pressed(args);
                             }
                             else
                             {
-                                ErrorText.UpdateText("Error: Fill out entire form");
+                                UpdateErrorMessage("Error: Fill out entire form");
                             }
                             return (0, 0);
                         }
@@ -174,6 +174,11 @@ namespace bank_app.Utility.UI.Components
                 _components[j].Y += totalHeight - 2;
                 _components[j].Render();
             }
+        }
+
+        public void UpdateErrorMessage(string errorMessage)
+        {
+            ErrorText.UpdateText(errorMessage);
         }
     }
 }
