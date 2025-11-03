@@ -8,26 +8,22 @@ namespace bank_app.Managers
         private static List<User> Users { get; } = new List<User>();
         public static List<string> UserIds { get; } = new List<string>();
 
-
- 
-
-
         /// <summary>
         /// Method to create new users within the bank app. Adds the newly created user to a list of all users within the application.
         /// </summary>
         /// <param name="userType">Enum that determines whether the user is a client or an administrator</param>
 
-        internal static User CreateUser(string userName, string userPassword, UserType userType, string email = "", string phoneNumber = "")
+        internal static User CreateUser(string userId, string userPassword, UserType userType, string email, string phoneNumber, string legalName)
         {
             if (userType is UserType.Admin)
             {
-                var admin = new Admin(userName, userPassword);
+                var admin = new Admin(userId, userPassword, email, phoneNumber, legalName);
                 Users.Add(admin);
                 return admin;
             }
             else if (userType is UserType.Client)
             {
-                var client = new Client(userName, userPassword, email, phoneNumber);
+                var client = new Client(userId, userPassword, email, phoneNumber, legalName);
                 Users.Add(client);
                 return client;
             }
