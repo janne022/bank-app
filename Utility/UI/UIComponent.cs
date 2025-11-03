@@ -22,6 +22,14 @@ namespace bank_app.Utility.UI
         public Align SelfAlign { get; set; }
         public UIComponent? ParentComponent { get; set; }
 
+        public UIComponent(int marginTop = 0, int marginLeft = 0, int marginRight = 0, int marginBottom = 0)
+        {
+            MarginTop = marginTop;
+            MarginLeft = marginLeft;
+            MarginRight = marginRight;
+            MarginBottom = marginBottom;
+        }
+
 
         /// <summary>
         /// Render should be used when displaying the component to the console

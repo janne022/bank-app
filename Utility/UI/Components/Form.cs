@@ -73,8 +73,6 @@ namespace bank_app.Utility.UI.Components
                 // Render every object after eachother. If selected object is the one we are rendering, we highlight it
                 for (int j = 0; j < _components.Count; j++)
                 {
-                    _components[j].X = X;
-                    _components[j].Y = Y + j;
                     if (j == _index)
                     {
                         // Black foreground on white background
@@ -149,13 +147,26 @@ namespace bank_app.Utility.UI.Components
                 }
             }
         }
-
+        public override void Measure()
+        {
+            for (int i = 0; i < _components.Count; i++)
+            {
+                Height += _components[i].Height;
+            }
+        }
         public override void Render()
         {
+            int totalHeight = 0;
             for (int j = 0; j < _components.Count; j++)
             {
+                _components[j].Measure();
                 _components[j].X = X;
-                _components[j].Y = Y + j;
+                _components[j].Y = Y;
+                totalHeight += _components[j].Height;
+                if (j != 0)
+                {
+                    _components[j].Y += totalHeight - 1;
+                }
                 _components[j].Render();
             }
         }
