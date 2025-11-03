@@ -39,11 +39,26 @@ namespace bank_app.Managers
             Users.Remove(userName);
         }
 
+        public static User GetUser(string userID)
+        {
+            foreach (var user in Users)
+            {
+                if (user.UserId.ToString() == userID)
+                {
+                    return user;
+                }
+            }
+
+            return null;
+        }
+
         /// <summary>
         /// Attempts to authorize a user by verifying the provided password.
         /// </summary>
-        internal static bool Authorization(User user, string inputPassword)
+        internal static bool Authorization(string userID, string inputPassword)
         {
+            var user = GetUser(userID);
+
             if (user.FailedLoginAttempts < 3 && user.CurrentAccountStatus == AccountStatus.Unlocked)
             {
                 if (PasswordHasher.VerifyPassword(inputPassword, user.UserPassword))
@@ -71,13 +86,13 @@ namespace bank_app.Managers
             user.UpdateAccountStatus(AccountStatus.Unlocked);
         }
 
-        internal static User? Login(User user, string password)
+        internal static User? Login(string userID, string password)
         {
             // Loops through all made users in the program...
             foreach (var u in Users)
             {
                 // if the user id input matches any of the existing users' ids... AND they are authorized to login AND the password is correct...
-                if (u.UserId == user.UserId && Authorization(user, password))
+                if (u.UserId.ToString() == userID && Authorization(userID, password))
                 {
                     // ...return that specific user
                     return u;

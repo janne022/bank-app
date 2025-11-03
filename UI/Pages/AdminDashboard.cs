@@ -13,7 +13,7 @@ namespace bank_app.UI.Pages
         {
             if (user is Admin admin)
             {
-                
+                Console.Clear();
             }
         }
     }
