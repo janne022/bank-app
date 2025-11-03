@@ -166,7 +166,7 @@ namespace bank_app.Utility.UI.Components
                 }
             }
 
-            HandleFeed(displayFeed);
+            PresentFeed(displayFeed);
 
 
             //if (FeedContents is List<Transaction> transactions)
@@ -191,7 +191,7 @@ namespace bank_app.Utility.UI.Components
         }
 
 
-        private void HandleFeed(List<string[]> displayFeed)
+        private void PresentFeed(List<string[]> displayFeed)
         {
             for (int i = 0; i < displayFeed.Count; i++)
             {
