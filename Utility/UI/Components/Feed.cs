@@ -36,10 +36,10 @@ namespace bank_app.Utility.UI.Components
             //    _objectType = "transaction";
             //}
 
-            Width = 50;
-            Height = 3;
-            X = 0;
-            Y = 0;
+            //Width = 50;
+            //Height = 3;
+            //X = 0;
+            //Y = 0;
         }
 
 
@@ -136,14 +136,14 @@ namespace bank_app.Utility.UI.Components
             //if (FeedContents is List<Client> clients)
             //{
 
-                Console.SetCursorPosition(0, 0);
+                Console.SetCursorPosition(X, Y);
                 //var relevantLines = 
                 //    .Skip(_pastEntries)
                 //    .Take(FeedLines);
                                
                 
-                Console.WriteLine($"{"  Name",-15}{"Phone Number",-15}{"Email",-25}");
-                for (int i = 0; i < 50; i++)
+                //Console.WriteLine($"{"  Name",-15}{"Phone Number",-15}{"Email",-25}");
+                for (int i = 0; i < Width; i++)
                 {
                     ColourManager.Write("─", ColourFG.None, ColourBG.None);
                 }
@@ -166,7 +166,7 @@ namespace bank_app.Utility.UI.Components
                 //}
             }
 
-            PresentFeed(displayFeed);
+            //PresentFeed();
 
 
             //if (FeedContents is List<Transaction> transactions)
@@ -188,7 +188,7 @@ namespace bank_app.Utility.UI.Components
             //    ColourManager.Write($"\n{_pastEntries + 1}-{Math.Min(_pastEntries + FeedLines, transactions.Count)} of {transactions.Count} {objectType}s.", ColourFG.None, ColourBG.None);
 
             //}
-        }
+        //}
 
 
         private void PresentFeed(List<string[]> displayFeed)
