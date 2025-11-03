@@ -13,7 +13,8 @@ namespace bank_app.UI.Pages
         {
             if (user is Admin admin)
             {
-                
+                Console.Clear();
+                Console.WriteLine("It's not about how hard you can hit, it's about how har dyou can get hit and KEEP MOVING FORWARD");
             }
         }
     }

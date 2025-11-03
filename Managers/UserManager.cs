@@ -39,13 +39,28 @@ namespace bank_app.Managers
             Users.Remove(userName);
         }
 
+        internal static User GetUser(string userID)
+        {
+            foreach (var user in Users)
+            {
+                if(user.UserId.ToString() == userID)
+                {
+                    return user;
+                }
+            }
+
+            return null;
+        }
+
         /// <summary>
         /// Attempts to authorize a user by verifying the provided password.
         /// </summary>
         /// 
         //Elvira kolla om du vill ändra den metoden
-        internal static bool Authorization(User user, string inputPassword)
+        internal static bool Authorization(string userID, string inputPassword)
         {
+            var user = GetUser(userID);
+
             if (user.FailedLoginAttempts < 3 && user.CurrentAccountStatus == AccountStatus.Unlocked)
             {
                 if (PasswordHasher.VerifyPassword(inputPassword, user.UserPassword))
@@ -92,10 +107,10 @@ namespace bank_app.Managers
 
 
         //New Method to Login user with User Id
-        internal static User? Login(Guid userId, string password)
+        internal static User? Login(string userId, string password)
         {
             
-           var user= Users.FirstOrDefault(u => u.UserId == userId && Authorization(u, password));
+           var user= Users.FirstOrDefault(u => u.UserId.ToString() == userId && Authorization(u.UserId.ToString(), password));
 
             if (user==null)
             {
