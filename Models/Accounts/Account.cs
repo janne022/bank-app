@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using bank_app.Utility;
 
 namespace bank_app.Models.Accounts
 {
@@ -11,17 +12,21 @@ namespace bank_app.Models.Accounts
         public Guid AccountID { get; private set; }
         public Currency AccountCurrency { get; private set; }
         public decimal Balance { get; private set; }
-
+        public Guid OwnerId { get; private set; }
         private readonly List<Transaction> _transactions = new List<Transaction>();
         public IReadOnlyList<Transaction> Transactions => _transactions;
 
-        protected Account(Currency currency, decimal balance)
+        protected Account(Currency currency, decimal balance, Guid ownerId)
         {
             AccountID = Guid.NewGuid();
             AccountCurrency = currency;
             Balance = balance < 0 ? 0 : balance;
+            OwnerId = ownerId;
         }
-        internal void ApplyTransaction(Transaction transaction)
+        /// <summary>
+        /// Method that adds or subtracts balance in accounts local currency, while also saving all transactions made into a List. 
+        /// </summary>
+        internal void ApplyTransaction(Transaction transaction, decimal amount)
         {
             if (!CanApply(transaction))
             {
@@ -31,10 +36,10 @@ namespace bank_app.Models.Accounts
             switch (transaction.TransactionType)
             {
                 case TransactionType.Deposit:
-                    Balance += transaction.TransferAmount;
+                    Balance += amount;
                     break;
                 case TransactionType.Withdrawal:
-                    Balance -= transaction.TransferAmount;
+                    Balance -= amount;
                     break;
                 default:
                     Console.WriteLine("This transaction type is not an option");
