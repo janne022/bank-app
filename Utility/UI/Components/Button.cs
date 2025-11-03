@@ -50,7 +50,7 @@ namespace bank_app.Utility.UI.Components
 
         public override void Measure()
         {
-            Height = 1;
+            Height = (1 + marginTop);
             Width = Text.Length + 4;  // [ ButtonText ]
                                       // 12          34
         }
@@ -67,32 +67,32 @@ namespace bank_app.Utility.UI.Components
 
         public override void Render()
         {
-            int leftMargin = SetMargin();
+            int marginLeft = SetMarginLeft();
 
-            Console.SetCursorPosition(X + leftMargin, Y);
+            Console.SetCursorPosition(X + marginLeft, Y + marginTop);
             Console.Write("[");
             ColourManager.Write($" {Text} ", _textColour, _buttonColour);
             Console.Write("]");
         }
 
-        private int SetMargin()
+        private int SetMarginLeft()
         {
-            int leftMargin = 0;
+            int marginLeft = 0;
             switch (Alignment)
             {
                 case Justify.Start:
-                    leftMargin = 0;
+                    marginLeft = 0;
                     break;
 
                 case Justify.Center:
-                    leftMargin = (ParentComponent!.Width - Text.Length) / 2;
+                    marginLeft = (ParentComponent!.Width - Text.Length) / 2;
                     break;
 
                 case Justify.End:
-                    leftMargin = ParentComponent!.Width - Text.Length;
+                    marginLeft = ParentComponent!.Width - Text.Length;
                     break;
             }
-            return leftMargin;
+            return marginLeft;
         }
     }
 }
