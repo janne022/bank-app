@@ -64,7 +64,9 @@ namespace bank_app.Utility.Components
         {
             _words = newText.Split(' ');
             _fullLines.Clear();
+            _thisLine.Clear();
             Measure();
+            Render();
         }
 
         public override void Render()
