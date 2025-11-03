@@ -13,7 +13,7 @@ namespace bank_app.UI.Pages
         {
             Console.CursorVisible = false;
             // Create a new Invokable object with the method that is going to run once the 'Login' button is pressed
-            var loginInvoke = new Invokable<User, string>(LoginHandler);
+            var loginInvoke = new Invokable<Guid, string>(LoginHandler);  //Check if we need to change back it later 
             // Create new 3x3 grid
             Grid grid = new Grid(3, 3);
             // Add Menu with two inputfields and button inside to center middle of grid. Note: Button is currently not finished, so it won't be rendered
@@ -34,10 +34,10 @@ namespace bank_app.UI.Pages
             Layout layout = new(grid, LayoutBorder.Heavy);
             layout.Render();
         }
-
-        private void LoginHandler(User user, string password)
+        //Just changed User to Guid userId
+        private void LoginHandler(Guid userId, string password)
         {
-            User? u = UserManager.Login( user, password);
+            User? u = UserManager.Login( userId, password);
             if (u != null)
             {
                 PageManager.SwitchUser(u);
