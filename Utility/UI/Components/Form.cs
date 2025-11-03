@@ -11,6 +11,9 @@ namespace bank_app.Utility.UI.Components
         private List<UIComponent> _components;
         private object[] args;
         private int _index = 0;
+        public ColourFG SelectionFG { get; set; }
+        public ColourBG SelectionBG { get; set; }
+        public Button SubmitButton { get; set; }
         /// <summary>
         /// Initializes a new instance of the <see cref="Form"/> that renders and handles
         /// keyboard navigation for a list of child <see cref="UIComponent"/>s.
@@ -30,13 +33,17 @@ namespace bank_app.Utility.UI.Components
         /// is captured internally. When a <see cref="Button"/> is activated, all captured values
         /// are passed to the button via <c>Pressed(object[] args)</c>.
         /// </remarks>
-        public Form(List<UIComponent> components, OrderBy order = OrderBy.Column, int width = 30)
+        public Form(List<UIComponent> components, Button submitButton, OrderBy order = OrderBy.Column, int width = 30, ColourFG selectionFG = ColourFG.Black, ColourBG selectionBG = ColourBG.White)
         {
             // Set variables
             IsInteractable = true;
             _components = components;
             Width = width;
             Height = components.Count;
+            SelectionFG = selectionFG;
+            SelectionBG = selectionBG;
+            SubmitButton = submitButton;
+
 
             // Make this object a parent to all child objects
             foreach (var item in components)
@@ -68,9 +75,10 @@ namespace bank_app.Utility.UI.Components
                     if (j == _index)
                     {
                         // Black foreground on white background
-                        Console.Write($"\u001b[30;47m");
+                        ColourManager.Set(SelectionFG);
+                        ColourManager.Set(SelectionBG);
                         _components[j].Render();
-                        Console.Write("\u001b[0m");
+                        ColourManager.Set(ColourBG.Reset);
                     }
                     else
                     {
