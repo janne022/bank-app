@@ -27,14 +27,14 @@ namespace bank_app.Utility.UI.Components
             FeedColumns = columns;
             _pastEntries = 0;
 
-            if (listOfObjects is List<Client>)
-            {
-                _objectType = "client";
-            }
-            if (listOfObjects is List<Transaction>)
-            {
-                _objectType = "transaction";
-            }
+            //if (listOfObjects is List<Client>)
+            //{
+            //    _objectType = "client";
+            //}
+            //if (listOfObjects is List<Transaction>)
+            //{
+            //    _objectType = "transaction";
+            //}
 
             Width = 50;
             Height = 3;
