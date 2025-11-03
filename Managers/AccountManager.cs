@@ -61,9 +61,10 @@ namespace bank_app.Managers
             return true;
         }
 
-        internal static void AddAccount(Account accountToAdd)
+        internal static bool AddAccount(Account accountToAdd)
         {
-            _accounts[accountToAdd.AccountID] = accountToAdd;
+         
+           return  _accounts.TryAdd(accountToAdd.AccountID, accountToAdd);
         }
 
 
