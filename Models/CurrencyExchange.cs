@@ -41,19 +41,22 @@ namespace bank_app.Models
         /// </summary>
         /// <param name="currency">The chosen currency to update exchange rate of</param>
         /// <param name="rateToSek">The chosen exchange rate of that currency based on base rate (SEK)</param>
-        public static void UpdateRate(Currency currency, decimal rateToSek)
+        public static bool UpdateRate(Currency currency, decimal rateToSek)
         {
             if (currency == Currency.SEK)
             {
+                return false;
                 throw new ArgumentException("Cannot change the base rate (SEK)");
             }
 
             if (rateToSek <= 0)
             {
+                return false;
                 throw new ArgumentException("Exchange rate must be more than 0");
             }
 
             _ratesToSEK[currency] = rateToSek;
+            return true;
         }
 
         /// <summary>
