@@ -137,7 +137,7 @@ namespace bank_app.Managers
         public static void Deposit(Guid accountId, Transaction transaction, decimal amount)
         {
             transaction.TransactionType = TransactionType.Deposit;
-            var account = GetOrThrow(accountId);
+            var account = GetAccountById(accountId);
             account.ApplyTransaction(transaction, amount);
         }
 
@@ -148,7 +148,7 @@ namespace bank_app.Managers
         public static void Withdraw(Guid accountId, Transaction transaction, decimal amount)
         {
             transaction.TransactionType = TransactionType.Withdrawal;
-            var account = GetOrThrow(accountId);
+            var account = GetAccountById(accountId);
             account.ApplyTransaction(transaction, amount);
         }
     }
