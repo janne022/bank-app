@@ -122,23 +122,26 @@ namespace bank_app.Managers
             return null;
         }
 
-        //Methods for Deposit and Withdraw to update Balance
+        /// <summary>
+        /// Adds balance to an account using data from a transaction object. 
         /// </summary>
-        public static void Deposit(Guid accountId, Transaction transaction)
+        /// <param name="accountId">The unique identifier (Guid) for an Account object</param>
+        public static void Deposit(Guid accountId, Transaction transaction, decimal amount)
         {
             transaction.TransactionType = TransactionType.Deposit;
             var account = GetOrThrow(accountId);
-            account.ApplyTransaction(transaction);
+            account.ApplyTransaction(transaction, amount);
         }
 
         /// <summary>
         /// Deducts balance from account using unique identifier and data from transaction.
         /// </summary>
-        public static void Withdraw(Guid accountId, Transaction transaction)
+        /// /// /// <param name="accountId">The unique identifier (Guid) for an Account object</param>
+        public static void Withdraw(Guid accountId, Transaction transaction, decimal amount)
         {
             transaction.TransactionType = TransactionType.Withdrawal;
             var account = GetOrThrow(accountId);
-            account.ApplyTransaction(transaction);
+            account.ApplyTransaction(transaction, amount);
         }
 
         /// <summary>

@@ -8,6 +8,7 @@ namespace bank_app.Models
 {
     public enum Currency
     {
+        SEK,  //Swedish krona (BASE CURRENCY)
         USD,  //Dollar
         EUR,  //Euro
         GBP,  //Pound Sterling
@@ -16,7 +17,6 @@ namespace bank_app.Models
         CAD,  //Canadian Dollar
         CHF,  //Swiss Franc
         CNY,  //Chinese Yuan
-        SEK,  //Swedish Krona
         NZD,  //New Zealand Dollar
         SLC   // Slava Coin
     }
