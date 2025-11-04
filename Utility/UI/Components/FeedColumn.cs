@@ -11,7 +11,7 @@ namespace bank_app.Utility.UI.Components
 {
     internal class FeedColumn : UIComponent
     {
-        private string[] _entries;
+        public string[] _entries { get; private set; }
         private string _header;
         private bool _displayHeader;
         private bool _displayFooter;
@@ -81,15 +81,15 @@ namespace bank_app.Utility.UI.Components
 
             int actualHeight = _scrollHeight;
 
-            if (_displayHeader)                 
-            {                                   
-                int headerText = 1;             
-                int headerSpacer = 1;           
-                actualHeight += headerText;     
-                actualHeight += headerSpacer;   
-            }                                   
-                                                
-            if (_displayFooter)                 
+            if (_displayHeader)
+            {
+                int headerText = 1;
+                int headerSpacer = 1;
+                actualHeight += headerText;
+                actualHeight += headerSpacer;
+            }
+
+            if (_displayFooter)
             {
                 int footerText = 1;
                 int footerSpacer = 1;
