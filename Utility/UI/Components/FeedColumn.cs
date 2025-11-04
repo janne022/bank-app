@@ -159,8 +159,30 @@ namespace bank_app.Utility.UI.Components
 
             Console.Write($"{text}");
 
-            int marginDifference = Width - text.Length;
-            for (int i = 0; i <= marginDifference; i++)
+            int marginRight = 0;
+            switch (_textAlign)
+            {
+                case TextAlign.Left:
+                    marginRight = Width - text.Length;
+                    break;
+
+                case TextAlign.Center:
+                    marginRight = Width - (marginLeft + text.Length);
+                    break;
+
+                case TextAlign.Right:
+                    marginRight = 0;
+                    break;
+            }
+
+
+
+
+            
+            
+            
+            
+            for (int i = 0; i <= marginRight; i++)
             {
                 Console.Write(" ");
             }
