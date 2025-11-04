@@ -20,7 +20,10 @@ namespace bank_app.UI
             {PageType.Transaction,  new Transaction()},
             {PageType.Account,  new Account()},
             {PageType.Loan,  new Loan()},
-            {PageType.AdminDashboard,  new AdminDashboard()}
+            {PageType.AdminDashboard,  new AdminDashboard()},
+            {PageType.CreateUser, new CreateUser()},
+            {PageType.CheckTransactions, new CheckTransactions()},
+            {PageType.UpdateRates, new UpdateRates()}
         };
         private static bool _isRunning = true;
         private static Page? _nextPage;
@@ -54,6 +57,11 @@ namespace bank_app.UI
         public static void SwitchUser(User user)
         {
             _currentUser = user;
+        }
+
+        public static User? GetCurrentUser()
+        {
+            return _currentUser;
         }
 
         /// <summary>

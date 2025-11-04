@@ -77,7 +77,10 @@ namespace bank_app.Utility
         Transfer,
         Transaction,
         Account,
-        Loan
+        Loan,
+        CreateUser,
+        CheckTransactions,
+        UpdateRates
     }
 
     public enum LayoutBorder
