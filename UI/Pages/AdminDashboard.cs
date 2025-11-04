@@ -15,14 +15,13 @@ namespace bank_app.UI.Pages
 {
     public class AdminDashboard : Page
     {
-
         internal override UIComponent LoadPage()
         {
             var user = PageManager.GetCurrentUser();
 
             Console.CursorVisible = false;
             var navbar = new Navbar(new List<NavbarItem> { new NavbarItem("Home", PageType.AdminDashboard), new NavbarItem("Create User", PageType.CreateUser), 
-                new NavbarItem("Check Transactions", PageType.CheckTransactions), new NavbarItem("Update Rates", PageType.UpdateRates)});
+                new NavbarItem("Transactions", PageType.CheckTransactions), new NavbarItem("Rates", PageType.UpdateRates)});
             // Create a new Invokable object with the method that is going to run once the 'Login' button is pressed
             // Create new 3x3 grid
             Grid grid = new Grid(3, 3);
