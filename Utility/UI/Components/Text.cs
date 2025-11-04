@@ -44,7 +44,10 @@ namespace bank_app.Utility.Components
 
         public override void Measure()
         {
-            WrapIntoLines();
+            if (_fullLines.Count == 0)
+            {
+                WrapIntoLines();
+            }
             // Look for longest index in words[] and set height and width
             for (int i = 0; i < _fullLines.Count; i++)
             {
@@ -57,11 +60,20 @@ namespace bank_app.Utility.Components
             Height = _totalLines;
         }
 
+        public void UpdateText(string newText)
+        {
+            _words = newText.Split(' ');
+            _fullLines.Clear();
+            _thisLine.Clear();
+            Measure();
+            Render();
+        }
+
         public override void Render()
         {
             int line = 0;
             int leftMargin = 0;
-            int PanelWidth = ParentElement!.Width;
+            int PanelWidth = ParentComponent!.Width;
 
             switch (_textAlign)
             {
@@ -116,7 +128,7 @@ namespace bank_app.Utility.Components
         {
             int currentWidth = 0;
             int currentLine = 1;
-            int PanelWidth = ParentElement!.Width;
+            int PanelWidth = ParentComponent!.Width;
 
             for (int i = 0; i < _words.Length; i++)
             {

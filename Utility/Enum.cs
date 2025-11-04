@@ -73,7 +73,11 @@ namespace bank_app.Utility
     {
         Login,
         AdminDashboard,
-        ClientDashboard
+        ClientDashboard,
+        Transfer,
+        Transaction,
+        Account,
+        Loan
     }
 
     public enum LayoutBorder
@@ -111,6 +115,12 @@ namespace bank_app.Utility
     {
         Admin,
         Client
+    }
+
+    public enum UpOrDown
+    {
+        Up,
+        Down
     }
 
     public enum Currency

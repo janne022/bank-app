@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace bank_app.Utility.UI.Components
 {
-    public class Layout : UIComponent
+    public class Panel : UIComponent
     {
         // Declare variables
         public LayoutBorder Border { get; set; }
@@ -20,14 +20,14 @@ namespace bank_app.Utility.UI.Components
         private ColourBG _backgroundColour;
 
         // Child element
-        private UIComponent _rootComponent;
+        private UIComponent _childComponent;
         public string TopText { get; set; }
 
         /// <summary>
         /// Creates a layout container that optionally draws a border and hosts a single root UI component.
         /// </summary>
         /// <param name="rootComponent">
-        /// The child component to render inside the layout. Its <see cref="UIComponent.ParentElement"/> is set to this layout.
+        /// The child component to render inside the layout. Its <see cref="UIComponent.ParentComponent"/> is set to this layout.
         /// If the component is a Grid, its row and column sizes are computed from the layout size.
         /// </param>
         /// <param name="border">The border style to draw around the layout bounds.</param>
@@ -42,7 +42,7 @@ namespace bank_app.Utility.UI.Components
         /// During rendering, the child component is measured and centered within the layout. The selected border style determines
         /// which corner and wall glyphs are used. The <paramref name="topText"/> is written on the top border if provided.
         /// </remarks>
-        public Layout(UIComponent rootComponent, LayoutBorder border, string topText = "", int width = 0, int height = 0, ColourFG borderColour = ColourFG.Reset, ColourBG backgroundColour = ColourBG.Reset)
+        public Panel(UIComponent rootComponent, LayoutBorder border, string topText = "", int width = 0, int height = 0, ColourFG borderColour = ColourFG.Reset, ColourBG backgroundColour = ColourBG.Reset)
         {
             _borderColour = borderColour;
             _backgroundColour = backgroundColour;
@@ -65,13 +65,17 @@ namespace bank_app.Utility.UI.Components
             }
 
             // Set rootComponent and set its parents element to this object
-            _rootComponent = rootComponent;
-            _rootComponent.ParentElement = this;
+            _childComponent = rootComponent;
+            _childComponent.ParentComponent = this;
             // If rootComponent is a grid we will take this objects height/width and change RowHeight & ColWidth for rootComponent
             if (rootComponent is Grid grid)
             {
                 grid.RowHeight = Height / grid.Rows;
                 grid.ColWidth = Width / grid.Cols;
+            }
+            if (rootComponent.IsInteractable)
+            {
+                IsInteractable = true;
             }
             // Chosen border style
             switch (border)
@@ -126,7 +130,10 @@ namespace bank_app.Utility.UI.Components
                     break;
             }
         }
-
+        public override (int, int) Pressed()
+        {
+            return _childComponent.Pressed();
+        }
         // First render the border, then the rootComponent
         public override void Render()
         {
@@ -165,15 +172,15 @@ namespace bank_app.Utility.UI.Components
                     }
                 }
             }
-            _rootComponent.Measure();
+            _childComponent.Measure();
             if (!string.IsNullOrEmpty(TopText))
             {
                 Console.SetCursorPosition(X + Width / 2 - TopText.Length / 2, Y);
                 Console.Write(TopText);
             }
-            _rootComponent.X = X + Width / 2 - _rootComponent.Width / 2;
-            _rootComponent.Y = Y + Height / 2 - _rootComponent.Height / 2;
-            _rootComponent.Render();
+            _childComponent.X = X + Width / 2 - _childComponent.Width / 2;
+            _childComponent.Y = Y + Height / 2 - _childComponent.Height / 2;
+            _childComponent.Render();
         }
     }
 }
