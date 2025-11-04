@@ -18,7 +18,8 @@ namespace bank_app.Utility.UI.Components
         private TextAlign _textAlign;
         private ColourBG _bgColour;
         private ColourFG _textColour;
-        private ColourFG _focusColour;
+        private ColourFG _focusTextColour;
+        private ColourBG _focusBGColour;
         private int _scrollHeight;
         public int StartIndex { get; set; }
         public int EndIndex { get; set; }
@@ -33,17 +34,24 @@ namespace bank_app.Utility.UI.Components
         /// <param name="displayHeader">Whether to show the header</param>
         /// <param name="displayFooter">Whether to show the footer</param>
         /// <param name="textAlign">Left, center or right</param>
-        /// <param name="focusColour">The colour to be displayed when an element is in focus</param>
+        /// <param name="focusTextColour">The text colour to be displayed when an element is in focus</param>
+        /// <param name="focusBGColour">The background colour to be displayed when an element is in focus</param>
+        /// <param name="textColour">The colour text is rendered in</param>
+        /// <param name="bgColour">The colour of the text background</param>
         public FeedColumn(string[] entries, string header,
             bool displayHeader = true, bool displayFooter = true,
-            TextAlign textAlign = TextAlign.Left, ColourFG focusColour = ColourFG.None)
+            TextAlign textAlign = TextAlign.Left, ColourFG focusTextColour = ColourFG.Black, ColourBG focusBGColour = ColourBG.White,
+            ColourFG textColour = ColourFG.Reset, ColourBG bgColour = ColourBG.Reset)
         {
             _entries = entries;
             _header = header;
             _displayHeader = displayHeader;
             _displayFooter = displayFooter;
             _textAlign = textAlign;
-            _focusColour = focusColour;
+            _focusTextColour = focusTextColour;
+            _focusBGColour = focusBGColour;
+            _textColour = textColour;
+            _bgColour = bgColour;
             StartIndex = 0;
             EndIndex = 0;
             _scrollHeight = EndIndex - StartIndex;
@@ -106,6 +114,16 @@ namespace bank_app.Utility.UI.Components
 
             for (int i = StartIndex; i < EndIndex; i++)
             {
+                if (CurrentIndex == i)
+                {
+                    ColourManager.Set(_focusTextColour);
+                    ColourManager.Set(_focusBGColour);
+                }
+                else
+                {
+                    ColourManager.Set(_textColour);
+                    ColourManager.Set(_bgColour);
+                }
                 linesDown = RenderJustified(_entries[i], linesDown);
             }
             Console.SetCursorPosition(X, Y + linesDown + 1);
@@ -138,7 +156,17 @@ namespace bank_app.Utility.UI.Components
             {
                 Console.Write(" ");
             }
-            Console.Write($"{text}  "); // Spaces to look good in multi-column view
+
+            Console.Write($"{text}");
+
+            int marginDifference = Width - text.Length;
+            for (int i = 0; i <= marginDifference; i++)
+            {
+                Console.Write(" ");
+            }
+            ColourManager.Set(_textColour);
+            ColourManager.Set(_bgColour);
+
             linesDown++;
             return linesDown;
         }
@@ -169,6 +197,8 @@ namespace bank_app.Utility.UI.Components
                     ColourManager.Write("─", _textColour, _bgColour);
                 }
             }
+            ColourManager.Write($"\n{StartIndex + 1}-{Math.Min(StartIndex + (EndIndex - StartIndex), _entries.Length)} " +
+                $"of {_entries.Length}s.", ColourFG.None, ColourBG.None);
         }
     }
 }
