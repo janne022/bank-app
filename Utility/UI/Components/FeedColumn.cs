@@ -163,7 +163,7 @@ namespace bank_app.Utility.UI.Components
             switch (_textAlign)
             {
                 case TextAlign.Left:
-                    marginRight = Width - text.Length;
+                    marginRight = Width - text.Length - 1;
                     break;
 
                 case TextAlign.Center:
