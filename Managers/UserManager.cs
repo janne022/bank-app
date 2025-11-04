@@ -90,7 +90,6 @@ namespace bank_app.Managers
         {
             List<User> sameNameList = new List<User>();
 
-
             // Loops through all made users in the program...
             foreach (var u in Users)
             {
@@ -100,46 +99,38 @@ namespace bank_app.Managers
                     //...add them to a local list.
                     sameNameList.Add(u);
                 }
+            }
 
-                //... if there is only one person with that name...
-                if (sameNameList.Count == 1)
+            //... if there is only one person with that name...
+            if (sameNameList.Count == 1)
+            {
+                // try and authorize. If it also is the correct password...
+                if (Authorization(sameNameList[0].UserId.ToString(), password))
                 {
-                    // try and authorize. If it also is the correct password...
-                    if (Authorization(u.UserId.ToString(), password))
-                    {
-                        // ...return that specific user
-                        return u;
-                    }
-                    else
-                    {
-                        u.UpdateLoginAttempts(1);
-                        return null;
-                    }
-                }
-                // if there are several people with the same name i.e. several Eriks...
-                else if (sameNameList.Count > 1)
-                {
-                    //... loop through these people and...
-                    foreach (var sameNameUser in sameNameList)
-                    {
-                        //...if they match with the correct password...
-                        if (Authorization(sameNameUser.UserId.ToString(), password))
-                        {
-                            // return
-                            return sameNameUser;
-                        }
-                    }
-
-
+                    // ...return that specific user
+                    return sameNameList[0];
                 }
                 else
                 {
+                    sameNameList[0].UpdateLoginAttempts(1);
                     return null;
                 }
-
+            }
+            // if there are several people with the same name i.e. several Eriks...
+            else if (sameNameList.Count > 1)
+            {
+                //... loop through these people and...
+                foreach (var sameNameUser in sameNameList)
+                {
+                    //...if they match with the correct password...
+                    if (Authorization(sameNameUser.UserId.ToString(), password))
+                    {
+                        // return
+                        return sameNameUser;
+                    }
+                }
             }
 
-            // ...and if no user matches the name, password or the user is not authorized to login: return nothing.
             return null;
         }
 
