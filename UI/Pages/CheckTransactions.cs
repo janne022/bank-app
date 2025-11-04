@@ -19,7 +19,7 @@ namespace bank_app.UI.Pages
         {
             Console.CursorVisible = false;
             var navbar = new Navbar(new List<NavbarItem> { new NavbarItem("Home", PageType.AdminDashboard), new NavbarItem("Create User", PageType.CreateUser),
-                new NavbarItem("Transaction", PageType.Transaction), new NavbarItem("Account", PageType.Account)});
+                new NavbarItem("Transactions", PageType.CheckTransactions), new NavbarItem("Rates", PageType.UpdateRates)});
             // Create a new Invokable object with the method that is going to run once the 'Login' button is pressed
             // Create new 3x3 grid
             Grid grid = new Grid(3, 3);
