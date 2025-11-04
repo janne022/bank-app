@@ -1,5 +1,6 @@
 ﻿using bank_app.Models;
 using bank_app.Models.Accounts;
+using bank_app.Models.Users;
 using bank_app.Utility;
 using System;
 using System.Collections.Generic;
@@ -58,6 +59,80 @@ namespace bank_app.Managers
 
             return loanAccount;
         }
+
+
+        public void AccrueInterestForAllLoans(DateTime currentDate)
+        {
+            foreach (var loan in _loans.Where(l => l.IsActive))
+            {
+                decimal before = loan.AccruedInterest;
+
+                loan.ApplyInterest(currentDate);
+
+                decimal added = loan.AccruedInterest - before;
+
+                var loanAccount = AccountManager.GetAllAccounts(loan.UserId)
+               .OfType<LoanAccount>()
+               .FirstOrDefault();
+
+
+                if (loanAccount != null && added > 0)
+                {
+                    var transaction = new Transaction(
+                loanAccount.AccountID,
+                loanAccount.AccountID,
+                added)
+                    {
+                        TransactionType = TransactionType.LoanInterest,
+                        Status = TransferStatus.Completed,
+
+                    };
+                    loanAccount.ApplyTransaction(transaction, added);
+                }
+
+
+            }
+        }
+
+        public bool RepayLoan(string userID, Guid loanID, decimal paymentAmount)
+        {
+            var loan = _loans.FirstOrDefault(l => l.LoanId == loanID && l.UserId == userID);
+
+            if (loan == null) { return false; }
+
+            loan?.ApplyPayment(paymentAmount);
+
+
+
+            var loanAccount = AccountManager.GetAllAccounts(userID).OfType<LoanAccount>().FirstOrDefault();
+
+            if (loanAccount != null)
+            {
+
+                var transaction = new Transaction(
+               loanAccount.AccountID,
+               loanAccount.AccountID,
+               paymentAmount)
+                {
+                    TransactionType = TransactionType.LoanRepayment,
+                    Status = TransferStatus.Completed,
+
+                };
+                loanAccount.ApplyTransaction(transaction, paymentAmount);
+            }
+            return true;
+
+        }
+
+
+
+
+
+
+
+
+
+
         private bool ValidateLoanLimit(string userId, decimal requestedAmount)
         {
 
@@ -72,11 +147,7 @@ namespace bank_app.Managers
             }
 
             decimal existingDebt = _loans.Where(loan => loan.UserId == userId && loan.IsActive).Sum(loan => loan.OutstandingPrincipal);
-
-            if (existingDebt <= 0)
-            {
-                return false;
-            }
+         
 
             decimal maxAllowed = Math.Round(totalBalance * 5, 2);
 
@@ -97,7 +168,7 @@ namespace bank_app.Managers
                 loanAccount.AccountID,
                 principal)
             {
-                TransactionType = TransactionType.Withdrawal,
+                TransactionType = TransactionType.LoanDisbursement,
                 Status = TransferStatus.Completed,
 
             };
