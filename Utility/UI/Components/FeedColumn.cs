@@ -22,6 +22,7 @@ namespace bank_app.Utility.UI.Components
         private int _scrollHeight;
         public int StartIndex { get; set; }
         public int EndIndex { get; set; }
+        public int CurrentIndex { get; set; }
 
 
         /// <summary>
@@ -32,15 +33,17 @@ namespace bank_app.Utility.UI.Components
         /// <param name="displayHeader">Whether to show the header</param>
         /// <param name="displayFooter">Whether to show the footer</param>
         /// <param name="textAlign">Left, center or right</param>
+        /// <param name="focusColour">The colour to be displayed when an element is in focus</param>
         public FeedColumn(string[] entries, string header,
             bool displayHeader = true, bool displayFooter = true,
-            TextAlign textAlign = TextAlign.Left)
+            TextAlign textAlign = TextAlign.Left, ColourFG focusColour = ColourFG.None)
         {
             _entries = entries;
             _header = header;
             _displayHeader = displayHeader;
             _displayFooter = displayFooter;
             _textAlign = textAlign;
+            _focusColour = focusColour;
             StartIndex = 0;
             EndIndex = 0;
             _scrollHeight = EndIndex - StartIndex;
