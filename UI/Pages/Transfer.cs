@@ -54,7 +54,6 @@ namespace bank_app.UI.Pages
                     if (successAmount)
                     {
                         TransactionManager.CreateNewTransaction(account.AccountID, sendAccount.AccountID, amountDouble);
-                        Console.WriteLine("TRANSCATION WORKED");
                     }
                     else
                     {
