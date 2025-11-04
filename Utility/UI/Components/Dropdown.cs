@@ -15,7 +15,6 @@ namespace bank_app.Utility.UI.Components
         ColourFG SelectionFG { get; set; }
         ColourBG SelectionBG { get; set; }
         ColourBG BackgroundBG { get; set; }
-        private bool _isClosed = true;
         public Dropdown(List<DropdownItem<T>> values, ColourFG selectionFG = ColourFG.Black, ColourBG selectionBG = ColourBG.White, ColourBG backgroundBG = ColourBG.BlackBright)
         {
             IsInteractable = true;
@@ -53,7 +52,6 @@ namespace bank_app.Utility.UI.Components
             int index = 0;
             while (true)
             {
-                _isClosed = false;
                 for (int i = -1; i < DropdownItems.Count; i++)
                 {
                     Console.SetCursorPosition(X, Y + (i + 1));
@@ -63,11 +61,11 @@ namespace bank_app.Utility.UI.Components
                     {
                         if (i == index)
                         {
-                            ColourManager.Write($"[ {name} ▸ ]", SelectionFG, SelectionBG);
+                            ColourManager.Write($"[ {name} ▾ ]", SelectionFG, SelectionBG);
                         }
                         else
                         {
-                            ColourManager.Write($"[ {name} ▸ ]", ColourFG.Black, BackgroundBG);
+                            ColourManager.Write($"[ {name} ▾ ]", ColourFG.Black, BackgroundBG);
                         }
                     }
                     else
@@ -102,11 +100,9 @@ namespace bank_app.Utility.UI.Components
                     case ConsoleKey.Enter:
                         SelectedDropdownItem = DropdownItems[index];
                         Value = DropdownItems[index].Item;
-                        _isClosed = true;
                         CleanUp();
                         return (0, 0);
                     case ConsoleKey.Escape:
-                        _isClosed = true;
                         CleanUp();
                         return (0, 0);
                 }
