@@ -85,7 +85,6 @@ namespace bank_app.Utility.UI.Components
         }
 
 
-
         public (int, int) Pressed(params object[] args)
         {
             while (true)
