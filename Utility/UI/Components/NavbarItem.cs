@@ -17,11 +17,13 @@ namespace bank_app.Utility.UI.Components
             Name = name;
             PageType = page;
         }
-        public override (int, int) Pressed()
+        public bool Pressed()
         {
-            PageManager.SwitchPage(PageType);
-            return (0, 0);
+            bool success = PageManager.SwitchPage(PageType);
+            return success;
         }
+
+
 
         public override void Measure()
         {
