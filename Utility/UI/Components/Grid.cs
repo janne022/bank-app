@@ -9,13 +9,15 @@ namespace bank_app.Utility.UI.Components
     internal class Grid : UIComponent
     {
         // Row is first index, Column is second index
-        private GridCell[,] _grid { get; set; }
+        private Flexbox[,] _grid { get; set; }
         public int Rows { get; set; }
         public int Cols { get; set; }
         public int RowHeight { get; set; }
         public int ColWidth { get; set; }
+        List<Flexbox> _interactableGridCells = new List<Flexbox>();
+        Flexbox? _currentGridCell = null;
         /// <summary>
-        /// A console UI layout container that divides its available area into a 2D matrix of <see cref="GridCell"/>s.
+        /// A console UI layout container that divides its available area into a 2D matrix of <see cref="Flexbox"/>s.
         /// Each cell hosts one or more <see cref="UIComponent"/>s. Indexing is 0-based and ordered as [row, column].
         /// </summary>
         /// <remarks>
@@ -27,7 +29,7 @@ namespace bank_app.Utility.UI.Components
         {
             Rows = rows;
             Cols = columns;
-            _grid = new GridCell[rows, columns];
+            _grid = new Flexbox[rows, columns];
             // Since we cant be sure grid has a parent, assume default height and width of console size. Parent can change childs rowheight and colwidth
             RowHeight = Console.WindowHeight / rows;
             ColWidth = Console.WindowWidth / columns;
@@ -36,8 +38,8 @@ namespace bank_app.Utility.UI.Components
             {
                 for (int c = 0; c < columns; c++)
                 {
-                    GridCell gridCell = new GridCell();
-                    gridCell.ParentElement = this;
+                    Flexbox gridCell = new Flexbox();
+                    gridCell.ParentComponent = this;
                     gridCell.Height = RowHeight;
                     gridCell.Width = ColWidth;
                     _grid[r, c] = gridCell;
@@ -46,11 +48,11 @@ namespace bank_app.Utility.UI.Components
         }
         public override void Measure()
         {
-            if (ParentElement != null)
+            if (ParentComponent != null)
             {
                 // Use parentelement to get row height and col width
-                Width = ParentElement.Width - 2;
-                Height = ParentElement.Height - 2;
+                Width = ParentComponent.Width - 2;
+                Height = ParentComponent.Height - 2;
                 RowHeight = Height / Rows;
                 ColWidth = Width / Cols;
                 // Initialize each cell with an empty list
@@ -66,63 +68,119 @@ namespace bank_app.Utility.UI.Components
         }
 
         // Adds a component to a GridCell
-        public GridCell AddGridComponent(int rowIndex, int colIndex, UIComponent component)
+        public Flexbox AddGridComponent(int rowIndex, int colIndex, UIComponent component)
         {
-            // Set the component ParentElement as this grid and if the component is a grid we set the RowHeight and ColWidth to one gridcell in this grids row and column system.
-            component.ParentElement = _grid[rowIndex, colIndex];
-            if (component is Grid grid)
-            {
-                grid.RowHeight = RowHeight / grid.Rows;
-                grid.ColWidth = ColWidth / grid.Cols;
-            }
-            // Add component to the specified row and column index
-            _grid[rowIndex, colIndex].Components.Add(component);
+            _grid[rowIndex, colIndex].AddFlexComponent(component);
             return _grid[rowIndex, colIndex];
         }
 
         // Gets a GridCell
-        public GridCell GetGridCell(int rowIndex, int colIndex)
+        public Flexbox GetGridCell(int rowIndex, int colIndex)
         {
             return _grid[rowIndex, colIndex];
         }
-        public override void Render()
+        private Flexbox FindClosestGridCell(List<Flexbox> gridCells, Flexbox currentCell, int dX, int dY)
         {
-            // Get max columns and max rows cursor can move to
-            int bufferW = Console.BufferWidth;
-            int bufferH = Console.BufferHeight;
-            // Start by rendering every component that isnt interactable. This is done because the Interactable components will automatically pause the process.
-            for (int r = 0; r < _grid.GetLength(0); r++)
+            var candidates = gridCells.Where(cell =>
             {
-                for (int c = 0; c < _grid.GetLength(1); c++)
+                if (cell == currentCell)
                 {
-                    if (!_grid[r, c].Components.Any(component => component.IsInteractable))
-                    {
-                        // Make sure we are not over max rows and columns by returning a value between 0 and buffer -1
-                        int left = Math.Clamp(c * ColWidth + X, 0, bufferW - 1);
-                        int top = Math.Clamp(r * RowHeight + Y, 0, bufferH - 1);
-                        _grid[r, c].X = left;
-                        _grid[r, c].Y = top;
-                        Console.SetCursorPosition(left, top);
-                        _grid[r, c].Render();
-                    }
+                    return false;
                 }
-            }
 
-            // Render all components that are interactable. First component will render and next component will render once first has had its intended interaction
+                // Find out if cell is to the right/left or above/below the currentCell
+                int dx = cell.X - currentCell.X;
+                int dy = cell.Y - currentCell.Y;
+
+                // Left
+                if (dY == -1)
+                {
+                    return dx < 0;
+                }
+                // Right
+                else if (dY == 1)
+                {
+                    return dx > 0;
+                }
+                // Up
+                if (dX == -1)
+                {
+                    return dy < 0;
+                }
+                // Down
+                else if (dX == 1)
+                {
+                    return dy > 0;
+                }
+
+                return false;
+            });
+
+            var closest = candidates.OrderBy(cell =>
+            {
+                int dx = cell.X - currentCell.X;
+                int dy = cell.Y - currentCell.Y;
+                return (dx * dx) + (dy * dy);
+            }).FirstOrDefault();
+
+            return closest;
+        }
+        public override (int, int) Pressed()
+        {
+            Flexbox? _cellBuffer = null;
+            // Add any GridCells that has an interactable component inside it
             for (int r = 0; r < _grid.GetLength(0); r++)
             {
                 for (int c = 0; c < _grid.GetLength(1); c++)
                 {
                     if (_grid[r, c].Components.Any(component => component.IsInteractable))
                     {
-                        // Make sure we are not over max rows and columns by returning a value between 0 and buffer -1
-                        int left = Math.Clamp(c * ColWidth, 0, bufferW - 1);
-                        int top = Math.Clamp(r * RowHeight, 0, bufferH - 1);
-                        _grid[r, c].X = left;
-                        _grid[r, c].Y = top;
-                        Console.SetCursorPosition(left, top);
-                        _grid[r, c].Render();
+                        _interactableGridCells.Add(_grid[r, c]);
                     }
+                }
+            }
+            if (_interactableGridCells.Count > 0 && _currentGridCell == null)
+            {
+                _currentGridCell = _interactableGridCells[0];
+            }
+            if (_currentGridCell != null)
+            {
+                while (true)
+                {
+                    // Press the Gridcell
+                    (int,int) directionInt = _currentGridCell.Pressed();
+                    _cellBuffer = FindClosestGridCell(_interactableGridCells,_currentGridCell,directionInt.Item1, directionInt.Item2);
+                    if (_cellBuffer == null)
+                    {
+                        return directionInt;
+                    }
+                    else
+                    {
+                        _currentGridCell.Render();
+                        _currentGridCell = _cellBuffer;
+                    }
+                }
+            }
+            return (0, 0);
+        }
+        public override void Render()
+        {
+            // Get max columns and max rows cursor can move to
+            int bufferW = Console.BufferWidth;
+            int bufferH = Console.BufferHeight;
+
+            // Render every GridCell
+            for (int r = 0; r < _grid.GetLength(0); r++)
+            {
+                for (int c = 0; c < _grid.GetLength(1); c++)
+                {
+                    // Make sure we are not over max rows and columns by returning a value between 0 and buffer -1
+                    int left = Math.Clamp(c * ColWidth + X, 0, bufferW - 1);
+                    int top = Math.Clamp(r * RowHeight + Y, 0, bufferH - 1);
+                    _grid[r, c].X = left;
+                    _grid[r, c].Y = top;
+                    Console.SetCursorPosition(left, top);
+                    _grid[r, c].Render();
                 }
             }
         }

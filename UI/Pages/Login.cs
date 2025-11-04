@@ -9,21 +9,23 @@ namespace bank_app.UI.Pages
 {
     public class Login : Page
     {
-        public override void LoadPage(User user)
+        private Form? _loginForm;
+        internal override UIComponent LoadPage()
         {
-            Console.CursorVisible = false;
+            UserManager.CreateUser("janne","jan",UserType.Admin);
             // Create a new Invokable object with the method that is going to run once the 'Login' button is pressed
             var loginInvoke = new Invokable<string, string>(LoginHandler);  //Check if we need to change back it later 
             // Create new 3x3 grid
             Grid grid = new Grid(3, 3);
             // Add Menu with two inputfields and button inside to center middle of grid. Note: Button is currently not finished, so it won't be rendered
-            GridCell cell = grid.GetGridCell(1, 1);
+            Flexbox cell = grid.GetGridCell(1, 1);
             cell.Justify = Justify.Center;
             cell.Align = Align.Middle;
             cell.OrderBy = OrderBy.Column;
-            grid.AddGridComponent(1, 1, new Layout(new Menu(new List<UIComponent>{new InputField("Username",false,16),
+            _loginForm = new Form(new List<UIComponent>{new InputField("Username",false,16),
                 new InputField("Password",true,16),
-                new Button(loginInvoke, "Login")}), LayoutBorder.Rounded, "Login", 40, 10, ColourFG.Yellow));
+                }, new Button(loginInvoke, "Login", marginTop: 2));
+            grid.AddGridComponent(1, 1, new Panel(_loginForm, LayoutBorder.Rounded, "Login", 40, 10, ColourFG.Yellow));
             // Add text to center bottom
             cell = grid.GetGridCell(0, 1);
             cell.Justify = Justify.Center;
@@ -31,8 +33,7 @@ namespace bank_app.UI.Pages
             cell.OrderBy = OrderBy.Column;
             grid.AddGridComponent(0, 1, new AsciiArt("Assets/Ascii/bank.txt"));
             // Add grid to layout and set rounded border style
-            Layout layout = new(grid, LayoutBorder.Heavy);
-            layout.Render();
+            return new Panel(grid, LayoutBorder.Heavy);
         }
         //Just changed User to Guid userId
         private void LoginHandler(string userId, string password)
@@ -46,17 +47,16 @@ namespace bank_app.UI.Pages
                 // Login successful, switch page and give feedback
                 if (u is Client client)
                 {
-                    PageManager.SwitchPage(PageType.ClientDashboard, client);
+                    PageManager.SwitchPage(PageType.ClientDashboard);
                 }
                 else if (u is Admin admin)
                 {
-                    PageManager.SwitchPage(PageType.AdminDashboard, admin);
+                    PageManager.SwitchPage(PageType.AdminDashboard);
                 }
             }
             else
             {
-                // Login not successful, give feedback
-                Console.WriteLine("you failed brother");
+                _loginForm.UpdateErrorMessage("Wrong username or password");
             }
         }
     }

@@ -1,10 +1,7 @@
-﻿using bank_app.Managers;
-using bank_app.Models.Users;
-using bank_app.Utility;
+﻿using bank_app.Utility;
 using bank_app.Utility.Components;
 using bank_app.Utility.UI;
 using bank_app.Utility.UI.Components;
-using bank_app.Utility.UI.Invokables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace bank_app.UI.Pages
 {
-    public class ClientDashboard : Page
+    public class Loan : Page
     {
         internal override UIComponent LoadPage()
         {
@@ -23,7 +20,7 @@ namespace bank_app.UI.Pages
             // Create new 3x3 grid
             Grid grid = new Grid(3, 3);
             grid.AddGridComponent(0, 1, navbar);
-            grid.AddGridComponent(1, 1, new Text("Home"));
+            grid.AddGridComponent(1, 1, new Text("Loan"));
             // Add grid to layout and set rounded border style
             return new Panel(grid, LayoutBorder.Heavy);
         }

@@ -15,7 +15,20 @@ namespace bank_app.Utility.UI
         public int Height { get; set; }
         public bool IsInteractable = false;
         public object? Value { get; set; }
-        public UIComponent? ParentElement { get; set; }
+        public int MarginTop { get; set; }
+        public int MarginLeft { get; set; }
+        public int MarginRight { get; set; }
+        public int MarginBottom { get; set; }
+        public Align SelfAlign { get; set; }
+        public UIComponent? ParentComponent { get; set; }
+
+        public UIComponent(int marginTop = 0, int marginLeft = 0, int marginRight = 0, int marginBottom = 0)
+        {
+            MarginTop = marginTop;
+            MarginLeft = marginLeft;
+            MarginRight = marginRight;
+            MarginBottom = marginBottom;
+        }
 
 
         /// <summary>
@@ -35,8 +48,9 @@ namespace bank_app.Utility.UI
         /// Pressed is a optional method used whenever a user is clicking inside another interactable component.
         /// </summary>
         /// 
-        public virtual void Pressed()
+        public virtual (int, int) Pressed()
         {
+            return (0, 0);
         }
     }
 }

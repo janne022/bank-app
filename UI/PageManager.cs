@@ -16,20 +16,35 @@ namespace bank_app.UI
         {
             {PageType.Login,  new Login()},
             {PageType.ClientDashboard,  new ClientDashboard()},
+            {PageType.Transfer,  new Transfer()},
+            {PageType.Transaction,  new Transaction()},
+            {PageType.Account,  new Account()},
+            {PageType.Loan,  new Loan()},
             {PageType.AdminDashboard,  new AdminDashboard()}
         };
         private static bool _isRunning = true;
         private static Page? _nextPage;
         private static Page? _currentPage;
         private static User? _currentUser;
+        private static PageType _currentPageType;
 
         /// <summary>
         /// Switches to specified page
         /// </summary>
         /// <param name="page">Chosen page to switch to</param>
-        public static void SwitchPage(PageType page, User user)
+        public static void SwitchPage(PageType page)
         {
             _nextPage = _pageDictionary[page];
+            _currentPageType = page;
+            if (_currentPage != null)
+            {
+                _currentPage.ContinueRunning = false;
+            }
+        }
+
+        public static PageType GetCurrentPageType()
+        {
+            return _currentPageType;
         }
 
         /// <summary>
@@ -58,13 +73,15 @@ namespace bank_app.UI
         public static void Start(PageType startPage)
         {
             _nextPage = _pageDictionary[startPage];
+            _currentPageType = startPage;
             while (_isRunning)
             {
                 if (_currentPage != _nextPage)
                 {
                     Console.Clear();
                     _currentPage = _nextPage;
-                    _currentPage?.LoadPage(_currentUser);
+                    _currentPage.ContinueRunning = true;
+                    _currentPage?.DisplayPage(_currentUser);
                 }
                 Thread.Sleep(100);
             }
