@@ -23,7 +23,7 @@ namespace bank_app.Utility.UI.Components
         private int PanelWidth { get; set; }
         public string Descriptor { get; private set; }
         public int MaxLength { get; private set; }
-        public bool IsPassword { get; private set; }
+        private InputFieldType _allowedCharacters;
         public string InputtedValue { get; private set; }
         private ColourFG _descriptorTextColour;
         private ColourFG _inputBoxTextColour;
@@ -37,21 +37,21 @@ namespace bank_app.Utility.UI.Components
         /// InputField UIComponent constructor. InputFields have a descriptor and an input box.
         /// </summary>
         /// <param name="descriptor">The text before the user's input field.</param>
-        /// <param name="isPassword">Whether the input field is a password.</param>
+        /// <param name="allowedCharacters">Whether the input field is a normal, number or password field.</param>
         /// <param name="maxLength">The amount of characters allowed in the input box.</param>
         /// <param name="descriptorTextColour">Text colour for descriptor</param>
         /// <param name="descriptorBGColour">Background colour for descriptor</param>
         /// <param name="inputBoxTextColour">Text colour for input box</param>
         /// <param name="inputBoxBGColour">Background colour for input box</param>
         /// <param name="userInputColour">Text colour for the user's inputted text</param>
-        public InputField(string descriptor, bool isPassword, int maxLength,
+        public InputField(string descriptor, InputFieldType allowedCharacters, int maxLength,
             ColourFG descriptorTextColour = ColourFG.None, ColourBG descriptorBGColour = ColourBG.None,
             ColourFG inputBoxTextColour = ColourFG.None, ColourBG inputBoxBGColour = ColourBG.None,
             ColourFG userInputColour = ColourFG.None)
         {
             Descriptor = descriptor;
             MaxLength = maxLength;
-            IsPassword = isPassword;
+            _allowedCharacters = allowedCharacters;
             InputtedValue = string.Empty;
             _descriptorTextColour = descriptorTextColour;
             _descriptorBGColour = descriptorBGColour;
@@ -107,7 +107,7 @@ namespace bank_app.Utility.UI.Components
             if (!string.IsNullOrEmpty(InputtedValue))
             {
                 Console.SetCursorPosition(X + Descriptor.Length + 3, Y);
-                if (IsPassword)
+                if (_allowedCharacters == InputFieldType.Password)
                 {
                     for (int i = 0; i < inputBoxWidth; i++)
                     {
@@ -181,15 +181,32 @@ namespace bank_app.Utility.UI.Components
                         {
                             if (characters <= MaxLength || MaxLength == 0)
                             {
-                                userInput += pressed.KeyChar;
-                                characters++;
-                                if (IsPassword)
+                                switch (_allowedCharacters)
                                 {
-                                    ColourManager.Write("*", _userInputColour, _inputBoxBGColour);
-                                }
-                                else
-                                {
-                                    ColourManager.Write(pressed.KeyChar.ToString(), _userInputColour, _inputBoxBGColour);
+                                    case InputFieldType.Password:
+                                        ColourManager.Write("*", _userInputColour, _inputBoxBGColour);
+                                        userInput += pressed.KeyChar;
+                                        characters++;
+                                        break;
+
+                                    case InputFieldType.Number:
+                                        if (Regex.IsMatch(pressed.KeyChar.ToString(), @"[0-9]"))
+                                        {
+                                            ColourManager.Write(pressed.KeyChar.ToString(), _userInputColour, _inputBoxBGColour);
+                                            userInput += pressed.KeyChar;
+                                            characters++;
+                                        }
+                                        else
+                                        {
+                                            Console.Beep();
+                                        }
+                                        break;
+
+                                    case InputFieldType.Normal:
+                                        ColourManager.Write(pressed.KeyChar.ToString(), _userInputColour, _inputBoxBGColour);
+                                        userInput += pressed.KeyChar;
+                                        characters++;
+                                        break;
                                 }
                             }
                             else
