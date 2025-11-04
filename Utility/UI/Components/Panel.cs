@@ -178,8 +178,8 @@ namespace bank_app.Utility.UI.Components
                 Console.SetCursorPosition(X + Width / 2 - TopText.Length / 2, Y);
                 Console.Write(TopText);
             }
-            _childComponent.X = X + Width / 2 - _childComponent.Width / 2;
-            _childComponent.Y = Y + Height / 2 - _childComponent.Height / 2;
+            _childComponent.X = X + (Width / 2) - (_childComponent.Width / 2);
+            _childComponent.Y = Y + (Height / 2) - (_childComponent.Height / 2);
             _childComponent.Render();
         }
     }
