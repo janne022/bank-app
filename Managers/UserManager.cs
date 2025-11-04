@@ -44,7 +44,7 @@ namespace bank_app.Managers
         {
             foreach (var user in Users)
             {
-                if (user.UserId.ToString() == userID)
+                if (user.UserId == userID)
                 {
                     return user;
                 }
