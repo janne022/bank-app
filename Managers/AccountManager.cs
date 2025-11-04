@@ -20,7 +20,7 @@ namespace bank_app.Managers
         /// Creates an account of the specified type, registers it internally, and returns it.
         /// Throws ArgumentException for invalid inputs.
         /// </summary>
-        public static bool CreateAccount(Guid ownerID, Currency currency, decimal balance, AccountType accountType)
+        public static bool CreateAccount(string ownerID, Currency currency, decimal balance, AccountType accountType)
         {
             // Construct the account using a switch expression for clarity.
             Account newAccount = accountType switch
@@ -42,7 +42,7 @@ namespace bank_app.Managers
                     AccountDefaults.SavingsAllowWithdraws),
 
                 AccountType.LoanAcc => new LoanAccount(
-                    currency,           
+                    currency,
                     ownerID,
                     AccountDefaults.LoanCreditLimit),
 
@@ -51,7 +51,7 @@ namespace bank_app.Managers
 
             // Add or overwrite the account entry in a thread-safe manner.
             // Using the indexer simplifies handling rare Guid collisions by overwriting the same key.
-            _accounts[ownerID] = newAccount;
+            AddAccount(newAccount);
 
             if (newAccount == null)
             {
@@ -64,8 +64,8 @@ namespace bank_app.Managers
 
         internal static bool AddAccount(Account accountToAdd)
         {
-         
-           return  _accounts.TryAdd(accountToAdd.AccountID, accountToAdd);
+
+            return _accounts.TryAdd(accountToAdd.AccountID, accountToAdd);
         }
 
 
@@ -80,9 +80,9 @@ namespace bank_app.Managers
         /// <summary>
         /// Returns a snapshot list of all accounts.
         /// </summary>
-        public static List<Account> GetAllAccounts(Guid ownerId)
+        public static List<Account> GetAllAccounts(string ownerId)
         {
-            return _accounts.Values.Where(account=>account.OwnerId==ownerId).ToList();
+            return _accounts.Values.Where(account => account.OwnerId == ownerId).ToList();
         }
 
         // Overload method to only return accounts of a specific user
@@ -91,7 +91,7 @@ namespace bank_app.Managers
             List<Account> specificUserAccounts = new List<Account>();
 
             // Loops through the account list, and checks the inputted user's ID with the accounts saved userIDs...
-            foreach(var account in _accounts.Where(a => a.Value.OwnerId == user.UserId))
+            foreach (var account in _accounts.Where(a => a.Value.OwnerId == user.UserId))
             {
                 //... And adds those accounts to a list of accounts
                 specificUserAccounts.Add(account.Value);

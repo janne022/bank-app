@@ -12,9 +12,9 @@ namespace bank_app.UI.Pages
         private Form? _loginForm;
         internal override UIComponent LoadPage()
         {
-            UserManager.CreateUser("janne","jan",UserType.Admin);
+            UserManager.CreateUser("janne","jan",UserType.Admin, "jannemail@gmail.com", "07093122", "Johannes");
             // Create a new Invokable object with the method that is going to run once the 'Login' button is pressed
-            var loginInvoke = new Invokable<Guid, string>(LoginHandler);  //Check if we need to change back it later 
+            var loginInvoke = new Invokable<string, string>(LoginHandler);  //Check if we need to change back it later 
             // Create new 3x3 grid
             Grid grid = new Grid(3, 3);
             // Add Menu with two inputfields and button inside to center middle of grid. Note: Button is currently not finished, so it won't be rendered
@@ -36,9 +36,11 @@ namespace bank_app.UI.Pages
             return new Panel(grid, LayoutBorder.Heavy);
         }
         //Just changed User to Guid userId
-        private void LoginHandler(Guid userId, string password)
+        private void LoginHandler(string userId, string password)
         {
-            User? u = UserManager.Login( userId, password);
+            Console.WriteLine(userId);
+            Console.WriteLine(password);
+            User? u = UserManager.Login(userId, password);
             if (u != null)
             {
                 PageManager.SwitchUser(u);

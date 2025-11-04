@@ -12,11 +12,11 @@ namespace bank_app.Models.Accounts
         public Guid AccountID { get; private set; }
         public Currency AccountCurrency { get; private set; }
         public decimal Balance { get; private set; }
-        public Guid OwnerId { get; private set; }
+        public string OwnerId { get; private set; }
         private readonly List<Transaction> _transactions = new List<Transaction>();
         public IReadOnlyList<Transaction> Transactions => _transactions;
 
-        protected Account(Currency currency, decimal balance, Guid ownerId)
+        protected Account(Currency currency, decimal balance, string ownerId)
         {
             AccountID = Guid.NewGuid();
             AccountCurrency = currency;

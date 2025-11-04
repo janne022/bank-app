@@ -14,8 +14,8 @@ namespace bank_app.Models.Users
         public string? PhoneNumber { get; private set; }
         public List<Account> MyAccounts { get; } = new List<Account>();
 
-        public Client(string userName, string userPassword, string email, string phoneNumber)
-            : base(userName, userPassword)
+        public Client(string userName, string userPassword, string email, string phoneNumber, string legalName)
+            : base(userName, userPassword, email, phoneNumber, legalName)
         {
             Email = email;
             PhoneNumber = phoneNumber;
