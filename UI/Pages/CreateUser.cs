@@ -30,7 +30,6 @@ namespace bank_app.UI.Pages
             Grid grid = new Grid(3, 3);
             grid.AddGridComponent(0, 1, navbar);
             grid.AddGridComponent(1, 1, new Text("Create a new user"));
-            // Add grid to layout and set rounded border style
 
             Flexbox cell = grid.GetGridCell(1, 1);
             cell.Justify = Justify.Center;
@@ -38,8 +37,9 @@ namespace bank_app.UI.Pages
             cell.OrderBy = OrderBy.Column;
             _createUserForm = new Form(new List<UIComponent>
             {
-                new InputField("Account Type",false,16),  //This will become dropdown menu later (choice client/admin)
+                new InputField("User Type",false,16),  //This will become dropdown menu later (choice client/admin)
                 new InputField("Username",false,16),
+                new InputField("Legal Name", false,16),
                 new InputField("Password",true,16),
                 new InputField("E-mail",false,16),
                 new InputField("Phone number",false,16),
@@ -50,7 +50,7 @@ namespace bank_app.UI.Pages
             return new Panel(grid, LayoutBorder.Heavy);
         }
 
-        private void CreateUserHandler(string userId, string userPassword, string userTypeString, string email, string phoneNumber, string legalName)
+        private void CreateUserHandler(string userTypeString, string userName, string legalName, string password, string email, string phone)
         {
             UserType userType;
 
@@ -64,7 +64,7 @@ namespace bank_app.UI.Pages
                 userType = UserType.Client;
             }
 
-            UserManager.CreateUser(userId, userPassword, userType, email, phoneNumber, legalName);
+            UserManager.CreateUser(userName, password, userType, email, phone, legalName);
         }
     }
 }
