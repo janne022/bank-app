@@ -8,14 +8,6 @@ namespace bank_app.Managers
         private static List<User> Users { get; } = new List<User>();
         public static List<string> UserIds { get; } = new List<string>();
 
-        /// <summary>
-        ///  Creates a user object with the inputted arguments
-        /// </summary>
-        /// <param name="userId">must be a unique login name</param>
-        /// <param name="email">must be correctly formatted with @</param>
-        /// <param name="phoneNumber">must be correctly formatted with country code and correct amount of digits</param>
-        /// <param name="legalName">The individual's legal first name</param>
-        /// <returns></returns>
         internal static User CreateUser(string userId, string userPassword, UserType userType, string email, string phoneNumber, string legalName)
         {
             if (userType is UserType.Admin)
@@ -30,7 +22,6 @@ namespace bank_app.Managers
                 Users.Add(client);
                 return client;
             }
-
             return null;
         }
 
@@ -48,7 +39,6 @@ namespace bank_app.Managers
                     return user;
                 }
             }
-
             return null;
         }
 
@@ -61,11 +51,15 @@ namespace bank_app.Managers
                 if (PasswordHasher.VerifyPassword(inputPassword, user.UserPassword))
                 {
                     user.UpdateLoginAttempts(0);
-
                     return true;
                 }
                 else
                 {
+                    user.UpdateLoginAttempts(1);
+                    if (user.FailedLoginAttempts == 3)
+                    {
+                        user.UpdateAccountStatus(AccountStatus.Locked);
+                    }
                     return false;
                 }
             }
@@ -73,7 +67,6 @@ namespace bank_app.Managers
             {
                 user.UpdateAccountStatus(AccountStatus.Locked);
                 return false;
-                // You have entered the wrong password 3 times, and thusly locked your account. Contact the bank to get your login unlocked.
             }
         }
 
@@ -82,49 +75,22 @@ namespace bank_app.Managers
             user.UpdateAccountStatus(AccountStatus.Unlocked);
         }
 
-        internal static User? Login(string userName, string password)
+        internal static User Login(string userName, string password)
         {
-            List<User> sameNameList = new List<User>();
-
-            // Loops through all made users in the program...
             foreach (var u in Users)
             {
-                // if more than one user in the app has the same name i.e. several Eriks...
                 if (u.UserId == userName)
                 {
-                    //...add them to a local list.
-                    sameNameList.Add(u);
-                }
-            }
-
-            //... if there is only one person with that name...
-            if (sameNameList.Count == 1)
-            {
-                // try and authorize. If it also is the correct password...
-                if (Authorization(sameNameList[0].UserId.ToString(), password))
-                {
-                    // ...return that specific user
-                    return sameNameList[0];
-                }
-                else
-                {
-                    sameNameList[0].UpdateLoginAttempts(1);
-                    return null;
-                }
-            }
-            // if there are several people with the same name i.e. several Eriks...
-            else if (sameNameList.Count > 1)
-            {
-                //... loop through these people and...
-                foreach (var sameNameUser in sameNameList)
-                {
-                    //...if they match with the correct password...
-                    if (Authorization(sameNameUser.UserId.ToString(), password))
+                    if (Authorization(u.UserId, password))
                     {
-                        // return
-                        return sameNameUser;
+                        return u;
+                    }
+                    else
+                    {
+                        return null;
                     }
                 }
+
             }
             return null;
         }
