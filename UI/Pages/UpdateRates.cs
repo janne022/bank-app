@@ -45,16 +45,17 @@ namespace bank_app.UI.Pages
             var loginInvoke = new Invokable<Currency, string>(UpdateRateHandler);
             Grid grid = new(3, 3);
             grid.AddGridComponent(0, 1, navbar);
-            grid.AddGridComponent(1, 1, new Text("Update the daily exchanges"));
+            grid.AddGridComponent(1, 1, new Text("Update the daily exchanges"))
+                .SetAlign(Align.Middle)
+                .SetJustify(Justify.Center);
 
-            Flexbox cell = grid.GetGridCell(1, 1).SetAlign(Align.Middle).SetJustify(Justify.Center);
             _rateForm = new Form(
             [
                 new Dropdown<Currency>(currencyItems),
                 new InputField("New rate",InputFieldType.Number, 16, 0),
 
             ], new Button(loginInvoke, "Apply", marginTop: 2));
-            grid.AddGridComponent(1, 1, new Panel(_rateForm, LayoutBorder.Rounded, "Login", 40, 10, ColourFG.GreenBright));
+            grid.AddGridComponent(1, 1, new Panel(_rateForm, LayoutBorder.Rounded, "Update Rates", 40, 10, ColourFG.GreenBright));
 
             return new Panel(grid, LayoutBorder.Heavy);
         }

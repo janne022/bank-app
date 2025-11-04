@@ -38,9 +38,8 @@ namespace bank_app.UI.Pages
 
             Grid grid = new(3, 3);
             grid.AddGridComponent(0, 1, navbar);
-            grid.AddGridComponent(1, 1, new Text("Create a new user"));
+            grid.AddGridComponent(0, 1, new Text("Create a new user"));
 
-            Flexbox cell = grid.GetGridCell(1, 1).SetAlign(Align.Middle).SetJustify(Justify.Center);
             _createUserForm = new Form(
             [
                 new Dropdown<UserType>(userTypeItems),
@@ -49,9 +48,10 @@ namespace bank_app.UI.Pages
                 new InputField("Password", InputFieldType.Password,24, 0),
                 new InputField("E-mail",InputFieldType.Normal, 24, 0),
                 new InputField("Phone number",InputFieldType.Number, 15, 0),
-            ], new Button(loginInvoke, "Create User", marginTop: 2));
-            grid.AddGridComponent(1, 1, new Panel(_createUserForm, LayoutBorder.Rounded, "Login", 40, 10, ColourFG.Red));
-            grid.GetGridCell(1, 1).Align = Align.Top;
+            ], new Button(loginInvoke, "Create User", marginTop: 1));
+            grid.AddGridComponent(1, 1, new Panel(_createUserForm, LayoutBorder.Rounded, "Login", 70, 15, ColourFG.Red))
+                .SetAlign(Align.Middle)
+                .SetJustify(Justify.Center);
 
             return new Panel(grid, LayoutBorder.Heavy);
         }

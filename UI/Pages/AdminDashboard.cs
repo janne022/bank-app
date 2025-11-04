@@ -29,8 +29,9 @@ namespace bank_app.UI.Pages
                 ]);
             Grid grid = new(3, 3);
             grid.AddGridComponent(0, 1, navbar);
-            grid.AddGridComponent(1, 1, new Text($"Welcome back {user?.UserId}!"));
-            grid.GetGridCell(1, 1).SetAlign(Align.Middle).SetJustify(Justify.Center);
+            grid.AddGridComponent(1, 1, new Text($"Welcome back {user?.UserId}!"))
+                .SetAlign(Align.Middle)
+                .SetJustify(Justify.Center);
             return new Panel(grid, LayoutBorder.Heavy);
         }
     }

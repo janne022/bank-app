@@ -45,8 +45,9 @@ namespace bank_app.UI.Pages
             transferGrid.Height = 10;
             Grid grid = new(3, 3);
             grid.AddGridComponent(0, 1, navbar);
-            grid.AddGridComponent(1, 1, new Panel(transferGrid, LayoutBorder.Rounded, width: 70, height: 15));
-            var gridCell = grid.GetGridCell(1, 1).SetAlign(Align.Middle).SetJustify(Justify.Center);
+            grid.AddGridComponent(1, 1, new Panel(transferGrid, LayoutBorder.Rounded, width: 70, height: 15))
+                .SetAlign(Align.Middle)
+                .SetJustify(Justify.Center);
             return new Panel(grid, LayoutBorder.Heavy);
         }
 
