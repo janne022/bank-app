@@ -27,7 +27,7 @@ namespace bank_app.UI.Pages
             // Create new 3x3 grid
             Grid grid = new Grid(3, 3);
             grid.AddGridComponent(0, 1, navbar);
-            grid.AddGridComponent(1, 1, new Text($"Welcome back {user?.UserName}!"));
+            grid.AddGridComponent(1, 1, new Text($"Welcome back {user?.UserId}!"));
             // Add grid to layout and set rounded border style
             return new Panel(grid, LayoutBorder.Heavy);
         }
