@@ -51,6 +51,10 @@ namespace bank_app.UI.Pages
                     PageManager.SwitchPage(PageType.AdminDashboard);
                 }
             }
+            else if (UserManager.GetUser(userId).CurrentAccountStatus == AccountStatus.Locked)
+            {
+                _loginForm.UpdateErrorMessage("Account is locked");
+            }
             else
             {
                 _loginForm.UpdateErrorMessage("Wrong username or password");
