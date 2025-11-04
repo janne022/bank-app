@@ -24,12 +24,10 @@ namespace bank_app.Managers
             }
             return null;
         }
-
         internal static void RemoveUser(User userName)
         {
             Users.Remove(userName);
         }
-
         internal static User GetUser(string userID)
         {
             foreach (var user in Users)
@@ -41,7 +39,6 @@ namespace bank_app.Managers
             }
             return null;
         }
-
         internal static bool Authorization(string userID, string inputPassword)
         {
             var user = GetUser(userID);
@@ -69,12 +66,6 @@ namespace bank_app.Managers
                 return false;
             }
         }
-
-        internal static void UnlockAccount(User user)
-        {
-            user.UpdateAccountStatus(AccountStatus.Unlocked);
-        }
-
         internal static User Login(string userName, string password)
         {
             foreach (var u in Users)
@@ -94,12 +85,14 @@ namespace bank_app.Managers
             }
             return null;
         }
-
+        internal static void UnlockAccount(User user)
+        {
+            user.UpdateAccountStatus(AccountStatus.Unlocked);
+        }
         internal static void Logout()
         {
             // UI needed to develop - change page to login page
         }
-
         public static void ChangeUserInfo(User user, string typeOfChange, string change)
         {
             user.UpdateUserInfo(typeOfChange, change);
