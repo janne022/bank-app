@@ -66,7 +66,6 @@ namespace bank_app.Models.Users
             CurrentAccountStatus = accountStatus;
         }
 
-
         // ----------------------------------------- PUBLIC UPDATING METHODS ----------------------------------------- //
         public bool UpdateUserId(string userId)
         {
