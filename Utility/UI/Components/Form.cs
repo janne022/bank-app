@@ -157,9 +157,12 @@ namespace bank_app.Utility.UI.Components
         }
         public override void Measure()
         {
-            for (int i = 0; i < _components.Count; i++)
+            if (Height == _components.Count)
             {
-                Height += _components[i].Height;
+                for (int i = 0; i < _components.Count; i++)
+                {
+                    Height += _components[i].Height;
+                }
             }
         }
         public override void Render()

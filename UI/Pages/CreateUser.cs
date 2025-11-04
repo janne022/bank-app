@@ -43,7 +43,7 @@ namespace bank_app.UI.Pages
                 new InputField("Password",true,16),
                 new InputField("E-mail",false,16),
                 new InputField("Phone number",false,16),
-                }, new Button(loginInvoke, "Create User", marginTop: 2));
+                }, new Button(loginInvoke, "Create User", marginTop: 1));
             grid.AddGridComponent(1, 1, new Panel(_createUserForm, LayoutBorder.Rounded, "Login", 40, 10, ColourFG.Red));
             grid.GetGridCell(1, 1).Align = Align.Top;
 
