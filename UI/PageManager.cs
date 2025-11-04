@@ -35,14 +35,19 @@ namespace bank_app.UI
         /// Switches to specified page
         /// </summary>
         /// <param name="page">Chosen page to switch to</param>
-        public static void SwitchPage(PageType page)
+        public static bool SwitchPage(PageType page)
         {
-            _nextPage = _pageDictionary[page];
-            _currentPageType = page;
-            if (_currentPage != null)
+            if (page != _currentPageType)
             {
-                _currentPage.ContinueRunning = false;
+                _nextPage = _pageDictionary[page];
+                _currentPageType = page;
+                if (_currentPage != null)
+                {
+                    _currentPage.ContinueRunning = false;
+                }
+                return true;
             }
+            return false;
         }
 
         public static PageType GetCurrentPageType()
