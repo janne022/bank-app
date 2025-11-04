@@ -52,14 +52,17 @@ namespace bank_app.Utility.UI.Components
                 {
                     _currentIndex--;
 
-                    if (_currentIndex < _startIndex)
+                    if (_currentIndex < _startIndex + 1)
                     {
-                        _startIndex--;
-                        _endIndex--;
+                        if (_startIndex > 0)
+                        {
+                            _startIndex--;
+                            _endIndex--;
+                        }
                     }
                 }
             }
-            
+
             if (direction == UpOrDown.Down)
             {
                 if (_currentIndex < FeedColumns[0]._entries.Length - 1)
