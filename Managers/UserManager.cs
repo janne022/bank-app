@@ -6,23 +6,29 @@ namespace bank_app.Managers
     public static class UserManager
     {
         private static List<User> Users { get; } = new List<User>();
+        public static List<string> UserIds { get; } = new List<string>();
 
         /// <summary>
         /// Method to create new users within the bank app. Adds the newly created user to a list of all users within the application.
         /// </summary>
         /// <param name="userType">Enum that determines whether the user is a client or an administrator</param>
-        internal static void CreateUser(string userName, string userPassword, UserType userType, string email = "", string phoneNumber = "")
+
+        internal static User CreateUser(string userId, string userPassword, UserType userType, string email, string phoneNumber, string legalName)
         {
             if (userType is UserType.Admin)
             {
-                var admin = new Admin(userName, userPassword);
+                var admin = new Admin(userId, userPassword, email, phoneNumber, legalName);
                 Users.Add(admin);
+                return admin;
             }
             else if (userType is UserType.Client)
             {
-                var client = new Client(userName, userPassword, email, phoneNumber);
+                var client = new Client(userId, userPassword, email, phoneNumber, legalName);
                 Users.Add(client);
+                return client;
             }
+
+            return null;
         }
 
         /// <summary>
@@ -34,27 +40,42 @@ namespace bank_app.Managers
             Users.Remove(userName);
         }
 
+        internal static User GetUser(string userID)
+        {
+            foreach (var user in Users)
+            {
+                if (user.UserId == userID)
+                {
+                    return user;
+                }
+            }
+
+            return null;
+        }
+
         /// <summary>
         /// Attempts to authorize a user by verifying the provided password.
         /// </summary>
-        internal static bool Authorization(User user, string inputPassword)
+        internal static bool Authorization(string userID, string inputPassword)
         {
+            var user = GetUser(userID);
+
             if (user.FailedLoginAttempts < 3 && user.CurrentAccountStatus == AccountStatus.Unlocked)
             {
                 if (PasswordHasher.VerifyPassword(inputPassword, user.UserPassword))
                 {
-                    user.FailedLoginAttempts = 0;
+                    user.UpdateLoginAttempts(0);
+
                     return true;
                 }
                 else
                 {
-                    user.FailedLoginAttempts++;
                     return false;
                 }
             }
             else
             {
-                user.CurrentAccountStatus = AccountStatus.Locked;
+                user.UpdateAccountStatus(AccountStatus.Locked);
                 return false;
                 // You have entered the wrong password 3 times, and thusly locked your account. Contact the bank to get your login unlocked.
             }
@@ -62,28 +83,83 @@ namespace bank_app.Managers
 
         internal static void UnlockAccount(User user)
         {
-            user.CurrentAccountStatus = AccountStatus.Unlocked;
+            user.UpdateAccountStatus(AccountStatus.Unlocked);
         }
 
         internal static User? Login(string userName, string password)
         {
+            List<User> sameNameList = new List<User>();
+
+
             // Loops through all made users in the program...
-            foreach (var user in Users)
+            foreach (var u in Users)
             {
-                // if the username input matches any of the existing users' names... AND they are authorized to login AND the password is correct...
-                if (user.UserName == userName && Authorization(user, password))
+                // if more than one user in the app has the same name i.e. several Eriks...
+                if (u.UserId == userName)
                 {
-                    // ...return that specific user
-                    return user;
+                    //...add them to a local list.
+                    sameNameList.Add(u);
                 }
+
+                //... if there is only one person with that name...
+                if (sameNameList.Count == 1)
+                {
+                    // try and authorize. If it also is the correct password...
+                    if (Authorization(u.UserId.ToString(), password))
+                    {
+                        // ...return that specific user
+                        return u;
+                    }
+                    else
+                    {
+                        u.UpdateLoginAttempts(1);
+                        return null;
+                    }
+                }
+                // if there are several people with the same name i.e. several Eriks...
+                else if (sameNameList.Count > 1)
+                {
+                    //... loop through these people and...
+                    foreach (var sameNameUser in sameNameList)
+                    {
+                        //...if they match with the correct password...
+                        if (Authorization(sameNameUser.UserId.ToString(), password))
+                        {
+                            // return
+                            return sameNameUser;
+                        }
+                    }
+
+
+                }
+                else
+                {
+                    return null;
+                }
+
             }
+
             // ...and if no user matches the name, password or the user is not authorized to login: return nothing.
             return null;
         }
 
+
+        ////New Method to Login user with User Id
+        //internal static User? Login(string userId, string password)
+        //{
+
+        //    var user = Users.FirstOrDefault(u => u.UserId.ToString() == userId && Authorization(u.UserId.ToString(), password));
+
+        //    if (user == null)
+        //    {
+        //        return null;
+        //    }
+
+        //    return user;
+        //}
         internal static void Logout()
         {
-            // UI needed to develop
+            // UI needed to develop - change page to login page
         }
 
 
@@ -91,10 +167,9 @@ namespace bank_app.Managers
         /// Updates the properties of the user object
         /// </summary>
         /// <param name="user">the name of the user object to be changed</param>
-        internal static void ChangeUserInfo(User user, string userName, string userPassword)
+        public static void ChangeUserInfo(User user, string typeOfChange, string change)
         {
-            user.UserName = userName;
-            user.UserPassword = userPassword;
+            user.UpdateUserInfo(typeOfChange, change);
         }
     }
 }

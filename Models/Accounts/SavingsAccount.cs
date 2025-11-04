@@ -18,8 +18,8 @@ namespace bank_app.Models.Accounts
         //Indicates whether withdrawals are allowed
         public bool AllowWithdrawals { get; private set; }
 
-        public SavingsAccount(Currency currency, decimal balance, decimal interestRate, decimal minimalBalance, DateTime lastInterestDate, bool allowWithdrawals)
-            : base(currency, balance)
+        public SavingsAccount(Currency currency, decimal balance, string ownerId,decimal interestRate, decimal minimalBalance, DateTime lastInterestDate, bool allowWithdrawals)
+            : base(currency, balance, ownerId)
         {
             InterestRate = interestRate < 0 ? 0 : interestRate;
             MinimumBalance = minimalBalance < 0 ? 0 : minimalBalance;
@@ -29,6 +29,11 @@ namespace bank_app.Models.Accounts
 
         public override bool CanApply(Transaction transaction)
         {
+            if (transaction == null || transaction.TransferAmount <= 0)
+            {
+                return false;
+            }
+
 
             if (transaction.TransactionType == TransactionType.Deposit)
             {
@@ -67,6 +72,8 @@ namespace bank_app.Models.Accounts
 
         public void ApplyInterest(int days)
         {
+
+
             if (days <= 0)
             {
                 return;
@@ -88,7 +95,7 @@ namespace bank_app.Models.Accounts
                 Status = TransferStatus.Completed
             };
 
-            ApplyTransaction(interestTransaction);
+            ApplyTransaction(interestTransaction, interest);
 
             LastInterestDate = LastInterestDate.AddDays(days);
         }

@@ -73,8 +73,15 @@ namespace bank_app.Utility.UI.Components
                     case ConsoleKey.UpArrow:
                         return (-1, 0);
                     case ConsoleKey.Enter:
-                        Items[_index].Pressed();
-                        return (0, 0);
+                        bool success = Items[_index].Pressed();
+                        if (success)
+                        {
+                            return (0, 0);
+                        }
+                        else
+                        {
+                            break;
+                        }
                 }
             }
         }
