@@ -23,7 +23,6 @@ namespace bank_app.Utility.UI.Components
         private int PanelWidth { get; set; }
         public string Descriptor { get; private set; }
         public int MaxLength { get; private set; }
-        private int MarginLeft;
         private InputFieldType _allowedCharacters;
         public string InputtedValue { get; private set; }
         private ColourFG _descriptorTextColour;
