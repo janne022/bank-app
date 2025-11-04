@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using bank_app.UI;
 
 
 namespace bank_app.UI.Pages
@@ -64,6 +65,7 @@ namespace bank_app.UI.Pages
             }
 
             UserManager.CreateUser(userName, password, userType, email, phone, legalName);
+            PageManager.SwitchPage(PageType.AdminDashboard);
         }
     }
 }
