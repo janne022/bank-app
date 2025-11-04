@@ -44,13 +44,16 @@ namespace bank_app.UI.Pages
                 new InputField("Phone number",false,16),
                 }, new Button(loginInvoke, "Create User", marginTop: 2));
             grid.AddGridComponent(1, 1, new Panel(_createUserForm, LayoutBorder.Rounded, "Login", 40, 10, ColourFG.Red));
+            grid.GetGridCell(1, 1).Align = Align.Top;
 
             return new Panel(grid, LayoutBorder.Heavy);
         }
 
-        private void CreateUserHandler(string userType, string name, string password, string email, string phone)
+        private void CreateUserHandler(string userId, string userPassword, string userType, string email, string phoneNumber, string legalName)
         {
 
+
+            var user = UserManager.CreateUser(userId, userPassword, userType, email, phoneNumber, legalName)
         }
     }
 }
