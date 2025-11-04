@@ -27,19 +27,19 @@ namespace bank_app.Utility.UI.Components
             FeedColumns = columns;
             _pastEntries = 0;
 
-            if (listOfObjects is List<Client>)
-            {
-                _objectType = "client";
-            }
-            if (listOfObjects is List<Transaction>)
-            {
-                _objectType = "transaction";
-            }
+            //if (listOfObjects is List<Client>)
+            //{
+            //    _objectType = "client";
+            //}
+            //if (listOfObjects is List<Transaction>)
+            //{
+            //    _objectType = "transaction";
+            //}
 
-            Width = 50;
-            Height = 3;
-            X = 0;
-            Y = 0;
+            //Width = 50;
+            //Height = 3;
+            //X = 0;
+            //Y = 0;
         }
 
 
@@ -131,42 +131,42 @@ namespace bank_app.Utility.UI.Components
 
 
             // displayFeed[object][property]
-            List<string[]> displayFeed = new List<string[]>();
+            //List<string[]> displayFeed = new List<string[]>();
 
-            if (FeedContents is List<Client> clients)
-            {
+            //if (FeedContents is List<Client> clients)
+            //{
 
-                Console.SetCursorPosition(0, 0);
-                var relevantClients = clients
-                    .Skip(_pastEntries)
-                    .Take(FeedLines);
+                Console.SetCursorPosition(X, Y);
+                //var relevantLines = 
+                //    .Skip(_pastEntries)
+                //    .Take(FeedLines);
                                
                 
-                Console.WriteLine($"{"  Name",-15}{"Phone Number",-15}{"Email",-25}");
-                for (int i = 0; i < 50; i++)
+                //Console.WriteLine($"{"  Name",-15}{"Phone Number",-15}{"Email",-25}");
+                for (int i = 0; i < Width; i++)
                 {
                     ColourManager.Write("─", ColourFG.None, ColourBG.None);
                 }
                 Console.WriteLine(new string('─', 50));
-                foreach (var client in relevantClients)
-                {
-                    if (!String.IsNullOrEmpty(client.UserName) &&
-                        !String.IsNullOrEmpty(client.PhoneNumber) &&
-                        !String.IsNullOrEmpty(client.Email)
-                    )
-                    {
-                        displayFeed.Add(new string[]
-                            {
-                                client.UserName,
-                                client.PhoneNumber,
-                                client.Email
-                            }
-                        );
-                    }
-                }
+                //foreach (var client in relevantClients)
+                //{
+                //    if (!String.IsNullOrEmpty(client.UserName) &&
+                //        !String.IsNullOrEmpty(client.PhoneNumber) &&
+                //        !String.IsNullOrEmpty(client.Email)
+                //    )
+                //    {
+                //        displayFeed.Add(new string[]
+                //            {
+                //                client.UserName,
+                //                client.PhoneNumber,
+                //                client.Email
+                //            }
+                //        );
+                //    }
+                //}
             }
 
-            HandleFeed(displayFeed);
+            //PresentFeed();
 
 
             //if (FeedContents is List<Transaction> transactions)
@@ -188,10 +188,10 @@ namespace bank_app.Utility.UI.Components
             //    ColourManager.Write($"\n{_pastEntries + 1}-{Math.Min(_pastEntries + FeedLines, transactions.Count)} of {transactions.Count} {objectType}s.", ColourFG.None, ColourBG.None);
 
             //}
-        }
+        //}
 
 
-        private void HandleFeed(List<string[]> displayFeed)
+        private void PresentFeed(List<string[]> displayFeed)
         {
             for (int i = 0; i < displayFeed.Count; i++)
             {

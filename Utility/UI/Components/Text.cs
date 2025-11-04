@@ -60,6 +60,15 @@ namespace bank_app.Utility.Components
             Height = _totalLines;
         }
 
+        public void UpdateText(string newText)
+        {
+            _words = newText.Split(' ');
+            _fullLines.Clear();
+            _thisLine.Clear();
+            Measure();
+            Render();
+        }
+
         public override void Render()
         {
             int line = 0;

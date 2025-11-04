@@ -1,4 +1,5 @@
-﻿using System;
+﻿using bank_app.Utility.Components;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,9 +9,13 @@ namespace bank_app.Utility.UI.Components
 {
     public class Form : UIComponent
     {
-        private List<UIComponent> _components;
+        private List<FormItem> _components;
         private object[] args;
         private int _index = 0;
+        public ColourFG SelectionFG { get; set; }
+        public ColourBG SelectionBG { get; set; }
+        public Button SubmitButton { get; set; }
+        public Text ErrorText { get; set; }
         /// <summary>
         /// Initializes a new instance of the <see cref="Form"/> that renders and handles
         /// keyboard navigation for a list of child <see cref="UIComponent"/>s.
@@ -30,29 +35,41 @@ namespace bank_app.Utility.UI.Components
         /// is captured internally. When a <see cref="Button"/> is activated, all captured values
         /// are passed to the button via <c>Pressed(object[] args)</c>.
         /// </remarks>
-        public Form(List<UIComponent> components, OrderBy order = OrderBy.Column, int width = 30)
+        public Form(List<UIComponent> components, Button submitButton, int width = 30, ColourFG selectionFG = ColourFG.Black, ColourBG selectionBG = ColourBG.White)
         {
             // Set variables
             IsInteractable = true;
-            _components = components;
+            _components = new List<FormItem>();
             Width = width;
             Height = components.Count;
+            SelectionFG = selectionFG;
+            SelectionBG = selectionBG;
+            SubmitButton = submitButton;
+            ErrorText = new Text("", textColour: ColourFG.RedBright);
 
             // Make this object a parent to all child objects
             foreach (var item in components)
             {
-                item.ParentComponent = this;
+                var formItem = new FormItem(item, true);
+                formItem.ParentComponent = this;
+                _components.Add(formItem);
             }
-            // Check how many objects that are not buttons to see how many arguments we are passing if there is a button inside Menu
+            var formItemButton = new FormItem(SubmitButton, false);
+            formItemButton.ParentComponent = this;
+            _components.Add(formItemButton);
+            var formItemText = new FormItem(ErrorText, false);
+            formItemText.ParentComponent = this;
+            _components.Add(formItemText);
             int argsCount = 0;
-            for (int j = 0; j < components.Count; j++)
+            for (int j = 0; j < _components.Count; j++)
             {
-                if (components[j] is not Button)
+                if (_components[j].IsFormValue)
                 {
                     argsCount++;
                 }
             }
             args = new object[argsCount];
+
         }
 
         public override (int, int) Pressed()
@@ -63,14 +80,14 @@ namespace bank_app.Utility.UI.Components
                 // Render every object after eachother. If selected object is the one we are rendering, we highlight it
                 for (int j = 0; j < _components.Count; j++)
                 {
-                    _components[j].X = X;
-                    _components[j].Y = Y + j;
                     if (j == _index)
                     {
                         // Black foreground on white background
-                        Console.Write($"\u001b[30;47m");
+                        ColourManager.Set(SelectionFG);
+                        ColourManager.Set(SelectionBG);
                         _components[j].Render();
-                        Console.Write("\u001b[0m");
+                        ColourManager.Set(ColourBG.Reset);
+                        ColourManager.Set(ColourFG.Reset);
                     }
                     else
                     {
@@ -84,7 +101,11 @@ namespace bank_app.Utility.UI.Components
                     case ConsoleKey.DownArrow:
                         if (_index < _components.Count - 1)
                         {
-                            _index++;
+                            int newIndex = _components.FindIndex(component => component.IsInteractable && _components.IndexOf(component) > _index);
+                            if (newIndex != -1)
+                            {
+                                _index = newIndex;
+                            }
                         }
                         else
                         {
@@ -94,7 +115,11 @@ namespace bank_app.Utility.UI.Components
                     case ConsoleKey.UpArrow:
                         if (_index > 0)
                         {
-                            _index--;
+                            int newIndex = _components.FindIndex(component => component.IsInteractable && _components.IndexOf(component) < _index);
+                            if (newIndex != -1)
+                            {
+                                _index = newIndex;
+                            }
                         }
                         else
                         {
@@ -108,28 +133,52 @@ namespace bank_app.Utility.UI.Components
                     case ConsoleKey.Enter:
                         _components[_index].Pressed();
                         // If component is not a button we set the args index to be the value inside the component. If it is a button we run the pressed method for button with the current args.
-                        if (_components[_index] is not Button)
+                        if (_components[_index].IsFormValue == true)
                         {
-                            args[_index] = _components[_index].Value;
+                            args[_index] = _components[_index].Component.Value;
                         }
-                        else if (_components[_index] is Button button)
+                        else if (_components[_index].Component == SubmitButton)
                         {
-                            button.Pressed(args);
-                            return (0,0);
+                            bool success = _components.TakeWhile(formItem => formItem.IsFormValue).All(component => component.Component.Value != null);
+                            if (success)
+                            {
+                                UpdateErrorMessage(" ");
+                                SubmitButton.Pressed(args);
+                            }
+                            else
+                            {
+                                UpdateErrorMessage("Error: Fill out entire form");
+                            }
+                            return (0, 0);
                         }
                         break;
                 }
             }
         }
-
+        public override void Measure()
+        {
+            for (int i = 0; i < _components.Count; i++)
+            {
+                Height += _components[i].Height;
+            }
+        }
         public override void Render()
         {
+            int totalHeight = 0;
             for (int j = 0; j < _components.Count; j++)
             {
+                _components[j].Measure();
                 _components[j].X = X;
-                _components[j].Y = Y + j;
+                _components[j].Y = Y;
+                totalHeight += _components[j].Height;
+                _components[j].Y += totalHeight - 2;
                 _components[j].Render();
             }
+        }
+
+        public void UpdateErrorMessage(string errorMessage)
+        {
+            ErrorText.UpdateText(errorMessage);
         }
     }
 }

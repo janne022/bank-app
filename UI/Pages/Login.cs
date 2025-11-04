@@ -9,11 +9,12 @@ namespace bank_app.UI.Pages
 {
     public class Login : Page
     {
+        private Form? _loginForm;
         internal override UIComponent LoadPage()
         {
-            UserManager.CreateUser("janne","jan",UserType.Client);
+            UserManager.CreateUser("janne","jan",UserType.Admin);
             // Create a new Invokable object with the method that is going to run once the 'Login' button is pressed
-            var loginInvoke = new Invokable<string, string>(LoginHandler);
+            var loginInvoke = new Invokable<Guid, string>(LoginHandler);  //Check if we need to change back it later 
             // Create new 3x3 grid
             Grid grid = new Grid(3, 3);
             // Add Menu with two inputfields and button inside to center middle of grid. Note: Button is currently not finished, so it won't be rendered
@@ -21,9 +22,10 @@ namespace bank_app.UI.Pages
             cell.Justify = Justify.Center;
             cell.Align = Align.Middle;
             cell.OrderBy = OrderBy.Column;
-            grid.AddGridComponent(1, 1, new Panel(new Form(new List<UIComponent>{new InputField("Username",false,16),
+            _loginForm = new Form(new List<UIComponent>{new InputField("Username",false,16),
                 new InputField("Password",true,16),
-                new Button(loginInvoke, "Login")}), LayoutBorder.Rounded, "Login", 40, 10, ColourFG.Yellow));
+                }, new Button(loginInvoke, "Login", marginTop: 2));
+            grid.AddGridComponent(1, 1, new Panel(_loginForm, LayoutBorder.Rounded, "Login", 40, 10, ColourFG.Yellow));
             // Add text to center bottom
             cell = grid.GetGridCell(0, 1);
             cell.Justify = Justify.Center;
@@ -33,26 +35,26 @@ namespace bank_app.UI.Pages
             // Add grid to layout and set rounded border style
             return new Panel(grid, LayoutBorder.Heavy);
         }
-
-        private void LoginHandler(string username, string password)
+        //Just changed User to Guid userId
+        private void LoginHandler(Guid userId, string password)
         {
-            User? user = UserManager.Login(username, password);
-            if (user != null)
+            User? u = UserManager.Login( userId, password);
+            if (u != null)
             {
-                PageManager.SwitchUser(user);
+                PageManager.SwitchUser(u);
                 // Login successful, switch page and give feedback
-                if (user is Client)
+                if (u is Client client)
                 {
                     PageManager.SwitchPage(PageType.ClientDashboard);
                 }
-                else if (user is Admin)
+                else if (u is Admin admin)
                 {
                     PageManager.SwitchPage(PageType.AdminDashboard);
                 }
             }
             else
             {
-                // Login not successful, give feedback
+                _loginForm.UpdateErrorMessage("Wrong username or password");
             }
         }
     }

@@ -21,7 +21,7 @@ namespace bank_app.UI.Pages
             // Create a new Invokable object with the method that is going to run once the 'Login' button is pressed
             var transferGrid = new Flexbox(Justify.Center, Align.Top);
             transferGrid.AddFlexComponent(new Text($"Avaliable balance: "));
-            transferGrid.AddFlexComponent(new Form(new List<UIComponent> { new InputField("Account ID", false, 24), new InputField("Amount", false, 24), new Button(transferInvokable, "Send") }));
+            transferGrid.AddFlexComponent(new Form(new List<UIComponent> { new InputField("Account ID", false, 24), new InputField("Amount", false, 24) }, new Button(transferInvokable, "Send")));
             transferGrid.Width = 40;
             transferGrid.Height = 10;
             // Create new 3x3 grid

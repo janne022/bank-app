@@ -3,31 +3,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using bank_app.Utility;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace bank_app.Models.Accounts
 {
     public class LoanAccount : Account
     {
-
-        public decimal InterestRate { get; private set; } //% per annum
-
+        
         public decimal CreditLimit { get; private set; }
 
-        //This will be implemented in the User data model
-        //private List<Loan> loans = new List<Loan>();
-        //public IReadOnlyList<Loan> Loans => loans;
-
-        public LoanAccount(Currency currency, decimal balance, decimal interestRate, decimal creditLimit)
-            : base(currency, balance)
+        public LoanAccount(Currency currency, Guid ownerId, decimal creditLimit)
+            : base(currency, 0, ownerId)
         {
-            InterestRate = interestRate < 0 ? 0 : interestRate;
-            CreditLimit = creditLimit < 0 ? 0 : creditLimit;
+           
+          
+            CreditLimit = creditLimit < 0 ? throw new ArgumentOutOfRangeException(nameof(creditLimit), "Credit limit cannot be negative.") : creditLimit;
 
         }
 
         public override bool CanApply(Transaction transaction)
         {
+
+            if (transaction==null || transaction.TransferAmount<=0)
+            {
+                return false;
+            }
 
             if (transaction.TransactionType == TransactionType.Deposit)
             {

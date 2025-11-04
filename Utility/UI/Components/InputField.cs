@@ -58,6 +58,7 @@ namespace bank_app.Utility.UI.Components
             _inputBoxTextColour = inputBoxTextColour;
             _inputBoxBGColour = inputBoxBGColour;
             _userInputColour = userInputColour;
+            IsInteractable = true;
         }
 
         public override (int, int) Pressed()
