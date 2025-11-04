@@ -10,14 +10,14 @@ namespace bank_app.Models.Accounts
 {
     public class LoanAccount : Account
     {
-        
+
         public decimal CreditLimit { get; private set; }
 
         public LoanAccount(Currency currency, string ownerId, decimal creditLimit)
             : base(currency, 0, ownerId)
         {
-           
-          
+
+
             CreditLimit = creditLimit < 0 ? throw new ArgumentOutOfRangeException(nameof(creditLimit), "Credit limit cannot be negative.") : creditLimit;
 
         }
@@ -25,7 +25,7 @@ namespace bank_app.Models.Accounts
         public override bool CanApply(Transaction transaction)
         {
 
-            if (transaction==null || transaction.TransferAmount<=0)
+            if (transaction == null || transaction.TransferAmount <= 0)
             {
                 return false;
             }

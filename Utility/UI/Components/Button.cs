@@ -20,7 +20,7 @@ namespace bank_app.Utility.UI.Components
         private Justify Alignment;
         private ColourFG _textColour;
         private ColourBG _buttonColour;
-        
+
 
         /// <summary>
         /// Button UIComponent constructor.

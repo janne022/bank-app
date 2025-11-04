@@ -18,7 +18,7 @@ namespace bank_app.Models.Accounts
         //Indicates whether withdrawals are allowed
         public bool AllowWithdrawals { get; private set; }
 
-        public SavingsAccount(Currency currency, decimal balance, string ownerId,decimal interestRate, decimal minimalBalance, DateTime lastInterestDate, bool allowWithdrawals)
+        public SavingsAccount(Currency currency, decimal balance, string ownerId, decimal interestRate, decimal minimalBalance, DateTime lastInterestDate, bool allowWithdrawals)
             : base(currency, balance, ownerId)
         {
             InterestRate = interestRate < 0 ? 0 : interestRate;
@@ -78,16 +78,16 @@ namespace bank_app.Models.Accounts
             {
                 return;
             }
-           
+
 
             decimal interest = CalculateInterest(days);
-          
-            if (interest <=0)
+
+            if (interest <= 0)
             {
                 return;
             }
 
-            interest=Math.Round(interest, 2, MidpointRounding.AwayFromZero);
+            interest = Math.Round(interest, 2, MidpointRounding.AwayFromZero);
             //We use this.AccountID for both sender and receiver since interest is being added to the same account, because we calculate interest based on current balance.
             var interestTransaction = new Transaction(this.AccountID, this.AccountID, interest)
             {

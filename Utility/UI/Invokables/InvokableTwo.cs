@@ -12,11 +12,12 @@ namespace bank_app.Utility.UI.Invokables
     /// <typeparam name="T1">Any type of parameter</typeparam>
     /// <typeparam name="T2">Any type of parameter</typeparam>
     /// <param name="action">A reference to the method to run using a Action as generic delegate</param>
-    public class Invokable<T1,T2>(Action<T1, T2> action) : IInvokable
+    public class Invokable<T1, T2>(Action<T1, T2> action) : IInvokable
     {
         private readonly Action<T1, T2> _action = action;
 
-        public void Invoke(params object[] args) {
+        public void Invoke(params object[] args)
+        {
             _action((T1)args[0], (T2)args[1]);
         }
     }

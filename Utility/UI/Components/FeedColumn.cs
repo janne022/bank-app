@@ -174,7 +174,7 @@ namespace bank_app.Utility.UI.Components
                     marginRight = 0;
                     break;
             }
-            
+
             for (int i = 0; i <= marginRight; i++)
             {
                 Console.Write(" ");

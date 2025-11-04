@@ -51,6 +51,6 @@ namespace bank_app.Models.Accounts
         }
 
         public abstract bool CanApply(Transaction transaction);
-       
+
     }
 }

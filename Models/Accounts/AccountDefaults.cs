@@ -12,7 +12,7 @@ namespace bank_app.Models.Accounts
         // Checking
 
 
-     
+
         public const decimal CheckingMonthlyFee = 10m;
         public const decimal CheckingOverdraftLimit = 500m;
 

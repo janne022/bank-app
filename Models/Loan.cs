@@ -47,7 +47,7 @@
         public void ApplyInterest(DateTime currentDate)
         {
             int daysToAccrue = (currentDate - LastAccrualDate).Days;
-            if (daysToAccrue <= 0) {   return; }
+            if (daysToAccrue <= 0) { return; }
 
             decimal interest = CalculateInterest(daysToAccrue);
             if (interest < 0)
@@ -63,9 +63,9 @@
         }
 
 
-        public void ApplyPayment(decimal amount )
+        public void ApplyPayment(decimal amount)
         {
-            if (amount<=0)
+            if (amount <= 0)
             {
                 return;
             }
@@ -80,14 +80,14 @@
             OutstandingPrincipal -= payPrincipal;
             amount -= payPrincipal;
 
-            if (OutstandingPrincipal <=0 && AccruedInterest<=0)
+            if (OutstandingPrincipal <= 0 && AccruedInterest <= 0)
             {
                 OutstandingPrincipal = 0;
                 AccruedInterest = 0;
-                
+
             }
 
-            
+
         }
 
     }
