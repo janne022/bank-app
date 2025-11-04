@@ -65,6 +65,7 @@ namespace bank_app.UI.Pages
             }
 
             UserManager.CreateUser(userName, password, userType, email, phone, legalName);
+            PageManager.SwitchPage(PageType.AdminDashboard);
         }
     }
 }
