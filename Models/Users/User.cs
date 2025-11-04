@@ -23,7 +23,7 @@ namespace bank_app.Models.Users
             CurrentAccountStatus = AccountStatus.Unlocked;
         }
 
-        // ----------------------------------------private setters--------------------------------------- //
+        // ---------------------------------------- PRIVATE SETTERS --------------------------------------- //
         private void SetLegalName(string name)
         {
             LegalName = name;
@@ -67,7 +67,7 @@ namespace bank_app.Models.Users
         }
 
 
-        // public methods to access private setters
+        // ----------------------------------------- PUBLIC UPDATING METHODS ----------------------------------------- //
         public bool UpdateUserId(string userId)
         {
             if (UserManager.UserIds.Contains(userId))
