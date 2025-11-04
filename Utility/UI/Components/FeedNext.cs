@@ -1,6 +1,7 @@
 ﻿using bank_app.Models.Users;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -50,95 +51,35 @@ namespace bank_app.Utility.UI.Components
                 if (_currentIndex > 0)
                 {
                     _currentIndex--;
-                    _startIndex--;
-                    _endIndex--;
+
+                    if (_currentIndex < _startIndex)
+                    {
+                        _startIndex--;
+                        _endIndex--;
+                    }
                 }
             }
-
+            
             if (direction == UpOrDown.Down)
             {
-                if (_currentIndex <= FeedColumns.Count)
+                if (_currentIndex < FeedColumns[0]._entries.Length - 1)
                 {
                     _currentIndex++;
-                    _startIndex++;
-                    _endIndex++;
+
+                    if (_currentIndex >= _endIndex - 1)
+                    {
+                        if (_endIndex < FeedColumns[0]._entries.Length)
+                        {
+                            _startIndex++;
+                            _endIndex++;
+                        }
+                    }
+
                 }
             }
         }
 
 
-
-        //public void Scroll(UpOrDown direction)
-        //{
-
-        //    int allEntries = FeedColumns.Count;
-
-        //    if (direction == UpOrDown.Up)
-        //    {
-        //        if (_currentIndex > 0)
-        //        {
-        //            _currentIndex--;
-
-        //            // Scroll if need be
-        //            if (_currentIndex < _startIndex)
-        //            {
-        //                _startIndex--;
-        //                _endIndex--;
-        //            }
-        //        }
-        //    }
-
-        //    if (direction == UpOrDown.Down)
-        //    {
-        //        if (_currentIndex < allEntries - 1)
-        //        {
-        //            _currentIndex++;
-
-        //            if (_currentIndex >= _startIndex + _lineAmount)
-        //            {
-        //                _startIndex++;
-        //                _endIndex++;
-        //            }
-        //        }
-        //    }
-
-        //}
-
-
-
-        //public void Scroll(UpOrDown direction)
-        //{
-
-        //    int allEntries = FeedColumns.Count;
-
-        //    if (direction == UpOrDown.Up)
-        //    {
-        //        if (_currentIndex > 0)
-        //        {
-        //            _currentIndex--;
-
-        //            // Scroll if need be
-        //            if (_currentIndex < _pastEntries)
-        //            {
-        //                _pastEntries--;
-        //            }
-        //        }
-        //    }
-
-        //    if (direction == UpOrDown.Down)
-        //    {
-        //        if (_currentIndex < allEntries - 1)
-        //        {
-        //            _currentIndex++;
-
-        //            if (_currentIndex >= _pastEntries + _lineAmount)
-        //            {
-        //                _pastEntries++;
-        //            }
-        //        }
-        //    }
-
-        //}
 
         public override (int, int) Pressed()
         {
@@ -149,6 +90,9 @@ namespace bank_app.Utility.UI.Components
                 switch (pressed.Key)
                 {
                     case ConsoleKey.Enter:
+                        Console.SetCursorPosition(0, 15);
+                        Console.Write(FeedColumns[0]._entries[_currentIndex]);
+                        //return (0, 0);
                         break;
 
                     case ConsoleKey.Escape:
@@ -175,38 +119,10 @@ namespace bank_app.Utility.UI.Components
         }
 
         public override void Render()
-        {
-            int currentWidth = 0;
-
-            //var relevantColumns = FeedColumns
-            //        .Skip(_pastEntries)
-            //        .Take(_lineAmount)
-            //        .ToList();
-
-            //var relevantColumns = FeedColumns
-            //        .Skip(_startIndex)
-            //        .Take(_lineAmount)
-            //        .ToList();
-            //foreach (FeedColumn column in relevantColumns)
-            //{
-            //    //column.X += currentWidth;
-            //    column.StartIndex = _startIndex;
-            //    column.EndIndex = _endIndex;
-            //    //currentWidth += column.Width;
-            //    column.Render();
-            //}
-
-
-            //for (int i = 0; i < relevantColumns.Count; i++)
-            //{
-            //    relevantColumns[i].CurrentIndex = _currentIndex;
-            //    relevantColumns[i].StartIndex = _startIndex;
-            //    relevantColumns[i].EndIndex = _endIndex;
-            //    relevantColumns[i].Render();
-            //}
-            
+        {            
             for (int i = 0; i < FeedColumns.Count; i++)
             {
+                FeedColumns[i].CurrentIndex = _currentIndex;
                 FeedColumns[i].StartIndex = _startIndex;
                 FeedColumns[i].EndIndex = _endIndex;
                 FeedColumns[i].Render();
