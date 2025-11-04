@@ -21,10 +21,23 @@ namespace bank_app.UI.Pages
         internal override UIComponent LoadPage()
         {
             Console.CursorVisible = false;
-            var navbar = new Navbar(new List<NavbarItem> { new NavbarItem("Home", PageType.AdminDashboard), new NavbarItem("Create User", PageType.CreateUser),
-                new NavbarItem("Transactions", PageType.CheckTransactions), new NavbarItem("Rates", PageType.UpdateRates)});
+            var navbar = new Navbar([ new("Home", PageType.AdminDashboard), new("Create User", PageType.CreateUser),
+                new("Transactions", PageType.CheckTransactions), new("Rates", PageType.UpdateRates)]);
 
-            var loginInvoke = new Invokable<string, string>(UpdateRateHandler);
+            List<DropdownItem<Currency>> currencyItems = [
+                new DropdownItem<Currency>("SEK", Currency.SEK),
+                new DropdownItem<Currency>("SLC", Currency.SLC),
+                new DropdownItem<Currency>("USD", Currency.USD),
+                new DropdownItem<Currency>("EUR", Currency.EUR),
+                new DropdownItem<Currency>("GBP", Currency.GBP),
+                new DropdownItem<Currency>("JPY", Currency.JPY),
+                new DropdownItem<Currency>("AUD", Currency.AUD),
+                new DropdownItem<Currency>("CAD", Currency.CAD),
+                new DropdownItem<Currency>("CHF", Currency.CHF),
+                new DropdownItem<Currency>("CNY", Currency.CNY),
+                new DropdownItem<Currency>("NZD", Currency.NZD)
+            ];
+            var loginInvoke = new Invokable<Currency, string>(UpdateRateHandler);
             // Create a new Invokable object with the method that is going to run once the 'Login' button is pressed
             // Create new 3x3 grid
             Grid grid = new Grid(3, 3);
@@ -37,7 +50,7 @@ namespace bank_app.UI.Pages
             cell.OrderBy = OrderBy.Column;
             _rateForm = new Form(new List<UIComponent>
             {
-                new InputField("Currency",false,16),  //This will become dropdown menu later (choice currency)
+                new Dropdown<Currency>(currencyItems),
                 new InputField("New rate",false,16),
 
                 }, new Button(loginInvoke, "Apply", marginTop: 2));
@@ -47,32 +60,21 @@ namespace bank_app.UI.Pages
             return new Panel(grid, LayoutBorder.Heavy);
         }
 
-        private void UpdateRateHandler(string currencyString, string rate)
+        private void UpdateRateHandler(Currency currency, string rate)
         {
 
             bool isConvert = decimal.TryParse(rate, out decimal decimalRate);
 
-
-            if (Enum.TryParse<Currency>(currencyString, ignoreCase: true, out Currency currency))
+            if (isConvert)
             {
-
-                if (isConvert)
-                {
-                    CurrencyExchange.UpdateRate(currency, decimalRate);
-                }
-                else
-                {
-                    throw new Exception("Invalid format");
-                }
-
+                CurrencyExchange.UpdateRate(currency, decimalRate);
             }
             else
             {
-
-                throw new Exception("Invalid currency");
+                throw new Exception("Invalid format");
             }
 
-            
+
 
             PageManager.SwitchPage(PageType.AdminDashboard);
         }
