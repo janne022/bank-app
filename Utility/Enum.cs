@@ -69,6 +69,13 @@ namespace bank_app.Utility
         Column
     }
 
+    public enum InputFieldType
+    {
+        Normal,
+        Number,
+        Password
+    }
+
     public enum PageType
     {
         Login,
