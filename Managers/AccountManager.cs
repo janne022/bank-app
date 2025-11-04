@@ -126,7 +126,7 @@ namespace bank_app.Managers
         {
             if (!_accounts.TryGetValue(id, out var account))
             {
-                throw new InvalidOperationException();
+                return null;
             }
             return account;
         }

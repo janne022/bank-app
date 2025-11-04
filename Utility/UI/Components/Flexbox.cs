@@ -118,7 +118,7 @@ namespace bank_app.Utility.UI.Components
                 switch (Align)
                 {
                     case Align.Middle:
-                        Components[i].Y += ((Height / 2));
+                        Components[i].Y += ((Height / 2) - (Components[i].Height / 2));
                         break;
                     case Align.Bottom:
                         Components[i].Y += Height;
