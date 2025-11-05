@@ -39,14 +39,14 @@ namespace bank_app.UI.Pages
 
 
             // --------------------------------------- AVAILABLE AMOUNT SECTION ------------------------------ //
-            string textToDisplay = $"Available Amount in SEK: <{AccountManager.SumOfAmountsInSek(CurrentUser)}>";
+            string textToDisplay = $"Available Amount in SEK: <{AccountManager.SumOfAmountsInSek(CurrentUser).ToString("F2")}>";
 
             var availableAmount = new Text(textToDisplay);
 
             // --------------------------------------- ACCOUNT TABLE SECTION -------------------------------- //
 
             // creates a table of account information
-            var accountFeed = new Feed(AccountManager.GetAllAccounts(CurrentUser.UserId).Count);
+            var accountFeed = new Feed(AccountManager.GetAllAccounts(CurrentUser.UserId).Count, false, false);
             string[] column1 = new string[AccountManager.GetAllAccounts(CurrentUser.UserId).Count];
             string[] column2 = new string[AccountManager.GetAllAccounts(CurrentUser.UserId).Count];
 
@@ -55,7 +55,16 @@ namespace bank_app.UI.Pages
             {
                 // adds info about the accounts first in first column, then second...
                 column1[i] = $"Account {i + 1} <{AccountManager.GetAllAccounts(CurrentUser.UserId)[i].GetType().Name.Substring(0, AccountManager.GetAllAccounts(CurrentUser.UserId)[i].GetType().Name.Length - 7)}>: ";
-                column2[i] = $"{AccountManager.GetAllAccounts(CurrentUser.UserId)[i].Balance} {AccountManager.GetAllAccounts(CurrentUser.UserId)[i].AccountCurrency}";
+
+                if (AccountManager.GetAllAccounts(CurrentUser.UserId)[i].AccountCurrency != Currency.SLC)
+                {
+                    column2[i] = $"{AccountManager.GetAllAccounts(CurrentUser.UserId)[i].Balance.ToString("F2")} {AccountManager.GetAllAccounts(CurrentUser.UserId)[i].AccountCurrency}";
+                }
+                else
+                {
+                    column2[i] = $"{AccountManager.GetAllAccounts(CurrentUser.UserId)[i].Balance} {AccountManager.GetAllAccounts(CurrentUser.UserId)[i].AccountCurrency}";
+                }
+
             }
 
             // ... then adds those columns into a left and right column...
@@ -66,10 +75,11 @@ namespace bank_app.UI.Pages
             accountFeed.AddColumn(leftColumn);
             accountFeed.AddColumn(rightColumn);
 
-            var flexbox = new Flexbox().AddFlexComponent(availableAmount).AddFlexComponent(accountFeed);
+            var flexbox = new Flexbox(Justify.Center, Align.Top).AddFlexComponent(availableAmount).AddFlexComponent(accountFeed);
 
             // adds border around the feed
-            grid.AddGridComponent(1, 1, new Panel(flexbox, LayoutBorder.Rounded, "Accounts", 55, 15, ColourFG.GreenBright));
+            grid.AddGridComponent(1, 1, new Panel(flexbox, LayoutBorder.Rounded, "", 55, 10, ColourFG.GreenBright)).SetAlign(Align.Middle).SetJustify(Justify.Center);
+
 
             // Add grid to layout and set rounded border style
             return new Panel(grid, LayoutBorder.Heavy);
