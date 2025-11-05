@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Security.AccessControl;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-
-namespace bank_app.Utility.UI.Components
+﻿namespace bank_app.Utility.UI.Components
 {
     /// <summary>
     /// Button UIComponent. Performs actions on page.

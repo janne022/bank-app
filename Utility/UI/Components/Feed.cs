@@ -1,13 +1,4 @@
-﻿using bank_app.Models.Users;
-using bank_app.Utility.UI.Invokables;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace bank_app.Utility.UI.Components
+﻿namespace bank_app.Utility.UI.Components
 {
     internal class Feed : UIComponent
     {
