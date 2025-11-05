@@ -22,10 +22,10 @@ namespace bank_app.UI.Pages
             var navbar = new Navbar(
                 [
                 new NavbarItem("Home", PageType.ClientDashboard),
-                new NavbarItem("Transfer", PageType.Transfer),
-                new NavbarItem("Transaction", PageType.Transaction),
-                new NavbarItem("Account", PageType.Account),
-                new NavbarItem("Loan", PageType.Loan)
+                new NavbarItem("Transfer", PageType.TransferPage),
+                new NavbarItem("Transaction", PageType.TransactionPage),
+                new NavbarItem("Account", PageType.AccountPage),
+                new NavbarItem("Loan", PageType.LoanPage)
                 ]);
             // Create a new Invokable object with the method that is going to run once the 'Login' button is pressed
             // Create new 3x3 grid

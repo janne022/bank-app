@@ -24,9 +24,9 @@ namespace bank_app.UI.Pages
             var navbar = new Navbar(
                 [
                 new NavbarItem("Home", PageType.AdminDashboard),
-                new NavbarItem("Create User", PageType.CreateUser),
-                new NavbarItem("Transactions", PageType.CheckTransactions),
-                new NavbarItem("Rates", PageType.UpdateRates)
+                new NavbarItem("Create User", PageType.CreateUserPage),
+                new NavbarItem("Transactions", PageType.TransactionLogPage),
+                new NavbarItem("Rates", PageType.UpdateRatePage)
                 ]);
             Grid grid = new(3, 3);
             grid.AddGridComponent(0, 1, navbar)

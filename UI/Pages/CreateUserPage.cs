@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace bank_app.UI.Pages
 {
-    internal class CreateUser : Page
+    internal class CreateUserPage : Page
     {
         private Form? _createUserForm;
         internal override UIComponent LoadPage()
@@ -30,9 +30,9 @@ namespace bank_app.UI.Pages
             var navbar = new Navbar(
                 [
                 new("Home", PageType.AdminDashboard),
-                new("Create User", PageType.CreateUser),
-                new("Transactions", PageType.CheckTransactions),
-                new("Rates", PageType.UpdateRates)
+                new("Create User", PageType.CreateUserPage),
+                new("Transactions", PageType.TransactionLogPage),
+                new("Rates", PageType.UpdateRatePage)
                 ]);
 
             var loginInvoke = new Invokable<UserType, string, string, string, string, string>(CreateUserHandler);
