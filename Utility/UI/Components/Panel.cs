@@ -41,21 +41,20 @@
             _borderColour = borderColour;
             _backgroundColour = backgroundColour;
             TopText = topText;
-            if (width == 0)
-            {
-                Width = Console.WindowWidth - 1;
-            }
-            else
-            {
-                Width = width;
-            }
-            if (height == 0)
-            {
-                Height = Console.WindowHeight - 1;
-            }
-            else
+            if (height != 0 && width != 0)
             {
                 Height = height;
+                Width = width;
+            }
+            else if (ParentComponent != null)
+            {
+                Height = ParentComponent.Height;
+                Width = ParentComponent.Width;
+            }
+            else
+            {
+                Height = Console.WindowHeight - 1;
+                Width = Console.WindowWidth - 1;
             }
 
             // Set rootComponent and set its parents element to this object
