@@ -84,16 +84,16 @@ namespace bank_app.Utility
 
     public enum PageType
     {
-        Login,
+        LoginPage,
         AdminDashboard,
         ClientDashboard,
-        Transfer,
-        Transaction,
-        Account,
-        Loan,
-        CreateUser,
-        CheckTransactions,
-        UpdateRates
+        TransferPage,
+        TransactionPage,
+        AccountPage,
+        LoanPage,
+        CreateUserPage,
+        TransactionLogPage,
+        UpdateRatePage
     }
 
     public enum LayoutBorder

@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace bank_app.UI.Pages
 {
-    internal class UpdateRates : Page
+    internal class UpdateRatePage : Page
     {
         private Form? _rateForm;
 
@@ -25,9 +25,9 @@ namespace bank_app.UI.Pages
             var navbar = new Navbar(
                 [
                 new("Home", PageType.AdminDashboard),
-                new("Create User", PageType.CreateUser),
-                new("Transactions", PageType.CheckTransactions),
-                new("Rates", PageType.UpdateRates)
+                new("Create User", PageType.CreateUserPage),
+                new("Transactions", PageType.TransactionLogPage),
+                new("Rates", PageType.UpdateRatePage)
                 ]);
 
             List<DropdownItem<Currency>> currencyItems = [

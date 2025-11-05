@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace bank_app.UI.Pages
 {
-    public class Transfer : Page
+    public class TransferPage : Page
     {
         Form? form { get; set; }
         internal override UIComponent LoadPage()
@@ -29,10 +29,10 @@ namespace bank_app.UI.Pages
             var navbar = new Navbar(
                 [
                 new NavbarItem("Home", PageType.ClientDashboard),
-                new NavbarItem("Transfer", PageType.Transfer),
-                new NavbarItem("Transaction", PageType.Transaction),
-                new NavbarItem("Account", PageType.Account),
-                new NavbarItem("Loan", PageType.Loan)
+                new NavbarItem("Transfer", PageType.TransferPage),
+                new NavbarItem("Transaction", PageType.TransactionPage),
+                new NavbarItem("Account", PageType.AccountPage),
+                new NavbarItem("Loan", PageType.LoanPage)
                 ]);
 
             form = new Form(

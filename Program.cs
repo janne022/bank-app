@@ -18,7 +18,7 @@ internal class Program
         UserManager.CreateUser("vira", "hera123", UserType.Admin, "admina@gmail.com", "+46 709 421 135", "El Vira");
 
         // Start the first User Interface page
-        PageManager.Start(PageType.Login);
+        PageManager.Start(PageType.LoginPage);
     }
     private static async Task BackgroundThread()
     {
