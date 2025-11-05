@@ -39,7 +39,7 @@ namespace bank_app.UI.Pages
             // --------------------------------------- ACCOUNT TABLE SECTION -------------------------------- //
 
             // creates a table of account information
-            var accountFeed = new Feed(AccountManager.GetAllAccounts(CurrentUser.UserId).Count, false, false);
+            var accountFeed = new Feed(4, false, false);
             string[] column1 = new string[AccountManager.GetAllAccounts(CurrentUser.UserId).Count];
             string[] column2 = new string[AccountManager.GetAllAccounts(CurrentUser.UserId).Count];
 
