@@ -20,16 +20,18 @@ namespace bank_app.UI.Pages
             var user = PageManager.GetCurrentUser();
 
             Console.CursorVisible = false;
-            var navbar = new Navbar(new List<NavbarItem> { new NavbarItem("Home", PageType.AdminDashboard), new NavbarItem("Create User", PageType.CreateUser), 
-                new NavbarItem("Transactions", PageType.CheckTransactions), new NavbarItem("Rates", PageType.UpdateRates)});
-            // Create a new Invokable object with the method that is going to run once the 'Login' button is pressed
-            // Create new 3x3 grid
-            Grid grid = new Grid(3, 3);
+            var navbar = new Navbar(
+                [
+                new NavbarItem("Home", PageType.AdminDashboard),
+                new NavbarItem("Create User", PageType.CreateUser),
+                new NavbarItem("Transactions", PageType.CheckTransactions),
+                new NavbarItem("Rates", PageType.UpdateRates)
+                ]);
+            Grid grid = new(3, 3);
             grid.AddGridComponent(0, 1, navbar);
-            grid.AddGridComponent(1, 1, new Text($"Welcome back {user?.UserId}!"));
-            grid.GetGridCell(1, 1).Align = Align.Middle;
-            grid.GetGridCell(1, 1).Justify = Justify.Center;
-            // Add grid to layout and set rounded border style
+            grid.AddGridComponent(1, 1, new Text($"Welcome back {user?.UserId}!"))
+                .SetAlign(Align.Middle)
+                .SetJustify(Justify.Center);
             return new Panel(grid, LayoutBorder.Heavy);
         }
     }

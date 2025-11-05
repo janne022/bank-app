@@ -85,6 +85,24 @@ namespace bank_app.Utility.UI.Components
             }
         }
 
+        public Flexbox SetJustify(Justify justify)
+        {
+            Justify = justify;
+            return this;
+        }
+
+        public Flexbox SetAlign(Align align)
+        {
+            Align = align;
+            return this;
+        }
+
+        public Flexbox SetOrderBy(OrderBy orderBy)
+        {
+            OrderBy = orderBy;
+            return this;
+        }
+
         public override void Render()
         {
             int totalHeight = 1;

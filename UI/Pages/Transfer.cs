@@ -15,43 +15,50 @@ namespace bank_app.UI.Pages
 {
     public class Transfer : Page
     {
-        Form? form {  get; set; }
+        Form? form { get; set; }
         internal override UIComponent LoadPage()
         {
             Console.CursorVisible = false;
 
             // Gets all checking accounts and saving accounts, then returns them as a DropdownItem with account id as name
-            List<DropdownItem<Models.Accounts.Account>> accounts = AccountManager.GetAllAccounts(CurrentUser.UserId).Where(account => account is CheckingAccount || account is SavingsAccount).Select(account => new DropdownItem<Models.Accounts.Account>(account.AccountID.ToString(), account)).ToList();
-            var transferInvokable = new Invokable<Models.Accounts.Account,string, string>(TransferMoney);
-            var navbar = new Navbar(new List<NavbarItem> { new NavbarItem("Home", PageType.ClientDashboard), new NavbarItem("Transfer", PageType.Transfer), new NavbarItem("Transaction", PageType.Transaction), new NavbarItem("Account", PageType.Account), new NavbarItem("Loan", PageType.Loan) });
-            // Create a new Invokable object with the method that is going to run once the 'Login' button is pressed
+            var accounts = AccountManager.GetAllAccounts(CurrentUser.UserId).Where(account => account is CheckingAccount || account is SavingsAccount);
+            var accountsNavbarItems = accounts.Select(account => new DropdownItem<Models.Accounts.Account>(account.AccountID.ToString(), account)).ToList();
+            var transferInvokable = new Invokable<Models.Accounts.Account, string, string>(TransferMoney);
+            var navbar = new Navbar(
+                [
+                new NavbarItem("Home", PageType.ClientDashboard),
+                new NavbarItem("Transfer", PageType.Transfer),
+                new NavbarItem("Transaction", PageType.Transaction),
+                new NavbarItem("Account", PageType.Account),
+                new NavbarItem("Loan", PageType.Loan)
+                ]);
             var transferGrid = new Flexbox(Justify.Center, Align.Top);
             transferGrid.AddFlexComponent(new Text($"Avaliable balance: "));
-            form = new Form(new List<UIComponent> { new Dropdown<Models.Accounts.Account>(accounts), new InputField("Account ID", false, 35), new InputField("Amount", false, 24) }, new Button(transferInvokable, "Send"));
+            form = new Form(
+                [
+                new Dropdown<Models.Accounts.Account>(accountsNavbarItems),
+                new InputField("Account ID", InputFieldType.Normal, 35, 0),
+                new InputField("Amount", InputFieldType.Number, 24, 0)
+                ], new Button(transferInvokable, "Send"));
             transferGrid.AddFlexComponent(form);
             transferGrid.Width = 40;
             transferGrid.Height = 10;
-            // Create new 3x3 grid
-            Grid grid = new Grid(3, 3);
+            Grid grid = new(3, 3);
             grid.AddGridComponent(0, 1, navbar);
-            grid.AddGridComponent(1,1, new Panel(transferGrid, LayoutBorder.Rounded,width: 70, height: 15));
-            var gridCell = grid.GetGridCell(1,1);
-            gridCell.Justify = Justify.Center;
-            gridCell.Align = Align.Middle;
-            // Add grid to layout and set rounded border style
+            grid.AddGridComponent(1, 1, new Panel(transferGrid, LayoutBorder.Rounded, width: 70, height: 15))
+                .SetAlign(Align.Middle)
+                .SetJustify(Justify.Center);
             return new Panel(grid, LayoutBorder.Heavy);
         }
 
-        private void TransferMoney(Models.Accounts.Account account,string id, string amount)
+        private void TransferMoney(Models.Accounts.Account account, string id, string amount)
         {
-            bool success = Guid.TryParse(id, out Guid guid);
-            bool successAmount = Decimal.TryParse(amount, out decimal amountDouble);
-            if (success)
+            if (Guid.TryParse(id, out Guid guid))
             {
                 Models.Accounts.Account sendAccount = AccountManager.GetAccountById(guid);
                 if (sendAccount != null)
                 {
-                    if (successAmount)
+                    if (Decimal.TryParse(amount, out decimal amountDouble))
                     {
                         TransactionManager.CreateNewTransaction(account.AccountID, sendAccount.AccountID, amountDouble);
                     }
@@ -67,7 +74,7 @@ namespace bank_app.UI.Pages
             }
             else
             {
-                form?.UpdateErrorMessage("Invalid account id");
+                form?.UpdateErrorMessage("Invalid Account ID");
             }
         }
     }

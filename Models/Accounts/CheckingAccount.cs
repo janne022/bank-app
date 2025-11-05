@@ -21,7 +21,7 @@ namespace bank_app.Models.Accounts
             MonthlyFee = monthlyFee < 0 ? 0 : monthlyFee;
         }
 
-     
+
 
         //This method is looking to see if the transaction can be applied based on the type of transaction and the current balance and overdraft limit.
         public override bool CanApply(Transaction transaction)
