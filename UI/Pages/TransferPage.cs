@@ -68,6 +68,7 @@ namespace bank_app.UI.Pages
                     if (Decimal.TryParse(amount, out decimal amountDouble))
                     {
                         TransactionManager.CreateNewTransaction(account.AccountID, sendAccount.AccountID, amountDouble);
+                        PageManager.SwitchPage(PageType.ClientDashboard);
                     }
                     else
                     {
