@@ -110,7 +110,7 @@ namespace bank_app.Managers
         {
             int code =  new Random().Next(100000,1000000);
             var message = new MimeMessage();
-            message.From.Add(new MailboxAddress("Slava Bank", "slavabank50@gmail.com"));
+            message.From.Add(new MailboxAddress("Slava Bank", Environment.GetEnvironmentVariable("EMAIL")));
             message.To.Add(new MailboxAddress(u.LegalName, u.Email));
             message.Subject = $"Authentication Code";
             message.Body = new TextPart("plain")
