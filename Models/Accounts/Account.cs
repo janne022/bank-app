@@ -41,6 +41,15 @@ namespace bank_app.Models.Accounts
                 case TransactionType.Withdrawal:
                     Balance -= amount;
                     break;
+                case TransactionType.LoanDisbursement:
+                    Balance -= amount;
+                    break;
+                case TransactionType.LoanInterest:
+                    Balance -= amount;
+                    break;
+                case TransactionType.LoanRepayment:
+                    Balance += amount;
+                    break;
                 default:
                     Console.WriteLine("This transaction type is not an option");
                     break;

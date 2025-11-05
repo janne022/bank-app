@@ -30,14 +30,14 @@ namespace bank_app.Models.Accounts
                 return false;
             }
 
-            if (transaction.TransactionType == TransactionType.Deposit)
+            if (transaction.TransactionType == TransactionType.Deposit || transaction.TransactionType == TransactionType.LoanRepayment)
             {
                 return true;
             }
 
-            if (transaction.TransactionType == TransactionType.Withdrawal)
+            if (transaction.TransactionType == TransactionType.Withdrawal || transaction.TransactionType == TransactionType.LoanInterest || transaction.TransactionType == TransactionType.LoanDisbursement)
             {
-                return Balance - transaction.TransferAmount /*This will be change with transaction.Amount later */ >= -CreditLimit;
+                return Balance - transaction.TransferAmount >= -CreditLimit;
             }
 
 
