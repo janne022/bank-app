@@ -1,4 +1,5 @@
 ﻿using bank_app.Managers;
+using bank_app.Models;
 using bank_app.Models.Users;
 using bank_app.UI;
 using bank_app.Utility;
@@ -12,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 
 namespace bank_app.UI.Pages
@@ -51,7 +53,7 @@ namespace bank_app.UI.Pages
                 new("Loan", PageType.LoanPage)
                 ]);
 
-            var loginInvoke = new Invokable<string, string, string>(CreateAccountHandler);
+            var createAccountInvoke = new Invokable<AccountType, Currency, string>(CreateAccountHandler);
 
             Grid grid = new(3, 3);
             grid.AddGridComponent(0, 1, navbar)
@@ -63,8 +65,8 @@ namespace bank_app.UI.Pages
             [
                 new Dropdown<AccountType>(accountTypeItems),
                 new Dropdown<Currency>(currencyItems),
-                new InputField("Deposit amount",InputFieldType.Number,24, 0),
-            ], new Button(loginInvoke, "Create", marginTop: 1));
+                new InputField("Deposit amount",InputFieldType.Normal,24, 0),
+            ], new Button(createAccountInvoke, "Create", marginTop: 1));
             grid.AddGridComponent(1, 1, new Panel(_createAccountForm, LayoutBorder.Rounded, "Login", 70, 15, ColourFG.Red))
                 .SetAlign(Align.Middle)
                 .SetJustify(Justify.Center);
@@ -72,9 +74,13 @@ namespace bank_app.UI.Pages
             return new Panel(grid, LayoutBorder.Heavy);
         }
 
-        private void CreateAccountHandler(string accountType, string currency, string depositAmount)
+        private void CreateAccountHandler(AccountType accountType, Currency currency, string stringAmount)
         {
-              
+            User? currentUser = PageManager.GetCurrentUser();
+            bool canConvert = decimal.TryParse(stringAmount, out decimal decimalAmount);
+
+            AccountManager.CreateAccount(currentUser.UserId, currency, decimalAmount, accountType);
+            PageManager.SwitchPage(PageType.ClientDashboard);
         }
     }
 }
