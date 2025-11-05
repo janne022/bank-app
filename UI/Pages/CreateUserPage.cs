@@ -1,17 +1,9 @@
 ﻿using bank_app.Managers;
-using bank_app.Models.Users;
-using bank_app.UI;
 using bank_app.Utility;
-using bank_app.Utility.Components;
 using bank_app.Utility.UI;
 using bank_app.Utility.UI.Components;
 using bank_app.Utility.UI.Invokables;
 using Figgle.Fonts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 
 namespace bank_app.UI.Pages

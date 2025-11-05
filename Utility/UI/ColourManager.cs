@@ -1,13 +1,4 @@
-﻿using bank_app.Models;
-using bank_app.Utility;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace bank_app.Utility.UI
+﻿namespace bank_app.Utility.UI
 {
     /// <summary>
     /// Class which handles ANSI colour code output to the console.

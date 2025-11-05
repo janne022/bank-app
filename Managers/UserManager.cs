@@ -1,5 +1,4 @@
 ﻿using bank_app.Models.Users;
-using bank_app.UI;
 using bank_app.Utility;
 using MailKit.Net.Smtp;
 using MailKit.Security;
@@ -90,7 +89,6 @@ namespace bank_app.Managers
                         return null;
                     }
                 }
-
             }
             return null;
         }
@@ -132,10 +130,12 @@ namespace bank_app.Managers
         {
             user.UpdateAccountStatus(AccountStatus.Unlocked);
         }
+
         internal static void Logout()
         {
             // UI needed to develop - change page to login page
         }
+
         public static void ChangeUserInfo(User user, string typeOfChange, string change)
         {
             user.UpdateUserInfo(typeOfChange, change);

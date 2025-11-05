@@ -1,7 +1,5 @@
 ﻿using bank_app.Managers;
 using bank_app.Utility;
-using System.ComponentModel.DataAnnotations;
-using System.Dynamic;
 using System.Text.RegularExpressions;
 
 namespace bank_app.Models.Users
