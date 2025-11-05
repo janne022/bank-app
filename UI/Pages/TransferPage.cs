@@ -75,7 +75,6 @@ namespace bank_app.UI.Pages
                     if (decimal.TryParse(amount, out decimal amountDecimal))
                     {
                         TransactionManager.CreateNewTransaction(senderAccount.AccountID, receiverAccount.AccountID, amountDecimal);
-                        TransactionManager.ProcessPendingTransactions();
                         PageManager.SwitchPage(PageType.ClientDashboard);
                     }
                     else
