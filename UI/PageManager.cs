@@ -18,12 +18,12 @@ namespace bank_app.UI
             {PageType.ClientDashboard,  new ClientDashboard()},
             {PageType.TransferPage,  new TransferPage()},
             {PageType.TransactionPage,  new TransactionPage()},
-            {PageType.AccountPage,  new AccountPage()},
+            {PageType.CreateAccountPage, new CreateAccountPage()},
             {PageType.LoanPage,  new LoanPage()},
             {PageType.AdminDashboard,  new AdminDashboard()},
             {PageType.CreateUserPage, new CreateUserPage()},
             {PageType.TransactionLogPage, new TransactionLogPage()},
-            {PageType.UpdateRatePage, new UpdateRatePage()}
+            {PageType.UpdateRatePage, new UpdateRatePage()}         
         };
         private static bool _isRunning = true;
         private static Page? _nextPage;
