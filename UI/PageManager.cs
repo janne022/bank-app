@@ -23,7 +23,7 @@ namespace bank_app.UI
             {PageType.AdminDashboard,  new AdminDashboard()},
             {PageType.CreateUserPage, new CreateUserPage()},
             {PageType.TransactionLogPage, new TransactionLogPage()},
-            {PageType.UpdateRatePage, new UpdateRatePage()}         
+            {PageType.UpdateRatePage, new UpdateRatePage()} 
         };
         private static bool _isRunning = true;
         private static Page? _nextPage;
