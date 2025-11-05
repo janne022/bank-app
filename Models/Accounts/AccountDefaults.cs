@@ -24,7 +24,7 @@ namespace bank_app.Models.Accounts
 
         // Loan
         public const decimal LoanInterestRate = 7m;
-        public const decimal LoanCreditLimit = 1000m;
+        public const decimal LoanCreditLimit = 10000000m;
         public const int MaxLoansPerUser = 5;
 
     }

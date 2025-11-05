@@ -1,6 +1,7 @@
 ﻿using bank_app.Models;
 using bank_app.Models.Accounts;
 using bank_app.Models.Users;
+using bank_app.UI.Pages;
 using bank_app.Utility;
 using System;
 using System.Collections.Generic;
@@ -16,23 +17,35 @@ namespace bank_app.Managers
         private readonly List<Loan> _loans = new List<Loan>();
 
 
+
         public Loan DisburseLoan(string userId, decimal principal, Currency currency)
         {
 
             if (!ValidateLoanLimit(userId, principal))
             {
+
                 throw new InvalidOperationException("Loan denied: exceeds allowed limit.");
             }
 
 
             var loanAccount = GetOrCreateLoanAccount(userId, currency);
 
+            var checkingAccount = AccountManager.GetAllAccounts(userId).OfType<CheckingAccount>().FirstOrDefault();
+
+            if (checkingAccount == null)
+            {
+
+                throw new InvalidOperationException("User must have a checking account to receive loan.");
+            }
+
             var loan = new Loan(userId, principal, AccountDefaults.LoanInterestRate, DateTime.Now);
             _loans.Add(loan);
+           
+            var transactionLoan = CreateLoanTransaction(loanAccount, principal);
+            loanAccount.ApplyTransaction(transactionLoan, principal);
 
-            var transaction = CreateLoanTransaction(loanAccount, principal);
-            loanAccount.ApplyTransaction(transaction, principal);
-
+            var transactionToChecking = CreateCheckingAccTransaction(checkingAccount, principal, TransactionType.Deposit);
+            checkingAccount.ApplyTransaction(transactionToChecking, principal);
             return loan;
 
         }
@@ -103,8 +116,15 @@ namespace bank_app.Managers
             loan?.ApplyPayment(paymentAmount);
 
 
-
             var loanAccount = AccountManager.GetAllAccounts(userID).OfType<LoanAccount>().FirstOrDefault();
+
+            var checkingAccount = AccountManager.GetAllAccounts(userID).OfType<CheckingAccount>().FirstOrDefault();
+
+            if (checkingAccount != null)
+            {
+                var transactionToChecking = CreateCheckingAccTransaction(checkingAccount, paymentAmount, TransactionType.Withdrawal);
+                checkingAccount.ApplyTransaction(transactionToChecking, paymentAmount);
+            }
 
             if (loanAccount != null)
             {
@@ -120,26 +140,29 @@ namespace bank_app.Managers
                 };
                 loanAccount.ApplyTransaction(transaction, paymentAmount);
             }
+
+           
             return true;
 
         }
 
 
 
-
-
-
-
-
-
-
         private bool ValidateLoanLimit(string userId, decimal requestedAmount)
         {
 
+            bool isUserHasCheckingAccount = AccountManager.GetAllAccounts(userId).Any(a => a is CheckingAccount);
+
+            if (!isUserHasCheckingAccount)
+            {
+                return false;
+            }
 
             decimal totalBalance = AccountManager.GetAllAccounts(userId)
                                    .Where(account => account is not LoanAccount)
                                    .Sum(account => account.Balance);
+
+
             if (totalBalance <= 0)
             {
 
@@ -147,7 +170,7 @@ namespace bank_app.Managers
             }
 
             decimal existingDebt = _loans.Where(loan => loan.UserId == userId && loan.IsActive).Sum(loan => loan.OutstandingPrincipal);
-         
+
 
             decimal maxAllowed = Math.Round(totalBalance * 5, 2);
 
@@ -158,6 +181,28 @@ namespace bank_app.Managers
             return true;
         }
 
+
+        private Transaction CreateCheckingAccTransaction(CheckingAccount checkingAccount, decimal principal, TransactionType transactionType)
+        {
+            if (principal <= 0)
+                throw new ArgumentOutOfRangeException(nameof(principal), "Loan amount must be positive.");
+
+
+
+            var transaction = new Transaction(
+               checkingAccount.AccountID,
+               checkingAccount.AccountID,
+               principal)
+            {
+                TransactionType = transactionType,
+                Status = TransferStatus.Completed,
+
+            };
+
+
+            return transaction;
+
+        }
         private Transaction CreateLoanTransaction(LoanAccount loanAccount, decimal principal)
         {
             if (principal <= 0)
