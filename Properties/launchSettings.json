@@ -1,7 +1,11 @@
 {
   "profiles": {
     "bank-app": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "environmentVariables": {
+        "EMAIL": "slavabank50@gmail.com",
+        "APP-PASSWORD": "yzwmnvsyxhnvpoma"
+      }
     },
     "bank-app-dev": {
       "commandName": "Project",

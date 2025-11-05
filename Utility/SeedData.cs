@@ -17,7 +17,7 @@ namespace bank_app.Utility
 
             User vira = UserManager.CreateUser("glorfindel", "glorfindel", UserType.Client, "elvira.test@chasacademy.se", "070729292", "Elvira");
             User emma = UserManager.CreateUser("ishtar", "ishtar", UserType.Client, "emma.test@chasacademy.se", "070729293", "Emma");
-            User janne = UserManager.CreateUser("sourdough_king", "sourdough", UserType.Client, "janne.test@chasacademy.se", "070729294", "Johannes");
+            User janne = UserManager.CreateUser("janne", "sourdough", UserType.Client, "johannes.flodin+slavabank@chasacademy.se", "070729294", "Johannes", true);
             User slava = UserManager.CreateUser("gif_lord", "giflord", UserType.Client, "slava.test@chasacademy.se", "070729295", "Slava");
             User iskld = UserManager.CreateUser("skitfiske", "skitfiske", UserType.Client, "theo.test@chasacademy.se", "070729296", "Theo");
 
