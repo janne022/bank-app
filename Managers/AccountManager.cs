@@ -16,6 +16,24 @@ namespace bank_app.Managers
         // Use ConcurrentDictionary for thread-safety and better concurrency behavior.
         private static Dictionary<Guid, Account> _accounts = new Dictionary<Guid, Account>();
 
+        public static decimal SumOfAmountsInSek(User user)
+        {
+            decimal totalSum = 0m;
+
+            foreach (var account in GetAllAccounts(user))
+            {
+                if (account.AccountCurrency != Currency.SEK)
+                {
+                    totalSum += CurrencyExchange.ExchangeToSek(account.Balance, account.AccountCurrency);
+                }
+                else
+                {
+                    totalSum += account.Balance;
+                }
+            }
+            return totalSum;
+        }
+
         /// <summary>
         /// Creates an account of the specified type, registers it internally, and returns it.
         /// Throws ArgumentException for invalid inputs.
