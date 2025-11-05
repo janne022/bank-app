@@ -14,9 +14,8 @@ internal class Program
         // Starts the async method inside a background thread that needs to run without getting blocked from ex. UI
         Task.Run(BackgroundThread);
 
-        UserManager.CreateUser("admin", "admin", UserType.Admin, "admin@gmail.com", "0709431135", "Creator");
-        UserManager.CreateUser("vira", "hera123", UserType.Client, "admina@gmail.com", "080808", "El Vira");
-        AccountManager.CreateAccount("vira", Currency.SEK, 100, AccountType.CheckingAcc);
+        UserManager.CreateUser("admin", "admin", UserType.Admin, "admin@gmail.com", "0709491 135", "Creator");
+        UserManager.CreateUser("vira", "hera123", UserType.Admin, "admina@gmail.com", "+46 709 421 135", "El Vira");
 
         // Start the first User Interface page
         PageManager.Start(PageType.Login);
