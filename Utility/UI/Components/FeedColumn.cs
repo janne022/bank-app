@@ -6,6 +6,7 @@
         private string _header;
         private bool _displayHeader;
         private bool _displayFooter;
+        private bool _displayFocus;
         private TextAlign _textAlign;
         private ColourBG _bgColour;
         private ColourFG _textColour;
@@ -24,13 +25,14 @@
         /// <param name="header">The title of the data field</param>
         /// <param name="displayHeader">Whether to show the header</param>
         /// <param name="displayFooter">Whether to show the footer</param>
+        /// <param name="displayFocus">Whether to show focus / the pointer mechanism</param>
         /// <param name="textAlign">Left, center or right</param>
         /// <param name="focusTextColour">The text colour to be displayed when an element is in focus</param>
         /// <param name="focusBGColour">The background colour to be displayed when an element is in focus</param>
         /// <param name="textColour">The colour text is rendered in</param>
         /// <param name="bgColour">The colour of the text background</param>
         public FeedColumn(string[] entries, string header,
-            bool displayHeader = true, bool displayFooter = true,
+            bool displayHeader = true, bool displayFooter = true, bool displayFocus = true,
             TextAlign textAlign = TextAlign.Left, ColourFG focusTextColour = ColourFG.Black, ColourBG focusBGColour = ColourBG.White,
             ColourFG textColour = ColourFG.Reset, ColourBG bgColour = ColourBG.Reset)
         {
@@ -38,6 +40,7 @@
             _header = header;
             _displayHeader = displayHeader;
             _displayFooter = displayFooter;
+            _displayFocus = displayFocus;
             _textAlign = textAlign;
             _focusTextColour = focusTextColour;
             _focusBGColour = focusBGColour;
@@ -105,7 +108,7 @@
 
             for (int i = StartIndex; i < EndIndex; i++)
             {
-                if (CurrentIndex == i)
+                if (CurrentIndex == i && _displayFocus == true)
                 {
                     ColourManager.Set(_focusTextColour);
                     ColourManager.Set(_focusBGColour);
@@ -203,8 +206,6 @@
                     ColourManager.Write("─", _textColour, _bgColour);
                 }
             }
-            ColourManager.Write($"\n{StartIndex + 1}-{Math.Min(StartIndex + (EndIndex - StartIndex), _entries.Length)} " +
-                $"of {_entries.Length}s.", ColourFG.None, ColourBG.None);
         }
     }
 }
