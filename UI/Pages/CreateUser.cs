@@ -21,49 +21,43 @@ namespace bank_app.UI.Pages
         internal override UIComponent LoadPage()
         {
             Console.CursorVisible = false;
-            var navbar = new Navbar(new List<NavbarItem> { new NavbarItem("Home", PageType.AdminDashboard), new NavbarItem("Create User", PageType.CreateUser),
-                new NavbarItem("Transactions", PageType.CheckTransactions), new NavbarItem("Rates", PageType.UpdateRates)});
+            List<DropdownItem<UserType>> userTypeItems =
+                [
+                new DropdownItem<UserType>("Admin", UserType.Admin),
+                new DropdownItem<UserType>("Client", UserType.Client)
+                ];
+            var navbar = new Navbar(
+                [
+                new("Home", PageType.AdminDashboard),
+                new("Create User", PageType.CreateUser),
+                new("Transactions", PageType.CheckTransactions),
+                new("Rates", PageType.UpdateRates)
+                ]);
 
-            var loginInvoke = new Invokable<string, string, string, string, string, string>(CreateUserHandler);
-            // Create a new Invokable object with the method that is going to run once the 'Login' button is pressed
-            // Create new 3x3 grid
-            Grid grid = new Grid(3, 3);
+            var loginInvoke = new Invokable<UserType, string, string, string, string, string>(CreateUserHandler);
+
+            Grid grid = new(3, 3);
             grid.AddGridComponent(0, 1, navbar);
-            grid.AddGridComponent(1, 1, new Text("Create a new user"));
+            grid.AddGridComponent(0, 1, new Text("Create a new user"));
 
-            Flexbox cell = grid.GetGridCell(1, 1);
-            cell.Justify = Justify.Center;
-            cell.Align = Align.Middle;
-            cell.OrderBy = OrderBy.Column;
-            _createUserForm = new Form(new List<UIComponent>
-            {
-                new InputField("User Type",false,16),  //This will become dropdown menu later (choice client/admin)
-                new InputField("Username",false,16),
-                new InputField("Legal Name", false,16),
-                new InputField("Password",true,16),
-                new InputField("E-mail",false,16),
-                new InputField("Phone number",false,16),
-                }, new Button(loginInvoke, "Create User", marginTop: 1));
-            grid.AddGridComponent(1, 1, new Panel(_createUserForm, LayoutBorder.Rounded, "Login", 40, 10, ColourFG.Red));
-            grid.GetGridCell(1, 1).Align = Align.Top;
+            _createUserForm = new Form(
+            [
+                new Dropdown<UserType>(userTypeItems),
+                new InputField("Username",InputFieldType.Normal,24, 0),
+                new InputField("Legal Name", InputFieldType.Normal, 24, 0),
+                new InputField("Password", InputFieldType.Password,24, 0),
+                new InputField("E-mail",InputFieldType.Normal, 24, 0),
+                new InputField("Phone number",InputFieldType.Number, 15, 0),
+            ], new Button(loginInvoke, "Create User", marginTop: 1));
+            grid.AddGridComponent(1, 1, new Panel(_createUserForm, LayoutBorder.Rounded, "Login", 70, 15, ColourFG.Red))
+                .SetAlign(Align.Middle)
+                .SetJustify(Justify.Center);
 
             return new Panel(grid, LayoutBorder.Heavy);
         }
 
-        private void CreateUserHandler(string userTypeString, string userName, string legalName, string password, string email, string phone)
+        private void CreateUserHandler(UserType userType, string userName, string legalName, string password, string email, string phone)
         {
-            UserType userType;
-
-            if (userTypeString ==  "Admin")
-            {
-                userType = UserType.Admin;
-            }
-
-            else 
-            {
-                userType = UserType.Client;
-            }
-
             UserManager.CreateUser(userName, password, userType, email, phone, legalName);
             PageManager.SwitchPage(PageType.AdminDashboard);
         }

@@ -12,29 +12,23 @@ namespace bank_app.UI.Pages
         private Form? _loginForm;
         internal override UIComponent LoadPage()
         {
-            // Create a new Invokable object with the method that is going to run once the 'Login' button is pressed
-            var loginInvoke = new Invokable<string, string>(LoginHandler);  //Check if we need to change back it later 
-            // Create new 3x3 grid
-            Grid grid = new Grid(3, 3);
-            // Add Menu with two inputfields and button inside to center middle of grid. Note: Button is currently not finished, so it won't be rendered
+            var loginInvoke = new Invokable<string, string>(LoginHandler);
+            Grid grid = new(3, 3);
             Flexbox cell = grid.GetGridCell(1, 1);
             cell.Justify = Justify.Center;
             cell.Align = Align.Middle;
             cell.OrderBy = OrderBy.Column;
-            _loginForm = new Form(new List<UIComponent>{new InputField("Username",false,16),
-                new InputField("Password",true,16),
-                }, new Button(loginInvoke, "Login", marginTop: 2));
-            grid.AddGridComponent(1, 1, new Panel(_loginForm, LayoutBorder.Rounded, "Login", 40, 10, ColourFG.Yellow));
-            // Add text to center bottom
-            cell = grid.GetGridCell(0, 1);
-            cell.Justify = Justify.Center;
-            cell.Align = Align.Middle;
-            cell.OrderBy = OrderBy.Column;
+            _loginForm = new Form(
+                [
+                new InputField("Username",InputFieldType.Normal, 24, 0),
+                new InputField("Password",InputFieldType.Password,24, 0),
+                ], new Button(loginInvoke, "Login", marginTop: 2));
+            grid.AddGridComponent(1, 1, new Panel(_loginForm, LayoutBorder.Rounded, "Create User", 40, 10, ColourFG.Yellow));
+            cell = grid.GetGridCell(0, 1).SetAlign(Align.Middle).SetJustify(Justify.Center);
             grid.AddGridComponent(0, 1, new AsciiArt("Assets/Ascii/bank.txt"));
-            // Add grid to layout and set rounded border style
             return new Panel(grid, LayoutBorder.Heavy);
         }
-        //Just changed User to Guid userId
+
         private void LoginHandler(string userId, string password)
         {
             User? u = UserManager.Login(userId, password);
@@ -42,22 +36,22 @@ namespace bank_app.UI.Pages
             {
                 PageManager.SwitchUser(u);
                 // Login successful, switch page and give feedback
-                if (u is Client client)
+                if (u is Client)
                 {
                     PageManager.SwitchPage(PageType.ClientDashboard);
                 }
-                else if (u is Admin admin)
+                else if (u is Admin)
                 {
                     PageManager.SwitchPage(PageType.AdminDashboard);
                 }
             }
-            else if (UserManager.GetUser(userId).CurrentAccountStatus == AccountStatus.Locked)
+            else if (UserManager.GetUser(userId) != null && UserManager.GetUser(userId).CurrentAccountStatus == AccountStatus.Locked)
             {
-                _loginForm.UpdateErrorMessage("Account is locked");
+                _loginForm?.UpdateErrorMessage("Account is locked");
             }
             else
             {
-                _loginForm.UpdateErrorMessage("Wrong username or password");
+                _loginForm?.UpdateErrorMessage("Wrong username or password");
             }
         }
     }

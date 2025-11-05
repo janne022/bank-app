@@ -175,7 +175,7 @@ namespace bank_app.Utility.UI.Components
             _childComponent.Measure();
             if (!string.IsNullOrEmpty(TopText))
             {
-                Console.SetCursorPosition(X + Width / 2 - TopText.Length / 2, Y);
+                Console.SetCursorPosition(X + (Width / 2) - (TopText.Length / 2), Y);
                 Console.Write(TopText);
             }
             _childComponent.X = X + (Width / 2) - (_childComponent.Width / 2);

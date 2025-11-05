@@ -4,40 +4,81 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace bank_app.Utility.UI.Components
 {
     public class Dropdown<T> : UIComponent
     {
-        public List<DropdownItem<T>> Items {  get; set; }
-        private int _index = 0;
+        public List<DropdownItem<T>> DropdownItems { get; set; }
         public DropdownItem<T> SelectedDropdownItem { get; set; }
-        public Dropdown(List<DropdownItem<T>> values)
+        ColourFG SelectionFG { get; set; }
+        ColourBG SelectionBG { get; set; }
+        ColourBG BackgroundBG { get; set; }
+        public Dropdown(List<DropdownItem<T>> values, ColourFG selectionFG = ColourFG.Black, ColourBG selectionBG = ColourBG.White, ColourBG backgroundBG = ColourBG.BlackBright)
         {
             IsInteractable = true;
-            Items = values;
+            DropdownItems = values;
+            SelectionFG = selectionFG;
+            SelectionBG = selectionBG;
+            BackgroundBG = backgroundBG;
             Height = 1;
-            SelectedDropdownItem = Items[0];
-            Value = Items[0];
+            if (DropdownItems.Count > 0)
+            {
+                SelectedDropdownItem = DropdownItems[0];
+                Value = DropdownItems[0].Item;
+            }
         }
         public override void Measure()
         {
-            
+            int largestDropdownName = 0;
+            foreach (var item in DropdownItems)
+            {
+                if (item.Name.Length > largestDropdownName)
+                {
+                    largestDropdownName = item.Name.Length;
+                }
+            }
+            Width = largestDropdownName;
+        }
+        private string GetCenteredName(string name)
+        {
+            int totalPadding = Width - name.Length;
+            int padLeftLength = (totalPadding / 2) + name.Length;
+            return name.PadLeft(padLeftLength).PadRight(Width);
         }
         public override (int, int) Pressed()
         {
+            int index = 0;
             while (true)
             {
-                for (int i = 0; i < Items.Count; i++)
+                for (int i = -1; i < DropdownItems.Count; i++)
                 {
-                    Console.SetCursorPosition(X, Y + i);
-                    if (i == _index)
+                    Console.SetCursorPosition(X, Y + (i + 1));
+                    string name = GetCenteredName(SelectedDropdownItem.Name);
+
+                    if (i == -1)
                     {
-                        ColourManager.Write(Items[i].Name, ColourFG.Black, ColourBG.White);
+                        if (i == index)
+                        {
+                            ColourManager.Write($"[ {name} ▾ ]", SelectionFG, SelectionBG);
+                        }
+                        else
+                        {
+                            ColourManager.Write($"[ {name} ▾ ]", ColourFG.Black, BackgroundBG);
+                        }
                     }
                     else
                     {
-                        Console.Write(Items[i].Name);
+                        name = GetCenteredName(DropdownItems[i].Name);
+                        if (i == index)
+                        {
+                            ColourManager.Write($"{name}", SelectionFG, SelectionBG);
+                        }
+                        else
+                        {
+                            ColourManager.Write(name, ColourFG.Black, BackgroundBG);
+                        }
                     }
                 }
                 // Read key and if user presses up or down we add or subtract from i. If user presses Enter we run the components pressed method.
@@ -45,36 +86,23 @@ namespace bank_app.Utility.UI.Components
                 switch (key)
                 {
                     case ConsoleKey.DownArrow:
-                        if (_index < Items.Count - 1)
+                        if (index < DropdownItems.Count - 1)
                         {
-                            _index++;
-                        }
-                        else
-                        {
-                            CleanUp();
-                            return (-1, 0);
+                            index++;
                         }
                         break;
                     case ConsoleKey.UpArrow:
-                        if (_index > 0)
+                        if (index > 0)
                         {
-                            _index--;
-                        }
-                        else
-                        {
-                            CleanUp();
-                            return (1, 0);
+                            index--;
                         }
                         break;
-                    case ConsoleKey.RightArrow:
-                        CleanUp();
-                        return (0, 1);
-                    case ConsoleKey.LeftArrow:
-                        CleanUp();
-                        return (0, -1);
                     case ConsoleKey.Enter:
-                        SelectedDropdownItem = Items[_index];
-                        Value = Items[_index].Item;
+                        SelectedDropdownItem = DropdownItems[index];
+                        Value = DropdownItems[index].Item;
+                        CleanUp();
+                        return (0, 0);
+                    case ConsoleKey.Escape:
                         CleanUp();
                         return (0, 0);
                 }
@@ -86,13 +114,7 @@ namespace bank_app.Utility.UI.Components
             UIComponent? currentParentComponent = ParentComponent;
             while (currentParentComponent != null)
             {
-                if (currentParentComponent is Panel panel)
-                {
-                    panel.Border = LayoutBorder.Ascii;
-                    panel.Render();
-                    return;
-                }
-                else if (currentParentComponent.ParentComponent == null)
+                if (currentParentComponent.ParentComponent == null)
                 {
                     currentParentComponent.Render();
                 }
@@ -101,8 +123,12 @@ namespace bank_app.Utility.UI.Components
         }
         public override void Render()
         {
-            Console.SetCursorPosition(X,Y);
-            Console.Write(SelectedDropdownItem.Name);
+            Console.SetCursorPosition(X, Y);
+            string name = SelectedDropdownItem.Name;
+            int totalPadding = Width - name.Length;
+            int padLeftLength = (totalPadding / 2) + name.Length;
+            string centeredName = name.PadLeft(padLeftLength).PadRight(Width);
+            Console.Write($"[ {centeredName} ▸ ]");
         }
     }
 }

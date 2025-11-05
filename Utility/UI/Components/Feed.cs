@@ -11,7 +11,7 @@ namespace bank_app.Utility.UI.Components
 {
     internal class Feed : UIComponent
     {
-        
+
         private List<FeedColumn> FeedColumns;
         public int _lineAmount;
         private int _pastEntries;
@@ -95,7 +95,7 @@ namespace bank_app.Utility.UI.Components
                 {
                     case ConsoleKey.Enter:
                         if (args.Length > 0)
-                        { 
+                        {
                             _invokable.Invoke(args, FeedColumns[0]._entries[_currentIndex]);
                         }
                         return (0, 0);
@@ -124,7 +124,7 @@ namespace bank_app.Utility.UI.Components
         }
 
         public override void Render()
-        {            
+        {
             for (int i = 0; i < FeedColumns.Count; i++)
             {
                 FeedColumns[i].CurrentIndex = _currentIndex;
