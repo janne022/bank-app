@@ -23,13 +23,11 @@ namespace bank_app.Utility.UI.Components
             SelectionBG = selectionBG;
             BackgroundBG = backgroundBG;
             Height = 1;
-      
-            if (DropdownItems.Count > 0)
-            {
-                SelectedDropdownItem = DropdownItems[0];
-                Value = DropdownItems[0].Item;
-            }
-          
+
+            SelectedDropdownItem = DropdownItems[0];
+            Value = DropdownItems[0].Item;
+
+            Measure();
         }
         public override void Measure()
         {
@@ -112,7 +110,7 @@ namespace bank_app.Utility.UI.Components
         }
         private void CleanUp()
         {
-            // This cleans either at root or at the closest Panel, might need to change depending on how complicated UI gets
+            // This cleans either at root
             UIComponent? currentParentComponent = ParentComponent;
             while (currentParentComponent != null)
             {
