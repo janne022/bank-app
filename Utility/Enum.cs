@@ -93,7 +93,8 @@ namespace bank_app.Utility
         LoanPage,
         CreateUserPage,
         TransactionLogPage,
-        UpdateRatePage
+        UpdateRatePage,
+        CreateAccountPage
     }
 
     public enum LayoutBorder
