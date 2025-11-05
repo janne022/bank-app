@@ -96,6 +96,23 @@
             return this;
         }
 
+        public override void Measure()
+        {
+            if (ParentComponent != null)
+            {
+                if (ParentComponent is not Grid)
+                {
+                    Height = ParentComponent.Height;
+                    Width = ParentComponent.Width;
+                }
+            }
+            else
+            {
+                Height = Console.WindowHeight - 1;
+                Width = Console.WindowWidth - 1;
+            }
+        }
+
         public override void Render()
         {
             int totalHeight = 1;
