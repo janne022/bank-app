@@ -57,7 +57,7 @@ namespace bank_app.UI.Pages
             grid.AddGridComponent(0, 1, navbar)
                 .SetJustify(Justify.Center)
                 .SetAlign(Align.Top);
-            grid.AddGridComponent(0, 1, new AsciiArt(AsciiType.String, FiggleFonts.Small.Render("Create a new user")));
+            grid.AddGridComponent(0, 1, new AsciiArt(AsciiType.String, FiggleFonts.Small.Render("Create a new account")));
 
             _createAccountForm = new Form(
             [
@@ -74,7 +74,7 @@ namespace bank_app.UI.Pages
 
         private void CreateAccountHandler(string accountType, string currency, string depositAmount)
         {
-           
+              
         }
     }
 }

@@ -16,6 +16,7 @@ internal class Program
 
         UserManager.CreateUser("admin", "admin", UserType.Admin, "admin@gmail.com", "0709491 135", "Creator");
         UserManager.CreateUser("vira", "hera123", UserType.Admin, "admina@gmail.com", "+46 709 421 135", "El Vira");
+        UserManager.CreateUser("theo", "123", UserType.Client, "admina@gmail.com", "+46 709 421 135", "El Vira");
 
         // Start the first User Interface page
         PageManager.Start(PageType.LoginPage);
