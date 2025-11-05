@@ -24,11 +24,11 @@ namespace bank_app.Utility.UI.Components
             BackgroundBG = backgroundBG;
             Height = 1;
       
-            //if (DropdownItems.Count > 0)
-            //{
+            if (DropdownItems.Count > 0)
+            {
                 SelectedDropdownItem = DropdownItems[0];
                 Value = DropdownItems[0].Item;
-            //}
+            }
           
         }
         public override void Measure()
