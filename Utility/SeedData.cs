@@ -54,6 +54,8 @@ namespace bank_app.Utility
                  AccountManager.GetAllAccounts(emma.UserId)[0].AccountID,
                  5000m
                  );
+
+            TransactionManager.ProcessPendingTransactions();
         }
     }
 }
