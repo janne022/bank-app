@@ -34,6 +34,7 @@ namespace bank_app.Utility.UI.Components
             ColourBG backgroundColour = ColourBG.None, ColourFG focusColour = ColourFG.Black)
         {
             FeedColumns = new List<FeedColumn>();
+            IsInteractable = true;
             _pastEntries = 0;
             _lineAmount = linesToDisplay;
             _renderHeader = renderHeader;
@@ -61,9 +62,10 @@ namespace bank_app.Utility.UI.Components
             }
         }
 
+
         public override void Measure()
         {
-            Height = ParentComponent!.Height;
+            Height = FeedColumns.Sum(r => r.Height);
             Width = FeedColumns.Sum(c => c.Width);
         }
 

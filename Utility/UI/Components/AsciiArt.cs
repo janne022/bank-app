@@ -1,12 +1,4 @@
-﻿using Figgle;
-using Figgle.Fonts;
-using System;
-using System.Collections.Generic;
-using System.Data.Common;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+﻿using System.Text.RegularExpressions;
 
 namespace bank_app.Utility.UI.Components
 {

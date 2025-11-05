@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace bank_app.Utility.UI.Invokables
+﻿namespace bank_app.Utility.UI.Invokables
 {
     /// <summary>
     /// Implements IInvokable and takes in a method that has 4 parameters and does not return anything.

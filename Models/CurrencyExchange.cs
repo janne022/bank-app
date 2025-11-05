@@ -1,19 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using bank_app.Utility;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+﻿using bank_app.Utility;
 
 namespace bank_app.Models
 {
     public class CurrencyExchange
     {
-        //Exchange rates relative to our base currency (SEK)
         private static Dictionary<Currency, decimal> _ratesToSEK = new Dictionary<Currency, decimal>
         {
-            {Currency.SEK, 1.00m },
+            {Currency.SEK, 1.00m }, //SEK is base currency. All rates are realative to SEK. 
             {Currency.USD, 0.11m },
             {Currency.EUR, 0.09m },
             {Currency.GBP, 0.08m },
@@ -25,6 +18,7 @@ namespace bank_app.Models
             {Currency.NZD, 0.18m },
             {Currency.SLC, 0.000004m }
         };
+
         public static decimal ExchangeToSek(decimal amount, Currency currencyFrom, Currency sek = Currency.SEK)
         {
             decimal exchangeRate = _ratesToSEK[currencyFrom];
@@ -40,8 +34,6 @@ namespace bank_app.Models
         /// Updates the exchange rate of a chosen currency in the currency list based on the base currency SEK.
         /// This method is meant to be used by Admin user to update current exchange rates. 
         /// </summary>
-        /// <param name="currency">The chosen currency to update exchange rate of</param>
-        /// <param name="rateToSek">The chosen exchange rate of that currency based on base rate (SEK)</param>
         public static bool UpdateRate(Currency currency, decimal rateToSek)
         {
             if (currency == Currency.SEK)
