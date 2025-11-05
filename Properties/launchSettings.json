@@ -3,8 +3,8 @@
     "bank-app": {
       "commandName": "Project",
       "environmentVariables": {
-        "EMAIL": "slavabank50@gmail.com",
-        "APP-PASSWORD": "yzwmnvsyxhnvpoma"
+        "EMAIL": "",
+        "APP-PASSWORD": ""
       }
     },
     "bank-app-dev": {
