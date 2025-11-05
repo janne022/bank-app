@@ -61,13 +61,11 @@ namespace bank_app.Managers
 
             return true;
         }
-
         internal static bool AddAccount(Account accountToAdd)
         {
 
             return _accounts.TryAdd(accountToAdd.AccountID, accountToAdd);
         }
-
 
         /// <summary>
         /// Removes an account by its ID. Returns true if removed.
@@ -85,7 +83,9 @@ namespace bank_app.Managers
             return _accounts.Values.Where(account => account.OwnerId == ownerId).ToList();
         }
 
-        // Overload method to only return accounts of a specific user
+        /// <summary>
+        /// Overload method to only return accounts of a specific user
+        /// </summary>
         public static List<Account> GetAllAccounts(User user)
         {
             List<Account> specificUserAccounts = new List<Account>();
@@ -100,10 +100,6 @@ namespace bank_app.Managers
             // finally returns list of that user's accounts
             return specificUserAccounts;
         }
-
-
-        /// <summary>
-        /// Adds balance to account using unique identifier and data from transaction.
 
         /// <summary>
         /// Returns the number of accounts currently tracked.
