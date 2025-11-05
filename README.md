@@ -8,6 +8,7 @@ This project is a Console Application written in C# for a group project.
 - Multiple different accounts such as Checking, Loan and Savings account.
 - Ability to make transactions between accounts
 - Ability to take out loans
+- 2-Factor Authentication
 
 # Documentation
 For full documentation, please [view the wiki](https://github.com/janne022/bank-app/wiki)
