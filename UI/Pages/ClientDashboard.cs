@@ -1,4 +1,6 @@
-﻿using bank_app.Utility;
+﻿using bank_app.Managers;
+using bank_app.Utility;
+using bank_app.Utility.Components;
 using bank_app.Utility.UI;
 using bank_app.Utility.UI.Components;
 using Figgle.Fonts;
