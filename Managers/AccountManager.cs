@@ -2,12 +2,6 @@
 using bank_app.Models.Accounts;
 using bank_app.Models.Users;
 using bank_app.Utility;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace bank_app.Managers
 {
@@ -22,7 +16,6 @@ namespace bank_app.Managers
         /// </summary>
         public static bool CreateAccount(string ownerID, Currency currency, decimal balance, AccountType accountType)
         {
-            // Construct the account using a switch expression for clarity.
             Account newAccount = accountType switch
             {
                 AccountType.CheckingAcc => new CheckingAccount(
@@ -61,9 +54,12 @@ namespace bank_app.Managers
 
             return true;
         }
+
+        /// <summary>
+        /// Adds account to account Dictionary. Returns true if added successfully. 
+        /// </summary>
         internal static bool AddAccount(Account accountToAdd)
         {
-
             return _accounts.TryAdd(accountToAdd.AccountID, accountToAdd);
         }
 
@@ -84,20 +80,16 @@ namespace bank_app.Managers
         }
 
         /// <summary>
-        /// Overload method to only return accounts of a specific user
+        /// Overload method to only return accounts of a specific user.
         /// </summary>
         public static List<Account> GetAllAccounts(User user)
         {
             List<Account> specificUserAccounts = new List<Account>();
 
-            // Loops through the account list, and checks the inputted user's ID with the accounts saved userIDs...
             foreach (var account in _accounts.Where(a => a.Value.OwnerId == user.UserId))
             {
-                //... And adds those accounts to a list of accounts
                 specificUserAccounts.Add(account.Value);
             }
-
-            // finally returns list of that user's accounts
             return specificUserAccounts;
         }
 
@@ -109,18 +101,21 @@ namespace bank_app.Managers
             return _accounts.Count;
         }
 
-        public static IReadOnlyList<Transaction> PrintAllAccountTransactions(Guid id)
+        /// <summary>
+        /// Prints all transactions in a chosen accound, found by the account id. 
+        /// </summary>
+        public static IReadOnlyList<Transaction> PrintAllAccountTransactions(Guid accountId)
         {
-            var account = GetAccountById(id);
+            var account = GetAccountById(accountId);
             return account.Transactions;
         }
 
         /// <summary>
         /// Returns account object from account list based on the unique account id (Guid)
         /// </summary>
-        public static Account GetAccountById(Guid id)
+        public static Account GetAccountById(Guid accountId)
         {
-            if (!_accounts.TryGetValue(id, out var account))
+            if (!_accounts.TryGetValue(accountId, out var account))
             {
                 return null;
             }
@@ -130,7 +125,6 @@ namespace bank_app.Managers
         /// <summary>
         /// Adds balance to an account using data from a transaction object. 
         /// </summary>
-        /// <param name="accountId">The unique identifier (Guid) for an Account object</param>
         public static void Deposit(Guid accountId, Transaction transaction, decimal amount)
         {
             transaction.TransactionType = TransactionType.Deposit;
@@ -141,7 +135,6 @@ namespace bank_app.Managers
         /// <summary>
         /// Deducts balance from account using unique identifier and data from transaction.
         /// </summary>
-        /// /// /// <param name="accountId">The unique identifier (Guid) for an Account object</param>
         public static void Withdraw(Guid accountId, Transaction transaction, decimal amount)
         {
             transaction.TransactionType = TransactionType.Withdrawal;

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace bank_app.Utility
+﻿namespace bank_app.Utility
 {
     public enum AccountStatus
     {
@@ -85,6 +79,7 @@ namespace bank_app.Utility
     public enum PageType
     {
         LoginPage,
+        TwoFactorPage,
         AdminDashboard,
         ClientDashboard,
         TransferPage,

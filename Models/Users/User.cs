@@ -1,7 +1,5 @@
 ﻿using bank_app.Managers;
 using bank_app.Utility;
-using System.ComponentModel.DataAnnotations;
-using System.Dynamic;
 using System.Text.RegularExpressions;
 
 namespace bank_app.Models.Users
@@ -23,8 +21,29 @@ namespace bank_app.Models.Users
         public string LegalName { get; private set; }
         public int FailedLoginAttempts { get; private set; } = 0;
         public AccountStatus CurrentAccountStatus { get; private set; }
+        public bool TwoFactorEnabled { get; private set; }
+        private string? _twoFactorCode;
+        public string TwoFactorCode
+        {
+            get
+            {
+                return _twoFactorCode;
+            }
 
-        public User(string userId, string userPassword, string email, string phoneNumber, string legalName)
+            set
+            {
+                if (value.Length == 6 && value.All(char.IsDigit))
+                {
+                    _twoFactorCode = value;
+                }
+                else
+                {
+                    throw new ArgumentException("must be 6 characters long and only be numbers");
+                }
+            }
+        }
+
+        public User(string userId, string userPassword, string email, string phoneNumber, string legalName, bool twoFactorEnabled = false)
         {
             UpdateUserId(userId);
             UserPassword = PasswordHasher.Hash(userPassword);
@@ -32,12 +51,18 @@ namespace bank_app.Models.Users
             SetPhoneNumber(phoneNumber);
             SetLegalName(legalName);
             CurrentAccountStatus = AccountStatus.Unlocked;
+            TwoFactorEnabled = twoFactorEnabled;
         }
 
         // ---------------------------------------- PRIVATE SETTERS --------------------------------------- //
         private void SetLegalName(string name)
         {
             LegalName = name;
+        }
+
+        public void ClearTwoFactorCode()
+        {
+            _twoFactorCode = null;
         }
 
         private void SetUserId(string userId)

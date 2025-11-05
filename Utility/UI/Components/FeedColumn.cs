@@ -1,13 +1,4 @@
-﻿using bank_app.Models.Users;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-
-namespace bank_app.Utility.UI.Components
+﻿namespace bank_app.Utility.UI.Components
 {
     internal class FeedColumn : UIComponent
     {

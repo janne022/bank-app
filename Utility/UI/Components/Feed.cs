@@ -62,6 +62,7 @@ namespace bank_app.Utility.UI.Components
             }
         }
 
+
         public override void Measure()
         {
             Height = FeedColumns.Sum(r => r.Height);

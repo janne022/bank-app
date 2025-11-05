@@ -36,7 +36,11 @@ namespace bank_app.UI.Pages
             {
                 PageManager.SwitchUser(u);
                 // Login successful, switch page and give feedback
-                if (u is Client)
+                if (u.TwoFactorEnabled)
+                {
+                    PageManager.SwitchPage(PageType.TwoFactorPage);
+                }
+                else if (u is Client)
                 {
                     PageManager.SwitchPage(PageType.ClientDashboard);
                 }

@@ -1,9 +1,4 @@
 ﻿using bank_app.Utility;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace bank_app.Models.Accounts
 {
@@ -34,26 +29,20 @@ namespace bank_app.Models.Accounts
                 return false;
             }
 
-
             if (transaction.TransactionType == TransactionType.Deposit)
             {
                 return true;
             }
             if (transaction.TransactionType == TransactionType.Withdrawal)
             {
-
                 if (!AllowWithdrawals)
                 {
                     return false;
                 }
-
                 return Balance - transaction.TransferAmount >= MinimumBalance;
             }
 
-
-
             return false;
-
         }
 
         public decimal CalculateInterest(int days)
@@ -63,7 +52,6 @@ namespace bank_app.Models.Accounts
                 return 0;
             }
 
-
             decimal annualRate = InterestRate / 100m;
             decimal fractionalRate = days / 365m;
             decimal interest = Balance * annualRate * fractionalRate;
@@ -72,13 +60,10 @@ namespace bank_app.Models.Accounts
 
         public void ApplyInterest(int days)
         {
-
-
             if (days <= 0)
             {
                 return;
             }
-
 
             decimal interest = CalculateInterest(days);
 

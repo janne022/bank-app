@@ -1,11 +1,6 @@
 ﻿using bank_app.Models.Users;
 using bank_app.UI.Pages;
 using bank_app.Utility;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace bank_app.UI
 {
@@ -23,7 +18,8 @@ namespace bank_app.UI
             {PageType.AdminDashboard,  new AdminDashboard()},
             {PageType.CreateUserPage, new CreateUserPage()},
             {PageType.TransactionLogPage, new TransactionLogPage()},
-            {PageType.UpdateRatePage, new UpdateRatePage()}         
+            {PageType.UpdateRatePage, new UpdateRatePage()},
+            {PageType.TwoFactorPage, new TwoFactorPage()}
         };
         private static bool _isRunning = true;
         private static Page? _nextPage;

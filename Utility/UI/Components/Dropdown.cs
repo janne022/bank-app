@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-
-namespace bank_app.Utility.UI.Components
+﻿namespace bank_app.Utility.UI.Components
 {
     public class Dropdown<T> : UIComponent
     {
@@ -15,6 +7,8 @@ namespace bank_app.Utility.UI.Components
         ColourFG SelectionFG { get; set; }
         ColourBG SelectionBG { get; set; }
         ColourBG BackgroundBG { get; set; }
+        public Action<T>? OnSelectionChanged { get; set; }
+     
         public Dropdown(List<DropdownItem<T>> values, ColourFG selectionFG = ColourFG.Black, ColourBG selectionBG = ColourBG.White, ColourBG backgroundBG = ColourBG.BlackBright)
         {
             IsInteractable = true;
@@ -89,17 +83,20 @@ namespace bank_app.Utility.UI.Components
                         if (index < DropdownItems.Count - 1)
                         {
                             index++;
+                            OnSelectionChanged?.Invoke(DropdownItems[index].Item);
                         }
                         break;
                     case ConsoleKey.UpArrow:
                         if (index > 0)
                         {
                             index--;
+                            OnSelectionChanged?.Invoke(DropdownItems[index].Item);
                         }
                         break;
                     case ConsoleKey.Enter:
                         SelectedDropdownItem = DropdownItems[index];
                         Value = DropdownItems[index].Item;
+                        OnSelectionChanged?.Invoke(DropdownItems[index].Item);
                         CleanUp();
                         return (0, 0);
                     case ConsoleKey.Escape:
