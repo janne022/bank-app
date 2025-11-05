@@ -13,7 +13,7 @@ namespace bank_app.UI.Pages
         private Form? _loginForm;
         internal override UIComponent LoadPage()
         {
-            var loginInvoke = new Invokable<string>(LoginHandler);
+            var loginInvoke = new Invokable<string>(AuthHandler);
             Grid grid = new(3, 3);
             Flexbox cell = grid.GetGridCell(1, 1);
             cell.Justify = Justify.Center;
@@ -29,7 +29,7 @@ namespace bank_app.UI.Pages
             return new Panel(grid, LayoutBorder.Heavy);
         }
 
-        private void LoginHandler(string code)
+        private void AuthHandler(string code)
         {
             User? u = CurrentUser;
             bool success = UserManager.TwoFactorAuth(u.UserId, code);
