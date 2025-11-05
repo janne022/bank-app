@@ -18,6 +18,8 @@ namespace bank_app.UI.Pages
     public class TransferPage : Page
     {
         Form? form { get; set; }
+        Text? balanceText { get; set; }
+
         internal override UIComponent LoadPage()
         {
             Console.CursorVisible = false;
@@ -25,26 +27,32 @@ namespace bank_app.UI.Pages
             // Gets all checking accounts and saving accounts, then returns them as a DropdownItem with account id as name
             var accounts = AccountManager.GetAllAccounts(CurrentUser.UserId).Where(account => account is CheckingAccount || account is SavingsAccount);
             var accountsNavbarItems = accounts.Select(account => new DropdownItem<Models.Accounts.Account>(account.AccountID.ToString(), account)).ToList();
-            var transferInvokable = new Invokable<Models.Accounts.Account, string, string>(TransferMoney);
+            var transferInvokable = new Invokable<Account, string, string>(TransferMoney);
+            
+            var accountDropdown = new Dropdown<Models.Accounts.Account>(accountsNavbarItems);
+            accountDropdown.OnSelectionChanged = UpdateBalanceDisplay;
+     
             var navbar = new Navbar(
-                [
+            [
                 new NavbarItem("Home", PageType.ClientDashboard),
                 new NavbarItem("Transfer", PageType.TransferPage),
                 new NavbarItem("Transaction", PageType.TransactionPage),
                 new NavbarItem("Account", PageType.AccountPage),
                 new NavbarItem("Loan", PageType.LoanPage)
-                ]);
+            ]);
 
             form = new Form(
                 [
-                new Dropdown<Models.Accounts.Account>(accountsNavbarItems),
-                new InputField("Account ID", InputFieldType.Normal, 35, 0),
-                new InputField("Amount", InputFieldType.Number, 24, 0)
+                    accountDropdown,
+                    new InputField("Account ID", InputFieldType.Normal, 35, 0),
+                    new InputField("Amount", InputFieldType.Number, 24, 0)
                 ], new Button(transferInvokable, "Send"));
 
+            balanceText = new Text($"Available balance: {accountsNavbarItems[0].Item.Balance:C}");
+
             Flexbox transferGrid = new Flexbox(Justify.Center, Align.Top)
-                .AddFlexComponent(new Text($"Avaliable balance: "))
-                .AddFlexComponent(form);
+            .AddFlexComponent(balanceText)
+            .AddFlexComponent(form);
             transferGrid.Width = 40;
             transferGrid.Height = 10;
             Grid grid = new(3, 3);
@@ -57,17 +65,17 @@ namespace bank_app.UI.Pages
                 .SetJustify(Justify.Center);
             return new Panel(grid, LayoutBorder.Heavy);
         }
-
-        private void TransferMoney(Models.Accounts.Account account, string id, string amount)
+        private void TransferMoney(Account senderAccount, string id, string amount)
         {
             if (Guid.TryParse(id, out Guid guid))
             {
-                Models.Accounts.Account sendAccount = AccountManager.GetAccountById(guid);
-                if (sendAccount != null)
+                Account receiverAccount = AccountManager.GetAccountById(guid);
+                if (receiverAccount != null)
                 {
-                    if (Decimal.TryParse(amount, out decimal amountDouble))
+                    if (decimal.TryParse(amount, out decimal amountDecimal))
                     {
-                        TransactionManager.CreateNewTransaction(account.AccountID, sendAccount.AccountID, amountDouble);
+                        TransactionManager.CreateNewTransaction(senderAccount.AccountID, receiverAccount.AccountID, amountDecimal);
+                        TransactionManager.ProcessPendingTransactions();
                         PageManager.SwitchPage(PageType.ClientDashboard);
                     }
                     else
@@ -83,6 +91,13 @@ namespace bank_app.UI.Pages
             else
             {
                 form?.UpdateErrorMessage("Invalid Account ID");
+            }
+        }
+        private void UpdateBalanceDisplay(Account account)
+        {
+            if (balanceText != null)
+            {
+                balanceText.UpdateText($"Available balance: {account.Balance} {account.AccountCurrency}");
             }
         }
     }
