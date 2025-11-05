@@ -8,4 +8,20 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Assets\Ascii\bank.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Assets\Ascii\bank.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Figgle" Version="0.6.5" />
+    <PackageReference Include="Figgle.Fonts" Version="0.6.5" />
+    <PackageReference Include="Figgle.Generator" Version="0.6.5" />
+  </ItemGroup>
+
 </Project>
