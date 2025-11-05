@@ -85,6 +85,7 @@ namespace bank_app.Utility
     public enum PageType
     {
         LoginPage,
+        TwoFactorPage,
         AdminDashboard,
         ClientDashboard,
         TransferPage,
