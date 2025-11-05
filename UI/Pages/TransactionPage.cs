@@ -18,13 +18,14 @@ namespace bank_app.UI.Pages
             var navbar = new Navbar(
                 [
                 new NavbarItem("Home", PageType.ClientDashboard),
-                new NavbarItem("Transfer", PageType.Transfer),
-                new NavbarItem("Transaction", PageType.Transaction),
-                new NavbarItem("Account", PageType.Account),
-                new NavbarItem("Loan", PageType.Loan)
+                new NavbarItem("Transfer", PageType.TransferPage),
+                new NavbarItem("Transaction", PageType.TransactionPage),
+                new NavbarItem("Account", PageType.AccountPage),
+                new NavbarItem("Loan", PageType.LoanPage)
                 ]);
             Grid grid = new(3, 3);
-            grid.AddGridComponent(0, 1, navbar);
+            grid.AddGridComponent(0, 1, navbar)
+                .SetJustify(Justify.Center);
             grid.AddGridComponent(1, 1, new Text("Transaction"));
             return new Panel(grid, LayoutBorder.Heavy);
         }

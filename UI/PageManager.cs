@@ -14,16 +14,16 @@ namespace bank_app.UI
         // Dictionary containing all pages that exist
         private static readonly Dictionary<PageType, Page> _pageDictionary = new()
         {
-            {PageType.Login,  new Login()},
+            {PageType.LoginPage,  new LoginPage()},
             {PageType.ClientDashboard,  new ClientDashboard()},
-            {PageType.Transfer,  new Transfer()},
-            {PageType.Transaction,  new TransactionPage()},
-            {PageType.Account,  new Account()},
-            {PageType.Loan,  new LoanPage()},
+            {PageType.TransferPage,  new TransferPage()},
+            {PageType.TransactionPage,  new TransactionPage()},
+            {PageType.CreateAccountPage, new CreateAccountPage()},
+            {PageType.LoanPage,  new LoanPage()},
             {PageType.AdminDashboard,  new AdminDashboard()},
-            {PageType.CreateUser, new CreateUser()},
-            {PageType.CheckTransactions, new CheckTransactions()},
-            {PageType.UpdateRates, new UpdateRates()}
+            {PageType.CreateUserPage, new CreateUserPage()},
+            {PageType.TransactionLogPage, new TransactionLogPage()},
+            {PageType.UpdateRatePage, new UpdateRatePage()}         
         };
         private static bool _isRunning = true;
         private static Page? _nextPage;

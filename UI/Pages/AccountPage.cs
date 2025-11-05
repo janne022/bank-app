@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace bank_app.UI.Pages
 {
-    public class Account : Page
+    public class AccountPage : Page
     {
         internal override UIComponent LoadPage()
         {
@@ -18,10 +18,10 @@ namespace bank_app.UI.Pages
             var navbar = new Navbar(
                 [
                 new NavbarItem("Home", PageType.ClientDashboard),
-                new NavbarItem("Transfer", PageType.Transfer),
-                new NavbarItem("Transaction", PageType.Transaction),
-                new NavbarItem("Account", PageType.Account),
-                new NavbarItem("Loan", PageType.Loan)
+                new NavbarItem("Transfer", PageType.TransferPage),
+                new NavbarItem("Transaction", PageType.TransactionPage),
+                new NavbarItem("Account", PageType.AccountPage),
+                new NavbarItem("Loan", PageType.LoanPage)
                 ]);
             Grid grid = new(3, 3);
             grid.AddGridComponent(0, 1, navbar);

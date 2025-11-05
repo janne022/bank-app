@@ -19,6 +19,12 @@ namespace bank_app.Utility
         Bottom
     }
 
+    public enum AsciiType
+    {
+        File,
+        String
+    }
+
     public enum ColourFG
     {
         None,
@@ -78,16 +84,17 @@ namespace bank_app.Utility
 
     public enum PageType
     {
-        Login,
+        LoginPage,
         AdminDashboard,
         ClientDashboard,
-        Transfer,
-        Transaction,
-        Account,
-        Loan,
-        CreateUser,
-        CheckTransactions,
-        UpdateRates
+        TransferPage,
+        TransactionPage,
+        AccountPage,
+        LoanPage,
+        CreateUserPage,
+        TransactionLogPage,
+        UpdateRatePage,
+        CreateAccountPage
     }
 
     public enum LayoutBorder
@@ -158,6 +165,9 @@ namespace bank_app.Utility
     {
         Deposit,
         Withdrawal,
+        LoanInterest,
+        LoanDisbursement,
+        LoanRepayment
     }
     public enum AccountType
     {

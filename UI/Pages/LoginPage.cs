@@ -7,7 +7,7 @@ using bank_app.Utility.UI.Invokables;
 
 namespace bank_app.UI.Pages
 {
-    public class Login : Page
+    public class LoginPage : Page
     {
         private Form? _loginForm;
         internal override UIComponent LoadPage()
@@ -25,7 +25,7 @@ namespace bank_app.UI.Pages
                 ], new Button(loginInvoke, "Login", marginTop: 2));
             grid.AddGridComponent(1, 1, new Panel(_loginForm, LayoutBorder.Rounded, "Create User", 40, 10, ColourFG.Yellow));
             cell = grid.GetGridCell(0, 1).SetAlign(Align.Middle).SetJustify(Justify.Center);
-            grid.AddGridComponent(0, 1, new AsciiArt("Assets/Ascii/bank.txt"));
+            grid.AddGridComponent(0, 1, new AsciiArt(AsciiType.File,"Assets/Ascii/bank.txt"));
             return new Panel(grid, LayoutBorder.Heavy);
         }
 

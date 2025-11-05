@@ -75,7 +75,7 @@ namespace bank_app.Utility.UI.Components
             }
         }
 
-        public void AddFlexComponent(UIComponent component)
+        public Flexbox AddFlexComponent(UIComponent component)
         {
             Components.Add(component);
             component.ParentComponent = this;
@@ -83,6 +83,7 @@ namespace bank_app.Utility.UI.Components
             {
                 IsInteractable = true;
             }
+            return this;
         }
 
         public Flexbox SetJustify(Justify justify)

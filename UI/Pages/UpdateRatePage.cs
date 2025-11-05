@@ -6,6 +6,7 @@ using bank_app.Utility.Components;
 using bank_app.Utility.UI;
 using bank_app.Utility.UI.Components;
 using bank_app.Utility.UI.Invokables;
+using Figgle.Fonts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace bank_app.UI.Pages
 {
-    internal class UpdateRates : Page
+    internal class UpdateRatePage : Page
     {
         private Form? _rateForm;
 
@@ -24,9 +25,9 @@ namespace bank_app.UI.Pages
             var navbar = new Navbar(
                 [
                 new("Home", PageType.AdminDashboard),
-                new("Create User", PageType.CreateUser),
-                new("Transactions", PageType.CheckTransactions),
-                new("Rates", PageType.UpdateRates)
+                new("Create User", PageType.CreateUserPage),
+                new("Transactions", PageType.TransactionLogPage),
+                new("Rates", PageType.UpdateRatePage)
                 ]);
 
             List<DropdownItem<Currency>> currencyItems = [
@@ -44,10 +45,10 @@ namespace bank_app.UI.Pages
             ];
             var loginInvoke = new Invokable<Currency, string>(UpdateRateHandler);
             Grid grid = new(3, 3);
-            grid.AddGridComponent(0, 1, navbar);
-            grid.AddGridComponent(1, 1, new Text("Update the daily exchanges"))
-                .SetAlign(Align.Middle)
-                .SetJustify(Justify.Center);
+            grid.AddGridComponent(0, 1, navbar)
+                .SetJustify(Justify.Center)
+                .SetAlign(Align.Top);
+            grid.AddGridComponent(0, 1, new AsciiArt(AsciiType.String, FiggleFonts.Small.Render("Update the daily exchanges")));
 
             _rateForm = new Form(
             [

@@ -5,7 +5,7 @@ namespace bank_app.Managers
 {
     public static class UserManager
     {
-        private static List<User> Users { get; } = new List<User>();
+        public static List<User> Users { get; } = new List<User>();
         public static List<string> UserIds { get; } = new List<string>();
 
         internal static User CreateUser(string userId, string userPassword, UserType userType, string email, string phoneNumber, string legalName)

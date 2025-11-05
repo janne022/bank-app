@@ -12,6 +12,8 @@ namespace bank_app.Utility.UI.Components
     {
         public List<NavbarItem> Items { get; set; }
         private int _index = 0;
+        private const string Separator = " · ";
+
         public Navbar(List<NavbarItem> items)
         {
             IsInteractable = true;
@@ -24,18 +26,35 @@ namespace bank_app.Utility.UI.Components
             Items.Add(item);
         }
 
+        public override void Measure()
+        {
+            foreach (var item in Items)
+            {
+                item.Measure();
+            }
+            Height = 1;
+            // Measure width with all nav items and with seperator
+            var sepCount = Math.Max(0, Items.Count - 1);
+            Width = Items.Sum(navItem => navItem.Width) + (sepCount * Separator.Length);
+        }
+
         public override (int, int) Pressed()
         {
             // Holds a menu in a while loop
             while (true)
             {
-                // Render every object after eachother. If selected object is the one we are rendering, we highlight it
+                // Layout and render at absolute positions to avoid overwriting separators
+                int totalWidth = 0;
                 for (int j = 0; j < Items.Count; j++)
                 {
+                    Items[j].Measure();
+                    Items[j].X = X + totalWidth;
+                    Items[j].Y = Y;
+
                     if (j == _index)
                     {
                         // Black foreground on white background
-                        Console.Write($"\u001b[30;47m");
+                        Console.Write("\u001b[30;47m");
                         Items[j].Render();
                         Console.Write("\u001b[0m");
                     }
@@ -43,8 +62,19 @@ namespace bank_app.Utility.UI.Components
                     {
                         Items[j].Render();
                     }
+
+                    totalWidth += Items[j].Width;
+
+                    if (j != Items.Count - 1)
+                    {
+                        // Place separator
+                        Console.SetCursorPosition(X + totalWidth, Y);
+                        Console.Write(Separator);
+                        totalWidth += Separator.Length;
+                    }
                 }
-                // Read key and if user presses up or down we add or subtract from i. If user presses Enter we run the components pressed method.
+
+                // Read key and if user presses left/right/up/down, update index. Enter invokes current item.
                 ConsoleKey key = Console.ReadKey(true).Key;
                 switch (key)
                 {
@@ -94,8 +124,16 @@ namespace bank_app.Utility.UI.Components
                 Items[j].Measure();
                 Items[j].X = X + totalWidth;
                 Items[j].Y = Y;
-                totalWidth += Items[j].Width + 1;
                 Items[j].Render();
+
+                totalWidth += Items[j].Width;
+
+                if (j != Items.Count - 1)
+                {
+                    Console.SetCursorPosition(X + totalWidth, Y);
+                    Console.Write(Separator);
+                    totalWidth += Separator.Length;
+                }
             }
         }
     }
