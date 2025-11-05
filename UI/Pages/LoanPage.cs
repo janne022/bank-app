@@ -31,7 +31,7 @@ namespace bank_app.UI.Pages
                 new("Home", PageType.ClientDashboard),
                 new("Transfer", PageType.TransferPage),
                 new("Transactions", PageType.TransactionPage),
-                new("Create Account", PageType.CreateAccountPage),
+                new("Account", PageType.CreateAccountPage),
                 new("Loan", PageType.LoanPage)
                 ]);
 
@@ -55,9 +55,12 @@ namespace bank_app.UI.Pages
             return new Panel(grid, LayoutBorder.Heavy);
         }
 
-        private void CreateLoanHandler(Account loanAccount, string loanAmount)
+        private void CreateLoanHandler(Account loanAccount, string stringAmount)
         {
-            
+            var loanManager = new LoanManager();
+            bool canConvert = decimal.TryParse(stringAmount, out decimal loanAmount);
+
+            loanManager.DisburseLoan(CurrentUser.UserId, loanAmount, loanAccount.AccountCurrency);
         }
     }
 }
