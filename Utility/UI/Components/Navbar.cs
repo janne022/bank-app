@@ -24,6 +24,16 @@ namespace bank_app.Utility.UI.Components
             Items.Add(item);
         }
 
+        public override void Measure()
+        {
+            foreach (var item in Items)
+            {
+                item.Measure();
+            }
+            Height = 1;
+            Width = Items.Sum(navItems => navItems.Width) + Items.Count;
+        }
+
         public override (int, int) Pressed()
         {
             // Holds a menu in a while loop

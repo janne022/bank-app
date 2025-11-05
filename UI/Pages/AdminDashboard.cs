@@ -5,6 +5,7 @@ using bank_app.Utility.Components;
 using bank_app.Utility.UI;
 using bank_app.Utility.UI.Components;
 using bank_app.Utility.UI.Invokables;
+using Figgle.Fonts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,10 +29,11 @@ namespace bank_app.UI.Pages
                 new NavbarItem("Rates", PageType.UpdateRates)
                 ]);
             Grid grid = new(3, 3);
-            grid.AddGridComponent(0, 1, navbar);
-            grid.AddGridComponent(1, 1, new Text($"Welcome back {user?.UserId}!"))
-                .SetAlign(Align.Middle)
-                .SetJustify(Justify.Center);
+            grid.AddGridComponent(0, 1, navbar)
+                .SetAlign(Align.Top)
+                .SetJustify(Justify.Center)
+                .SetOrderBy(OrderBy.Column);
+            grid.AddGridComponent(0, 1, new AsciiArt(AsciiType.String, FiggleFonts.Small.Render($"Welcome back {user?.UserId}!")));
             return new Panel(grid, LayoutBorder.Heavy);
         }
     }

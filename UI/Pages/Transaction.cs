@@ -24,7 +24,8 @@ namespace bank_app.UI.Pages
                 new NavbarItem("Loan", PageType.Loan)
                 ]);
             Grid grid = new(3, 3);
-            grid.AddGridComponent(0, 1, navbar);
+            grid.AddGridComponent(0, 1, navbar)
+                .SetJustify(Justify.Center);
             grid.AddGridComponent(1, 1, new Text("Transaction"));
             return new Panel(grid, LayoutBorder.Heavy);
         }

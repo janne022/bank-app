@@ -15,7 +15,8 @@ internal class Program
         Task.Run(BackgroundThread);
 
         UserManager.CreateUser("admin", "admin", UserType.Admin, "admin@gmail.com", "0709431135", "Creator");
-        UserManager.CreateUser("vira", "hera123", UserType.Admin, "admina@gmail.com", "080808", "El Vira");
+        UserManager.CreateUser("vira", "hera123", UserType.Client, "admina@gmail.com", "080808", "El Vira");
+        AccountManager.CreateAccount("vira", Currency.SEK, 100, AccountType.CheckingAcc);
 
         // Start the first User Interface page
         PageManager.Start(PageType.Login);

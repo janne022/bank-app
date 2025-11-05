@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Figgle;
+using Figgle.Fonts;
+using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
@@ -14,20 +16,27 @@ namespace bank_app.Utility.UI.Components
         private string[] _lines;
 
         /// <summary>
-        /// Text components only contain text.
+        /// AsciiArt UIComponent. Renders ascii art from either a file or from string
         /// </summary>
-        /// <param name="textContents">The text to be displayed in the component.</param>
-        public AsciiArt(string filePath)
+        /// <param name="asciiType"></param>
+        /// <param name="content"></param>
+        public AsciiArt(AsciiType asciiType, string content)
         {
-            // Read text file with ascii art
-            _lines = File.ReadAllLines(filePath);
+            switch (asciiType)
+            {
+                case AsciiType.File:
+                    _lines = File.ReadAllLines(content);
+                    break;
+                case AsciiType.String:
+                    _lines = content.Split('\n');
+                    break;
+            }
         }
         public override void Measure()
         {
+
             // Strip away ansi characters into an array by using regex replace to identify a ansi character such as \x1B[0m and replacing it with an empty string
-            string[] cleanedLines = _lines
-    .Select(line => Regex.Replace(line, @"\x1B\[[0-9;]*[a-zA-Z]", ""))
-    .ToArray();
+            string[] cleanedLines = _lines.Select(line => Regex.Replace(line, @"\x1B\[[0-9;]*[a-zA-Z]", "")).ToArray();
             // Loop through the cleaned array and checks for the longest line
             int longestLine = 0;
             foreach (string item in cleanedLines)
@@ -39,7 +48,7 @@ namespace bank_app.Utility.UI.Components
             }
             // Set height and width
             Width = longestLine;
-            Height = cleanedLines.Length;
+            Height = cleanedLines.Length + MarginTop + MarginBottom;
         }
 
         public override void Render()

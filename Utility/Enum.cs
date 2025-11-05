@@ -19,6 +19,12 @@ namespace bank_app.Utility
         Bottom
     }
 
+    public enum AsciiType
+    {
+        File,
+        String
+    }
+
     public enum ColourFG
     {
         None,
