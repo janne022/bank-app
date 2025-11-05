@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using bank_app.Utility;
+﻿using bank_app.Utility;
 
 namespace bank_app.Models.Accounts
 {
@@ -54,12 +49,9 @@ namespace bank_app.Models.Accounts
                     Console.WriteLine("This transaction type is not an option");
                     break;
             }
-
             _transactions.Add(transaction);
-
         }
 
         public abstract bool CanApply(Transaction transaction);
-
     }
 }
