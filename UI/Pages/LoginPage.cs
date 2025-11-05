@@ -7,7 +7,7 @@ using bank_app.Utility.UI.Invokables;
 
 namespace bank_app.UI.Pages
 {
-    public class Login : Page
+    public class LoginPage : Page
     {
         private Form? _loginForm;
         internal override UIComponent LoadPage()

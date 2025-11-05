@@ -1,7 +1,10 @@
-﻿using bank_app.Utility;
+﻿using bank_app.Managers;
+using bank_app.Models.Users;
+using bank_app.Utility;
 using bank_app.Utility.Components;
 using bank_app.Utility.UI;
 using bank_app.Utility.UI.Components;
+using bank_app.Utility.UI.Invokables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,17 +13,22 @@ using System.Threading.Tasks;
 
 namespace bank_app.UI.Pages
 {
-    public class Account : Page
+    public class AdminDashboardPage : Page
     {
         internal override UIComponent LoadPage()
         {
+            var user = PageManager.GetCurrentUser();
+
             Console.CursorVisible = false;
-            var navbar = new Navbar(new List<NavbarItem> { new NavbarItem("Home", PageType.ClientDashboard), new NavbarItem("Transfer", PageType.Transfer), new NavbarItem("Transaction", PageType.Transaction), new NavbarItem("Account", PageType.Account), new NavbarItem("Loan", PageType.Loan) });
+            var navbar = new Navbar(new List<NavbarItem> { new NavbarItem("Home", PageType.AdminDashboard), new NavbarItem("Create User", PageType.CreateUser), 
+                new NavbarItem("Transactions", PageType.CheckTransactions), new NavbarItem("Rates", PageType.UpdateRates)});
             // Create a new Invokable object with the method that is going to run once the 'Login' button is pressed
             // Create new 3x3 grid
             Grid grid = new Grid(3, 3);
             grid.AddGridComponent(0, 1, navbar);
-            grid.AddGridComponent(1, 1, new Text("Account"));
+            grid.AddGridComponent(1, 1, new Text($"Welcome back {user?.UserId}!"));
+            grid.GetGridCell(1, 1).Align = Align.Middle;
+            grid.GetGridCell(1, 1).Justify = Justify.Center;
             // Add grid to layout and set rounded border style
             return new Panel(grid, LayoutBorder.Heavy);
         }

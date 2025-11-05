@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace bank_app.UI.Pages
 {
-    public class ClientDashboard : Page
+    public class ClientDashboardPage : Page
     {
         internal override UIComponent LoadPage()
         {
