@@ -60,16 +60,13 @@ namespace bank_app.Utility.UI.Components
             var formItemText = new FormItem(ErrorText, false);
             formItemText.ParentComponent = this;
             _components.Add(formItemText);
-            int argsCount = 0;
-            for (int j = 0; j < _components.Count; j++)
-            {
-                if (_components[j].IsFormValue)
-                {
-                    argsCount++;
-                }
-            }
+            var formValueComponents = _components.Where(component => component.IsFormValue).ToList();
+            int argsCount = formValueComponents.Count;
             args = new object[argsCount];
-
+            for (int i = 0; i < args.Length; i++)
+            {
+                args[i] = formValueComponents[i].Component.Value;
+            }
         }
 
         public override (int, int) Pressed()
