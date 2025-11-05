@@ -1,16 +1,17 @@
 ﻿using bank_app.Managers;
 using bank_app.Models.Users;
+using bank_app.UI;
 using bank_app.Utility;
 using bank_app.Utility.Components;
 using bank_app.Utility.UI;
 using bank_app.Utility.UI.Components;
 using bank_app.Utility.UI.Invokables;
+using Figgle.Fonts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using bank_app.UI;
 
 
 namespace bank_app.UI.Pages
@@ -37,8 +38,10 @@ namespace bank_app.UI.Pages
             var loginInvoke = new Invokable<UserType, string, string, string, string, string>(CreateUserHandler);
 
             Grid grid = new(3, 3);
-            grid.AddGridComponent(0, 1, navbar);
-            grid.AddGridComponent(0, 1, new Text("Create a new user"));
+            grid.AddGridComponent(0, 1, navbar)
+                .SetJustify(Justify.Center)
+                .SetAlign(Align.Top);
+            grid.AddGridComponent(0, 1, new AsciiArt(AsciiType.String, FiggleFonts.Small.Render("Create a new user")));
 
             _createUserForm = new Form(
             [

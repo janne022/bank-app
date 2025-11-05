@@ -1,10 +1,12 @@
 ﻿using bank_app.Managers;
 using bank_app.Models.Accounts;
+using bank_app.Models.Users;
 using bank_app.Utility;
 using bank_app.Utility.Components;
 using bank_app.Utility.UI;
 using bank_app.Utility.UI.Components;
 using bank_app.Utility.UI.Invokables;
+using Figgle.Fonts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,19 +34,24 @@ namespace bank_app.UI.Pages
                 new NavbarItem("Account", PageType.Account),
                 new NavbarItem("Loan", PageType.Loan)
                 ]);
-            var transferGrid = new Flexbox(Justify.Center, Align.Top);
-            transferGrid.AddFlexComponent(new Text($"Avaliable balance: "));
+
             form = new Form(
                 [
                 new Dropdown<Models.Accounts.Account>(accountsNavbarItems),
                 new InputField("Account ID", InputFieldType.Normal, 35, 0),
                 new InputField("Amount", InputFieldType.Number, 24, 0)
                 ], new Button(transferInvokable, "Send"));
-            transferGrid.AddFlexComponent(form);
+
+            Flexbox transferGrid = new Flexbox(Justify.Center, Align.Top)
+                .AddFlexComponent(new Text($"Avaliable balance: "))
+                .AddFlexComponent(form);
             transferGrid.Width = 40;
             transferGrid.Height = 10;
             Grid grid = new(3, 3);
-            grid.AddGridComponent(0, 1, navbar);
+            grid.AddGridComponent(0, 1, navbar)
+                .SetJustify(Justify.Center)
+                .SetAlign(Align.Top);
+            grid.AddGridComponent(0, 1, new AsciiArt(AsciiType.String, FiggleFonts.Small.Render("Transfer")));
             grid.AddGridComponent(1, 1, new Panel(transferGrid, LayoutBorder.Rounded, width: 70, height: 15))
                 .SetAlign(Align.Middle)
                 .SetJustify(Justify.Center);
