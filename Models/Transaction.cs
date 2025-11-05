@@ -1,11 +1,4 @@
-﻿using bank_app.Models.Accounts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Transactions;
-using bank_app.Utility;
+﻿using bank_app.Utility;
 
 namespace bank_app.Models
 {
