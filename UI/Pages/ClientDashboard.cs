@@ -19,6 +19,8 @@ namespace bank_app.UI.Pages
         internal override UIComponent LoadPage()
         {
             Console.CursorVisible = false;
+
+            // -------------------------------------- NAVBAR AND MESSAGE SECTION ----------------------------- //
             var navbar = new Navbar(
                 [
                 new NavbarItem("Home", PageType.ClientDashboard),
@@ -36,7 +38,12 @@ namespace bank_app.UI.Pages
             grid.AddGridComponent(0, 1, new AsciiArt(AsciiType.String, FiggleFonts.Small.Render($"Welcome back {CurrentUser?.LegalName}")));
 
 
+            // --------------------------------------- AVAILABLE AMOUNT SECTION ------------------------------ //
+            string textToDisplay = $"Available Amount in SEK: <{AccountManager.SumOfAmountsInSek(CurrentUser)}>";
 
+            var availableAmount = new Text(textToDisplay);
+
+            // --------------------------------------- ACCOUNT TABLE SECTION -------------------------------- //
 
             // creates a table of account information
             var accountFeed = new Feed(AccountManager.GetAllAccounts(CurrentUser.UserId).Count);
@@ -58,11 +65,11 @@ namespace bank_app.UI.Pages
             //...and finally adds the columns into the table
             accountFeed.AddColumn(leftColumn);
             accountFeed.AddColumn(rightColumn);
-            grid.AddGridComponent(1, 1, accountFeed);
-            grid.AddGridComponent(0, 1, new Panel(accountFeed, LayoutBorder.Rounded, "Accounts", 100, 15, ColourFG.GreenBright));
 
+            var flexbox = new Flexbox().AddFlexComponent(availableAmount).AddFlexComponent(accountFeed);
 
-
+            // adds border around the feed
+            grid.AddGridComponent(1, 1, new Panel(flexbox, LayoutBorder.Rounded, "Accounts", 55, 15, ColourFG.GreenBright));
 
             // Add grid to layout and set rounded border style
             return new Panel(grid, LayoutBorder.Heavy);
