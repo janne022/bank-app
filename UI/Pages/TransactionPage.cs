@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace bank_app.UI.Pages
 {
-    public class Loan : Page
+    public class TransactionPage : Page
     {
         internal override UIComponent LoadPage()
         {
@@ -20,7 +20,7 @@ namespace bank_app.UI.Pages
             // Create new 3x3 grid
             Grid grid = new Grid(3, 3);
             grid.AddGridComponent(0, 1, navbar);
-            grid.AddGridComponent(1, 1, new Text("Loan"));
+            grid.AddGridComponent(1, 1, new Text("Transaction"));
             // Add grid to layout and set rounded border style
             return new Panel(grid, LayoutBorder.Heavy);
         }

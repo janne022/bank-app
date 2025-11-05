@@ -151,6 +151,9 @@ namespace bank_app.Utility
     {
         Deposit,
         Withdrawal,
+        LoanInterest,
+        LoanDisbursement,
+        LoanRepayment
     }
     public enum AccountType
     {
