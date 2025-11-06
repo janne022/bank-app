@@ -32,10 +32,10 @@ namespace bank_app.Utility.UI.Components
         /// <param name="inputBoxTextColour">Text colour for input box</param>
         /// <param name="inputBoxBGColour">Background colour for input box</param>
         /// <param name="userInputColour">Text colour for the user's inputted text</param>
-        public InputField(string descriptor, InputFieldType allowedCharacters, int maxLength, int marginLeft,
+        public InputField(string descriptor, InputFieldType allowedCharacters, int maxLength,
             ColourFG descriptorTextColour = ColourFG.None, ColourBG descriptorBGColour = ColourBG.None,
             ColourFG inputBoxTextColour = ColourFG.None, ColourBG inputBoxBGColour = ColourBG.None,
-            ColourFG userInputColour = ColourFG.None)
+            ColourFG userInputColour = ColourFG.None, int marginTop = 0, int marginLeft = 0, int marginRight = 0, int marginBottom = 0) : base(marginTop, marginLeft, marginRight, marginBottom)
         {
             Descriptor = descriptor;
             MaxLength = maxLength;
@@ -54,7 +54,7 @@ namespace bank_app.Utility.UI.Components
         {
             InputtedValue = string.Empty;
             Render();
-            Console.SetCursorPosition(X + MarginLeft + Descriptor.Length + 3, Y); // 3, because ": ["
+            Console.SetCursorPosition(X + Descriptor.Length + 3, Y); // 3, because ": ["
             Console.CursorVisible = true;
             InputtedValue = Writing();
             Value = InputtedValue;
@@ -66,8 +66,8 @@ namespace bank_app.Utility.UI.Components
         {
             if (ParentComponent != null)
             {
-                Width = ParentComponent.Width;
-                Height = 1;
+                Width = ParentComponent.Width + MarginLeft + MarginRight;
+                Height = 1 + MarginTop + MarginBottom;
             }
         }
 

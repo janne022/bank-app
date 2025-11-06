@@ -8,7 +8,7 @@ namespace bank_app.Utility.UI.Components
         private int _index = 0;
         private const string Separator = " · ";
 
-        public Navbar(List<NavbarItem> items)
+        public Navbar(List<NavbarItem> items, int marginTop = 0, int marginLeft = 0, int marginRight = 0, int marginBottom = 0) : base(marginTop, marginLeft, marginRight, marginBottom)
         {
             IsInteractable = true;
             IsMultiComponent = true;
@@ -27,10 +27,10 @@ namespace bank_app.Utility.UI.Components
             {
                 item.Measure();
             }
-            Height = 1;
+            Height = 1 + MarginBottom + MarginTop;
             // Measure width with all nav items and with seperator
             var sepCount = Math.Max(0, Items.Count - 1);
-            Width = Items.Sum(navItem => navItem.Width) + (sepCount * Separator.Length);
+            Width = Items.Sum(navItem => navItem.Width) + (sepCount * Separator.Length) + MarginLeft + MarginRight;
         }
 
         public override (int, int) Pressed()

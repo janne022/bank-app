@@ -12,7 +12,7 @@ namespace bank_app.Utility.UI.Components
         /// </summary>
         /// <param name="asciiType"></param>
         /// <param name="content"></param>
-        public AsciiArt(AsciiType asciiType, string content)
+        public AsciiArt(AsciiType asciiType, string content, int marginTop = 0, int marginLeft = 0, int marginRight = 0, int marginBottom = 0) : base(marginTop, marginLeft, marginRight, marginBottom)
         {
             switch (asciiType)
             {
@@ -39,7 +39,7 @@ namespace bank_app.Utility.UI.Components
                 }
             }
             // Set height and width
-            Width = longestLine;
+            Width = longestLine + MarginLeft + MarginRight;
             Height = cleanedLines.Length + MarginTop + MarginBottom;
         }
 
