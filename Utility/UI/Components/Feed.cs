@@ -204,6 +204,14 @@ namespace bank_app.Utility.UI.Components
 
             ColourManager.Write($"{_startIndex + 1}-{Math.Min(_startIndex + (_endIndex - _startIndex), _lengthOfColumns)} " +
                 $"of {_lengthOfColumns}.", _textColour, _bgColour);
+
+            int footerWidth = 0;
+            int spacersWidth = 5;
+            footerWidth += (_startIndex + 1).ToString().Length + 1 + spacersWidth +
+                _lengthOfColumns.ToString().Length + _lengthOfColumns.ToString().Length;
+
+            footerWidth = Width - footerWidth;
+            Console.Write(new string(' ', (footerWidth)));
         }
     }
 }
