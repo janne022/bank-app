@@ -25,7 +25,7 @@ namespace bank_app.UI.Pages
                 .SetAlign(Align.Top)
                 .SetJustify(Justify.Center)
                 .SetOrderBy(OrderBy.Column);
-            grid.AddGridComponent(0, 1, new AsciiArt(AsciiType.String, FiggleFonts.Small.Render($"Welcome back {user?.LegalName}!")));
+            grid.AddGridComponent(0, 1, new AsciiArt(AsciiType.String, FiggleFonts.Small.Render($"Welcome back, {user?.LegalName}!")));
             return new Panel(grid, LayoutBorder.Heavy);
         }
     }

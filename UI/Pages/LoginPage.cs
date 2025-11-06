@@ -23,9 +23,10 @@ namespace bank_app.UI.Pages
                 new InputField("Username",InputFieldType.Normal, 24),
                 new InputField("Password",InputFieldType.Password,24),
                 ], new Button(loginInvoke, "Login", marginTop: 2));
-            grid.AddGridComponent(1, 1, new Panel(_loginForm, LayoutBorder.Rounded, "Create User", 40, 10, ColourFG.Yellow));
+            grid.AddGridComponent(1, 1, new Panel(_loginForm, LayoutBorder.Rounded, "Create User", 40, 10, ColourFG.Yellow))
+                .SetAlign(Align.Middle);
             cell = grid.GetGridCell(0, 1).SetAlign(Align.Middle).SetJustify(Justify.Center);
-            grid.AddGridComponent(0, 1, new AsciiArt(AsciiType.File,"Assets/Ascii/bank.txt"));
+            grid.AddGridComponent(0, 1, new AsciiArt(AsciiType.File,"Assets/Ascii/bank.txt", marginTop: -2));
             return new Panel(grid, LayoutBorder.Heavy);
         }
 
