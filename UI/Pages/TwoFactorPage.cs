@@ -21,7 +21,7 @@ namespace bank_app.UI.Pages
             cell.OrderBy = OrderBy.Column;
             _loginForm = new Form(
                 [
-                new InputField("Code",InputFieldType.Number, 6, 0),
+                new InputField("Code",InputFieldType.Number, 6),
                 ], new Button(loginInvoke, "Submit", marginTop: 2));
             grid.AddGridComponent(1, 1, new Panel(_loginForm, LayoutBorder.Rounded, "Authentication Code", 40, 10, ColourFG.Yellow));
             cell = grid.GetGridCell(0, 1).SetAlign(Align.Middle).SetJustify(Justify.Center);

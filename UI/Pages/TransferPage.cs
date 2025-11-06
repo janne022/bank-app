@@ -31,17 +31,18 @@ namespace bank_app.UI.Pages
                 new NavbarItem("Transfer", PageType.TransferPage),
                 new NavbarItem("Transaction", PageType.TransactionPage),
                 new NavbarItem("Account", PageType.CreateAccountPage),
-                new NavbarItem("Loan", PageType.LoanPage)
+                new NavbarItem("Loan", PageType.LoanPage),
+                new NavbarItem("Logout", PageType.LogOut)
             ]);
 
             form = new Form(
                 [
                     accountDropdown,
-                    new InputField("Account ID", InputFieldType.Normal, 35, 0),
-                    new InputField("Amount", InputFieldType.Number, 24, 0)
-                ], new Button(transferInvokable, "Send"));
+                    new InputField("Account ID", InputFieldType.Normal, 35),
+                    new InputField("Amount", InputFieldType.Number, 24)
+                ], new Button(transferInvokable, "Send", Justify.Center, marginTop: 1));
 
-            balanceText = new Text($"Available balance: {accountsNavbarItems[0].Item.Balance:C}");
+            balanceText = new Text($"Available balance: {accountsNavbarItems[0].Item.Balance:C}", marginBottom: 1);
 
             Flexbox transferGrid = new Flexbox(Justify.Center, Align.Top)
             .AddFlexComponent(balanceText)
@@ -53,7 +54,7 @@ namespace bank_app.UI.Pages
                 .SetJustify(Justify.Center)
                 .SetAlign(Align.Top);
             grid.AddGridComponent(0, 1, new AsciiArt(AsciiType.String, FiggleFonts.Small.Render("Transfer")));
-            grid.AddGridComponent(1, 1, new Panel(transferGrid, LayoutBorder.Rounded, width: 70, height: 15))
+            grid.AddGridComponent(1, 1, new Panel(transferGrid, LayoutBorder.Rounded, width: 60, height: 10))
                 .SetAlign(Align.Middle)
                 .SetJustify(Justify.Center);
             return new Panel(grid, LayoutBorder.Heavy);

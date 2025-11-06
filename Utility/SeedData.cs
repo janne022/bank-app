@@ -15,7 +15,7 @@ namespace bank_app.Utility
             User janne = UserManager.CreateUser("janne", "sourdough", UserType.Client, "johannes.flodin+slavabank@chasacademy.se", "070729294", "Johannes", true);
             User slava = UserManager.CreateUser("gif_lord", "giflord", UserType.Client, "slava.test@chasacademy.se", "070729295", "Slava");
             User iskld = UserManager.CreateUser("skitfiske", "skitfiske", UserType.Client, "theo.test@chasacademy.se", "070729296", "Theo");
-
+            User slava2 = UserManager.CreateUser("123", "123", UserType.Client, "slava.test@chasacademy.se", "070729295", "Slava");
 
             // gives each user three accounts; two checking accounts and one saving account
             foreach (var user in UserManager.Users)
@@ -23,6 +23,7 @@ namespace bank_app.Utility
                 AccountManager.CreateAccount(user.UserId, Currency.SEK, 100000m, AccountType.CheckingAcc);
                 AccountManager.CreateAccount(user.UserId, Currency.SLC, 0.00005m, AccountType.CheckingAcc);
                 AccountManager.CreateAccount(user.UserId, Currency.SEK, 60000m, AccountType.SavingsAcc);
+                AccountManager.CreateAccount(user.UserId, Currency.SEK, 0m, AccountType.LoanAcc);
             }
 
             // -------------------------------------- some transactions ------------------------ //

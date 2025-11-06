@@ -19,7 +19,8 @@ namespace bank_app.UI.Pages
                 new("Home", PageType.AdminDashboard),
                 new("Create User", PageType.CreateUserPage),
                 new("Transactions", PageType.TransactionLogPage),
-                new("Rates", PageType.UpdateRatePage)
+                new("Rates", PageType.UpdateRatePage),
+                new NavbarItem("Logout", PageType.LogOut)
                 ]);
 
             List<DropdownItem<Currency>> currencyItems = [
@@ -45,7 +46,7 @@ namespace bank_app.UI.Pages
             _rateForm = new Form(
             [
                 new Dropdown<Currency>(currencyItems),
-                new InputField("New rate",InputFieldType.Number, 16, 0),
+                new InputField("New rate",InputFieldType.Number, 16),
 
             ], new Button(loginInvoke, "Apply", marginTop: 2));
             grid.AddGridComponent(1, 1, new Panel(_rateForm, LayoutBorder.Rounded, "Update Rates", 40, 10, ColourFG.GreenBright));

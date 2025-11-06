@@ -18,7 +18,6 @@ namespace bank_app.UI.Pages
                 [
                 new DropdownItem<AccountType>("Checking Account", AccountType.CheckingAcc),
                 new DropdownItem<AccountType>("Savings Account", AccountType.SavingsAcc),
-                new DropdownItem<AccountType>("Loan Account", AccountType.LoanAcc)
                 ];
 
             List<DropdownItem<Currency>> currencyItems = [
@@ -40,7 +39,8 @@ namespace bank_app.UI.Pages
                 new("Transfer", PageType.TransferPage),
                 new("Transactions", PageType.TransactionPage),
                 new("Create Account", PageType.CreateAccountPage),
-                new("Loan", PageType.LoanPage)
+                new("Loan", PageType.LoanPage),
+                new NavbarItem("Logout", PageType.LogOut)
                 ]);
 
             var createAccountInvoke = new Invokable<AccountType, Currency, string>(CreateAccountHandler);
@@ -55,7 +55,7 @@ namespace bank_app.UI.Pages
             [
                 new Dropdown<AccountType>(accountTypeItems),
                 new Dropdown<Currency>(currencyItems),
-                new InputField("Deposit amount",InputFieldType.Normal,24, 0),
+                new InputField("Deposit amount",InputFieldType.Normal,24),
             ], new Button(createAccountInvoke, "Create", marginTop: 1));
             grid.AddGridComponent(1, 1, new Panel(_createAccountForm, LayoutBorder.Rounded, "Create New Account", 70, 15, ColourFG.Red))
                 .SetAlign(Align.Middle)
@@ -70,7 +70,18 @@ namespace bank_app.UI.Pages
             bool canConvert = decimal.TryParse(stringAmount, out decimal decimalAmount);
 
             AccountManager.CreateAccount(currentUser.UserId, currency, decimalAmount, accountType);
-            PageManager.SwitchPage(PageType.ClientDashboard);
+
+
+            if (accountType == AccountType.CheckingAcc)
+            {
+                PageManager.SwitchPage(PageType.CheckingAccountPageConfirm);
+            }
+            else if (accountType == AccountType.SavingsAcc)
+            {
+                PageManager.SwitchPage(PageType.SavingsAccountConfirm);
+            }
+
+
         }
     }
 }

@@ -20,8 +20,8 @@ namespace bank_app.UI.Pages
             cell.OrderBy = OrderBy.Column;
             _loginForm = new Form(
                 [
-                new InputField("Username",InputFieldType.Normal, 24, 0),
-                new InputField("Password",InputFieldType.Password,24, 0),
+                new InputField("Username",InputFieldType.Normal, 24),
+                new InputField("Password",InputFieldType.Password,24),
                 ], new Button(loginInvoke, "Login", marginTop: 2));
             grid.AddGridComponent(1, 1, new Panel(_loginForm, LayoutBorder.Rounded, "Create User", 40, 10, ColourFG.Yellow));
             cell = grid.GetGridCell(0, 1).SetAlign(Align.Middle).SetJustify(Justify.Center);

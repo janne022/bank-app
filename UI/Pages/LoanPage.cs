@@ -25,7 +25,8 @@ namespace bank_app.UI.Pages
                 new("Transfer", PageType.TransferPage),
                 new("Transactions", PageType.TransactionPage),
                 new("Account", PageType.CreateAccountPage),
-                new("Loan", PageType.LoanPage)
+                new("Loan", PageType.LoanPage),
+                new NavbarItem("Logout", PageType.LogOut)
                 ]);
 
             var createAccountInvoke = new Invokable<Account, string>(CreateLoanHandler);
@@ -39,7 +40,7 @@ namespace bank_app.UI.Pages
             _createLoanForm = new Form(
             [
                 accountDropdown,
-                new InputField("Loan Amount",InputFieldType.Number,24, 0),
+                new InputField("Loan Amount",InputFieldType.Number,24),
             ], new Button(createAccountInvoke, "Take Loan", marginTop: 1));
             grid.AddGridComponent(1, 1, new Panel(_createLoanForm, LayoutBorder.Rounded, "Take new Loan", 70, 15, ColourFG.Red))
                 .SetAlign(Align.Middle)
@@ -53,7 +54,16 @@ namespace bank_app.UI.Pages
             var loanManager = new LoanManager();
             bool canConvert = decimal.TryParse(stringAmount, out decimal loanAmount);
 
-            loanManager.DisburseLoan(CurrentUser.UserId, loanAmount, loanAccount.AccountCurrency);
+            try 
+            {
+                loanManager.DisburseLoan(CurrentUser.UserId, loanAmount, loanAccount.AccountCurrency);
+                PageManager.SwitchPage(PageType.LoanConfirmPage);
+            }
+            
+            catch (Exception)
+            {
+                _createLoanForm?.UpdateErrorMessage("Loan exceeds limit");
+            }
         }
     }
 }
