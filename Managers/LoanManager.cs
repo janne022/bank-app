@@ -53,7 +53,9 @@ namespace bank_app.Managers
                 loanAccount = new LoanAccount(
                     currency,
                     userId,
-                    AccountDefaults.LoanCreditLimit
+                    AccountDefaults.LoanCreditLimit,
+                    AccountType.LoanAcc
+                    
                 );
                 AccountManager.AddAccount(loanAccount);
             }
