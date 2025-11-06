@@ -53,7 +53,16 @@ namespace bank_app.UI.Pages
             var loanManager = new LoanManager();
             bool canConvert = decimal.TryParse(stringAmount, out decimal loanAmount);
 
-            loanManager.DisburseLoan(CurrentUser.UserId, loanAmount, loanAccount.AccountCurrency);
+            try 
+            {
+                loanManager.DisburseLoan(CurrentUser.UserId, loanAmount, loanAccount.AccountCurrency);
+                PageManager.SwitchPage(PageType.LoanConfirmPage);
+            }
+            
+            catch (Exception)
+            {
+                _createLoanForm?.UpdateErrorMessage("Loan exceeds limit");
+            }
         }
     }
 }
