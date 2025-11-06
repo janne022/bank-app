@@ -8,15 +8,19 @@
         public Align Align { get; set; }
         public OrderBy OrderBy { get; set; }
         private int _index = 0;
+        public ColourFG SelectionFG { get; set; }
+        public ColourBG SelectionBG { get; set; }
 
         /// <summary>
         /// Gridcell represents a a cell within a grid. Initiates a new empty list of UIComponent and sets default values for Justify, Align, OrderBy
         /// </summary>
-        public Flexbox(Justify justify = Justify.Start, Align align = Align.Top, OrderBy orderBy = OrderBy.Column)
+        public Flexbox(Justify justify = Justify.Start, Align align = Align.Top, OrderBy orderBy = OrderBy.Column, ColourFG selectionFG = ColourFG.Black, ColourBG selectionBG = ColourBG.White)
         {
             Justify = justify;
             Align = align;
             OrderBy = orderBy;
+            SelectionFG = selectionFG;
+            SelectionBG = selectionBG;
             Components = new List<UIComponent>();
             IsMultiComponent = true;
             IsInteractable = true;
@@ -37,8 +41,8 @@
                         }
                         else if(!Components[i].IsMultiComponent && Components[i].IsInteractable)
                         {
-                            ColourManager.Set(ColourBG.White);
-                            ColourManager.Set(ColourFG.Black);
+                            ColourManager.Set(SelectionBG);
+                            ColourManager.Set(SelectionFG);
                             Components[i].Render();
                             ColourManager.Set(ColourBG.Reset);
                             ColourManager.Set(ColourFG.Reset);
