@@ -27,6 +27,7 @@
             // Since we cant be sure grid has a parent, assume default height and width of console size. Parent can change childs rowheight and colwidth
             RowHeight = Console.WindowHeight / rows;
             ColWidth = Console.WindowWidth / columns;
+            IsMultiComponent = true;
             // Initialize each cell with an empty list
             for (int r = 0; r < rows; r++)
             {
@@ -127,7 +128,7 @@
             {
                 for (int c = 0; c < _grid.GetLength(1); c++)
                 {
-                    if (_grid[r, c].Components.Any(component => component.IsInteractable))
+                    if (_grid[r, c].Components.Any(component => component.IsInteractable || component.IsMultiComponent))
                     {
                         _interactableGridCells.Add(_grid[r, c]);
                     }

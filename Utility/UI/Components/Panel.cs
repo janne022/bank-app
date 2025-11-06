@@ -41,6 +41,7 @@
             _borderColour = borderColour;
             _backgroundColour = backgroundColour;
             TopText = topText;
+            IsMultiComponent = true;
             if (width == 0)
             {
                 Width = Console.WindowWidth - 1;
@@ -66,10 +67,6 @@
             {
                 grid.RowHeight = Height / grid.Rows;
                 grid.ColWidth = Width / grid.Cols;
-            }
-            if (rootComponent.IsInteractable)
-            {
-                IsInteractable = true;
             }
             // Chosen border style
             switch (border)
