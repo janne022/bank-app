@@ -23,7 +23,7 @@ namespace bank_app.Utility.UI.Components
         private ColourBG _bgColour;
         private ColourFG _textColour;
         public ColourFG _focusColour;
-        private readonly IInvokable ?_invokable;
+        private readonly IInvokable? _invokable;
         private int _lengthOfColumns;
         private int _startIndex;
         private int _endIndex;
@@ -35,6 +35,7 @@ namespace bank_app.Utility.UI.Components
         {
             FeedColumns = new List<FeedColumn>();
             IsInteractable = true;
+            IsMultiComponent = true;
             _pastEntries = 0;
             _lineAmount = linesToDisplay;
             _renderHeader = renderHeader;
@@ -61,6 +62,7 @@ namespace bank_app.Utility.UI.Components
                 return (_startIndex + _lineAmount);
             }
         }
+
 
         public override void Measure()
         {
@@ -107,7 +109,7 @@ namespace bank_app.Utility.UI.Components
         }
 
 
-        public (int, int) Pressed(params object[] args)
+        public override (int, int) Pressed(params object[] args)
         {
             while (true)
             {
@@ -120,10 +122,10 @@ namespace bank_app.Utility.UI.Components
                         {
                             _invokable?.Invoke(args, FeedColumns[0]._entries[_currentIndex]);
                         }
-                        return (0, 0);
+                        return (-1, 0);
 
                     case ConsoleKey.Escape:
-                        return (0, 0);
+                        return (-1, 0);
 
                     case ConsoleKey.UpArrow:
                         Scroll(UpOrDown.Up);
@@ -135,6 +137,11 @@ namespace bank_app.Utility.UI.Components
                 }
                 Render();
             }
+        }
+
+        public override (int, int) Pressed()
+        {
+            return Pressed("janne was here");
         }
 
         public void AddColumn(FeedColumn incomingColumn)
