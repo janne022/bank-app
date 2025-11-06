@@ -109,7 +109,7 @@ namespace bank_app.Utility.UI.Components
         }
 
 
-        public (int, int) Pressed(params object[] args)
+        public override (int, int) Pressed(params object[] args)
         {
             while (true)
             {
@@ -137,6 +137,11 @@ namespace bank_app.Utility.UI.Components
                 }
                 Render();
             }
+        }
+
+        public override (int, int) Pressed()
+        {
+            return Pressed("hi aldor");
         }
 
         public void AddColumn(FeedColumn incomingColumn)

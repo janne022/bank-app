@@ -34,9 +34,15 @@
         /// Press (on Enter key) button functionality with passed arguments.
         /// </summary>
         /// <param name="args">Object array sent as arguments</param>
-        public void Pressed(params object[] args)
+        public override (int, int) Pressed(params object[] args)
         {
             _invokable.Invoke(args);
+            return (0, 0);
+        }
+
+        public override (int, int) Pressed()
+        {
+            return Pressed("hi aldor");
         }
 
         public override void Measure()
