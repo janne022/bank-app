@@ -39,7 +39,7 @@ namespace bank_app.UI.Pages
             // --------------------------------------- ACCOUNT TABLE SECTION -------------------------------- //
 
             // creates a table of account information
-            var accountFeed = new Feed(AccountManager.GetAllAccounts(CurrentUser.UserId).Count, false, false);
+            var accountFeed = new Feed(4, false, false);
             string[] column1 = new string[AccountManager.GetAllAccounts(CurrentUser.UserId).Count];
             string[] column2 = new string[AccountManager.GetAllAccounts(CurrentUser.UserId).Count];
 
@@ -71,7 +71,7 @@ namespace bank_app.UI.Pages
             var flexbox = new Flexbox(Justify.Center, Align.Top).AddFlexComponent(availableAmount).AddFlexComponent(accountFeed);
 
             // adds border around the feed
-            grid.AddGridComponent(1, 1, new Panel(flexbox, LayoutBorder.Rounded, "", 55, 10, ColourFG.GreenBright)).SetAlign(Align.Middle).SetJustify(Justify.Center);
+            grid.AddGridComponent(1, 1, new Panel(flexbox, LayoutBorder.Rounded, "", 55, 8, ColourFG.GreenBright)).SetAlign(Align.Middle).SetJustify(Justify.Center);
 
 
             // Add grid to layout and set rounded border style
