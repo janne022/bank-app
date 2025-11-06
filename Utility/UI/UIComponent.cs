@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace bank_app.Utility.UI
+﻿namespace bank_app.Utility.UI
 {
     public abstract class UIComponent
     {
@@ -14,6 +8,7 @@ namespace bank_app.Utility.UI
         public int Width { get; set; }
         public int Height { get; set; }
         public bool IsInteractable = false;
+        public bool IsMultiComponent = false;
         public object? Value { get; set; }
         public int MarginTop { get; set; }
         public int MarginLeft { get; set; }
@@ -49,6 +44,11 @@ namespace bank_app.Utility.UI
         /// </summary>
         /// 
         public virtual (int, int) Pressed()
+        {
+            return (0, 0);
+        }
+
+        public virtual (int, int) Pressed(params object[] args)
         {
             return (0, 0);
         }

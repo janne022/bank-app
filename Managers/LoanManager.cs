@@ -1,40 +1,29 @@
 ﻿using bank_app.Models;
 using bank_app.Models.Accounts;
-using bank_app.Models.Users;
-using bank_app.UI.Pages;
 using bank_app.Utility;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace bank_app.Managers
 {
     internal class LoanManager
     {
-
         private readonly List<Loan> _loans = new List<Loan>();
 
-
-
+        /// <summary>
+        /// Creates a new loan connected to a user, identified by their userId. Runs methods
+        /// to verify that the user is permitted to take a loan, and creates a new loan object. 
+        /// </summary>
         public Loan DisburseLoan(string userId, decimal principal, Currency currency)
         {
-
             if (!ValidateLoanLimit(userId, principal))
             {
-
                 throw new InvalidOperationException("Loan denied: exceeds allowed limit.");
             }
 
-
             var loanAccount = GetOrCreateLoanAccount(userId, currency);
-
             var checkingAccount = AccountManager.GetAllAccounts(userId).OfType<CheckingAccount>().FirstOrDefault();
 
             if (checkingAccount == null)
             {
-
                 throw new InvalidOperationException("User must have a checking account to receive loan.");
             }
 
@@ -47,9 +36,12 @@ namespace bank_app.Managers
             var transactionToChecking = CreateCheckingAccTransaction(checkingAccount, principal, TransactionType.Deposit);
             checkingAccount.ApplyTransaction(transactionToChecking, principal);
             return loan;
-
         }
 
+        /// <summary>
+        /// Checks if the input user has a loan account. Returns it if true, otherwise
+        /// automatically creates a new one and adds it to the users account list. 
+        /// </summary>
         public LoanAccount GetOrCreateLoanAccount(string userId, Currency currency)
         {
             var loanAccount = AccountManager.GetAllAccounts(userId)
@@ -63,16 +55,10 @@ namespace bank_app.Managers
                     userId,
                     AccountDefaults.LoanCreditLimit
                 );
-
-
-
                 AccountManager.AddAccount(loanAccount);
-
             }
-
             return loanAccount;
         }
-
 
         public void AccrueInterestForAllLoans(DateTime currentDate)
         {
@@ -85,25 +71,21 @@ namespace bank_app.Managers
                 decimal added = loan.AccruedInterest - before;
 
                 var loanAccount = AccountManager.GetAllAccounts(loan.UserId)
-               .OfType<LoanAccount>()
-               .FirstOrDefault();
-
+                .OfType<LoanAccount>()
+                .FirstOrDefault();
 
                 if (loanAccount != null && added > 0)
                 {
                     var transaction = new Transaction(
-                loanAccount.AccountID,
-                loanAccount.AccountID,
-                added)
+                    loanAccount.AccountID,
+                    loanAccount.AccountID,
+                    added)
                     {
                         TransactionType = TransactionType.LoanInterest,
                         Status = TransferStatus.Completed,
-
                     };
                     loanAccount.ApplyTransaction(transaction, added);
                 }
-
-
             }
         }
 
@@ -111,13 +93,12 @@ namespace bank_app.Managers
         {
             var loan = _loans.FirstOrDefault(l => l.LoanId == loanID && l.UserId == userID);
 
-            if (loan == null) { return false; }
+            if (loan == null)
+                return false;
 
             loan?.ApplyPayment(paymentAmount);
 
-
             var loanAccount = AccountManager.GetAllAccounts(userID).OfType<LoanAccount>().FirstOrDefault();
-
             var checkingAccount = AccountManager.GetAllAccounts(userID).OfType<CheckingAccount>().FirstOrDefault();
 
             if (checkingAccount != null)
@@ -128,29 +109,21 @@ namespace bank_app.Managers
 
             if (loanAccount != null)
             {
-
                 var transaction = new Transaction(
-               loanAccount.AccountID,
-               loanAccount.AccountID,
-               paymentAmount)
+                loanAccount.AccountID,
+                loanAccount.AccountID,
+                paymentAmount)
                 {
                     TransactionType = TransactionType.LoanRepayment,
                     Status = TransferStatus.Completed,
-
                 };
                 loanAccount.ApplyTransaction(transaction, paymentAmount);
-            }
-
-           
+            }      
             return true;
-
         }
-
-
 
         private bool ValidateLoanLimit(string userId, decimal requestedAmount)
         {
-
             bool isUserHasCheckingAccount = AccountManager.GetAllAccounts(userId).Any(a => a is CheckingAccount);
 
             if (!isUserHasCheckingAccount)
@@ -159,19 +132,15 @@ namespace bank_app.Managers
             }
 
             decimal totalBalance = AccountManager.GetAllAccounts(userId)
-                                   .Where(account => account is not LoanAccount)
-                                   .Sum(account => account.Balance);
-
+                .Where(account => account is not LoanAccount)
+                .Sum(account => account.Balance);
 
             if (totalBalance <= 0)
             {
-
                 return false;
             }
 
             decimal existingDebt = _loans.Where(loan => loan.UserId == userId && loan.IsActive).Sum(loan => loan.OutstandingPrincipal);
-
-
             decimal maxAllowed = Math.Round(totalBalance * 5, 2);
 
             if ((requestedAmount + existingDebt) > maxAllowed)
@@ -181,28 +150,22 @@ namespace bank_app.Managers
             return true;
         }
 
-
         private Transaction CreateCheckingAccTransaction(CheckingAccount checkingAccount, decimal principal, TransactionType transactionType)
         {
             if (principal <= 0)
                 throw new ArgumentOutOfRangeException(nameof(principal), "Loan amount must be positive.");
 
-
-
             var transaction = new Transaction(
-               checkingAccount.AccountID,
-               checkingAccount.AccountID,
-               principal)
+                checkingAccount.AccountID,
+                checkingAccount.AccountID,
+                principal)
             {
                 TransactionType = transactionType,
                 Status = TransferStatus.Completed,
-
             };
-
-
             return transaction;
-
         }
+
         private Transaction CreateLoanTransaction(LoanAccount loanAccount, decimal principal)
         {
             if (principal <= 0)
@@ -215,13 +178,8 @@ namespace bank_app.Managers
             {
                 TransactionType = TransactionType.LoanDisbursement,
                 Status = TransferStatus.Completed,
-
             };
-
-
             return transaction;
         }
-
-
     }
 }

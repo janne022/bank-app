@@ -1,17 +1,4 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Reflection.PortableExecutable;
+﻿using System.Text.RegularExpressions;
 
 namespace bank_app.Utility.UI.Components
 {

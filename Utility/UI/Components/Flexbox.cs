@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace bank_app.Utility.UI.Components
+﻿namespace bank_app.Utility.UI.Components
 {
     public class Flexbox : UIComponent
     {
@@ -16,30 +8,44 @@ namespace bank_app.Utility.UI.Components
         public Align Align { get; set; }
         public OrderBy OrderBy { get; set; }
         private int _index = 0;
+        public ColourFG SelectionFG { get; set; }
+        public ColourBG SelectionBG { get; set; }
 
         /// <summary>
         /// Gridcell represents a a cell within a grid. Initiates a new empty list of UIComponent and sets default values for Justify, Align, OrderBy
         /// </summary>
-        public Flexbox(Justify justify = Justify.Start, Align align = Align.Top, OrderBy orderBy = OrderBy.Column)
+        public Flexbox(Justify justify = Justify.Start, Align align = Align.Top, OrderBy orderBy = OrderBy.Column, ColourFG selectionFG = ColourFG.Black, ColourBG selectionBG = ColourBG.White)
         {
             Justify = justify;
             Align = align;
             OrderBy = orderBy;
+            SelectionFG = selectionFG;
+            SelectionBG = selectionBG;
             Components = new List<UIComponent>();
+            IsMultiComponent = true;
+            IsInteractable = true;
         }
 
         public override (int, int) Pressed()
         {
-            _index = Components.FindIndex(component => component.IsInteractable);
+            _index = Components.FindIndex(component => component.IsInteractable || component.IsMultiComponent);
             while (true)
             {
                 for (int i = 0; i < Components.Count; i++)
                 {
                     if (i == _index)
                     {
-                        if (Components[i].IsInteractable)
+                        if (Components[i].IsMultiComponent)
                         {
                             return Components[i].Pressed();
+                        }
+                        else if(!Components[i].IsMultiComponent && Components[i].IsInteractable)
+                        {
+                            ColourManager.Set(SelectionBG);
+                            ColourManager.Set(SelectionFG);
+                            Components[i].Render();
+                            ColourManager.Set(ColourBG.Reset);
+                            ColourManager.Set(ColourFG.Reset);
                         }
                     }
                 }
@@ -50,7 +56,7 @@ namespace bank_app.Utility.UI.Components
                     case ConsoleKey.DownArrow:
                         if (_index < Components.Count - 1)
                         {
-                            _index = Components.FindIndex(component => component.IsInteractable && Components.IndexOf(component) > _index);
+                            _index = Components.FindIndex(component => (component.IsInteractable || component.IsMultiComponent) && Components.IndexOf(component) > _index);
                             if (_index == -1)
                             {
                                 return (1, 0);
@@ -60,7 +66,7 @@ namespace bank_app.Utility.UI.Components
                     case ConsoleKey.UpArrow:
                         if (_index > 0)
                         {
-                            _index = Components.FindIndex(component => component.IsInteractable && Components.IndexOf(component) < _index);
+                            _index = Components.FindIndex(component => (component.IsInteractable || component.IsMultiComponent) && Components.IndexOf(component) < _index);
                             if (_index == -1)
                             {
                                 return (-1, 0);
@@ -71,6 +77,8 @@ namespace bank_app.Utility.UI.Components
                         return (0, 1);
                     case ConsoleKey.LeftArrow:
                         return (0, -1);
+                    case ConsoleKey.Enter:
+                        return Components[_index].Pressed();
                 }
             }
         }
@@ -102,6 +110,23 @@ namespace bank_app.Utility.UI.Components
         {
             OrderBy = orderBy;
             return this;
+        }
+
+        public override void Measure()
+        {
+            if (ParentComponent != null)
+            {
+                if (ParentComponent is not Grid)
+                {
+                    Height = ParentComponent.Height;
+                    Width = ParentComponent.Width;
+                }
+            }
+            else
+            {
+                Height = Console.WindowHeight - 1;
+                Width = Console.WindowWidth - 1;
+            }
         }
 
         public override void Render()
@@ -143,7 +168,7 @@ namespace bank_app.Utility.UI.Components
                         Components[i].Y += Height;
                         break;
                 }
-                Components[i].Render();
+                    Components[i].Render();
             }
         }
     }

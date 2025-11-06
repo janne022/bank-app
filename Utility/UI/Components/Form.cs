@@ -1,9 +1,4 @@
 ﻿using bank_app.Utility.Components;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace bank_app.Utility.UI.Components
 {
@@ -39,13 +34,14 @@ namespace bank_app.Utility.UI.Components
         {
             // Set variables
             IsInteractable = true;
+            IsMultiComponent = true;
             _components = new List<FormItem>();
             Width = width;
             Height = components.Count;
             SelectionFG = selectionFG;
             SelectionBG = selectionBG;
             SubmitButton = submitButton;
-            ErrorText = new Text("", textColour: ColourFG.RedBright);
+            ErrorText = new Text("", textColour: ColourFG.RedBright, textAlign: TextAlign.Center);
 
             // Make this object a parent to all child objects
             foreach (var item in components)

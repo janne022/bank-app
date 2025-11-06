@@ -1,8 +1,6 @@
 ﻿using bank_app.UI;
 using bank_app.Managers;
 using bank_app.Utility;
-using bank_app.Models.Users;
-using bank_app.Models.Accounts;
 
 internal class Program
 {

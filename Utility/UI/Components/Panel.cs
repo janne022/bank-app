@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace bank_app.Utility.UI.Components
+﻿namespace bank_app.Utility.UI.Components
 {
     public class Panel : UIComponent
     {
@@ -47,21 +41,21 @@ namespace bank_app.Utility.UI.Components
             _borderColour = borderColour;
             _backgroundColour = backgroundColour;
             TopText = topText;
-            if (width == 0)
-            {
-                Width = Console.WindowWidth - 1;
-            }
-            else
-            {
-                Width = width;
-            }
-            if (height == 0)
-            {
-                Height = Console.WindowHeight - 1;
-            }
-            else
+            IsMultiComponent = true;
+            if (height != 0 && width != 0)
             {
                 Height = height;
+                Width = width;
+            }
+            else if (ParentComponent != null)
+            {
+                Height = ParentComponent.Height;
+                Width = ParentComponent.Width;
+            }
+            else
+            {
+                Height = Console.WindowHeight - 1;
+                Width = Console.WindowWidth - 1;
             }
 
             // Set rootComponent and set its parents element to this object
@@ -72,10 +66,6 @@ namespace bank_app.Utility.UI.Components
             {
                 grid.RowHeight = Height / grid.Rows;
                 grid.ColWidth = Width / grid.Cols;
-            }
-            if (rootComponent.IsInteractable)
-            {
-                IsInteractable = true;
             }
             // Chosen border style
             switch (border)

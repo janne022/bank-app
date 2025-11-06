@@ -2,11 +2,6 @@
 using bank_app.Utility.Components;
 using bank_app.Utility.UI;
 using bank_app.Utility.UI.Components;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace bank_app.UI.Pages
 {
@@ -20,7 +15,7 @@ namespace bank_app.UI.Pages
                 new NavbarItem("Home", PageType.ClientDashboard),
                 new NavbarItem("Transfer", PageType.TransferPage),
                 new NavbarItem("Transaction", PageType.TransactionPage),
-                new NavbarItem("Account", PageType.AccountPage),
+                new NavbarItem("Account", PageType.CreateAccountPage),
                 new NavbarItem("Loan", PageType.LoanPage)
                 ]);
             Grid grid = new(3, 3);
