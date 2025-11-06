@@ -38,11 +38,11 @@ namespace bank_app.UI.Pages
             _createUserForm = new Form(
             [
                 new Dropdown<UserType>(userTypeItems),
-                new InputField("Username",InputFieldType.Normal,24, 0),
-                new InputField("Legal Name", InputFieldType.Normal, 24, 0),
-                new InputField("Password", InputFieldType.Password,24, 0),
-                new InputField("E-mail",InputFieldType.Normal, 24, 0),
-                new InputField("Phone number",InputFieldType.Number, 15, 0),
+                new InputField("Username",InputFieldType.Normal,24),
+                new InputField("Legal Name", InputFieldType.Normal, 24),
+                new InputField("Password", InputFieldType.Password,24),
+                new InputField("E-mail",InputFieldType.Normal, 24),
+                new InputField("Phone number",InputFieldType.Number, 15),
             ], new Button(loginInvoke, "Create User", marginTop: 1));
             grid.AddGridComponent(1, 1, new Panel(_createUserForm, LayoutBorder.Rounded, "Login", 70, 15, ColourFG.Red))
                 .SetAlign(Align.Middle)

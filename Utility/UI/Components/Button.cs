@@ -61,8 +61,8 @@ namespace bank_app.Utility.UI.Components
 
         public override void Measure()
         {
-            Height = (1 + MarginTop);
-            Width = Text.Length + 4;  // [ ButtonText ]
+            Height = 1 + MarginTop + MarginBottom;
+            Width = Text.Length + 4 + MarginRight + MarginLeft;  // [ ButtonText ]
                                       // 12          34
         }
 

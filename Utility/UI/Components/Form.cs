@@ -30,14 +30,14 @@ namespace bank_app.Utility.UI.Components
         /// is captured internally. When a <see cref="Button"/> is activated, all captured values
         /// are passed to the button via <c>Pressed(object[] args)</c>.
         /// </remarks>
-        public Form(List<UIComponent> components, Button submitButton, int width = 30, ColourFG selectionFG = ColourFG.Black, ColourBG selectionBG = ColourBG.White)
+        public Form(List<UIComponent> components, Button submitButton, int width = 30, ColourFG selectionFG = ColourFG.Black, ColourBG selectionBG = ColourBG.White, int marginTop = 0, int marginLeft = 0, int marginRight = 0, int marginBottom = 0) : base(marginTop, marginLeft, marginRight, marginBottom)
         {
             // Set variables
             IsInteractable = true;
             IsMultiComponent = true;
             _components = new List<FormItem>();
-            Width = width;
-            Height = components.Count;
+            Width = width + MarginLeft + MarginRight;
+            Height = components.Count + MarginTop + MarginBottom;
             SelectionFG = selectionFG;
             SelectionBG = selectionBG;
             SubmitButton = submitButton;

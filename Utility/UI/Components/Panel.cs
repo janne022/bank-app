@@ -36,7 +36,7 @@
         /// During rendering, the child component is measured and centered within the layout. The selected border style determines
         /// which corner and wall glyphs are used. The <paramref name="topText"/> is written on the top border if provided.
         /// </remarks>
-        public Panel(UIComponent rootComponent, LayoutBorder border, string topText = "", int width = 0, int height = 0, ColourFG borderColour = ColourFG.Reset, ColourBG backgroundColour = ColourBG.Reset)
+        public Panel(UIComponent rootComponent, LayoutBorder border, string topText = "", int width = 0, int height = 0, ColourFG borderColour = ColourFG.Reset, ColourBG backgroundColour = ColourBG.Reset, int marginTop = 0, int marginLeft = 0, int marginRight = 0, int marginBottom = 0) : base(marginTop, marginLeft, marginRight, marginBottom)
         {
             _borderColour = borderColour;
             _backgroundColour = backgroundColour;
@@ -44,13 +44,13 @@
             IsMultiComponent = true;
             if (height != 0 && width != 0)
             {
-                Height = height;
-                Width = width;
+                Height = height + MarginBottom + MarginTop;
+                Width = width + MarginLeft + MarginRight;
             }
             else if (ParentComponent != null)
             {
-                Height = ParentComponent.Height;
-                Width = ParentComponent.Width;
+                Height = ParentComponent.Height + MarginLeft + MarginRight;
+                Width = ParentComponent.Width + MarginLeft + MarginRight;
             }
             else
             {
