@@ -9,7 +9,7 @@
         public const decimal CheckingOverdraftLimit = 1000m;
 
         //Savings Account
-        public const decimal SavingsInterestRate = 0.1m;
+        public const decimal SavingsInterestRate = 10m;
         public const decimal SavingsMinimumBalance = 1000m;
         public const bool SavingsAllowWithdraws = true;
 
