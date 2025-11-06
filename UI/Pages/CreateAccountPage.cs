@@ -18,7 +18,6 @@ namespace bank_app.UI.Pages
                 [
                 new DropdownItem<AccountType>("Checking Account", AccountType.CheckingAcc),
                 new DropdownItem<AccountType>("Savings Account", AccountType.SavingsAcc),
-                new DropdownItem<AccountType>("Loan Account", AccountType.LoanAcc)
                 ];
 
             List<DropdownItem<Currency>> currencyItems = [
