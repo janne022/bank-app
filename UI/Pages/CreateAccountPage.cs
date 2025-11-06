@@ -18,7 +18,6 @@ namespace bank_app.UI.Pages
                 [
                 new DropdownItem<AccountType>("Checking Account", AccountType.CheckingAcc),
                 new DropdownItem<AccountType>("Savings Account", AccountType.SavingsAcc),
-                new DropdownItem<AccountType>("Loan Account", AccountType.LoanAcc)
                 ];
 
             List<DropdownItem<Currency>> currencyItems = [
@@ -71,7 +70,18 @@ namespace bank_app.UI.Pages
             bool canConvert = decimal.TryParse(stringAmount, out decimal decimalAmount);
 
             AccountManager.CreateAccount(currentUser.UserId, currency, decimalAmount, accountType);
-            PageManager.SwitchPage(PageType.ClientDashboard);
+
+
+            if (accountType == AccountType.CheckingAcc)
+            {
+                PageManager.SwitchPage(PageType.CheckingAccountPageConfirm);
+            }
+            else if (accountType == AccountType.SavingsAcc)
+            {
+                PageManager.SwitchPage(PageType.SavingsAccountConfirm);
+            }
+
+
         }
     }
 }
