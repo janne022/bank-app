@@ -41,7 +41,7 @@ namespace bank_app.UI.Pages
             [
                 accountDropdown,
                 new InputField("Loan Amount",InputFieldType.Number,24),
-            ], new Button(createAccountInvoke, "Take Loan", marginTop: 1));
+            ], new Button(createAccountInvoke, "Take Loan", marginTop: 2));
             grid.AddGridComponent(1, 1, new Panel(_createLoanForm, LayoutBorder.Rounded, "Take new Loan", 55, 10, ColourFG.Red))
                 .SetAlign(Align.Middle)
                 .SetJustify(Justify.Center);
