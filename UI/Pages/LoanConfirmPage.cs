@@ -1,4 +1,5 @@
-﻿using bank_app.Models.Accounts;
+﻿using bank_app.Managers;
+using bank_app.Models.Accounts;
 using bank_app.Utility;
 using bank_app.Utility.Components;
 using bank_app.Utility.UI;
@@ -13,6 +14,12 @@ namespace bank_app.UI.Pages
         internal override UIComponent LoadPage()
         {
             Console.CursorVisible = false;
+            string currenctUserId = PageManager.GetCurrentUser()!.UserId;
+            
+            var latestUserLoan = LoanManager.GetLatestLoan(currenctUserId);
+            decimal latestLoanAmount = latestUserLoan.Principal;
+            decimal monthlyInterestRate = latestUserLoan.AnnualRate;
+            decimal monthlyPayment = (latestLoanAmount * (monthlyInterestRate/100)) / 12;
 
             var navbar = new Navbar(
                 [
@@ -27,8 +34,8 @@ namespace bank_app.UI.Pages
                 .SetAlign(Align.Top);
             grid.AddGridComponent(0, 1, new AsciiArt(AsciiType.String, FiggleFonts.Small.Render("Loan Confirmed")));
 
-            grid.AddGridComponent(1, 1, new Text($"Your interest is: {AccountDefaults.LoanInterestRate}%"));
-            grid.AddGridComponent(1, 1, new Text("Your monthly payment is: "));
+            grid.AddGridComponent(1, 1, new Text($"Your interest is: {monthlyInterestRate}%"));
+            grid.AddGridComponent(1, 1, new Text($"Your monthly payment is: {monthlyPayment:F2}"));
 
             return new Panel(grid, LayoutBorder.Heavy);
         }
