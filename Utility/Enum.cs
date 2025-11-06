@@ -89,7 +89,9 @@
         CreateUserPage,
         TransactionLogPage,
         UpdateRatePage,
-        CreateAccountPage
+        CreateAccountPage,
+        CheckingAccountPage
+
     }
 
     public enum LayoutBorder

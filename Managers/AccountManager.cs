@@ -9,6 +9,26 @@ namespace bank_app.Managers
     {
         // Use ConcurrentDictionary for thread-safety and better concurrency behavior.
         private static Dictionary<Guid, Account> _accounts = new Dictionary<Guid, Account>();
+     
+        //ovveride method to count balance in specifik account
+        public static decimal SumOfAmountsInSek(User user,AccountType accountType)
+        {
+            decimal totalSum = 0m;
+
+            foreach (var account in GetAllAccounts(user).Where(a=>a.AccountType==accountType))
+            {
+                if (account.AccountCurrency != Currency.SEK)
+                {
+                    totalSum += CurrencyExchange.ExchangeToSek(account.Balance, account.AccountCurrency);
+                }
+                else
+                {
+                    totalSum += account.Balance;
+                }
+            }
+            return totalSum;
+        }
+
 
         public static decimal SumOfAmountsInSek(User user)
         {
@@ -41,7 +61,8 @@ namespace bank_app.Managers
                     balance,
                     ownerID,
                     AccountDefaults.CheckingMonthlyFee,
-                    AccountDefaults.CheckingOverdraftLimit),
+                    AccountDefaults.CheckingOverdraftLimit, 
+                    AccountType.CheckingAcc),
 
                 AccountType.SavingsAcc => new SavingsAccount(
                     currency,
@@ -50,12 +71,15 @@ namespace bank_app.Managers
                     AccountDefaults.SavingsInterestRate,
                     AccountDefaults.SavingsMinimumBalance,
                     DateTime.Now,
-                    AccountDefaults.SavingsAllowWithdraws),
+                    AccountDefaults.SavingsAllowWithdraws
+                    ,AccountType.SavingsAcc),
 
                 AccountType.LoanAcc => new LoanAccount(
                     currency,
                     ownerID,
-                    AccountDefaults.LoanCreditLimit),
+                    AccountDefaults.LoanCreditLimit,
+                    AccountType.LoanAcc
+                    ),
 
                 _ => throw new ArgumentException("Invalid account type.", nameof(accountType))
             };
