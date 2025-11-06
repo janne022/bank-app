@@ -13,20 +13,16 @@ namespace bank_app.UI.Pages
         internal override UIComponent LoadPage()
         {
             var loginInvoke = new Invokable<string, string>(LoginHandler);
-            Grid grid = new(3, 3);
-            Flexbox cell = grid.GetGridCell(1, 1);
-            cell.Justify = Justify.Center;
-            cell.Align = Align.Middle;
-            cell.OrderBy = OrderBy.Column;
+            Grid grid = new(2, 1);
+
             _loginForm = new Form(
                 [
                 new InputField("Username",InputFieldType.Normal, 24),
                 new InputField("Password",InputFieldType.Password,24),
                 ], new Button(loginInvoke, "Login", marginTop: 2));
-            grid.AddGridComponent(1, 1, new Panel(_loginForm, LayoutBorder.Rounded, "Create User", 40, 10, ColourFG.Yellow))
-                .SetAlign(Align.Middle);
-            cell = grid.GetGridCell(0, 1).SetAlign(Align.Middle).SetJustify(Justify.Center);
-            grid.AddGridComponent(0, 1, new AsciiArt(AsciiType.File,"Assets/Ascii/bank.txt", marginTop: -2));
+            grid.AddGridComponent(1, 0, new Panel(_loginForm, LayoutBorder.Rounded, "Create User", 40, 10, ColourFG.Yellow))
+                .SetAlign(Align.Top).SetJustify(Justify.Center);
+            grid.AddGridComponent(0, 0, new AsciiArt(AsciiType.File,"Assets/Ascii/bank.txt")).SetJustify(Justify.Center);
             return new Panel(grid, LayoutBorder.Heavy);
         }
 
