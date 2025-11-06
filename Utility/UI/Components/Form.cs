@@ -41,7 +41,7 @@ namespace bank_app.Utility.UI.Components
             SelectionFG = selectionFG;
             SelectionBG = selectionBG;
             SubmitButton = submitButton;
-            ErrorText = new Text("", textColour: ColourFG.RedBright);
+            ErrorText = new Text("", textColour: ColourFG.RedBright, textAlign: TextAlign.Center);
 
             // Make this object a parent to all child objects
             foreach (var item in components)
