@@ -1,11 +1,18 @@
 ﻿using bank_app.Managers;
 using bank_app.Models.Accounts;
+using bank_app.Models.Users;
 using bank_app.Utility;
 using bank_app.Utility.Components;
 using bank_app.Utility.UI;
 using bank_app.Utility.UI.Components;
 using bank_app.Utility.UI.Invokables;
 using Figgle.Fonts;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
 
 namespace bank_app.UI.Pages
 {
@@ -21,6 +28,9 @@ namespace bank_app.UI.Pages
             decimal monthlyInterestRate = latestUserLoan.AnnualRate;
             decimal monthlyPayment = (latestLoanAmount * (monthlyInterestRate/100)) / 12;
 
+            string displayInterestText = $"Your interest is: {monthlyInterestRate}%";
+            string displayPaymentText = $"Your monthly payment is: {monthlyPayment:F2} SEK";
+
             var navbar = new Navbar(
                 [
                     new("Continue", PageType.ClientDashboard),
@@ -34,8 +44,8 @@ namespace bank_app.UI.Pages
                 .SetAlign(Align.Top);
             grid.AddGridComponent(0, 1, new AsciiArt(AsciiType.String, FiggleFonts.Small.Render("Loan Confirmed")));
 
-            grid.AddGridComponent(1, 1, new Text($"Your interest is: {monthlyInterestRate}%"));
-            grid.AddGridComponent(1, 1, new Text($"Your monthly payment is: {monthlyPayment:F2}"));
+            grid.AddGridComponent(1, 1, new Text(displayInterestText)).SetJustify(Justify.Center);
+            grid.AddGridComponent(1, 1, new Text(displayPaymentText)).SetJustify(Justify.Center);
 
             return new Panel(grid, LayoutBorder.Heavy);
         }
