@@ -11,11 +11,11 @@ namespace bank_app.Managers
         private static Dictionary<Guid, Account> _accounts = new Dictionary<Guid, Account>();
      
         //ovveride method to count balance in specifik account
-        public static decimal SumOfAmountsInSek(User user,AccountType accountType)
+        public static decimal SumOfAmountsInSek(string userID,AccountType accountType)
         {
             decimal totalSum = 0m;
 
-            foreach (var account in GetAllAccounts(user).Where(a=>a.AccountType==accountType))
+            foreach (var account in GetAllAccounts(userID).Where(a=>a.AccountType==accountType))
             {
                 if (account.AccountCurrency != Currency.SEK)
                 {
@@ -30,11 +30,11 @@ namespace bank_app.Managers
         }
 
 
-        public static decimal SumOfAmountsInSek(User user)
+        public static decimal SumOfAmountsInSek(string userID)
         {
             decimal totalSum = 0m;
 
-            foreach (var account in GetAllAccounts(user))
+            foreach (var account in GetAllAccounts(userID))
             {
                 if (account.AccountCurrency != Currency.SEK)
                 {

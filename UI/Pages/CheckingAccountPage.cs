@@ -22,7 +22,7 @@ namespace bank_app.UI.Pages
         {
             Console.CursorVisible = false;
          
-            var balance = AccountManager.SumOfAmountsInSek(CurrentUser,AccountType.CheckingAcc);
+            var balance = AccountManager.SumOfAmountsInSek(CurrentUser.UserId,AccountType.CheckingAcc);
           
             var createAccountInvoke = new Invokable(ContinueHandler);
 
