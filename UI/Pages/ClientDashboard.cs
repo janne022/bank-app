@@ -30,8 +30,9 @@ namespace bank_app.UI.Pages
             grid.AddGridComponent(0, 1, navbar)
                 .SetJustify(Justify.Center)
                 .SetAlign(Align.Top);
-            grid.AddGridComponent(0, 1, new AsciiArt(AsciiType.String, FiggleFonts.Small.Render($"Welcome back, {CurrentUser?.LegalName}")));
 
+            if (CurrentUser != null)
+            { 
             grid.AddGridComponent(
                 0,
                 1,
@@ -39,10 +40,10 @@ namespace bank_app.UI.Pages
                     AsciiType.String,
                     FiggleFonts
                     .Small
-                    .Render($"Welcome back {CurrentUser.LegalName}")
+                    .Render($"Welcome back, {CurrentUser.LegalName}")
                     )
                 );
-
+            }
 
             // --------------------------------------- ACCOUNT TABLE SECTION -------------------------------- //
 
