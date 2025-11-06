@@ -54,7 +54,7 @@ namespace bank_app.UI.Pages
                 .SetJustify(Justify.Center)
                 .SetAlign(Align.Top);
             grid.AddGridComponent(0, 1, new AsciiArt(AsciiType.String, FiggleFonts.Small.Render("Transfer")));
-            grid.AddGridComponent(1, 1, new Panel(transferGrid, LayoutBorder.Rounded, width: 60, height: 10))
+            grid.AddGridComponent(1, 1, new Panel(transferGrid, LayoutBorder.Rounded, width: 60, height: 10, borderColour: ColourFG.Red))
                 .SetAlign(Align.Middle)
                 .SetJustify(Justify.Center);
             return new Panel(grid, LayoutBorder.Heavy);
