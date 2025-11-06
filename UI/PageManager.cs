@@ -20,9 +20,6 @@ namespace bank_app.UI
             {PageType.TransactionLogPage, new TransactionLogPage()},
             {PageType.LoanConfirmPage, new LoanConfirmPage()},
             {PageType.CheckingAccountPage, new CheckingAccountPage()},
-
-
-            {PageType.LoanConfirmPage, new LoanConfirmPage()},
             {PageType.UpdateRatePage, new UpdateRatePage()},
             {PageType.TwoFactorPage, new TwoFactorPage()},
         };
