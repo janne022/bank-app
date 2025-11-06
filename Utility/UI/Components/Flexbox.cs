@@ -78,15 +78,7 @@
                     case ConsoleKey.LeftArrow:
                         return (0, -1);
                     case ConsoleKey.Enter:
-                        if (Components[_index] is Button button)
-                        {
-                            button.Pressed();
-                        }
-                        else
-                        {
-                            Components[_index].Pressed();
-                        }
-                        break;
+                        return Components[_index].Pressed();
                 }
             }
         }

@@ -47,5 +47,10 @@
         {
             return (0, 0);
         }
+
+        public virtual (int, int) Pressed(params object[] args)
+        {
+            return (0, 0);
+        }
     }
 }
