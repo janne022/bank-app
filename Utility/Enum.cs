@@ -89,7 +89,7 @@
         TransactionLogPage,
         UpdateRatePage,
         CreateAccountPage,
-        CheckingAccountPage,
+        CheckingAccountPageConfirm,
         LoanConfirmPage,
         SavingsAccountConfirm
     }
