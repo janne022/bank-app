@@ -90,8 +90,6 @@
         UpdateRatePage,
         CreateAccountPage,
         LoanConfirmPage,
-        LoanConfirmPage
-        CreateAccountPage,
         CheckingAccountPage
     }
 
