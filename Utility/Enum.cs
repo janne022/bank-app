@@ -89,6 +89,7 @@
         TransactionLogPage,
         UpdateRatePage,
         CreateAccountPage,
+        LogOut,
         CheckingAccountPageConfirm,
         LoanConfirmPage,
         SavingsAccountConfirm

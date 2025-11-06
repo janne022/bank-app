@@ -31,7 +31,8 @@ namespace bank_app.UI.Pages
                 new NavbarItem("Transfer", PageType.TransferPage),
                 new NavbarItem("Transaction", PageType.TransactionPage),
                 new NavbarItem("Account", PageType.CreateAccountPage),
-                new NavbarItem("Loan", PageType.LoanPage)
+                new NavbarItem("Loan", PageType.LoanPage),
+                new NavbarItem("Logout", PageType.LogOut)
             ]);
 
             form = new Form(

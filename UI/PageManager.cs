@@ -23,6 +23,7 @@ namespace bank_app.UI
             {PageType.SavingsAccountConfirm, new SavingsAccountConfirm()},
             {PageType.UpdateRatePage, new UpdateRatePage()},
             {PageType.TwoFactorPage, new TwoFactorPage()},
+            {PageType.LogOut, new LoginPage()}
         };
         private static bool _isRunning = true;
         private static Page? _nextPage;
