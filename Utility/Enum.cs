@@ -84,13 +84,14 @@
         ClientDashboard,
         TransferPage,
         TransactionPage,
-        AccountPage,
         LoanPage,
         CreateUserPage,
         TransactionLogPage,
         UpdateRatePage,
         CreateAccountPage,
         LoanConfirmPage
+        CheckingAccountPage
+
     }
 
     public enum LayoutBorder

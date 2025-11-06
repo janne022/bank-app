@@ -32,7 +32,7 @@ namespace bank_app.UI.Pages
 
 
             // --------------------------------------- AVAILABLE AMOUNT SECTION ------------------------------ //
-            string textToDisplay = $"Available Amount in SEK: <{AccountManager.SumOfAmountsInSek(CurrentUser).ToString("F2")}>";
+            string textToDisplay = $"Available Amount in SEK: <{AccountManager.SumOfAmountsInSek(CurrentUser.UserId).ToString("F2")}>";
 
             var availableAmount = new Text(textToDisplay);
 

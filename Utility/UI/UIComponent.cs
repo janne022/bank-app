@@ -8,6 +8,7 @@
         public int Width { get; set; }
         public int Height { get; set; }
         public bool IsInteractable = false;
+        public bool IsMultiComponent = false;
         public object? Value { get; set; }
         public int MarginTop { get; set; }
         public int MarginLeft { get; set; }
@@ -43,6 +44,11 @@
         /// </summary>
         /// 
         public virtual (int, int) Pressed()
+        {
+            return (0, 0);
+        }
+
+        public virtual (int, int) Pressed(params object[] args)
         {
             return (0, 0);
         }

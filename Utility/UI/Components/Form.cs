@@ -34,6 +34,7 @@ namespace bank_app.Utility.UI.Components
         {
             // Set variables
             IsInteractable = true;
+            IsMultiComponent = true;
             _components = new List<FormItem>();
             Width = width;
             Height = components.Count;

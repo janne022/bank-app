@@ -12,6 +12,7 @@
         public Dropdown(List<DropdownItem<T>> values, ColourFG selectionFG = ColourFG.Black, ColourBG selectionBG = ColourBG.White, ColourBG backgroundBG = ColourBG.BlackBright)
         {
             IsInteractable = true;
+            IsMultiComponent = true;
             DropdownItems = values;
             SelectionFG = selectionFG;
             SelectionBG = selectionBG;
