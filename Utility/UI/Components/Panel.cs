@@ -66,10 +66,6 @@
                 grid.RowHeight = Height / grid.Rows;
                 grid.ColWidth = Width / grid.Cols;
             }
-            if (rootComponent.IsInteractable)
-            {
-                IsInteractable = true;
-            }
             // Chosen border style
             switch (border)
             {

@@ -18,20 +18,30 @@
             Align = align;
             OrderBy = orderBy;
             Components = new List<UIComponent>();
+            IsMultiComponent = true;
+            IsInteractable = true;
         }
 
         public override (int, int) Pressed()
         {
-            _index = Components.FindIndex(component => component.IsInteractable);
+            _index = Components.FindIndex(component => component.IsInteractable || component.IsMultiComponent);
             while (true)
             {
                 for (int i = 0; i < Components.Count; i++)
                 {
                     if (i == _index)
                     {
-                        if (Components[i].IsInteractable)
+                        if (Components[i].IsMultiComponent)
                         {
                             return Components[i].Pressed();
+                        }
+                        else if(!Components[i].IsMultiComponent && Components[i].IsInteractable)
+                        {
+                            ColourManager.Set(ColourBG.White);
+                            ColourManager.Set(ColourFG.Black);
+                            Components[i].Render();
+                            ColourManager.Set(ColourBG.Reset);
+                            ColourManager.Set(ColourFG.Reset);
                         }
                     }
                 }
@@ -42,7 +52,7 @@
                     case ConsoleKey.DownArrow:
                         if (_index < Components.Count - 1)
                         {
-                            _index = Components.FindIndex(component => component.IsInteractable && Components.IndexOf(component) > _index);
+                            _index = Components.FindIndex(component => (component.IsInteractable || component.IsMultiComponent) && Components.IndexOf(component) > _index);
                             if (_index == -1)
                             {
                                 return (1, 0);
@@ -52,7 +62,7 @@
                     case ConsoleKey.UpArrow:
                         if (_index > 0)
                         {
-                            _index = Components.FindIndex(component => component.IsInteractable && Components.IndexOf(component) < _index);
+                            _index = Components.FindIndex(component => (component.IsInteractable || component.IsMultiComponent) && Components.IndexOf(component) < _index);
                             if (_index == -1)
                             {
                                 return (-1, 0);
@@ -63,6 +73,16 @@
                         return (0, 1);
                     case ConsoleKey.LeftArrow:
                         return (0, -1);
+                    case ConsoleKey.Enter:
+                        if (Components[_index] is Button button)
+                        {
+                            button.Pressed();
+                        }
+                        else
+                        {
+                            Components[_index].Pressed();
+                        }
+                        break;
                 }
             }
         }
@@ -152,7 +172,7 @@
                         Components[i].Y += Height;
                         break;
                 }
-                Components[i].Render();
+                    Components[i].Render();
             }
         }
     }
