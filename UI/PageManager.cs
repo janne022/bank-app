@@ -18,7 +18,7 @@ namespace bank_app.UI
             {PageType.AdminDashboard,  new AdminDashboard()},
             {PageType.CreateUserPage, new CreateUserPage()},
             {PageType.TransactionLogPage, new TransactionLogPage()},
-
+            {PageType.LoanConfirmPage, new LoanConfirmPage()},
             {PageType.UpdateRatePage, new UpdateRatePage()},
             {PageType.TwoFactorPage, new TwoFactorPage()}
         };
