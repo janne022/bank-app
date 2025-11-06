@@ -41,6 +41,7 @@
             _borderColour = borderColour;
             _backgroundColour = backgroundColour;
             TopText = topText;
+            IsMultiComponent = true;
             if (height != 0 && width != 0)
             {
                 Height = height;
