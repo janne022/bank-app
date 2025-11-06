@@ -54,8 +54,24 @@ namespace bank_app.UI.Pages
 
         private void CreateUserHandler(UserType userType, string userName, string legalName, string password, string email, string phone)
         {
-            UserManager.CreateUser(userName, password, userType, email, phone, legalName);
-            PageManager.SwitchPage(PageType.AdminDashboard);
+                if(UserManager.GetUser(userName) != null)
+                {
+                    _createUserForm?.UpdateErrorMessage("Username already exists");
+                }
+
+                else 
+                {
+                    try
+                    {
+                        UserManager.CreateUser(userName, password, userType, email, phone, legalName);
+                        PageManager.SwitchPage(PageType.AdminDashboard);
+                    }
+
+                    catch (Exception)
+                    {
+                        _createUserForm?.UpdateErrorMessage("An error occured");
+                    }
+                }
         }
     }
 }
