@@ -89,6 +89,8 @@
         TransactionLogPage,
         UpdateRatePage,
         CreateAccountPage,
+        LoanConfirmPage
+        CreateAccountPage,
         CheckingAccountPage
 
     }

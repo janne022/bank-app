@@ -21,6 +21,7 @@ namespace bank_app.UI
             {PageType.CheckingAccountPage, new CheckingAccountPage()},
 
 
+            {PageType.LoanConfirmPage, new LoanConfirmPage()},
             {PageType.UpdateRatePage, new UpdateRatePage()},
             {PageType.TwoFactorPage, new TwoFactorPage()},
         };
