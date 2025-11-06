@@ -141,7 +141,7 @@ namespace bank_app.Utility.UI.Components
 
         public override (int, int) Pressed()
         {
-            return Pressed("hi aldor");
+            return Pressed("janne was here");
         }
 
         public void AddColumn(FeedColumn incomingColumn)
