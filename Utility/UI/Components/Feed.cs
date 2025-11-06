@@ -23,7 +23,7 @@ namespace bank_app.Utility.UI.Components
         private ColourBG _bgColour;
         private ColourFG _textColour;
         public ColourFG _focusColour;
-        private readonly IInvokable ?_invokable;
+        private readonly IInvokable? _invokable;
         private int _lengthOfColumns;
         private int _startIndex;
         private int _endIndex;
@@ -122,10 +122,10 @@ namespace bank_app.Utility.UI.Components
                         {
                             _invokable?.Invoke(args, FeedColumns[0]._entries[_currentIndex]);
                         }
-                        return (0, 0);
+                        return (-1, 0);
 
                     case ConsoleKey.Escape:
-                        return (0, 0);
+                        return (-1, 0);
 
                     case ConsoleKey.UpArrow:
                         Scroll(UpOrDown.Up);
