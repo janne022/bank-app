@@ -43,7 +43,7 @@ namespace bank_app.Utility.UI.Components
             _textColour = textColour;
             _bgColour = backgroundColour;
             _focusColour = focusColour;
-            _currentIndex = 0;
+            _currentIndex = -1;
             _startIndex = 0;
             _endIndex = (_startIndex + _lineAmount);
             _extraX = 0;
@@ -111,6 +111,12 @@ namespace bank_app.Utility.UI.Components
 
         public override (int, int) Pressed(params object[] args)
         {
+            if (_currentIndex == -1)
+            {
+                _currentIndex = 0;
+                Render();
+            }
+
             while (true)
             {
                 Console.CursorVisible = false;
@@ -128,6 +134,11 @@ namespace bank_app.Utility.UI.Components
                         return (-1, 0);
 
                     case ConsoleKey.UpArrow:
+                        if (_currentIndex == 0)
+                        {
+                            _currentIndex = -1;
+                            return (-1, 0);
+                        }
                         Scroll(UpOrDown.Up);
                         break;
 
