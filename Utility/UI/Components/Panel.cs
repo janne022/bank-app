@@ -118,7 +118,7 @@
         {
             return _childComponent.Pressed();
         }
-        s
+
         // First render the border, then the rootComponent
         public override void Render()
         {
