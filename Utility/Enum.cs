@@ -88,7 +88,8 @@
         CreateUserPage,
         TransactionLogPage,
         UpdateRatePage,
-        CreateAccountPage
+        CreateAccountPage,
+        LogOut
     }
 
     public enum LayoutBorder

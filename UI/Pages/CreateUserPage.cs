@@ -24,7 +24,8 @@ namespace bank_app.UI.Pages
                 new("Home", PageType.AdminDashboard),
                 new("Create User", PageType.CreateUserPage),
                 new("Transactions", PageType.TransactionLogPage),
-                new("Rates", PageType.UpdateRatePage)
+                new("Rates", PageType.UpdateRatePage),
+                new NavbarItem("Logout", PageType.LogOut)
                 ]);
 
             var loginInvoke = new Invokable<UserType, string, string, string, string, string>(CreateUserHandler);

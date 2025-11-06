@@ -25,7 +25,8 @@ namespace bank_app.UI.Pages
                 new("Transfer", PageType.TransferPage),
                 new("Transactions", PageType.TransactionPage),
                 new("Account", PageType.CreateAccountPage),
-                new("Loan", PageType.LoanPage)
+                new("Loan", PageType.LoanPage),
+                new NavbarItem("Logout", PageType.LogOut)
                 ]);
 
             var createAccountInvoke = new Invokable<Account, string>(CreateLoanHandler);
