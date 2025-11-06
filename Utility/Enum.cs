@@ -89,8 +89,10 @@
         TransactionLogPage,
         UpdateRatePage,
         CreateAccountPage,
-        LoanConfirmPage,
-        CheckingAccountPage
+        CheckingAccountPage,
+        LoanPageConfirm,
+        SavingsAccountConfirm
+
     }
 
     public enum LayoutBorder
