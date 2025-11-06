@@ -84,7 +84,6 @@
         ClientDashboard,
         TransferPage,
         TransactionPage,
-        AccountPage,
         LoanPage,
         CreateUserPage,
         TransactionLogPage,
