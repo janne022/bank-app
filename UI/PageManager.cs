@@ -18,10 +18,9 @@ namespace bank_app.UI
             {PageType.AdminDashboard,  new AdminDashboard()},
             {PageType.CreateUserPage, new CreateUserPage()},
             {PageType.TransactionLogPage, new TransactionLogPage()},
+            {PageType.LoanConfirmPage, new LoanConfirmPage()},
             {PageType.CheckingAccountPage, new CheckingAccountPage()},
-            {PageType.LoanPageConfirm, new LoanPageConfirm()},
-            { PageType.SavingsAccountConfirm, new SavingsAccountConfirm()},
-
+            {PageType.SavingsAccountConfirm, new SavingsAccountConfirm()},
             {PageType.UpdateRatePage, new UpdateRatePage()},
             {PageType.TwoFactorPage, new TwoFactorPage()},
         };
