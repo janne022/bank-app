@@ -23,6 +23,11 @@ namespace bank_app.Utility
                 AccountManager.CreateAccount(user.UserId, Currency.SEK, 100000m, AccountType.CheckingAcc);
                 AccountManager.CreateAccount(user.UserId, Currency.SLC, 0.00005m, AccountType.CheckingAcc);
                 AccountManager.CreateAccount(user.UserId, Currency.SEK, 60000m, AccountType.SavingsAcc);
+                AccountManager.CreateAccount(user.UserId, Currency.SEK, 60000m, AccountType.SavingsAcc);
+                AccountManager.CreateAccount(user.UserId, Currency.SEK, 60000m, AccountType.SavingsAcc);
+                AccountManager.CreateAccount(user.UserId, Currency.SEK, 60000m, AccountType.SavingsAcc);
+                AccountManager.CreateAccount(user.UserId, Currency.SEK, 60000m, AccountType.SavingsAcc);
+
             }
 
             // -------------------------------------- some transactions ------------------------ //
