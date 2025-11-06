@@ -19,12 +19,10 @@ namespace bank_app.Utility.UI.Components
         public int _lineAmount;
         private bool _renderHeader;
         private bool _displayFooter;
-        private int _pastEntries;
         public int _currentIndex;
         private ColourBG _bgColour;
         private ColourFG _textColour;
         public ColourFG _focusColour;
-        private readonly IInvokable? _invokable;
         private int _lengthOfColumns;
         private int _startIndex;
         private int _endIndex;
@@ -37,7 +35,6 @@ namespace bank_app.Utility.UI.Components
             FeedColumns = new List<FeedColumn>();
             IsInteractable = true;
             IsMultiComponent = true;
-            _pastEntries = 0;
             _lineAmount = linesToDisplay;
             _renderHeader = renderHeader;
             _displayFooter = renderFooter;
@@ -110,7 +107,7 @@ namespace bank_app.Utility.UI.Components
         }
 
 
-        public override (int, int) Pressed(params object[] args)
+        public override (int, int) Pressed()
         {
             if (_currentIndex == -1)
             {
@@ -125,10 +122,6 @@ namespace bank_app.Utility.UI.Components
                 switch (pressed.Key)
                 {
                     case ConsoleKey.Enter:
-                        if (args.Length > 0)
-                        {
-                            _invokable?.Invoke(args, FeedColumns[0]._entries[_currentIndex]);
-                        }
                         return (-1, 0);
 
                     case ConsoleKey.Escape:
@@ -149,11 +142,6 @@ namespace bank_app.Utility.UI.Components
                 }
                 Render();
             }
-        }
-
-        public override (int, int) Pressed()
-        {
-            return Pressed("janne was here");
         }
 
         public void AddColumn(FeedColumn incomingColumn)
