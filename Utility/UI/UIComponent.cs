@@ -8,6 +8,7 @@
         public int Width { get; set; }
         public int Height { get; set; }
         public bool IsInteractable = false;
+        public bool IsMultiComponent = false;
         public object? Value { get; set; }
         public int MarginTop { get; set; }
         public int MarginLeft { get; set; }

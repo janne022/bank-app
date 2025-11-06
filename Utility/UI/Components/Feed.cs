@@ -35,6 +35,7 @@ namespace bank_app.Utility.UI.Components
         {
             FeedColumns = new List<FeedColumn>();
             IsInteractable = true;
+            IsMultiComponent = true;
             _pastEntries = 0;
             _lineAmount = linesToDisplay;
             _renderHeader = renderHeader;

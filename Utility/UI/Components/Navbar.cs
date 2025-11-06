@@ -11,6 +11,7 @@ namespace bank_app.Utility.UI.Components
         public Navbar(List<NavbarItem> items)
         {
             IsInteractable = true;
+            IsMultiComponent = true;
             Items = items;
             _index = Items.FindIndex(item => item.PageType == PageManager.GetCurrentPageType());
         }

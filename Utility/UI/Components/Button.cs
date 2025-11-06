@@ -7,7 +7,6 @@
     {
         public string Text { get; private set; }
         private readonly IInvokable _invokable;
-        public Action<Button>? MethodRunner { get; set; }
         private Justify Alignment;
         private ColourFG _textColour;
         private ColourBG _buttonColour;
@@ -45,16 +44,6 @@
             Height = (1 + MarginTop);
             Width = Text.Length + 4;  // [ ButtonText ]
                                       // 12          34
-        }
-
-        /// <summary>
-        /// Press (on Enter key) button functionality with no passed arguments.
-        /// Usage: myButton.MethodRunner = myButton => myObject.myMethod();
-        /// </summary>
-        public override (int, int) Pressed()
-        {
-            MethodRunner?.Invoke(this);
-            return (0, 0);
         }
 
         public override void Render()
