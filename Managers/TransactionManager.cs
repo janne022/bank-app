@@ -78,5 +78,23 @@ namespace bank_app.Managers
                 }
             }
         }
+
+        public static IReadOnlyList<Transaction> GetAllTransactions()
+        {
+            return allTransactions.OrderByDescending(t => t.TimeStamp).ToList();
+        }
+
+        public static IReadOnlyList<Transaction> GetAllTransactions(string userId)
+        {
+            var accountList = AccountManager.GetAllAccounts(userId);
+            var accountIds = accountList.Select(a => a.AccountID).ToList();
+
+            var userTransactions = allTransactions
+                .Where(t => accountIds.Contains(t.SenderId) || accountIds.Contains(t.ReceiverId))
+                .OrderByDescending(t => t.TimeStamp)
+                .ToList();
+
+            return userTransactions;
+        }
     }
 }

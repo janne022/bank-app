@@ -38,7 +38,7 @@ namespace bank_app.UI.Pages
                 new("Home", PageType.ClientDashboard),
                 new("Transfer", PageType.TransferPage),
                 new("Transactions", PageType.TransactionPage),
-                new("Create Account", PageType.CreateAccountPage),
+                new("Account", PageType.CreateAccountPage),
                 new("Loan", PageType.LoanPage),
                 new NavbarItem("Logout", PageType.LogOut)
                 ]);
