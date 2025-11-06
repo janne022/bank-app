@@ -31,7 +31,7 @@ namespace bank_app.Utility.UI.Components
 
 
         public Feed(int linesToDisplay, bool renderHeader, bool renderFooter, ColourFG textColour = ColourFG.None,
-            ColourBG backgroundColour = ColourBG.None, ColourFG focusColour = ColourFG.Black)
+            ColourBG backgroundColour = ColourBG.None, ColourFG focusColour = ColourFG.Black, int marginTop = 0, int marginLeft = 0, int marginRight = 0, int marginBottom = 0) : base(marginTop, marginLeft, marginRight, marginBottom)
         {
             FeedColumns = new List<FeedColumn>();
             IsInteractable = true;
@@ -66,8 +66,8 @@ namespace bank_app.Utility.UI.Components
 
         public override void Measure()
         {
-            Height = FeedColumns.Sum(r => r.Height);
-            Width = FeedColumns.Sum(c => c.Width);
+            Height = FeedColumns.Sum(r => r.Height) + MarginTop + MarginBottom;
+            Width = FeedColumns.Sum(c => c.Width) + MarginLeft + MarginRight;
         }
 
         public void Scroll(UpOrDown direction)
@@ -204,6 +204,14 @@ namespace bank_app.Utility.UI.Components
 
             ColourManager.Write($"{_startIndex + 1}-{Math.Min(_startIndex + (_endIndex - _startIndex), _lengthOfColumns)} " +
                 $"of {_lengthOfColumns}.", _textColour, _bgColour);
+
+            int footerWidth = 0;
+            int spacersWidth = 5;
+            footerWidth += (_startIndex + 1).ToString().Length + 1 + spacersWidth +
+                _lengthOfColumns.ToString().Length + _lengthOfColumns.ToString().Length;
+
+            footerWidth = Width - footerWidth;
+            Console.Write(new string(' ', (footerWidth)));
         }
     }
 }
