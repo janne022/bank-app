@@ -30,7 +30,7 @@ namespace bank_app.UI.Pages
                 new NavbarItem("Home", PageType.ClientDashboard),
                 new NavbarItem("Transfer", PageType.TransferPage),
                 new NavbarItem("Transaction", PageType.TransactionPage),
-                new NavbarItem("Account", PageType.AccountPage),
+                new NavbarItem("Account", PageType.CreateAccountPage),
                 new NavbarItem("Loan", PageType.LoanPage)
             ]);
 
