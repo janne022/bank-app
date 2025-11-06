@@ -1,7 +1,7 @@
 ﻿namespace bank_app.Utility.UI.Invokables
 {
     /// <summary>
-    /// Implements IInvokable and takes in a method that has 0 parameters and does not return anything. This one needs an empty object array
+    /// Does not use IInvokable because it doesn't have parameters. Will still overload fine.
     /// </summary>
     /// <param name="action">A reference to the method to run using a Action as generic delegate</param>
     public class Invokable(Action action)

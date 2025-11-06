@@ -14,14 +14,14 @@ using System.Threading.Tasks;
 
 namespace bank_app.UI.Pages
 {
-    internal class SavingsAccountConfirm:Page
+    internal class SavingsAccountConfirm : Page
     {
         internal override UIComponent LoadPage()
         {
             Console.CursorVisible = false;
 
 
-          
+
             var createAccountInvoke = new Invokable(ContinueHandler);
 
             string textToDisplayInterest = $"Your interest is {AccountDefaults.SavingsInterestRate} %";

@@ -12,6 +12,8 @@ namespace bank_app.Utility.UI.Components
             Name = name;
             PageType = page;
         }
+
+        // Switch to the page
         new public bool Pressed()
         {
             bool success = PageManager.SwitchPage(PageType);

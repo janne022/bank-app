@@ -8,22 +8,30 @@
         ColourBG SelectionBG { get; set; }
         ColourBG BackgroundBG { get; set; }
         public Action<T>? OnSelectionChanged { get; set; }
-     
-        public Dropdown(List<DropdownItem<T>> values, ColourFG selectionFG = ColourFG.Black, ColourBG selectionBG = ColourBG.White, ColourBG backgroundBG = ColourBG.BlackBright, int marginTop = 0, int marginLeft = 0, int marginRight = 0, int marginBottom = 0) : base(marginTop, marginLeft, marginRight, marginBottom)
+
+        /// <summary>
+        /// A dropdown menu that takes DropdownItems. Opens up on pressed, where one value can be selected. Will be saved in Value.
+        /// </summary>
+        /// <param name="dropDownItems">The dropdown items you want to display inside Dropdown</param>
+        /// <param name="selectionFG">Color of the selection foreground color</param>
+        /// <param name="selectionBG">Color of the selection background color</param>
+        /// <param name="backgroundBG">Background color of items not selected</param>
+        public Dropdown(List<DropdownItem<T>> dropDownItems, ColourFG selectionFG = ColourFG.Black, ColourBG selectionBG = ColourBG.White, ColourBG backgroundBG = ColourBG.BlackBright, int marginTop = 0, int marginLeft = 0, int marginRight = 0, int marginBottom = 0) : base(marginTop, marginLeft, marginRight, marginBottom)
         {
             IsInteractable = true;
             IsMultiComponent = true;
-            DropdownItems = values;
+            DropdownItems = dropDownItems;
             SelectionFG = selectionFG;
             SelectionBG = selectionBG;
             BackgroundBG = backgroundBG;
             Height = 1;
 
             SelectedDropdownItem = DropdownItems[0];
-            Value = DropdownItems[0].Item;
+            Value = DropdownItems[0].DropDownItem;
 
             Measure();
         }
+
         public override void Measure()
         {
             int largestDropdownName = 0;
@@ -48,6 +56,7 @@
             int index = 0;
             while (true)
             {
+                // Start at -1 so when can begin with displaying the little bar
                 for (int i = -1; i < DropdownItems.Count; i++)
                 {
                     Console.SetCursorPosition(X, Y + (i + 1));
@@ -77,7 +86,7 @@
                         }
                     }
                 }
-                // Read key and if user presses up or down we add or subtract from i. If user presses Enter we run the components pressed method.
+                // Read key and if user presses up or down we add or subtract from index. If user presses Enter we set the value as the T item. Also runs any invoke with SelectionChanged
                 ConsoleKey key = Console.ReadKey(true).Key;
                 switch (key)
                 {
@@ -85,20 +94,20 @@
                         if (index < DropdownItems.Count - 1)
                         {
                             index++;
-                            OnSelectionChanged?.Invoke(DropdownItems[index].Item);
+                            OnSelectionChanged?.Invoke(DropdownItems[index].DropDownItem);
                         }
                         break;
                     case ConsoleKey.UpArrow:
                         if (index > 0)
                         {
                             index--;
-                            OnSelectionChanged?.Invoke(DropdownItems[index].Item);
+                            OnSelectionChanged?.Invoke(DropdownItems[index].DropDownItem);
                         }
                         break;
                     case ConsoleKey.Enter:
                         SelectedDropdownItem = DropdownItems[index];
-                        Value = DropdownItems[index].Item;
-                        OnSelectionChanged?.Invoke(DropdownItems[index].Item);
+                        Value = DropdownItems[index].DropDownItem;
+                        OnSelectionChanged?.Invoke(DropdownItems[index].DropDownItem);
                         CleanUp();
                         return (0, 0);
                     case ConsoleKey.Escape:
@@ -109,7 +118,7 @@
         }
         private void CleanUp()
         {
-            // This cleans either at root
+            // This just re-renders root
             UIComponent? currentParentComponent = ParentComponent;
             while (currentParentComponent != null)
             {

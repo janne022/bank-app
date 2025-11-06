@@ -12,7 +12,7 @@
         public ColourBG SelectionBG { get; set; }
 
         /// <summary>
-        /// Gridcell represents a a cell within a grid. Initiates a new empty list of UIComponent and sets default values for Justify, Align, OrderBy
+        /// One dimensional layout component.
         /// </summary>
         public Flexbox(Justify justify = Justify.Start, Align align = Align.Top, OrderBy orderBy = OrderBy.Column, ColourFG selectionFG = ColourFG.Black, ColourBG selectionBG = ColourBG.White)
         {
@@ -35,11 +35,12 @@
                 {
                     if (i == _index)
                     {
+                        // Multi components can handle their own navigation so we just go straight into them.
                         if (Components[i].IsMultiComponent)
                         {
                             return Components[i].Pressed();
                         }
-                        else if(!Components[i].IsMultiComponent && Components[i].IsInteractable)
+                        else if (!Components[i].IsMultiComponent && Components[i].IsInteractable)
                         {
                             ColourManager.Set(SelectionBG);
                             ColourManager.Set(SelectionFG);
@@ -49,7 +50,7 @@
                         }
                     }
                 }
-                // Read key and if user presses up or down we add or subtract from i. If user presses Enter we run the components pressed method.
+                // Read key and if user presses up or down we add or subtract from index. If user presses Enter we run the components pressed method.
                 ConsoleKey key = Console.ReadKey(true).Key;
                 switch (key)
                 {
@@ -168,7 +169,7 @@
                         Components[i].Y += Height;
                         break;
                 }
-                    Components[i].Render();
+                Components[i].Render();
             }
         }
     }

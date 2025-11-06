@@ -9,13 +9,13 @@ namespace bank_app.Managers
     {
         // Use ConcurrentDictionary for thread-safety and better concurrency behavior.
         private static Dictionary<Guid, Account> _accounts = new Dictionary<Guid, Account>();
-     
+
         //ovveride method to count balance in specifik account
-        public static decimal SumOfAmountsInSek(string userID,AccountType accountType)
+        public static decimal SumOfAmountsInSek(string userID, AccountType accountType)
         {
             decimal totalSum = 0m;
 
-            foreach (var account in GetAllAccounts(userID).Where(a=>a.AccountType==accountType))
+            foreach (var account in GetAllAccounts(userID).Where(a => a.AccountType == accountType))
             {
                 if (account.AccountCurrency != Currency.SEK)
                 {
@@ -61,7 +61,7 @@ namespace bank_app.Managers
                     balance,
                     ownerID,
                     AccountDefaults.CheckingMonthlyFee,
-                    AccountDefaults.CheckingOverdraftLimit, 
+                    AccountDefaults.CheckingOverdraftLimit,
                     AccountType.CheckingAcc),
 
                 AccountType.SavingsAcc => new SavingsAccount(
@@ -72,7 +72,7 @@ namespace bank_app.Managers
                     AccountDefaults.SavingsMinimumBalance,
                     DateTime.Now,
                     AccountDefaults.SavingsAllowWithdraws
-                    ,AccountType.SavingsAcc),
+                    , AccountType.SavingsAcc),
 
                 AccountType.LoanAcc => new LoanAccount(
                     currency,

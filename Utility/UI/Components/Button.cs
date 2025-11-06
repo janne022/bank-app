@@ -33,6 +33,14 @@ namespace bank_app.Utility.UI.Components
             IsInteractable = true;
         }
 
+        /// <summary>
+        /// Button UIComponent constructor.
+        /// </summary>
+        /// <param name="invokable">Needs to be an Invokable class object with the method you want to run</param>
+        /// <param name="text">The text displayed on the button.</param>
+        /// <param name="justify">Whether the button should be displayed aligned left, right or center.</param>
+        /// <param name="textColour">Colour of text. Default to the terminal's default.</param>
+        /// <param name="buttonColour">Colour of the button itself. Default to the terminal's default.</param>
         public Button(Invokable invokable, string text, Justify justify = Justify.Center, ColourFG textColour = ColourFG.None, ColourBG buttonColour = ColourBG.None, int marginTop = 0, int marginLeft = 0, int marginRight = 0, int marginBottom = 0) : base(marginTop, marginLeft, marginRight, marginBottom)
         {
             Text = text;
@@ -53,6 +61,7 @@ namespace bank_app.Utility.UI.Components
             return (0, 0);
         }
 
+        // Runs with a regular Invokable class that doesn't need any arguments
         public override (int, int) Pressed()
         {
             _invokableNone?.Invoke();
@@ -63,7 +72,7 @@ namespace bank_app.Utility.UI.Components
         {
             Height = 1 + MarginTop + MarginBottom;
             Width = Text.Length + 4 + MarginRight + MarginLeft;  // [ ButtonText ]
-                                      // 12          34
+                                                                 // 12          34
         }
 
         public override void Render()
@@ -78,22 +87,18 @@ namespace bank_app.Utility.UI.Components
 
         private int SetMarginLeft()
         {
-            int marginLeft = 0;
             switch (Alignment)
             {
                 case Justify.Start:
-                    marginLeft = 0;
-                    break;
+                    return 0;
 
                 case Justify.Center:
-                    marginLeft = (ParentComponent!.Width - Text.Length) / 2;
-                    break;
+                    return (ParentComponent!.Width - Text.Length) / 2;
 
                 case Justify.End:
-                    marginLeft = ParentComponent!.Width - Text.Length;
-                    break;
+                    return ParentComponent!.Width - Text.Length;
             }
-            return marginLeft;
+            return 0;
         }
     }
 }

@@ -21,10 +21,10 @@ namespace bank_app.UI.Pages
             var accounts = AccountManager.GetAllAccounts(CurrentUser.UserId).Where(account => account is CheckingAccount || account is SavingsAccount);
             var accountsNavbarItems = accounts.Select(account => new DropdownItem<Models.Accounts.Account>(account.AccountID.ToString(), account)).ToList();
             var transferInvokable = new Invokable<Account, string, string>(TransferMoney);
-            
+
             var accountDropdown = new Dropdown<Models.Accounts.Account>(accountsNavbarItems);
             accountDropdown.OnSelectionChanged = UpdateBalanceDisplay;
-     
+
             var navbar = new Navbar(
             [
                 new NavbarItem("Home", PageType.ClientDashboard),
@@ -42,7 +42,7 @@ namespace bank_app.UI.Pages
                     new InputField("Amount", InputFieldType.Number, 24)
                 ], new Button(transferInvokable, "Send", Justify.Center, marginTop: 1));
 
-            balanceText = new Text($"Available balance: {accountsNavbarItems[0].Item.Balance:C}", marginBottom: 1);
+            balanceText = new Text($"Available balance: {accountsNavbarItems[0].DropDownItem.Balance:C}", marginBottom: 1);
 
             Flexbox transferGrid = new Flexbox(Justify.Center, Align.Top)
             .AddFlexComponent(balanceText)

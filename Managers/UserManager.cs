@@ -106,7 +106,7 @@ namespace bank_app.Managers
 
         private static string GenerateAuthCode(User u)
         {
-            int code =  new Random().Next(100000,1000000);
+            int code = new Random().Next(100000, 1000000);
             var message = new MimeMessage();
             message.From.Add(new MailboxAddress("Slava Bank", Environment.GetEnvironmentVariable("EMAIL")));
             message.To.Add(new MailboxAddress(u.LegalName, u.Email));

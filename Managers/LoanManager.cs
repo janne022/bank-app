@@ -29,7 +29,7 @@ namespace bank_app.Managers
 
             var loan = new Loan(userId, principal, AccountDefaults.LoanInterestRate, DateTime.Now);
             _loans.Add(loan);
-           
+
             var transactionLoan = CreateLoanTransaction(loanAccount, principal);
             loanAccount.ApplyTransaction(transactionLoan, principal);
 
@@ -55,7 +55,7 @@ namespace bank_app.Managers
                     userId,
                     AccountDefaults.LoanCreditLimit,
                     AccountType.LoanAcc
-                    
+
                 );
                 AccountManager.AddAccount(loanAccount);
             }
@@ -120,7 +120,7 @@ namespace bank_app.Managers
                     Status = TransferStatus.Completed,
                 };
                 loanAccount.ApplyTransaction(transaction, paymentAmount);
-            }      
+            }
             return true;
         }
 

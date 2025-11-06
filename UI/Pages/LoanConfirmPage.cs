@@ -14,11 +14,11 @@ namespace bank_app.UI.Pages
         {
             Console.CursorVisible = false;
             string currenctUserId = PageManager.GetCurrentUser()!.UserId;
-            
+
             var latestUserLoan = LoanManager.GetLatestLoan(currenctUserId);
             decimal latestLoanAmount = latestUserLoan.Principal;
             decimal monthlyInterestRate = latestUserLoan.AnnualRate;
-            decimal monthlyPayment = (latestLoanAmount * (monthlyInterestRate/100)) / 12;
+            decimal monthlyPayment = (latestLoanAmount * (monthlyInterestRate / 100)) / 12;
 
             string displayInterestText = $"Your interest is: {monthlyInterestRate}%";
             string displayPaymentText = $"Your monthly payment is: {monthlyPayment:F2} SEK";

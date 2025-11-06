@@ -11,6 +11,7 @@ namespace bank_app.Utility.UI.Components
         public ColourBG SelectionBG { get; set; }
         public Button SubmitButton { get; set; }
         public Text ErrorText { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Form"/> that renders and handles
         /// keyboard navigation for a list of child <see cref="UIComponent"/>s.
@@ -18,10 +19,6 @@ namespace bank_app.Utility.UI.Components
         /// <param name="components">
         /// The child components to display inside the menu, in render/navigation order.
         /// The menu sets itself as each child's <see cref="UIComponent.ParentComponent"/>.
-        /// </param>
-        /// <param name="order">
-        /// Intended layout ordering for the menu items (row or column). Rendering currently
-        /// behaves as a column list; this parameter is reserved for future layout behavior.
         /// </param>
         /// <remarks>
         /// The menu is interactive by default. It highlights the currently selected item and
@@ -67,7 +64,6 @@ namespace bank_app.Utility.UI.Components
 
         public override (int, int) Pressed()
         {
-            // Holds a menu in a while loop
             while (true)
             {
                 // Render every object after eachother. If selected object is the one we are rendering, we highlight it
@@ -125,11 +121,12 @@ namespace bank_app.Utility.UI.Components
                         return (0, -1);
                     case ConsoleKey.Enter:
                         _components[_index].Pressed();
-                        // If component is not a button we set the args index to be the value inside the component. If it is a button we run the pressed method for button with the current args.
+                        // If FormItem is a formvalue we set the args index to the components value inside the formitem
                         if (_components[_index].IsFormValue == true)
                         {
                             args[_index] = _components[_index].Component.Value;
                         }
+                        // Check if the component being pressed is a submitbutton and in that case we 
                         else if (_components[_index].Component == SubmitButton)
                         {
                             bool success = _components.TakeWhile(formItem => formItem.IsFormValue).All(component => component.Component.Value != null);

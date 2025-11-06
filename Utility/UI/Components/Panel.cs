@@ -18,7 +18,7 @@
         public string TopText { get; set; }
 
         /// <summary>
-        /// Creates a layout container that optionally draws a border and hosts a single root UI component.
+        /// Creates a layout container that optionally draws a border and hosts a single UI component.
         /// </summary>
         /// <param name="rootComponent">
         /// The child component to render inside the layout. Its <see cref="UIComponent.ParentComponent"/> is set to this layout.
@@ -61,12 +61,6 @@
             // Set rootComponent and set its parents element to this object
             _childComponent = rootComponent;
             _childComponent.ParentComponent = this;
-            // If rootComponent is a grid we will take this objects height/width and change RowHeight & ColWidth for rootComponent
-            if (rootComponent is Grid grid)
-            {
-                grid.RowHeight = Height / grid.Rows;
-                grid.ColWidth = Width / grid.Cols;
-            }
             // Chosen border style
             switch (border)
             {
@@ -124,6 +118,7 @@
         {
             return _childComponent.Pressed();
         }
+        s
         // First render the border, then the rootComponent
         public override void Render()
         {
