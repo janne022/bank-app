@@ -54,6 +54,7 @@ namespace bank_app.UI.Pages
             bool canConvert = decimal.TryParse(stringAmount, out decimal loanAmount);
 
             loanManager.DisburseLoan(CurrentUser.UserId, loanAmount, loanAccount.AccountCurrency);
+
             PageManager.SwitchPage(PageType.LoanConfirmPage);
         }
     }

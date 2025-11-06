@@ -6,7 +6,7 @@ namespace bank_app.Managers
 {
     internal class LoanManager
     {
-        private readonly List<Loan> _loans = new List<Loan>();
+        private static readonly List<Loan> _loans = new List<Loan>();
 
         /// <summary>
         /// Creates a new loan connected to a user, identified by their userId. Runs methods
@@ -180,6 +180,11 @@ namespace bank_app.Managers
                 Status = TransferStatus.Completed,
             };
             return transaction;
+        }
+
+        public static Loan? GetLatestLoan(string userId)
+        {
+            return _loans.Where(l => l.UserId == userId).OrderByDescending(l => l.LastAccrualDate).FirstOrDefault();
         }
     }
 }
