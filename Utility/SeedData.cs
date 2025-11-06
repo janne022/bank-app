@@ -51,7 +51,40 @@ namespace bank_app.Utility
                  5000m
                  );
 
+            // -------------------------------------- RANDOMIZED MASS TRANSACTIONS -------------------------------------- //
+            var users = new[] { vira, emma, janne, slava, iskld };
+            var rand = new Random();
+
+            for (int i = 0; i < 5000; i++)
+            {
+                var sender = users[rand.Next(users.Length)];
+                var receiver = users[rand.Next(users.Length)];
+
+                if (sender == receiver)
+                    continue;
+
+                var senderAcc = AccountManager.GetAllAccounts(sender.UserId)[rand.Next(2)];
+                var receiverAcc = AccountManager.GetAllAccounts(receiver.UserId)[rand.Next(2)];
+
+                decimal amount = RandomDecimal(50, 5000);
+
+                TransactionManager.CreateNewTransaction(
+                    senderAcc.AccountID,
+                    receiverAcc.AccountID,
+                    amount
+                );
+            }
+
             TransactionManager.ProcessPendingTransactions();
+        }
+
+        private static decimal RandomDecimal(decimal min, decimal max)
+        {
+            var rand = new Random(Guid.NewGuid().GetHashCode());
+            double range = (double)(max - min);
+            double sample = rand.NextDouble();
+            decimal value = (decimal)(sample * range) + min;
+            return Math.Round(value, 2);
         }
     }
 }
