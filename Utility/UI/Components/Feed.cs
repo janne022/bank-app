@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace bank_app.Utility.UI.Components
 {
@@ -202,16 +203,23 @@ namespace bank_app.Utility.UI.Components
 
             Console.SetCursorPosition(X, Y + footerDepth);
 
-            ColourManager.Write($"{_startIndex + 1}-{Math.Min(_startIndex + (_endIndex - _startIndex), _lengthOfColumns)} " +
-                $"of {_lengthOfColumns}.", _textColour, _bgColour);
+            string footerText = $"{_startIndex + 1}-{Math.Min(_startIndex + (_endIndex - _startIndex), _lengthOfColumns)} of {_lengthOfColumns}";
 
-            int footerWidth = 0;
-            int spacersWidth = 5;
-            footerWidth += (_startIndex + 1).ToString().Length + 1 + spacersWidth +
-                _lengthOfColumns.ToString().Length + _lengthOfColumns.ToString().Length;
+            int footerLeftSide = (Width - footerText.Length) / 2;
+            if (footerLeftSide < 0)
+            {
+                footerLeftSide = 0;
+            }
 
-            footerWidth = Width - footerWidth;
-            Console.Write(new string(' ', (footerWidth)));
+            int footerRightSide = Width - footerLeftSide - footerText.Length;
+            if (footerRightSide < 0)
+            {
+                footerRightSide = 0;
+            }
+
+            Console.Write(new string(' ', footerLeftSide));
+            ColourManager.Write(footerText, _textColour, _bgColour);
+            Console.Write(new string(' ', footerRightSide));
         }
     }
 }
