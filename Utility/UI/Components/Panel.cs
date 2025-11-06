@@ -122,32 +122,32 @@
         // First render the border, then the rootComponent
         public override void Render()
         {
-            for (int col = 0; col < Width; col++)
+            for (int col = 0; col < Width - (MarginLeft + MarginRight); col++)
             {
-                for (int row = 0; row < Height; row++)
+                for (int row = 0; row < Height - (MarginTop + MarginTop); row++)
                 {
                     Console.SetCursorPosition(col + X, row + Y);
                     if (col == 0 && row == 0)
                     {
                         ColourManager.Write(_topLeftCorner, _borderColour);
                     }
-                    else if (col == Width - 1 && row == 0)
+                    else if (col == Width - (1 + (MarginLeft + MarginRight)) && row == 0)
                     {
                         ColourManager.Write(_topRightCorner, _borderColour);
                     }
-                    else if (col == 0 && row == Height - 1)
+                    else if (col == 0 && row == Height - (1 +(MarginTop + MarginTop)))
                     {
                         ColourManager.Write(_bottomLeftCorner, _borderColour);
                     }
-                    else if (col == Width - 1 && row == Height - 1)
+                    else if (col == Width - (1 + (MarginLeft + MarginRight)) && row == Height - (1 + (MarginTop + MarginTop)))
                     {
                         ColourManager.Write(_bottomRightCorner, _borderColour);
                     }
-                    else if (col == 0 || col == Width - 1)
+                    else if (col == 0 || col == Width - (1 + (MarginLeft + MarginRight)))
                     {
                         ColourManager.Write(_verticalWall, _borderColour);
                     }
-                    else if (row == Height - 1 || row == 0)
+                    else if (row == Height - (1 + (MarginTop + MarginTop)) || row == 0)
                     {
                         ColourManager.Write(_horizontalWall, _borderColour);
                     }
