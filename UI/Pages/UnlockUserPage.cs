@@ -36,20 +36,18 @@ namespace bank_app.UI.Pages
 
             var loginInvoke = new Invokable<User>(UnlockUserHandler);
 
-            Grid grid = new(3, 3);
-            grid.AddGridComponent(0, 1, navbar)
+            Grid grid = new(1, 1);
+            grid.AddGridComponent(0, 0, navbar)
                 .SetJustify(Justify.Center)
                 .SetAlign(Align.Top);
-            grid.AddGridComponent(0, 1, userNavbar);
-            grid.AddGridComponent(0, 1, new AsciiArt(AsciiType.String, FiggleFonts.Small.Render("Create a new user")));
+            grid.AddGridComponent(0, 0, userNavbar);
+            grid.AddGridComponent(0, 0, new AsciiArt(AsciiType.String, FiggleFonts.Small.Render("Unlock a user account")));
 
             _createUserForm = new Form(
             [
                 new Dropdown<User>(userTypeItems),
             ], new Button(loginInvoke, "Unlock User", marginTop: 1));
-            grid.AddGridComponent(1, 1, new Panel(_createUserForm, LayoutBorder.Rounded, "Login", 50, 10, ColourFG.Red))
-                .SetAlign(Align.Middle)
-                .SetJustify(Justify.Center);
+            grid.AddGridComponent(0, 0, new Panel(_createUserForm, LayoutBorder.Rounded, "Unlock User", 50, 10, ColourFG.Red));
 
             return new Panel(grid, LayoutBorder.Heavy);
         }
