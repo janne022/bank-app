@@ -56,13 +56,35 @@ namespace bank_app.Managers
             return loanAccount;
         }
 
+        public static  decimal CalcculateMonthlyPayment(string userId, int months)
+        {
+            var loan = LoanManager.GetLatestLoan(userId);
+
+            if (loan==null)
+            {
+                throw new InvalidOperationException("User must have a checking account to receive loan.");
+            }
+
+            decimal monthlyRate = loan.AnnualRate / 100m / months;
+            if (monthlyRate == 0)
+            {
+                return loan.Principal / months;
+            }
+
+            decimal factor = (decimal)Math.Pow((double)(1 + monthlyRate), months);
+            decimal monthlyPayment = loan.Principal * monthlyRate * factor / (factor - 1);
+            return monthlyPayment;
+
+        }
+
+
         public void AccrueInterestForAllLoans(DateTime currentDate)
         {
             foreach (var loan in _loans.Where(l => l.IsActive))
             {
                 decimal before = loan.AccruedInterest;
 
-                loan.ApplyInterest(currentDate);
+               // loan.ApplyInterest(currentDate);
 
                 decimal added = loan.AccruedInterest - before;
 
