@@ -41,7 +41,7 @@ namespace bank_app.UI.Pages
             grid.AddGridComponent(0, 1, navbar)
                 .SetJustify(Justify.Center)
                 .SetAlign(Align.Top);
-            grid.AddGridComponent(0, 1, new AsciiArt(AsciiType.String, FiggleFonts.Small.Render("Update the daily exchanges")));
+            grid.AddGridComponent(0, 1, new AsciiArt(AsciiType.String, FiggleFonts.Small.Render("Update the daily exchanges"), ColourFG.Red));
 
             _rateForm = new Form(
             [

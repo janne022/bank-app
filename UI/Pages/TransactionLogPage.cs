@@ -26,7 +26,7 @@ namespace bank_app.UI.Pages
                 .SetAlign(Align.Top)
                 .SetJustify(Justify.Center);
 
-            grid.AddGridComponent(0, 1, new AsciiArt(AsciiType.String, FiggleFonts.Small.Render("All Transactions")))
+            grid.AddGridComponent(0, 1, new AsciiArt(AsciiType.String, FiggleFonts.Small.Render("All Transactions"), ColourFG.Red))
                 .SetAlign(Align.Top)
                 .SetJustify(Justify.Center);
 

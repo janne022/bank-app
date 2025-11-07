@@ -136,7 +136,7 @@ namespace bank_app.Utility.UI.Components
                             }
                             else
                             {
-                                UpdateErrorMessage("Error: Fill out entire form");
+                                UpdateErrorMessage("Fill out entire form");
                             }
                             return (0, 0);
                         }
@@ -170,6 +170,7 @@ namespace bank_app.Utility.UI.Components
 
         public void UpdateErrorMessage(string errorMessage)
         {
+            ErrorText.UpdateText(new string(' ', 28));
             ErrorText.UpdateText(errorMessage);
         }
     }
