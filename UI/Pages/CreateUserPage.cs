@@ -14,16 +14,19 @@ namespace bank_app.UI.Pages
         internal override UIComponent LoadPage()
         {
             Console.CursorVisible = false;
+
             List<DropdownItem<UserType>> userTypeItems =
                 [
                 new DropdownItem<UserType>("Admin", UserType.Admin),
                 new DropdownItem<UserType>("Client", UserType.Client)
                 ];
+
             List<DropdownItem<bool>> authTypeItems =
                 [
                 new DropdownItem<bool>("2-Step Disabled", false),
                 new DropdownItem<bool>("2-Step Enabled", true)
                 ];
+
             var navbar = new Navbar(
                 [
                 new("Home", PageType.AdminDashboard),
@@ -39,14 +42,14 @@ namespace bank_app.UI.Pages
                 new("Unlock User", PageType.UnlockUserPage),
             ]);
 
-            var loginInvoke = new Invokable<UserType, string, string, string, string, string, bool>(CreateUserHandler);
-
             Grid grid = new(1, 1);
             grid.AddGridComponent(0, 0, navbar)
                 .SetJustify(Justify.Center)
                 .SetAlign(Align.Top);
             grid.AddGridComponent(0, 0, userNavbar);
             grid.AddGridComponent(0, 0, new AsciiArt(AsciiType.String, FiggleFonts.Small.Render("Create a new user")));
+
+            var loginInvoke = new Invokable<UserType, string, string, string, string, string, bool>(CreateUserHandler);
 
             _createUserForm = new Form(
             [
@@ -63,6 +66,9 @@ namespace bank_app.UI.Pages
             return new Panel(grid, LayoutBorder.Heavy);
         }
 
+        /// <summary>
+        /// Invoked by a button connected to a form. Uses the data from the form to create a new User object using methods from UserManager.cs. 
+        /// </summary>
         private void CreateUserHandler(UserType userType, string userName, string legalName, string password, string email, string phone, bool twoFactorEnabled)
         {
             if (UserManager.GetUser(userName) != null)

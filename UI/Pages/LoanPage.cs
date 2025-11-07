@@ -1,5 +1,4 @@
 ﻿using bank_app.Managers;
-using bank_app.Models.Accounts;
 using bank_app.Utility;
 using bank_app.Utility.UI;
 using bank_app.Utility.UI.Components;
@@ -23,9 +22,7 @@ namespace bank_app.UI.Pages
                 new("Account", PageType.CreateAccountPage),
                 new("Loan", PageType.LoanPage),
                 new NavbarItem("Logout", PageType.LogOut)
-                ]);
-
-            var createAccountInvoke = new Invokable<string>(CreateLoanHandler);
+                ]);         
 
             Grid grid = new(3, 3);
             grid.AddGridComponent(0, 1, navbar)
@@ -33,12 +30,13 @@ namespace bank_app.UI.Pages
                 .SetAlign(Align.Top);
             grid.AddGridComponent(0, 1, new AsciiArt(AsciiType.String, FiggleFonts.Small.Render("Loans")));
 
-            _createLoanForm = new Form(
-            [
-               
-                new InputField("Loan Amount",InputFieldType.Number,24),
+            var createAccountInvoke = new Invokable<string>(CreateLoanHandler);
 
+            _createLoanForm = new Form(
+            [          
+                new InputField("Loan Amount",InputFieldType.Number,24),
             ], new Button(createAccountInvoke, "Take Loan", marginTop: 2));
+
             grid.AddGridComponent(1, 1, new Panel(_createLoanForm, LayoutBorder.Rounded, "Take new Loan", 55, 10, ColourFG.Red))
                 .SetAlign(Align.Middle)
                 .SetJustify(Justify.Center);
@@ -46,6 +44,9 @@ namespace bank_app.UI.Pages
             return new Panel(grid, LayoutBorder.Heavy);
         }
 
+        /// <summary>
+        /// Invoked by a button with data from the connected form, that creates a new loan using methods from LoanManager.cs
+        /// </summary>
         private void CreateLoanHandler(string stringAmount)
         {
             var loanManager = new LoanManager();

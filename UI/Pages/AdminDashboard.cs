@@ -12,6 +12,7 @@ namespace bank_app.UI.Pages
             var user = PageManager.GetCurrentUser();
 
             Console.CursorVisible = false;
+
             var navbar = new Navbar(
                 [
                 new NavbarItem("Home", PageType.AdminDashboard),
@@ -20,6 +21,7 @@ namespace bank_app.UI.Pages
                 new NavbarItem("Rates", PageType.UpdateRatePage),
                 new NavbarItem("Logout", PageType.LogOut)
                 ]);
+
             Grid grid = new(3, 3);
             grid.AddGridComponent(0, 1, navbar)
                 .SetAlign(Align.Top)

@@ -66,13 +66,15 @@ namespace bank_app.UI.Pages
             return new Panel(grid, LayoutBorder.Heavy);
         }
 
+        /// <summary>
+        /// Invoked by a button connected to a form. Uses the data from the form to create a new Account object using methods from AccountManager.cs. 
+        /// </summary>
         private void CreateAccountHandler(AccountType accountType, Currency currency, string stringAmount, string label)
         {
             User? currentUser = PageManager.GetCurrentUser();
             bool canConvert = decimal.TryParse(stringAmount, out decimal decimalAmount);
 
             AccountManager.CreateAccount(currentUser.UserId, currency, decimalAmount, accountType, label);
-
 
             if (accountType == AccountType.CheckingAcc)
             {
@@ -82,8 +84,6 @@ namespace bank_app.UI.Pages
             {
                 PageManager.SwitchPage(PageType.SavingsAccountConfirmPage);
             }
-
-
         }
     }
 }

@@ -19,11 +19,18 @@ namespace bank_app.Models
             {Currency.SLC, 0.000004m }
         };
 
+        /// <summary>
+        /// Exchanges an amount of a selected currency to SEK based on current exchange rates. 
+        /// </summary>
         public static decimal ExchangeToSek(decimal amount, Currency currencyFrom, Currency sek = Currency.SEK)
         {
             decimal exchangeRate = _ratesToSEK[currencyFrom];
             return amount / exchangeRate;
         }
+
+        /// <summary>
+        /// Exchanges an amount of SEK into a selected currency based on current exchange rates. 
+        /// </summary>
         public static decimal ExchangeFromSek(decimal amount, Currency currencyTo, Currency sek = Currency.SEK)
         {
             decimal exchangeRate = _ratesToSEK[currencyTo];
