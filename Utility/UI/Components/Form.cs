@@ -92,7 +92,7 @@ namespace bank_app.Utility.UI.Components
                     case ConsoleKey.DownArrow:
                         if (_index < _components.Count - 1)
                         {
-                            int newIndex = _components.FindIndex(component => component.IsInteractable && _components.IndexOf(component) > _index);
+                            int newIndex = _components.FindIndex(_index + 1, component => component.IsInteractable);
                             if (newIndex != -1)
                             {
                                 _index = newIndex;
@@ -106,7 +106,15 @@ namespace bank_app.Utility.UI.Components
                     case ConsoleKey.UpArrow:
                         if (_index > 0)
                         {
-                            int newIndex = _components.FindIndex(component => component.IsInteractable && _components.IndexOf(component) < _index);
+                            int newIndex = -1;
+                            for (int i = _index - 1; i >= 0; i--)
+                            {
+                                if (_components[i].IsInteractable)
+                                {
+                                    newIndex = i;
+                                    break;
+                                }
+                            }
                             if (newIndex != -1)
                             {
                                 _index = newIndex;
