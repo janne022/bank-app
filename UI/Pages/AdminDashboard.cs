@@ -15,7 +15,7 @@ namespace bank_app.UI.Pages
             var navbar = new Navbar(
                 [
                 new NavbarItem("Home", PageType.AdminDashboard),
-                new NavbarItem("Create User", PageType.CreateUserPage),
+                new NavbarItem("User", PageType.CreateUserPage),
                 new NavbarItem("Transactions", PageType.TransactionLogPage),
                 new NavbarItem("Rates", PageType.UpdateRatePage),
                 new NavbarItem("Logout", PageType.LogOut)
@@ -25,7 +25,7 @@ namespace bank_app.UI.Pages
                 .SetAlign(Align.Top)
                 .SetJustify(Justify.Center)
                 .SetOrderBy(OrderBy.Column);
-            grid.AddGridComponent(0, 1, new AsciiArt(AsciiType.String, FiggleFonts.Small.Render($"Welcome back {user?.LegalName}!")));
+            grid.AddGridComponent(0, 1, new AsciiArt(AsciiType.String, FiggleFonts.Small.Render($"Welcome back, {user?.LegalName}!"), ColourFG.Red));
             return new Panel(grid, LayoutBorder.Heavy);
         }
     }

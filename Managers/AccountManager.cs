@@ -9,13 +9,13 @@ namespace bank_app.Managers
     {
         // Use ConcurrentDictionary for thread-safety and better concurrency behavior.
         private static Dictionary<Guid, Account> _accounts = new Dictionary<Guid, Account>();
-     
+
         //ovveride method to count balance in specifik account
-        public static decimal SumOfAmountsInSek(string userID,AccountType accountType)
+        public static decimal SumOfAmountsInSek(string userID, AccountType accountType)
         {
             decimal totalSum = 0m;
 
-            foreach (var account in GetAllAccounts(userID).Where(a=>a.AccountType==accountType))
+            foreach (var account in GetAllAccounts(userID).Where(a => a.AccountType == accountType))
             {
                 if (account.AccountCurrency != Currency.SEK)
                 {
@@ -52,7 +52,7 @@ namespace bank_app.Managers
         /// Creates an account of the specified type, registers it internally, and returns it.
         /// Throws ArgumentException for invalid inputs.
         /// </summary>
-        public static bool CreateAccount(string ownerID, Currency currency, decimal balance, AccountType accountType)
+        public static bool CreateAccount(string ownerID, Currency currency, decimal balance, AccountType accountType, string label)
         {
             Account newAccount = accountType switch
             {
@@ -61,8 +61,9 @@ namespace bank_app.Managers
                     balance,
                     ownerID,
                     AccountDefaults.CheckingMonthlyFee,
-                    AccountDefaults.CheckingOverdraftLimit, 
-                    AccountType.CheckingAcc),
+                    AccountDefaults.CheckingOverdraftLimit,
+                    AccountType.CheckingAcc,
+                    label),
 
                 AccountType.SavingsAcc => new SavingsAccount(
                     currency,
@@ -71,14 +72,16 @@ namespace bank_app.Managers
                     AccountDefaults.SavingsInterestRate,
                     AccountDefaults.SavingsMinimumBalance,
                     DateTime.Now,
-                    AccountDefaults.SavingsAllowWithdraws
-                    ,AccountType.SavingsAcc),
+                    AccountDefaults.SavingsAllowWithdraws,
+                    AccountType.SavingsAcc,
+                    label),
 
                 AccountType.LoanAcc => new LoanAccount(
                     currency,
                     ownerID,
                     AccountDefaults.LoanCreditLimit,
-                    AccountType.LoanAcc
+                    AccountType.LoanAcc,
+                    label
                     ),
 
                 _ => throw new ArgumentException("Invalid account type.", nameof(accountType))

@@ -17,7 +17,7 @@ namespace bank_app.UI.Pages
             var navbar = new Navbar(
                 [
                 new("Home", PageType.AdminDashboard),
-                new("Create User", PageType.CreateUserPage),
+                new("User", PageType.CreateUserPage),
                 new("Transactions", PageType.TransactionLogPage),
                 new("Rates", PageType.UpdateRatePage),
                 new NavbarItem("Logout", PageType.LogOut)
@@ -41,15 +41,15 @@ namespace bank_app.UI.Pages
             grid.AddGridComponent(0, 1, navbar)
                 .SetJustify(Justify.Center)
                 .SetAlign(Align.Top);
-            grid.AddGridComponent(0, 1, new AsciiArt(AsciiType.String, FiggleFonts.Small.Render("Update the daily exchanges")));
+            grid.AddGridComponent(0, 1, new AsciiArt(AsciiType.String, FiggleFonts.Small.Render("Update the daily exchanges"), ColourFG.Red));
 
             _rateForm = new Form(
             [
                 new Dropdown<Currency>(currencyItems),
-                new InputField("New rate",InputFieldType.Number, 16),
+                new InputField("New rate",InputFieldType.Normal, 16),
 
             ], new Button(loginInvoke, "Apply", marginTop: 2));
-            grid.AddGridComponent(1, 1, new Panel(_rateForm, LayoutBorder.Rounded, "Update Rates", 40, 10, ColourFG.GreenBright));
+            grid.AddGridComponent(1, 1, new Panel(_rateForm, LayoutBorder.Rounded, "Update Rates", 40, 10, ColourFG.Red));
 
             return new Panel(grid, LayoutBorder.Heavy);
         }

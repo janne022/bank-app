@@ -19,22 +19,34 @@ namespace bank_app.UI.Pages
                 new DropdownItem<UserType>("Admin", UserType.Admin),
                 new DropdownItem<UserType>("Client", UserType.Client)
                 ];
+            List<DropdownItem<bool>> authTypeItems =
+                [
+                new DropdownItem<bool>("2-Step Disabled", false),
+                new DropdownItem<bool>("2-Step Enabled", true)
+                ];
             var navbar = new Navbar(
                 [
                 new("Home", PageType.AdminDashboard),
-                new("Create User", PageType.CreateUserPage),
+                new("User", PageType.CreateUserPage),
                 new("Transactions", PageType.TransactionLogPage),
                 new("Rates", PageType.UpdateRatePage),
                 new NavbarItem("Logout", PageType.LogOut)
                 ]);
 
-            var loginInvoke = new Invokable<UserType, string, string, string, string, string>(CreateUserHandler);
+            var userNavbar = new Navbar(
+                [
+                new("Create User", PageType.CreateUserPage),
+                new("Unlock User", PageType.UnlockUserPage),
+            ]);
 
-            Grid grid = new(3, 3);
-            grid.AddGridComponent(0, 1, navbar)
+            var loginInvoke = new Invokable<UserType, string, string, string, string, string, bool>(CreateUserHandler);
+
+            Grid grid = new(1, 1);
+            grid.AddGridComponent(0, 0, navbar)
                 .SetJustify(Justify.Center)
                 .SetAlign(Align.Top);
-            grid.AddGridComponent(0, 1, new AsciiArt(AsciiType.String, FiggleFonts.Small.Render("Create a new user")));
+            grid.AddGridComponent(0, 0, userNavbar);
+            grid.AddGridComponent(0, 0, new AsciiArt(AsciiType.String, FiggleFonts.Small.Render("Create a new user"), ColourFG.Red));
 
             _createUserForm = new Form(
             [
@@ -44,18 +56,33 @@ namespace bank_app.UI.Pages
                 new InputField("Password", InputFieldType.Password,24),
                 new InputField("E-mail",InputFieldType.Normal, 24),
                 new InputField("Phone number",InputFieldType.Number, 15),
+                new Dropdown<bool>(authTypeItems),
             ], new Button(loginInvoke, "Create User", marginTop: 1));
-            grid.AddGridComponent(1, 1, new Panel(_createUserForm, LayoutBorder.Rounded, "Login", 70, 15, ColourFG.Red))
-                .SetAlign(Align.Middle)
-                .SetJustify(Justify.Center);
+            grid.AddGridComponent(0, 0, new Panel(_createUserForm, LayoutBorder.Rounded, "Create User", 55, 13, ColourFG.Red));
 
             return new Panel(grid, LayoutBorder.Heavy);
         }
 
-        private void CreateUserHandler(UserType userType, string userName, string legalName, string password, string email, string phone)
+        private void CreateUserHandler(UserType userType, string userName, string legalName, string password, string email, string phone, bool twoFactorEnabled)
         {
-            UserManager.CreateUser(userName, password, userType, email, phone, legalName);
-            PageManager.SwitchPage(PageType.AdminDashboard);
+            if (UserManager.GetUser(userName) != null)
+            {
+                _createUserForm?.UpdateErrorMessage("Username already exists");
+            }
+
+            else
+            {
+                try
+                {
+                    UserManager.CreateUser(userName, password, userType, email, phone, legalName, twoFactorEnabled);
+                    PageManager.SwitchPage(PageType.AdminDashboard);
+                }
+
+                catch (Exception)
+                {
+                    _createUserForm?.UpdateErrorMessage("An error occured");
+                }
+            }
         }
     }
 }

@@ -18,7 +18,7 @@
         public string TopText { get; set; }
 
         /// <summary>
-        /// Creates a layout container that optionally draws a border and hosts a single root UI component.
+        /// Creates a layout container that optionally draws a border and hosts a single UI component.
         /// </summary>
         /// <param name="rootComponent">
         /// The child component to render inside the layout. Its <see cref="UIComponent.ParentComponent"/> is set to this layout.
@@ -64,12 +64,6 @@
             // Set rootComponent and set its parents element to this object
             _childComponent = rootComponent;
             _childComponent.ParentComponent = this;
-            // If rootComponent is a grid we will take this objects height/width and change RowHeight & ColWidth for rootComponent
-            if (rootComponent is Grid grid)
-            {
-                grid.RowHeight = Height / grid.Rows;
-                grid.ColWidth = Width / grid.Cols;
-            }
             // Chosen border style
             switch (border)
             {
@@ -127,35 +121,36 @@
         {
             return _childComponent.Pressed();
         }
+
         // First render the border, then the rootComponent
         public override void Render()
         {
-            for (int col = 0; col < Width; col++)
+            for (int col = 0; col < Width - (MarginLeft + MarginRight); col++)
             {
-                for (int row = 0; row < Height; row++)
+                for (int row = 0; row < Height - (MarginTop + MarginTop); row++)
                 {
                     Console.SetCursorPosition(col + X, row + Y);
                     if (col == 0 && row == 0)
                     {
                         ColourManager.Write(_topLeftCorner, _borderColour);
                     }
-                    else if (col == Width - 1 && row == 0)
+                    else if (col == Width - (1 + (MarginLeft + MarginRight)) && row == 0)
                     {
                         ColourManager.Write(_topRightCorner, _borderColour);
                     }
-                    else if (col == 0 && row == Height - 1)
+                    else if (col == 0 && row == Height - (1 +(MarginTop + MarginTop)))
                     {
                         ColourManager.Write(_bottomLeftCorner, _borderColour);
                     }
-                    else if (col == Width - 1 && row == Height - 1)
+                    else if (col == Width - (1 + (MarginLeft + MarginRight)) && row == Height - (1 + (MarginTop + MarginTop)))
                     {
                         ColourManager.Write(_bottomRightCorner, _borderColour);
                     }
-                    else if (col == 0 || col == Width - 1)
+                    else if (col == 0 || col == Width - (1 + (MarginLeft + MarginRight)))
                     {
                         ColourManager.Write(_verticalWall, _borderColour);
                     }
-                    else if (row == Height - 1 || row == 0)
+                    else if (row == Height - (1 + (MarginTop + MarginTop)) || row == 0)
                     {
                         ColourManager.Write(_horizontalWall, _borderColour);
                     }

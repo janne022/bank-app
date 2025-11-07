@@ -15,10 +15,6 @@ namespace bank_app.UI.Pages
         {
             Console.CursorVisible = false;
 
-            var accounts = AccountManager.GetAllAccounts(CurrentUser.UserId).Where(account => account is LoanAccount);
-            var accountsNavbarItems = accounts.Select(account => new DropdownItem<Models.Accounts.Account>(account.AccountID.ToString(), account)).ToList();
-            var accountDropdown = new Dropdown<Models.Accounts.Account>(accountsNavbarItems);
-
             var navbar = new Navbar(
                 [
                 new("Home", PageType.ClientDashboard),
@@ -29,41 +25,46 @@ namespace bank_app.UI.Pages
                 new NavbarItem("Logout", PageType.LogOut)
                 ]);
 
-            var createAccountInvoke = new Invokable<Account, string>(CreateLoanHandler);
+            var createAccountInvoke = new Invokable<string>(CreateLoanHandler);
 
             Grid grid = new(3, 3);
             grid.AddGridComponent(0, 1, navbar)
                 .SetJustify(Justify.Center)
                 .SetAlign(Align.Top);
-            grid.AddGridComponent(0, 1, new AsciiArt(AsciiType.String, FiggleFonts.Small.Render("Loans")));
+            grid.AddGridComponent(0, 1, new AsciiArt(AsciiType.String, FiggleFonts.Small.Render("Loans"), ColourFG.Green));
 
             _createLoanForm = new Form(
             [
-                accountDropdown,
+               
                 new InputField("Loan Amount",InputFieldType.Number,24),
-            ], new Button(createAccountInvoke, "Take Loan", marginTop: 1));
-            grid.AddGridComponent(1, 1, new Panel(_createLoanForm, LayoutBorder.Rounded, "Take new Loan", 70, 15, ColourFG.Red))
+
+            ], new Button(createAccountInvoke, "Take Loan", marginTop: 2));
+            grid.AddGridComponent(1, 1, new Panel(_createLoanForm, LayoutBorder.Rounded, "Take new Loan", 55, 10, ColourFG.Green))
                 .SetAlign(Align.Middle)
                 .SetJustify(Justify.Center);
 
             return new Panel(grid, LayoutBorder.Heavy);
         }
 
-        private void CreateLoanHandler(Account loanAccount, string stringAmount)
+        private void CreateLoanHandler(string stringAmount)
         {
             var loanManager = new LoanManager();
             bool canConvert = decimal.TryParse(stringAmount, out decimal loanAmount);
-
-            try 
+            
+            try
             {
-                loanManager.DisburseLoan(CurrentUser.UserId, loanAmount, loanAccount.AccountCurrency);
+                loanManager.DisburseLoan(CurrentUser.UserId, loanAmount);
                 PageManager.SwitchPage(PageType.LoanConfirmPage);
             }
-            
+            catch (InvalidOperationException)
+            {
+                _createLoanForm?.UpdateErrorMessage("Loan amount exceeds your allowed limit.");
+            }
             catch (Exception)
             {
-                _createLoanForm?.UpdateErrorMessage("Loan exceeds limit");
+                _createLoanForm?.UpdateErrorMessage("An error has occurred. Try again.");
             }
+           
         }
     }
 }

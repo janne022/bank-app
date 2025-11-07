@@ -11,8 +11,10 @@ namespace bank_app.UI
         /// <summary>
         /// Method that should be used for loading of the page
         /// </summary>
-        /// <param name="user"></param>
+        /// <param name="user">user goes into page</param>
         internal abstract UIComponent LoadPage();
+
+        // Displays page. Should only be called from PageManager
         public void DisplayPage(User user)
         {
             Console.CursorVisible = false;
