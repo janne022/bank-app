@@ -8,7 +8,9 @@ namespace bank_app.Utility.UI.Components
         private int _index = 0;
         private const string Separator = " · ";
 
-        public Navbar(List<NavbarItem> items, int marginTop = 0, int marginLeft = 0, int marginRight = 0, int marginBottom = 0) : base(marginTop, marginLeft, marginRight, marginBottom)
+        public Navbar(List<NavbarItem> items, 
+            int marginTop = 0, int marginLeft = 0, int marginRight = 0, int marginBottom = 0) 
+            : base(marginTop, marginLeft, marginRight, marginBottom)
         {
             IsInteractable = true;
             IsMultiComponent = true;

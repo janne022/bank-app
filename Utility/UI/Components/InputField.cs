@@ -35,7 +35,9 @@ namespace bank_app.Utility.UI.Components
         public InputField(string descriptor, InputFieldType allowedCharacters, int maxLength,
             ColourFG descriptorTextColour = ColourFG.None, ColourBG descriptorBGColour = ColourBG.None,
             ColourFG inputBoxTextColour = ColourFG.None, ColourBG inputBoxBGColour = ColourBG.None,
-            ColourFG userInputColour = ColourFG.None, int marginTop = 0, int marginLeft = 0, int marginRight = 0, int marginBottom = 0) : base(marginTop, marginLeft, marginRight, marginBottom)
+            ColourFG userInputColour = ColourFG.None, 
+            int marginTop = 0, int marginLeft = 0, int marginRight = 0, int marginBottom = 0) 
+            : base(marginTop, marginLeft, marginRight, marginBottom)
         {
             Descriptor = descriptor;
             MaxLength = maxLength;

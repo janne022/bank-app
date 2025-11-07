@@ -22,7 +22,10 @@ namespace bank_app.Utility.Components
         /// <param name="textAlign">Left/Center/Right alignment of text. Default left.</param>
         /// <param name="textColour">Colour of text. Default to the terminal's default.</param>
         /// <param name="bgColour">Colour of background. Default to the terminal's default.</param>
-        public Text(string textContents, TextAlign textAlign = TextAlign.Left, ColourFG textColour = ColourFG.None, ColourBG bgColour = ColourBG.None, int marginTop = 0, int marginLeft = 0, int marginRight = 0, int marginBottom = 0) : base(marginTop, marginLeft, marginRight, marginBottom)
+        public Text(string textContents, TextAlign textAlign = TextAlign.Left,
+            ColourFG textColour = ColourFG.None, ColourBG bgColour = ColourBG.None,
+            int marginTop = 0, int marginLeft = 0, int marginRight = 0, int marginBottom = 0) 
+            : base(marginTop, marginLeft, marginRight, marginBottom)
         {
             _words = textContents.Split(' ');
             _textAlign = textAlign;
