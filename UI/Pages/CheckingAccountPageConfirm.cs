@@ -31,11 +31,17 @@ namespace bank_app.UI.Pages
             // Create new 3x3 grid
             Grid grid = new(3, 3);
 
-            grid.AddGridComponent(0, 1, new AsciiArt(AsciiType.String, FiggleFonts.Small.Render("Checking Account"))).SetAlign(Align.Middle).SetJustify(Justify.Center);
-            grid.AddGridComponent(1, 1, new Text("Checking account created")).SetJustify(Justify.Center);
+            grid.AddGridComponent(0, 1, new AsciiArt(AsciiType.String, FiggleFonts.Small.Render("Checking Account"), ColourFG.Green))
+                .SetAlign(Align.Middle)
+                .SetJustify(Justify.Center);
 
-            grid.AddGridComponent(1, 1, new Text(textToDisplay)).SetJustify(Justify.Center);
-            grid.AddGridComponent(2, 1, new Button(createAccountInvoke, "Continue")).SetAlign(Align.Middle);
+            grid.AddGridComponent(1, 1, new Text("Checking account created"))
+                .SetJustify(Justify.Center);
+
+            grid.AddGridComponent(1, 1, new Text(textToDisplay));
+
+            grid.AddGridComponent(2, 1, new Button(createAccountInvoke, "Continue"))
+                .SetAlign(Align.Middle);
 
             return new Panel(grid, LayoutBorder.Heavy);
         }
