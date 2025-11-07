@@ -16,7 +16,10 @@
         /// <param name="selectionFG">Color of the selection foreground color</param>
         /// <param name="selectionBG">Color of the selection background color</param>
         /// <param name="backgroundBG">Background color of items not selected</param>
-        public Dropdown(List<DropdownItem<T>> dropDownItems, ColourFG selectionFG = ColourFG.Black, ColourBG selectionBG = ColourBG.White, ColourBG backgroundBG = ColourBG.BlackBright, int marginTop = 0, int marginLeft = 0, int marginRight = 0, int marginBottom = 0) : base(marginTop, marginLeft, marginRight, marginBottom)
+        public Dropdown(List<DropdownItem<T>> dropDownItems, 
+            ColourFG selectionFG = ColourFG.Black, ColourBG selectionBG = ColourBG.White, ColourBG backgroundBG = ColourBG.BlackBright, 
+            int marginTop = 0, int marginLeft = 0, int marginRight = 0, int marginBottom = 0) 
+            : base(marginTop, marginLeft, marginRight, marginBottom)
         {
             IsMultiComponent = true;
             IsInteractable = true;

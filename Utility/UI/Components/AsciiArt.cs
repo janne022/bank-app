@@ -14,7 +14,10 @@ namespace bank_app.Utility.UI.Components
         /// </summary>
         /// <param name="asciiType"></param>
         /// <param name="content"></param>
-        public AsciiArt(AsciiType asciiType, string content, ColourFG asciiColourFG = ColourFG.None, ColourBG asciiColourBG = ColourBG.None, int marginTop = 0, int marginLeft = 0, int marginRight = 0, int marginBottom = 0) : base(marginTop, marginLeft, marginRight, marginBottom)
+        public AsciiArt(AsciiType asciiType, string content, 
+            ColourFG asciiColourFG = ColourFG.None, ColourBG asciiColourBG = ColourBG.None, 
+            int marginTop = 0, int marginLeft = 0, int marginRight = 0, int marginBottom = 0) 
+            : base(marginTop, marginLeft, marginRight, marginBottom)
         {
             switch (asciiType)
             {

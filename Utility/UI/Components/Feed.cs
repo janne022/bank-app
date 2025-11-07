@@ -26,11 +26,22 @@ namespace bank_app.Utility.UI.Components
         private int _lengthOfColumns;
         private int _startIndex;
         private int _endIndex;
-        private int _extraX;
+        private int _addedDistance;
 
 
+        /// <summary>
+        /// Creates a Feed field on your page.
+        /// </summary>
+        /// <param name="linesToDisplay">How many lines are displayed at once in the Feed</param>
+        /// <param name="renderHeader">Whether to show the header</param>
+        /// <param name="renderFooter">Whether to show the footer</param>
+        /// <param name="textColour">The colour of text</param>
+        /// <param name="backgroundColour">The colour of the element's background</param>
+        /// <param name="focusColour">The colour of the text in focus</param>
         public Feed(int linesToDisplay, bool renderHeader, bool renderFooter, ColourFG textColour = ColourFG.None,
-            ColourBG backgroundColour = ColourBG.None, ColourFG focusColour = ColourFG.Black, int marginTop = 0, int marginLeft = 0, int marginRight = 0, int marginBottom = 0) : base(marginTop, marginLeft, marginRight, marginBottom)
+            ColourBG backgroundColour = ColourBG.None, ColourFG focusColour = ColourFG.Black, 
+            int marginTop = 0, int marginLeft = 0, int marginRight = 0, int marginBottom = 0) 
+            : base(marginTop, marginLeft, marginRight, marginBottom)
         {
             FeedColumns = new List<FeedColumn>();
             IsMultiComponent = true;
@@ -43,7 +54,7 @@ namespace bank_app.Utility.UI.Components
             _currentIndex = -1;
             _startIndex = 0;
             _endIndex = (_startIndex + _lineAmount);
-            _extraX = 0;
+            _addedDistance = 0;
         }
 
 
@@ -154,15 +165,15 @@ namespace bank_app.Utility.UI.Components
             _lengthOfColumns = FeedColumns[0]._entries.Length;
             _endIndex = FindLowestLineAmount();
 
-            _extraX = 0;
+            _addedDistance = 0;
             for (int i = 0; i < FeedColumns.Count; i++)
             {
-                FeedColumns[i].X = X + _extraX;
+                FeedColumns[i].X = X + _addedDistance;
                 FeedColumns[i].Y = Y;
                 FeedColumns[i].CurrentIndex = _currentIndex;
                 FeedColumns[i].StartIndex = _startIndex;
                 FeedColumns[i].EndIndex = _endIndex;
-                _extraX += FeedColumns[i].Width;
+                _addedDistance += FeedColumns[i].Width;
                 FeedColumns[i].Render();
             }
 
@@ -174,6 +185,10 @@ namespace bank_app.Utility.UI.Components
 
         private void RenderFooter()
         {
+            string footerText = $"{_startIndex + 1}-{Math.Min(_startIndex + (_endIndex - _startIndex), _lengthOfColumns)} of {_lengthOfColumns}";
+
+            // Finds out where the footer should be displayed by checking how many lines
+            // come before it.
             int footerDepth = 0;
             int headerTitleAndSpacer = 0;
 
@@ -190,8 +205,8 @@ namespace bank_app.Utility.UI.Components
 
             Console.SetCursorPosition(X, Y + footerDepth);
 
-            string footerText = $"{_startIndex + 1}-{Math.Min(_startIndex + (_endIndex - _startIndex), _lengthOfColumns)} of {_lengthOfColumns}";
 
+            // Calculate the middle of the footer for later display
             int footerLeftSide = (Width - footerText.Length) / 2;
             if (footerLeftSide < 0)
             {
