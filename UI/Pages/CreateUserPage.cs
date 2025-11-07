@@ -19,6 +19,7 @@ namespace bank_app.UI.Pages
                 new DropdownItem<UserType>("Admin", UserType.Admin),
                 new DropdownItem<UserType>("Client", UserType.Client)
             ];
+
             var navbar = new Navbar(
             [
                 new("Home", PageType.AdminDashboard),
@@ -28,7 +29,7 @@ namespace bank_app.UI.Pages
                 new NavbarItem("Logout", PageType.LogOut)
             ]);
 
-            var loginInvoke = new Invokable<UserType, string, string, string, string, string>(CreateUserHandler);
+            var loginInvoke = new Invokable<UserType, string, string, string, string, string, bool>(CreateUserHandler);
 
             Grid grid = new(3, 3);
             grid.AddGridComponent(0, 1, navbar)
@@ -44,22 +45,31 @@ namespace bank_app.UI.Pages
                 new InputField("Password", InputFieldType.Password,24),
                 new InputField("E-mail",InputFieldType.Normal, 24),
                 new InputField("Phone number",InputFieldType.Number, 15),
+                new Dropdown<bool>(authTypeItems),
             ], new Button(loginInvoke, "Create User", marginTop: 1));
-            grid.AddGridComponent(1, 1, new Panel(_createUserForm, LayoutBorder.Rounded, "Login", 70, 15, ColourFG.Red))
+            grid.AddGridComponent(1, 1, new Panel(_createUserForm, LayoutBorder.Rounded, "Login", 55, 13, ColourFG.Red))
                 .SetAlign(Align.Middle)
                 .SetJustify(Justify.Center);
 
             return new Panel(grid, LayoutBorder.Heavy);
         }
 
-        private void CreateUserHandler(UserType userType, string userName, string legalName, string password, string email, string phone)
+        private void CreateUserHandler(UserType userType, string userName, string legalName, string password, string email, string phone, bool twoFactorEnabled)
         {
-                if(UserManager.GetUser(userName) != null)
+            if (UserManager.GetUser(userName) != null)
+            {
+                _createUserForm?.UpdateErrorMessage("Username already exists");
+            }
+
+            else
+            {
+                try
                 {
-                    _createUserForm?.UpdateErrorMessage("Username already exists");
+                    UserManager.CreateUser(userName, password, userType, email, phone, legalName, twoFactorEnabled);
+                    PageManager.SwitchPage(PageType.AdminDashboard);
                 }
 
-                else 
+                catch (Exception)
                 {
                     try
                     {
@@ -71,6 +81,7 @@ namespace bank_app.UI.Pages
                         _createUserForm?.UpdateErrorMessage("An error occured");
                     }
                 }
+            }
         }
     }
 }
