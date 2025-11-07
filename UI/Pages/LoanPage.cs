@@ -49,22 +49,28 @@ namespace bank_app.UI.Pages
         private void CreateLoanHandler(string stringAmount)
         {
             var loanManager = new LoanManager();
-            bool canConvert = decimal.TryParse(stringAmount, out decimal loanAmount);
-            
-            try
+
+            if(decimal.TryParse(stringAmount, out decimal loanAmount))
             {
-                loanManager.DisburseLoan(CurrentUser.UserId, loanAmount);
-                PageManager.SwitchPage(PageType.LoanConfirmPage);
+                try
+                {
+                    loanManager.DisburseLoan(CurrentUser.UserId, loanAmount);
+                    PageManager.SwitchPage(PageType.LoanConfirmPage);
+                }
+                catch (InvalidOperationException)
+                {
+                    _createLoanForm?.UpdateErrorMessage("Loan amount exceeds your allowed limit.");
+                }
+                catch (Exception)
+                {
+                    _createLoanForm?.UpdateErrorMessage("An error has occurred. Try again.");
+                }
             }
-            catch (InvalidOperationException)
+
+            else
             {
-                _createLoanForm?.UpdateErrorMessage("Loan amount exceeds your allowed limit.");
-            }
-            catch (Exception)
-            {
-                _createLoanForm?.UpdateErrorMessage("An error has occurred. Try again.");
-            }
-           
+                _createLoanForm?.UpdateErrorMessage("Loan amount wrong format");
+            }  
         }
     }
 }
