@@ -23,6 +23,10 @@ namespace bank_app.Managers
             {
                 var client = new Client(userId, userPassword, email, phoneNumber, legalName, twoFactorEnabled);
                 Users.Add(client);
+                AccountManager.CreateAccount(client.UserId, Currency.SEK, 20000, AccountType.CheckingAcc, "My transaction acc.");
+                AccountManager.CreateAccount(client.UserId, Currency.SEK, 100000, AccountType.CheckingAcc, "Emergency savings acc.");
+                AccountManager.CreateAccount(client.UserId, Currency.SEK, 0, AccountType.LoanAcc, "My Loan acc.");
+
                 return client;
             }
             return null;
