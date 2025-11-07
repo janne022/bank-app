@@ -14,4 +14,4 @@ This project is a Console Application written in C# for a group project.
 
 
 # Documentation
-For full documentation, please [view the wiki](https://github.com/janne022/bank-app/wiki)
+For full documentation, please [view the wiki](https://github.com/janne022/bank-app/wiki).
