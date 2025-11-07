@@ -54,11 +54,15 @@ namespace bank_app.UI.Pages
                 loanManager.DisburseLoan(CurrentUser.UserId, loanAmount, Currency.SEK, label);
                 PageManager.SwitchPage(PageType.LoanConfirmPage);
             }
-
+            catch (InvalidOperationException)
+            {
+                _createLoanForm?.UpdateErrorMessage("Loan amount exceeds your allowed limit.");
+            }
             catch (Exception)
             {
-                _createLoanForm?.UpdateErrorMessage("Loan exceeds limit");
+                _createLoanForm?.UpdateErrorMessage("An error has occurred. Try again.");
             }
+           
         }
     }
 }
