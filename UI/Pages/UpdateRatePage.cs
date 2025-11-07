@@ -17,7 +17,7 @@ namespace bank_app.UI.Pages
             var navbar = new Navbar(
                 [
                 new("Home", PageType.AdminDashboard),
-                new("Create User", PageType.CreateUserPage),
+                new("User", PageType.CreateUserPage),
                 new("Transactions", PageType.TransactionLogPage),
                 new("Rates", PageType.UpdateRatePage),
                 new NavbarItem("Logout", PageType.LogOut)

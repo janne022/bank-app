@@ -76,6 +76,10 @@
         {
             // Find first interactable or multicomponent
             _index = Components.FindIndex(component => component.IsInteractable || component.IsMultiComponent);
+            if (_index == -1)
+            {
+                return (0, 0);
+            }
             while (true)
             {
                 for (int i = 0; i < Components.Count; i++)

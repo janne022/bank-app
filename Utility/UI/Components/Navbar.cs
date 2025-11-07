@@ -17,6 +17,10 @@ namespace bank_app.Utility.UI.Components
             IsMultiComponent = true;
             Items = navItems;
             _index = Items.FindIndex(item => item.PageType == PageManager.GetCurrentPageType());
+            if (_index == -1)
+            {
+                _index = 0;
+            }
         }
 
         public void AddNavbarItem(NavbarItem item)
