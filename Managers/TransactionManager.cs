@@ -79,11 +79,18 @@ namespace bank_app.Managers
             }
         }
 
+        /// <summary>
+        /// Returns a readonly list of all transactions in the bank, ordered by their creation date & time
+        /// </summary>
         public static IReadOnlyList<Transaction> GetAllTransactions()
         {
             return allTransactions.OrderByDescending(t => t.TimeStamp).ToList();
         }
 
+        /// <summary>
+        /// Returns a readonly list of all transactions that occured to and from accounts that are owned by
+        /// a specific user. Ordered by creation date & time. 
+        /// </summary>
         public static IReadOnlyList<Transaction> GetAllTransactions(string userId)
         {
             var accountList = AccountManager.GetAllAccounts(userId);

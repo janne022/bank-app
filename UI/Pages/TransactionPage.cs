@@ -40,11 +40,18 @@ namespace bank_app.UI.Pages
 
             var _currentUser = PageManager.GetCurrentUser();
 
-
             if (_currentUser != null)
             {
                 var allTransactions = new List<bank_app.Models.Transaction>();
 
+                if (allTransactions.Count == 0)
+                {
+                    var errorText = new Text("There are no transactions to be displayed yet.", TextAlign.Center);
+                    grid.AddGridComponent(1, 1, errorText)
+                    .SetJustify(Justify.Center)
+                    .SetAlign(Align.Middle);
+                    return new Panel(grid, LayoutBorder.Heavy);
+                }
 
                 allTransactions.AddRange(bank_app.Managers.TransactionManager.GetAllTransactions(_currentUser.UserId));
 
@@ -91,8 +98,15 @@ namespace bank_app.UI.Pages
                 transactionFeed.AddColumn(_timeStampColumn);
 
             }
-
-            return new Panel(grid, LayoutBorder.Heavy);
+            else
+            {
+                var errorText = new Text("Technical error when finding your data. Please try again later.", TextAlign.Center);
+                grid.AddGridComponent(1, 1, errorText)
+                .SetJustify(Justify.Center)
+                .SetAlign(Align.Middle);
+                return new Panel(grid, LayoutBorder.Heavy);
+            }
+                return new Panel(grid, LayoutBorder.Heavy);
         }
     }
 }

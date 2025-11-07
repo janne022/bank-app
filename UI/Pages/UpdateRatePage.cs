@@ -37,6 +37,7 @@ namespace bank_app.UI.Pages
                 new DropdownItem<Currency>("NZD", Currency.NZD)
             ];
             var loginInvoke = new Invokable<Currency, string>(UpdateRateHandler);
+
             Grid grid = new(3, 3);
             grid.AddGridComponent(0, 1, navbar)
                 .SetJustify(Justify.Center)
@@ -47,13 +48,15 @@ namespace bank_app.UI.Pages
             [
                 new Dropdown<Currency>(currencyItems),
                 new InputField("New rate",InputFieldType.Normal, 16),
-
             ], new Button(loginInvoke, "Apply", marginTop: 2));
             grid.AddGridComponent(1, 1, new Panel(_rateForm, LayoutBorder.Rounded, "Update Rates", 40, 10, ColourFG.Red));
 
             return new Panel(grid, LayoutBorder.Heavy);
         }
 
+        /// <summary>
+        /// Invoked by a button connected to a form. Will update the current rate of a chosen currency using methods from CurrencyExchange.cs
+        /// </summary>
         private void UpdateRateHandler(Currency currency, string rate)
         {
             if (decimal.TryParse(rate, out decimal decimalRate))
