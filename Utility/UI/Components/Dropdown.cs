@@ -18,8 +18,8 @@
         /// <param name="backgroundBG">Background color of items not selected</param>
         public Dropdown(List<DropdownItem<T>> dropDownItems, ColourFG selectionFG = ColourFG.Black, ColourBG selectionBG = ColourBG.White, ColourBG backgroundBG = ColourBG.BlackBright, int marginTop = 0, int marginLeft = 0, int marginRight = 0, int marginBottom = 0) : base(marginTop, marginLeft, marginRight, marginBottom)
         {
-            IsInteractable = true;
             IsMultiComponent = true;
+            IsInteractable = true;
             DropdownItems = dropDownItems;
             SelectionFG = selectionFG;
             SelectionBG = selectionBG;

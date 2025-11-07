@@ -1,4 +1,5 @@
 ﻿using bank_app.Managers;
+using bank_app.Models.Users;
 using bank_app.Utility;
 using bank_app.Utility.UI;
 using bank_app.Utility.UI.Components;
@@ -8,7 +9,7 @@ using Figgle.Fonts;
 
 namespace bank_app.UI.Pages
 {
-    internal class CreateUserPage : Page
+    internal class UnlockUserPage : Page
     {
         private Form? _createUserForm;
         internal override UIComponent LoadPage()
@@ -18,11 +19,6 @@ namespace bank_app.UI.Pages
                 [
                 new DropdownItem<UserType>("Admin", UserType.Admin),
                 new DropdownItem<UserType>("Client", UserType.Client)
-                ];
-            List<DropdownItem<bool>> authTypeItems =
-                [
-                new DropdownItem<bool>("2-Step Disabled", false),
-                new DropdownItem<bool>("2-Step Enabled", true)
                 ];
             var navbar = new Navbar(
                 [
@@ -39,7 +35,7 @@ namespace bank_app.UI.Pages
                 new("Unlock User", PageType.TransactionLogPage),
             ]);
 
-            var loginInvoke = new Invokable<UserType, string, string, string, string, string, bool>(CreateUserHandler);
+            var loginInvoke = new Invokable<UserType, string, string, string, string, string, bool>(UnlockUserHandler);
 
             Grid grid = new(3, 3);
             grid.AddGridComponent(0, 1, navbar)
@@ -56,8 +52,7 @@ namespace bank_app.UI.Pages
                 new InputField("Password", InputFieldType.Password,24),
                 new InputField("E-mail",InputFieldType.Normal, 24),
                 new InputField("Phone number",InputFieldType.Number, 15),
-                new Dropdown<bool>(authTypeItems),
-            ], new Button(loginInvoke, "Create User", marginTop: 1));
+            ], new Button(loginInvoke, "Unlock User", marginTop: 1));
             grid.AddGridComponent(1, 1, new Panel(_createUserForm, LayoutBorder.Rounded, "Login", 55, 13, ColourFG.Red))
                 .SetAlign(Align.Middle)
                 .SetJustify(Justify.Center);
@@ -65,25 +60,17 @@ namespace bank_app.UI.Pages
             return new Panel(grid, LayoutBorder.Heavy);
         }
 
-        private void CreateUserHandler(UserType userType, string userName, string legalName, string password, string email, string phone, bool twoFactorEnabled)
+        private void UnlockUserHandler(User user)
         {
-            if (UserManager.GetUser(userName) != null)
+            try
             {
-                _createUserForm?.UpdateErrorMessage("Username already exists");
+                UserManager.UnlockAccount(user);
+                PageManager.SwitchPage(PageType.AdminDashboard);
             }
 
-            else
+            catch (Exception)
             {
-                try
-                {
-                    UserManager.CreateUser(userName, password, userType, email, phone, legalName, twoFactorEnabled);
-                    PageManager.SwitchPage(PageType.AdminDashboard);
-                }
-
-                catch (Exception)
-                {
-                    _createUserForm?.UpdateErrorMessage("An error occured");
-                }
+                _createUserForm?.UpdateErrorMessage("An error occured");
             }
         }
     }
