@@ -49,7 +49,7 @@ namespace bank_app.UI.Pages
                 new InputField("New rate",InputFieldType.Normal, 16),
 
             ], new Button(loginInvoke, "Apply", marginTop: 2));
-            grid.AddGridComponent(1, 1, new Panel(_rateForm, LayoutBorder.Rounded, "Update Rates", 40, 10, ColourFG.GreenBright));
+            grid.AddGridComponent(1, 1, new Panel(_rateForm, LayoutBorder.Rounded, "Update Rates", 40, 10, ColourFG.Red));
 
             return new Panel(grid, LayoutBorder.Heavy);
         }
