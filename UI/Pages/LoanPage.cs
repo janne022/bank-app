@@ -15,10 +15,6 @@ namespace bank_app.UI.Pages
         {
             Console.CursorVisible = false;
 
-            var accounts = AccountManager.GetAllAccounts(CurrentUser.UserId).Where(account => account is LoanAccount);
-            var accountsNavbarItems = accounts.Select(account => new DropdownItem<Models.Accounts.Account>(account.AccountID.ToString(), account)).ToList();
-            var accountDropdown = new Dropdown<Models.Accounts.Account>(accountsNavbarItems);
-
             var navbar = new Navbar(
                 [
                 new("Home", PageType.ClientDashboard),
@@ -29,7 +25,7 @@ namespace bank_app.UI.Pages
                 new NavbarItem("Logout", PageType.LogOut)
                 ]);
 
-            var createAccountInvoke = new Invokable<Account, string>(CreateLoanHandler);
+            var createAccountInvoke = new Invokable<string>(CreateLoanHandler);
 
             Grid grid = new(3, 3);
             grid.AddGridComponent(0, 1, navbar)
@@ -39,9 +35,7 @@ namespace bank_app.UI.Pages
 
             _createLoanForm = new Form(
             [
-                accountDropdown,
-                new InputField("Loan Amount",InputFieldType.Number,24),
-
+                new InputField("Loan Amount (SEK)",InputFieldType.Number,24),
             ], new Button(createAccountInvoke, "Take Loan", marginTop: 2));
             grid.AddGridComponent(1, 1, new Panel(_createLoanForm, LayoutBorder.Rounded, "Take new Loan", 55, 10, ColourFG.Red))
                 .SetAlign(Align.Middle)
@@ -50,14 +44,14 @@ namespace bank_app.UI.Pages
             return new Panel(grid, LayoutBorder.Heavy);
         }
 
-        private void CreateLoanHandler(Account loanAccount, string stringAmount)
+        private void CreateLoanHandler(string stringAmount)
         {
             var loanManager = new LoanManager();
             bool canConvert = decimal.TryParse(stringAmount, out decimal loanAmount);
             string label = "";
             try
             {
-                loanManager.DisburseLoan(CurrentUser.UserId, loanAmount, loanAccount.AccountCurrency, label);
+                loanManager.DisburseLoan(CurrentUser.UserId, loanAmount, Currency.SEK, label);
                 PageManager.SwitchPage(PageType.LoanConfirmPage);
             }
 
