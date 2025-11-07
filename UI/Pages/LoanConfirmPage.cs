@@ -26,10 +26,14 @@ namespace bank_app.UI.Pages
             var continueInvoke = new Invokable(NavigationHandler);
 
             Grid grid = new(3, 3);
-            grid.AddGridComponent(0, 1, new AsciiArt(AsciiType.String, FiggleFonts.Small.Render("Loan Confirmed"))).SetJustify(Justify.Center);
-            grid.AddGridComponent(1, 1, new Text(displayInterestText)).SetJustify(Justify.Center);
-            grid.AddGridComponent(1, 1, new Text(displayPaymentText)).SetJustify(Justify.Center);
-            grid.AddGridComponent(2, 1, new Button(continueInvoke, "Continue")).SetAlign(Align.Middle);
+            grid.AddGridComponent(0, 1, new AsciiArt(AsciiType.String, FiggleFonts.Small.Render("Loan Confirmed"), ColourFG.Green))
+                .SetJustify(Justify.Center);
+            grid.AddGridComponent(1, 1, new Text(displayInterestText))
+                .SetJustify(Justify.Center);
+            grid.AddGridComponent(1, 1, new Text(displayPaymentText))
+                .SetJustify(Justify.Center);
+            grid.AddGridComponent(2, 1, new Button(continueInvoke, "Continue"))
+                .SetAlign(Align.Middle);
 
             return new Panel(grid, LayoutBorder.Heavy);
         }
