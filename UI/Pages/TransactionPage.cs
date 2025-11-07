@@ -29,6 +29,7 @@ namespace bank_app.UI.Pages
                 new NavbarItem("Transaction", PageType.TransactionPage),
                 new NavbarItem("Account", PageType.CreateAccountPage),
                 new NavbarItem("Loan", PageType.LoanPage),
+                new NavbarItem("Change Info", PageType.ChangeUserInfoPage),
                 new NavbarItem("Logout", PageType.LogOut)
                 ]);
             Grid grid = new(3, 3);

@@ -152,29 +152,31 @@ namespace bank_app.Models.Users
             }
         }
 
-        public void UpdateUserInfo(string type, string change)
+        public void UpdateUserInfo(string fullName, string username, string email, string phoneNumber, string password)
         {
-            switch (type)
+            if (!string.IsNullOrEmpty(fullName) && fullName != LegalName)
             {
-                case "id":
-                    UpdateUserId(change);
-                    break;
+                SetLegalName(fullName);
+            }
 
-                case "password":
-                    SetPassword(change);
-                    break;
+            if (!string.IsNullOrEmpty(username) && username != UserId)
+            {
+                UpdateUserId(username);
+            }
 
-                case "email":
-                    SetEmail(change);
-                    break;
+            if (!string.IsNullOrEmpty(email) && email != Email)
+            {
+                SetEmail(email);
+            }
 
-                case "number":
-                    SetPhoneNumber(change);
-                    break;
+            if (!string.IsNullOrEmpty(phoneNumber) && phoneNumber != PhoneNumber)
+            {
+                SetPhoneNumber(phoneNumber);
+            }
 
-                case "name":
-                    SetLegalName(change);
-                    break;
+            if (!string.IsNullOrEmpty(password))
+            {
+                SetPassword(password);
             }
         }
 

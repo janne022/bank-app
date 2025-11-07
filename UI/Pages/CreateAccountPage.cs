@@ -41,6 +41,7 @@ namespace bank_app.UI.Pages
                 new("Transactions", PageType.TransactionPage),
                 new("Account", PageType.CreateAccountPage),
                 new("Loan", PageType.LoanPage),
+                new NavbarItem("Change Info", PageType.ChangeUserInfoPage),
                 new NavbarItem("Logout", PageType.LogOut)
                 ]);
 

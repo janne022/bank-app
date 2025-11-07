@@ -141,9 +141,9 @@ namespace bank_app.Managers
             // UI needed to develop - change page to login page
         }
 
-        public static void ChangeUserInfo(User user, string typeOfChange, string change)
+        public static void ChangeUserInfo(User user, string fullName, string username, string email, string phoneNumer, string password)
         {
-            user.UpdateUserInfo(typeOfChange, change);
+            user.UpdateUserInfo(fullName, username, email, phoneNumer, password);
         }
     }
 }
