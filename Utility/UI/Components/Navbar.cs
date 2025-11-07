@@ -14,10 +14,13 @@ namespace bank_app.Utility.UI.Components
         /// <param name="navItems">the list of navbar items</param>
         public Navbar(List<NavbarItem> navItems, int marginTop = 0, int marginLeft = 0, int marginRight = 0, int marginBottom = 0) : base(marginTop, marginLeft, marginRight, marginBottom)
         {
-            IsInteractable = true;
             IsMultiComponent = true;
             Items = navItems;
             _index = Items.FindIndex(item => item.PageType == PageManager.GetCurrentPageType());
+            if (_index == -1)
+            {
+                _index = 0;
+            }
         }
 
         public void AddNavbarItem(NavbarItem item)

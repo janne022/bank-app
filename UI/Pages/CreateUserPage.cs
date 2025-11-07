@@ -27,19 +27,26 @@ namespace bank_app.UI.Pages
             var navbar = new Navbar(
                 [
                 new("Home", PageType.AdminDashboard),
-                new("Create User", PageType.CreateUserPage),
+                new("User", PageType.CreateUserPage),
                 new("Transactions", PageType.TransactionLogPage),
                 new("Rates", PageType.UpdateRatePage),
                 new NavbarItem("Logout", PageType.LogOut)
                 ]);
 
+            var userNavbar = new Navbar(
+                [
+                new("Create User", PageType.CreateUserPage),
+                new("Unlock User", PageType.UnlockUserPage),
+            ]);
+
             var loginInvoke = new Invokable<UserType, string, string, string, string, string, bool>(CreateUserHandler);
 
-            Grid grid = new(3, 3);
-            grid.AddGridComponent(0, 1, navbar)
+            Grid grid = new(1, 1);
+            grid.AddGridComponent(0, 0, navbar)
                 .SetJustify(Justify.Center)
                 .SetAlign(Align.Top);
-            grid.AddGridComponent(0, 1, new AsciiArt(AsciiType.String, FiggleFonts.Small.Render("Create a new user")));
+            grid.AddGridComponent(0, 0, userNavbar);
+            grid.AddGridComponent(0, 0, new AsciiArt(AsciiType.String, FiggleFonts.Small.Render("Create a new user")));
 
             _createUserForm = new Form(
             [
@@ -51,9 +58,7 @@ namespace bank_app.UI.Pages
                 new InputField("Phone number",InputFieldType.Number, 15),
                 new Dropdown<bool>(authTypeItems),
             ], new Button(loginInvoke, "Create User", marginTop: 1));
-            grid.AddGridComponent(1, 1, new Panel(_createUserForm, LayoutBorder.Rounded, "Login", 55, 13, ColourFG.Red))
-                .SetAlign(Align.Middle)
-                .SetJustify(Justify.Center);
+            grid.AddGridComponent(0, 0, new Panel(_createUserForm, LayoutBorder.Rounded, "Create User", 55, 13, ColourFG.Red));
 
             return new Panel(grid, LayoutBorder.Heavy);
         }

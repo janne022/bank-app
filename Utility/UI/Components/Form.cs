@@ -30,7 +30,6 @@ namespace bank_app.Utility.UI.Components
         public Form(List<UIComponent> components, Button submitButton, int width = 30, ColourFG selectionFG = ColourFG.Black, ColourBG selectionBG = ColourBG.White, int marginTop = 0, int marginLeft = 0, int marginRight = 0, int marginBottom = 0) : base(marginTop, marginLeft, marginRight, marginBottom)
         {
             // Set variables
-            IsInteractable = true;
             IsMultiComponent = true;
             _components = new List<FormItem>();
             Width = width + MarginLeft + MarginRight;

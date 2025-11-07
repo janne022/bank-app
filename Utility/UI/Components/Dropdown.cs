@@ -18,17 +18,18 @@
         /// <param name="backgroundBG">Background color of items not selected</param>
         public Dropdown(List<DropdownItem<T>> dropDownItems, ColourFG selectionFG = ColourFG.Black, ColourBG selectionBG = ColourBG.White, ColourBG backgroundBG = ColourBG.BlackBright, int marginTop = 0, int marginLeft = 0, int marginRight = 0, int marginBottom = 0) : base(marginTop, marginLeft, marginRight, marginBottom)
         {
-            IsInteractable = true;
             IsMultiComponent = true;
+            IsInteractable = true;
             DropdownItems = dropDownItems;
             SelectionFG = selectionFG;
             SelectionBG = selectionBG;
             BackgroundBG = backgroundBG;
             Height = 1;
-
-            SelectedDropdownItem = DropdownItems[0];
-            Value = DropdownItems[0].DropDownItem;
-
+            if (dropDownItems.Count > 0)
+            {
+                SelectedDropdownItem = DropdownItems[0];
+                Value = DropdownItems[0].DropDownItem;
+            }
             Measure();
         }
 
@@ -132,11 +133,18 @@
         public override void Render()
         {
             Console.SetCursorPosition(X, Y);
-            string name = SelectedDropdownItem.Name;
-            int totalPadding = Width - name.Length;
-            int padLeftLength = (totalPadding / 2) + name.Length;
-            string centeredName = name.PadLeft(padLeftLength).PadRight(Width);
-            Console.Write($"[ {centeredName} ▸ ]");
+            if (DropdownItems.Count > 0)
+            {
+                string name = SelectedDropdownItem.Name;
+                int totalPadding = Width - name.Length;
+                int padLeftLength = (totalPadding / 2) + name.Length;
+                string centeredName = name.PadLeft(padLeftLength).PadRight(Width);
+                Console.Write($"[ {centeredName} ▸ ]");
+            }
+            else
+            {
+                Console.Write("No Items to display");
+            }
         }
     }
 }

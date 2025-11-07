@@ -33,7 +33,6 @@ namespace bank_app.Utility.UI.Components
             ColourBG backgroundColour = ColourBG.None, ColourFG focusColour = ColourFG.Black, int marginTop = 0, int marginLeft = 0, int marginRight = 0, int marginBottom = 0) : base(marginTop, marginLeft, marginRight, marginBottom)
         {
             FeedColumns = new List<FeedColumn>();
-            IsInteractable = true;
             IsMultiComponent = true;
             _lineAmount = linesToDisplay;
             _renderHeader = renderHeader;
