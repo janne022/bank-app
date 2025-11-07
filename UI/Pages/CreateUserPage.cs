@@ -36,7 +36,7 @@ namespace bank_app.UI.Pages
             var userNavbar = new Navbar(
                 [
                 new("Create User", PageType.CreateUserPage),
-                new("Unlock User", PageType.TransactionLogPage),
+                new("Unlock User", PageType.UnlockUserPage),
             ]);
 
             var loginInvoke = new Invokable<UserType, string, string, string, string, string, bool>(CreateUserHandler);

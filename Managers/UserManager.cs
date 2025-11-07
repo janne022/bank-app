@@ -129,6 +129,7 @@ namespace bank_app.Managers
         internal static void UnlockAccount(User user)
         {
             user.UpdateAccountStatus(AccountStatus.Unlocked);
+            user.UpdateLoginAttempts(0);
         }
 
         internal static void Logout()
