@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace bank_app.UI.Pages
 {
-    internal class SavingsAccountConfirm : Page
+    internal class SavingsAccountConfirmPage : Page
     {
         internal override UIComponent LoadPage()
         {
