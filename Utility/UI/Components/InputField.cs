@@ -32,22 +32,26 @@ namespace bank_app.Utility.UI.Components
         /// <param name="inputBoxTextColour">Text colour for input box</param>
         /// <param name="inputBoxBGColour">Background colour for input box</param>
         /// <param name="userInputColour">Text colour for the user's inputted text</param>
+        /// <param name="preinputtedValue">Text already present in the input box on first render</param>
         public InputField(string descriptor, InputFieldType allowedCharacters, int maxLength,
             ColourFG descriptorTextColour = ColourFG.None, ColourBG descriptorBGColour = ColourBG.None,
             ColourFG inputBoxTextColour = ColourFG.None, ColourBG inputBoxBGColour = ColourBG.None,
-            ColourFG userInputColour = ColourFG.None, int marginTop = 0, int marginLeft = 0, int marginRight = 0, int marginBottom = 0) : base(marginTop, marginLeft, marginRight, marginBottom)
+            ColourFG userInputColour = ColourFG.None, string preinputtedValue = "",
+            int marginTop = 0, int marginLeft = 0, int marginRight = 0, int marginBottom = 0)
+            : base(marginTop, marginLeft, marginRight, marginBottom)
         {
             Descriptor = descriptor;
             MaxLength = maxLength;
             MarginLeft = marginLeft;
             _allowedCharacters = allowedCharacters;
-            InputtedValue = string.Empty;
+            InputtedValue = preinputtedValue;
             _descriptorTextColour = descriptorTextColour;
             _descriptorBGColour = descriptorBGColour;
             _inputBoxTextColour = inputBoxTextColour;
             _inputBoxBGColour = inputBoxBGColour;
             _userInputColour = userInputColour;
             IsInteractable = true;
+            Value = InputtedValue;
         }
 
         public override (int, int) Pressed()
