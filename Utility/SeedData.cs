@@ -68,7 +68,7 @@ namespace bank_app.Utility
             var users = new[] { vira, emma, janne, slava, iskld, aldorLivs, pelleblues, slavagym, emmamanga, jannebakery, theocarz, virabook };
             var rand = new Random();
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 420; i++)
             {
                 var sender = users[rand.Next(users.Length)];
                 var receiver = users[rand.Next(users.Length)];
