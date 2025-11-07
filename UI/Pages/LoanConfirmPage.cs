@@ -23,21 +23,13 @@ namespace bank_app.UI.Pages
             string displayInterestText = $"Your interest is: {monthlyInterestRate}%";
             string displayPaymentText = $"Your monthly payment is: {monthlyPayment:F2} SEK";
 
-            var navbar = new Navbar(
-                [
-                    new("Continue", PageType.ClientDashboard),
-                ]);
-
             var continueInvoke = new Invokable(NavigationHandler);
 
             Grid grid = new(3, 3);
-            grid.AddGridComponent(0, 1, navbar)
-                .SetJustify(Justify.Center)
-                .SetAlign(Align.Top);
-            grid.AddGridComponent(0, 1, new AsciiArt(AsciiType.String, FiggleFonts.Small.Render("Loan Confirmed")));
-
+            grid.AddGridComponent(0, 1, new AsciiArt(AsciiType.String, FiggleFonts.Small.Render("Loan Confirmed"))).SetJustify(Justify.Center);
             grid.AddGridComponent(1, 1, new Text(displayInterestText)).SetJustify(Justify.Center);
             grid.AddGridComponent(1, 1, new Text(displayPaymentText)).SetJustify(Justify.Center);
+            grid.AddGridComponent(2, 1, new Button(continueInvoke, "Continue")).SetAlign(Align.Middle);
 
             return new Panel(grid, LayoutBorder.Heavy);
         }

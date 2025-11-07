@@ -12,7 +12,7 @@ namespace bank_app.Managers
         /// Creates a new loan connected to a user, identified by their userId. Runs methods
         /// to verify that the user is permitted to take a loan, and creates a new loan object. 
         /// </summary>
-        public Loan DisburseLoan(string userId, decimal principal, Currency currency)
+        public Loan DisburseLoan(string userId, decimal principal, Currency currency, string label)
         {
             if (!ValidateLoanLimit(userId, principal))
             {
@@ -45,7 +45,7 @@ namespace bank_app.Managers
         public LoanAccount GetLoanAccount(string userId)
         {
             var loanAccount = AccountManager.GetAllAccounts(userId)
-                .OfType<LoanAccount>()
+                .OfType<LoanAccount>()https://github.com/janne022/bank-app/pull/181/conflict?name=UI%252FPages%252FLoanPage.cs&ancestor_oid=6c4f362814f7c7885b4a8888d91f62fb08d494e7&base_oid=644c69881a76397d38edc3217084b7cddc2d2cc6&head_oid=c71ecaec34bda51f804015564662e4b4001ab7c3
                 .FirstOrDefault();
 
             if (loanAccount==null)
