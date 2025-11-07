@@ -1,4 +1,5 @@
 ﻿using bank_app.Managers;
+using bank_app.Models.Accounts;
 using bank_app.Utility;
 using System.Text.RegularExpressions;
 
@@ -161,7 +162,14 @@ namespace bank_app.Models.Users
 
             if (!string.IsNullOrEmpty(username) && username != UserId)
             {
+                List<Account> accountList = AccountManager.GetAllAccounts(UserId);
+
                 UpdateUserId(username);
+                foreach(var accounts in accountList)
+                {
+                    accounts.UpdateOwnerId(UserId);
+                }
+                
             }
 
             if (!string.IsNullOrEmpty(email) && email != Email)
