@@ -17,6 +17,7 @@ namespace bank_app.Utility.UI.Components
         private ColourBG _descriptorBGColour;
         private ColourBG _inputBoxBGColour;
         private ColourFG _userInputColour;
+        private int _inputBoxWidth;
 
 
 
@@ -84,10 +85,10 @@ namespace bank_app.Utility.UI.Components
              */
 
             Console.SetCursorPosition(X, Y);
-            int inputBoxWidth = MarginLeft - Descriptor.Length - 4;// 4 refers to the extra characters
+            _inputBoxWidth = MarginLeft - Descriptor.Length - 4;// 4 refers to the extra characters
             if (ParentComponent != null)
             {
-                inputBoxWidth = ParentComponent.Width - MarginLeft - Descriptor.Length - 4;
+                _inputBoxWidth = ParentComponent.Width - MarginLeft - Descriptor.Length - 4;
             }
 
             for (int i = 0; i < MarginLeft; i++)
@@ -98,7 +99,7 @@ namespace bank_app.Utility.UI.Components
             ColourManager.Write($"{Descriptor}: [", _descriptorTextColour, _descriptorBGColour);
 
             // Start out by filling the input box with underscores.
-            DrawUnderscores(0, inputBoxWidth);
+            DrawUnderscores(0, _inputBoxWidth);
 
 
             // If the user has inputted data before.
@@ -107,26 +108,26 @@ namespace bank_app.Utility.UI.Components
                 Console.SetCursorPosition(X + MarginLeft + Descriptor.Length + 3, Y);
                 if (_allowedCharacters == InputFieldType.Password)
                 {
-                    for (int i = 0; i < inputBoxWidth; i++)
+                    for (int i = 0; i < _inputBoxWidth; i++)
                     {
                         ColourManager.Write("*", _userInputColour, _inputBoxBGColour);
                     }
                 }
                 else
                 {
-                    if (InputtedValue.Length < inputBoxWidth)
+                    if (InputtedValue.Length < _inputBoxWidth)
                     {
                         ColourManager.Write(InputtedValue, _userInputColour, _inputBoxBGColour);
-                        DrawUnderscores(InputtedValue.Length, inputBoxWidth);
+                        DrawUnderscores(InputtedValue.Length, _inputBoxWidth);
                     }
                     else
                     {
-                        ColourManager.Write(InputtedValue[..Math.Min(InputtedValue.Length, inputBoxWidth)],
+                        ColourManager.Write(InputtedValue[..Math.Min(InputtedValue.Length, _inputBoxWidth)],
                             _userInputColour, _inputBoxBGColour);
                     }
                 }
             }
-            Console.SetCursorPosition(X + MarginLeft + Descriptor.Length + inputBoxWidth + 3, Y);
+            Console.SetCursorPosition(X + MarginLeft + Descriptor.Length + _inputBoxWidth + 3, Y);
             ColourManager.Write("]", _descriptorTextColour, _descriptorBGColour);
         }
 
@@ -144,6 +145,8 @@ namespace bank_app.Utility.UI.Components
             int characters = 0;
             bool isEscaping = false;
             bool isInputting = true;
+            int scrollOffset = 0;
+
             while (isInputting)
             {
                 ConsoleKeyInfo pressed = Console.ReadKey(true);
@@ -165,10 +168,13 @@ namespace bank_app.Utility.UI.Components
                         if (characters > 0)
                         {
                             userInput = userInput.Substring(0, userInput.Length - 1);
-                            Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop);
-                            ColourManager.Write("_", _inputBoxTextColour, _inputBoxBGColour);
-                            Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop);
                             characters--;
+                            if (scrollOffset > 0 && characters - scrollOffset < _inputBoxWidth)
+                            {
+                                scrollOffset--;
+                            }
+
+                            RedrawInputBox(userInput, _inputBoxWidth, scrollOffset);
                         }
                         break;
 
@@ -179,32 +185,43 @@ namespace bank_app.Utility.UI.Components
                         {
                             if (characters <= MaxLength || MaxLength == 0)
                             {
-                                switch (_allowedCharacters)
+                                bool shouldDraw = false;
+
+                                userInput += pressed.KeyChar;
+                                characters++;
+
+                                if (_allowedCharacters == InputFieldType.Number)
                                 {
-                                    case InputFieldType.Password:
-                                        ColourManager.Write("*", _userInputColour, _inputBoxBGColour);
-                                        userInput += pressed.KeyChar;
-                                        characters++;
-                                        break;
+                                    if (Regex.IsMatch(pressed.KeyChar.ToString(), @"[0-9]"))
+                                    {
+                                        shouldDraw = true;
+                                    }
+                                    else
+                                    {
+                                        Console.Beep();
+                                    }
+                                }
 
-                                    case InputFieldType.Number:
-                                        if (Regex.IsMatch(pressed.KeyChar.ToString(), @"[0-9]"))
-                                        {
-                                            ColourManager.Write(pressed.KeyChar.ToString(), _userInputColour, _inputBoxBGColour);
-                                            userInput += pressed.KeyChar;
-                                            characters++;
-                                        }
-                                        else
-                                        {
-                                            Console.Beep();
-                                        }
-                                        break;
+                                if (_allowedCharacters == InputFieldType.Normal || _allowedCharacters == InputFieldType.Password)
+                                {
+                                    shouldDraw = true;
+                                }
 
-                                    case InputFieldType.Normal:
-                                        ColourManager.Write(pressed.KeyChar.ToString(), _userInputColour, _inputBoxBGColour);
-                                        userInput += pressed.KeyChar;
-                                        characters++;
-                                        break;
+                                if (shouldDraw && userInput.Length > _inputBoxWidth)
+                                {
+                                    scrollOffset = userInput.Length - _inputBoxWidth;
+
+                                    RedrawInputBox(userInput, _inputBoxWidth, scrollOffset);
+                                }
+                                else if (shouldDraw && userInput.Length <= _inputBoxWidth)
+                                {
+                                    scrollOffset = 0;
+
+                                    RedrawInputBox(userInput, _inputBoxWidth, scrollOffset);
+                                }
+                                else
+                                {
+                                    Console.Beep();
                                 }
                             }
                             else
@@ -212,7 +229,11 @@ namespace bank_app.Utility.UI.Components
                                 Console.Beep();
                             }
                         }
-                        break;
+                        else
+                        {
+                            Console.Beep();
+                        }
+                            break;
                 }
             }
 
@@ -231,6 +252,51 @@ namespace bank_app.Utility.UI.Components
             for (int i = startingPosition; i < endingPosition; i++)
             {
                 ColourManager.Write("_", _inputBoxTextColour, _inputBoxBGColour);
+            }
+        }
+
+        private void RedrawInputBox(string userInput, int inputBoxWidth, int scrollOffset)
+        {
+            Console.CursorVisible = false;
+
+            int startIndex = userInput.Length - inputBoxWidth - scrollOffset;
+            if (startIndex < 0)
+            {
+                startIndex = 0;
+            }
+
+            string visibleText = string.Empty;
+            if (_allowedCharacters == InputFieldType.Password)
+            {
+                string prePassword = userInput.Substring(scrollOffset, Math.Min(inputBoxWidth, userInput.Length - scrollOffset));
+                int visibleTextLength = prePassword.Length;
+                visibleText = (new string('*', visibleTextLength));
+            }
+            else
+            {
+                visibleText = userInput.Substring(scrollOffset, Math.Min(inputBoxWidth, userInput.Length - scrollOffset));
+            }
+
+            int inputStartX = X + MarginLeft + Descriptor.Length + 3;
+            Console.SetCursorPosition(inputStartX, Y);
+
+            int amountOfUnderscores = inputBoxWidth - visibleText.Length;
+            ColourManager.Write(visibleText, _userInputColour, _inputBoxBGColour);
+
+            for (int i = 0; i < amountOfUnderscores; i++)
+            {
+                ColourManager.Write("_", _inputBoxTextColour, _inputBoxBGColour);
+            }
+
+            Console.SetCursorPosition(inputStartX + visibleText.Length, Y);
+
+            if (visibleText.Length >= _inputBoxWidth)
+            {
+                Console.CursorVisible = false;
+            }
+            else
+            {
+                Console.CursorVisible = true;
             }
         }
     }
