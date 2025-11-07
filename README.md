@@ -10,5 +10,8 @@ This project is a Console Application written in C# for a group project.
 - Ability to take out loans
 - 2-Factor Authentication
 
+<img width="1080" height="551" alt="image" src="https://github.com/user-attachments/assets/b264fdef-ee79-4a07-97f9-5d0d9fe55b65" />
+
+
 # Documentation
 For full documentation, please [view the wiki](https://github.com/janne022/bank-app/wiki)
