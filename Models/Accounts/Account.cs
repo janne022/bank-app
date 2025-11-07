@@ -18,7 +18,7 @@ namespace bank_app.Models.Accounts
             AccountID = Guid.NewGuid();
             AccountCurrency = currency;
             Balance = balance < 0 ? 0 : balance;
-            OwnerId = ownerId;
+            SetOwnerId(ownerId);
             AccountType = accountType;
             Label = label;
         }
@@ -57,5 +57,15 @@ namespace bank_app.Models.Accounts
         }
 
         public abstract bool CanApply(Transaction transaction);
+
+        private void SetOwnerId(string ownerId)
+        {
+            OwnerId = ownerId;
+        }
+
+        public void UpdateOwnerId(string ownerId)
+        {
+            SetOwnerId(ownerId);
+        }
     }
 }
