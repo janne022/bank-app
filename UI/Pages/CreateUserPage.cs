@@ -51,7 +51,7 @@ namespace bank_app.UI.Pages
                 new InputField("Phone number",InputFieldType.Number, 15),
                 new Dropdown<bool>(authTypeItems),
             ], new Button(loginInvoke, "Create User", marginTop: 1));
-            grid.AddGridComponent(1, 1, new Panel(_createUserForm, LayoutBorder.Rounded, "Login", 70, 15, ColourFG.Red))
+            grid.AddGridComponent(1, 1, new Panel(_createUserForm, LayoutBorder.Rounded, "Login", 55, 13, ColourFG.Red))
                 .SetAlign(Align.Middle)
                 .SetJustify(Justify.Center);
 
