@@ -192,7 +192,7 @@ namespace bank_app.Utility.UI.Components
 
                                 if (_allowedCharacters == InputFieldType.Number)
                                 {
-                                    if (Regex.IsMatch(pressed.KeyChar.ToString(), @"[0-9]"))
+                                    if (Regex.IsMatch(pressed.KeyChar.ToString(), @"[0-9,.]"))
                                     {
                                         shouldDraw = true;
                                     }
