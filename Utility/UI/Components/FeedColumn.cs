@@ -62,8 +62,15 @@
                 }
             }
             int extraMargin = 2; // 2 margin to the right to look good in multi-column view
-            Width = actualWidth + extraMargin;
-
+            
+            if (_displayHeader && _header.Length > actualWidth)
+            {
+                Width = _header.Length + extraMargin;
+            }
+            else
+            { 
+                Width = actualWidth + extraMargin;
+            }
 
             // Header  Header2 | - - - - - - -  +1
             // ----------------| - - - - - - -  +2
