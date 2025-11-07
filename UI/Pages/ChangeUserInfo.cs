@@ -36,13 +36,13 @@ namespace bank_app.UI.Pages
 
             _changeUserInfoForm = new Form(
             [
-                new InputField("FullName",InputFieldType.Normal,24),
-                new InputField("Username",InputFieldType.Normal,24),
-                new InputField("E-Mail",InputFieldType.Normal,24),
-                new InputField("Phone number",InputFieldType.Number,16),
+                new InputField("FullName",InputFieldType.Normal,24, preinputtedValue: CurrentUser.LegalName),
+                new InputField("Username",InputFieldType.Normal,24, preinputtedValue: CurrentUser.UserId),
+                new InputField("E-Mail",InputFieldType.Normal,24, preinputtedValue: CurrentUser.Email),
+                new InputField("Phone number",InputFieldType.Number,16, preinputtedValue: CurrentUser.PhoneNumber),
                 new InputField("Password",InputFieldType.Password,24),
             ], new Button(createAccountInvoke, "Update", marginTop: 1));
-            grid.AddGridComponent(1, 1, new Panel(_changeUserInfoForm, LayoutBorder.Rounded, "Update User Info", 55, 10, ColourFG.Green))
+            grid.AddGridComponent(1, 1, new Panel(_changeUserInfoForm, LayoutBorder.Rounded, "Update User Info", 55, 12, ColourFG.Green))
                 .SetAlign(Align.Middle)
                 .SetJustify(Justify.Center);
 
