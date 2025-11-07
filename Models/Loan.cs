@@ -30,38 +30,7 @@
         }
 
 
-        public decimal CalculateInterest(int days)
-        {
-            if (days <= 0 || AnnualRate <= 0 || OutstandingPrincipal <= 0)
-            {
-                return 0;
-            }
-
-            decimal dailyRate = AnnualRate / 100m / 365m;
-            decimal interest = OutstandingPrincipal * dailyRate * days;
-            return interest;
-
-        }
-
-        //Can change to return type decimal if it's needed
-        public void ApplyInterest(DateTime currentDate)
-        {
-            int daysToAccrue = (currentDate - LastAccrualDate).Days;
-            if (daysToAccrue <= 0) { return; }
-
-            decimal interest = CalculateInterest(daysToAccrue);
-            if (interest < 0)
-            {
-                return;
-            }
-            interest = Math.Round(interest, 2, MidpointRounding.AwayFromZero);
-
-            AccruedInterest += interest;
-            LastAccrualDate = currentDate.Date;
-
-
-        }
-
+      
 
         public void ApplyPayment(decimal amount)
         {

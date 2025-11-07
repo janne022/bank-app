@@ -1,4 +1,6 @@
 ﻿using bank_app.Managers;
+using bank_app.Models;
+using bank_app.Models.Accounts;
 using bank_app.Utility;
 using bank_app.Utility.Components;
 using bank_app.Utility.UI;
@@ -14,13 +16,10 @@ namespace bank_app.UI.Pages
         {
             Console.CursorVisible = false;
             string currenctUserId = PageManager.GetCurrentUser()!.UserId;
+         
+            var monthlyPayment = LoanManager.CalcculateMonthlyPayment(CurrentUser!.UserId, AccountDefaults.MonthsToPay);
 
-            var latestUserLoan = LoanManager.GetLatestLoan(currenctUserId);
-            decimal latestLoanAmount = latestUserLoan.Principal;
-            decimal monthlyInterestRate = latestUserLoan.AnnualRate;
-            decimal monthlyPayment = (latestLoanAmount * (monthlyInterestRate / 100)) / 12;
-
-            string displayInterestText = $"Your interest is: {monthlyInterestRate}%";
+            string displayInterestText = $"Your interest is: {AccountDefaults.LoanInterestRate}%";
             string displayPaymentText = $"Your monthly payment is: {monthlyPayment:F2} SEK";
 
             var continueInvoke = new Invokable(NavigationHandler);
