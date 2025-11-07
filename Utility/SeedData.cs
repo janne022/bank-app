@@ -29,12 +29,12 @@ namespace bank_app.Utility
             // --------------------------- Some fake companies ---------------------------------------- //
 
             User aldorLivs = UserManager.CreateUser("aldorLivs", "aldorLivs", UserType.Client, "livsAB@aldorlivs.se", "080707071", "Aldor Livs AB");
-            User pelleblues = UserManager.CreateUser("pelleblues", "pelleblues", UserType.Client, "livsAB@aldorlivs.se", "080707072", "Pelle blues & jazz café HB");
+            User pelleblues = UserManager.CreateUser("pelleblues", "pelleblues", UserType.Client, "livsAB@aldorlivs.se", "080707072", "Pelle blues HB");
             User theocarz = UserManager.CreateUser("theocar", "theocar", UserType.Client, "livsAB@aldorlivs.se", "080707073", "Theo Carz shop");
-            User jannebakery = UserManager.CreateUser("jannebread", "jannebread", UserType.Client, "livsAB@aldorlivs.se", "080707073", "Janne bakery AB");
-            User slavagym = UserManager.CreateUser("slavagym", "slavagym", UserType.Client, "livsAB@aldorlivs.se", "080707073", "Slava fitness 25/7");
-            User emmamanga = UserManager.CreateUser("emmamanga", "emmamanga", UserType.Client, "livsAB@aldorlivs.se", "080707073", "Emma's manga store");
-            User virabook = UserManager.CreateUser("virabook", "virabook", UserType.Client, "livsAB@aldorlivs.se", "080707073", "Vira's book cornershop");
+            User jannebakery = UserManager.CreateUser("jannebread", "jannebread", UserType.Client, "livsAB@aldorlivs.se", "080707073", "J. bakery AB");
+            User slavagym = UserManager.CreateUser("slavagym", "slavagym", UserType.Client, "livsAB@aldorlivs.se", "080707073", "Slava fit 25/7");
+            User emmamanga = UserManager.CreateUser("emmamanga", "emmamanga", UserType.Client, "livsAB@aldorlivs.se", "080707073", "Em's mangstore");
+            User virabook = UserManager.CreateUser("virabook", "virabook", UserType.Client, "livsAB@aldorlivs.se", "080707073", "V book shop");
 
 
             // --------------------------- some transactions ------------------------ //

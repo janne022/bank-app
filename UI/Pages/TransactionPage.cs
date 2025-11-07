@@ -48,21 +48,26 @@ namespace bank_app.UI.Pages
 
                 allTransactions.AddRange(bank_app.Managers.TransactionManager.GetAllTransactions(_currentUser.UserId));
 
-
                 string[] _transactionIDs = new string[allTransactions.Count];
                 string[] _senderIDs = new string[allTransactions.Count];
                 string[] _receiverIDs = new string[allTransactions.Count];
                 string[] _transferAmounts = new string[allTransactions.Count];
                 string[] _statuses = new string[allTransactions.Count];
                 string[] _timeStamps = new string[allTransactions.Count];
+                string[] _senderLegalNames = new string[allTransactions.Count];
+                string[] _receiverLegalNames = new string[allTransactions.Count];
 
                 for (int i = 0; i < allTransactions.Count; i++)
                 {
                     _senderIDs[i] = allTransactions[i].SenderId.ToString().Substring(0, 8);
                     _receiverIDs[i] = allTransactions[i].ReceiverId.ToString().Substring(0, 8);
-                    _transferAmounts[i] = allTransactions[i].TransferAmount.ToString();
+                    var senderAccount = AccountManager.GetAccountById(allTransactions[i].SenderId);
+                    string senderCurrency = senderAccount.AccountCurrency.ToString();
+                    _transferAmounts[i] = allTransactions[i].TransferAmount.ToString() + " " + senderCurrency;
                     _statuses[i] = allTransactions[i].Status.ToString();
                     _timeStamps[i] = allTransactions[i].TimeStamp.ToString();
+                    _senderLegalNames[i] = UserManager.GetUser(AccountManager.GetAccountById(allTransactions[i].SenderId).OwnerId).LegalName;
+                    _receiverLegalNames[i] = UserManager.GetUser(AccountManager.GetAccountById(allTransactions[i].ReceiverId).OwnerId).LegalName;
                 }
 
                 FeedColumn _senderIDColumn = new FeedColumn(_senderIDs, "Sender", true, true, true, textAlign: TextAlign.Center);
@@ -70,6 +75,8 @@ namespace bank_app.UI.Pages
                 FeedColumn _transferAmountIDColumn = new FeedColumn(_transferAmounts, "Amount", true, true, true, textAlign: TextAlign.Center);
                 FeedColumn _statusColumn = new FeedColumn(_statuses, "Status", true, true, true, textAlign: TextAlign.Center);
                 FeedColumn _timeStampColumn = new FeedColumn(_timeStamps, "Time", true, true, true, textAlign: TextAlign.Center);
+                FeedColumn _senderLegalColumn = new FeedColumn(_senderLegalNames, "Sender", true, true, true, textAlign: TextAlign.Center);
+                FeedColumn _receiverLegalColumn = new FeedColumn(_receiverLegalNames, "Receiver", true, true, true, textAlign: TextAlign.Center);
 
                 var transactionFeed = new Feed(12, true, true, marginTop: -10);
 
@@ -77,8 +84,8 @@ namespace bank_app.UI.Pages
                     .SetJustify(Justify.Center)
                     .SetAlign(Align.Middle);
 
-                transactionFeed.AddColumn(_senderIDColumn);
-                transactionFeed.AddColumn(_receiverIDColumn);
+                transactionFeed.AddColumn(_senderLegalColumn);
+                transactionFeed.AddColumn(_receiverLegalColumn);
                 transactionFeed.AddColumn(_transferAmountIDColumn);
                 transactionFeed.AddColumn(_statusColumn);
                 transactionFeed.AddColumn(_timeStampColumn);
