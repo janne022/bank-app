@@ -33,16 +33,7 @@ namespace bank_app.UI.Pages
 
             if (CurrentUser != null)
             {
-                grid.AddGridComponent(
-                    0,
-                    1,
-                    new AsciiArt(
-                        AsciiType.String,
-                        FiggleFonts
-                        .Small
-                        .Render($"Welcome back, {CurrentUser.LegalName}")
-                        )
-                    );
+                grid.AddGridComponent(0,1, new AsciiArt(AsciiType.String, FiggleFonts.Small.Render($"Welcome back, {CurrentUser.LegalName}"), ColourFG.Green));
             }
 
             // --------------------------------------- ACCOUNT TABLE SECTION -------------------------------- //

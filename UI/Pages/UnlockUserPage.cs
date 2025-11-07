@@ -41,7 +41,7 @@ namespace bank_app.UI.Pages
                 .SetJustify(Justify.Center)
                 .SetAlign(Align.Top);
             grid.AddGridComponent(0, 0, userNavbar);
-            grid.AddGridComponent(0, 0, new AsciiArt(AsciiType.String, FiggleFonts.Small.Render("Unlock a user account")));
+            grid.AddGridComponent(0, 0, new AsciiArt(AsciiType.String, FiggleFonts.Small.Render("Unlock a user account"), ColourFG.Red));
 
             _createUserForm = new Form(
             [

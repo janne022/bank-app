@@ -6,13 +6,15 @@ namespace bank_app.Utility.UI.Components
     public class AsciiArt : UIComponent
     {
         private string[] _lines;
+        public ColourFG AsciiColourFG { get; set; }
+        public ColourBG AsciiColourBG { get; set; }
 
         /// <summary>
         /// AsciiArt UIComponent. Renders ascii art from either a file or from string
         /// </summary>
         /// <param name="asciiType"></param>
         /// <param name="content"></param>
-        public AsciiArt(AsciiType asciiType, string content, int marginTop = 0, int marginLeft = 0, int marginRight = 0, int marginBottom = 0) : base(marginTop, marginLeft, marginRight, marginBottom)
+        public AsciiArt(AsciiType asciiType, string content, ColourFG asciiColourFG = ColourFG.None, ColourBG asciiColourBG = ColourBG.None, int marginTop = 0, int marginLeft = 0, int marginRight = 0, int marginBottom = 0) : base(marginTop, marginLeft, marginRight, marginBottom)
         {
             switch (asciiType)
             {
@@ -20,6 +22,8 @@ namespace bank_app.Utility.UI.Components
                     _lines = File.ReadAllLines(content);
                     break;
                 case AsciiType.String:
+                    AsciiColourBG = asciiColourBG;
+                    AsciiColourFG = asciiColourFG;
                     _lines = content.Split('\n');
                     break;
             }
@@ -48,7 +52,7 @@ namespace bank_app.Utility.UI.Components
             for (int i = 0; i < _lines.Length; i++)
             {
                 Console.SetCursorPosition(X, Y + i);
-                ColourManager.Write(_lines[i]);
+                ColourManager.Write(_lines[i], AsciiColourFG, AsciiColourBG);
             }
         }
     }

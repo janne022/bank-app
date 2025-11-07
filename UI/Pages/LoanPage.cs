@@ -28,7 +28,7 @@ namespace bank_app.UI.Pages
             grid.AddGridComponent(0, 1, navbar)
                 .SetJustify(Justify.Center)
                 .SetAlign(Align.Top);
-            grid.AddGridComponent(0, 1, new AsciiArt(AsciiType.String, FiggleFonts.Small.Render("Loans")));
+            grid.AddGridComponent(0, 1, new AsciiArt(AsciiType.String, FiggleFonts.Small.Render("Loans"), ColourFG.Green));
 
             var createAccountInvoke = new Invokable<string>(CreateLoanHandler);
 
@@ -36,8 +36,7 @@ namespace bank_app.UI.Pages
             [          
                 new InputField("Loan Amount",InputFieldType.Number,24),
             ], new Button(createAccountInvoke, "Take Loan", marginTop: 2));
-
-            grid.AddGridComponent(1, 1, new Panel(_createLoanForm, LayoutBorder.Rounded, "Take new Loan", 55, 10, ColourFG.Red))
+            grid.AddGridComponent(1, 1, new Panel(_createLoanForm, LayoutBorder.Rounded, "Take new Loan", 55, 10, ColourFG.Green))
                 .SetAlign(Align.Middle)
                 .SetJustify(Justify.Center);
 

@@ -36,7 +36,7 @@ namespace bank_app.UI.Pages
                 .SetJustify(Justify.Center)
                 .SetAlign(Align.Top);
 
-            grid.AddGridComponent(0, 1, new AsciiArt(AsciiType.String, FiggleFonts.Small.Render("Transactions")));
+            grid.AddGridComponent(0, 1, new AsciiArt(AsciiType.String, FiggleFonts.Small.Render("Transactions"), ColourFG.Green));
 
             var _currentUser = PageManager.GetCurrentUser();
 

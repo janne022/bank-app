@@ -50,7 +50,7 @@ namespace bank_app.UI.Pages
             grid.AddGridComponent(0, 1, navbar)
                 .SetJustify(Justify.Center)
                 .SetAlign(Align.Top);
-            grid.AddGridComponent(0, 1, new AsciiArt(AsciiType.String, FiggleFonts.Small.Render("Create a new account")));
+            grid.AddGridComponent(0, 1, new AsciiArt(AsciiType.String, FiggleFonts.Small.Render("Create a new account"), ColourFG.Green));
 
             _createAccountForm = new Form(
             [
@@ -59,7 +59,7 @@ namespace bank_app.UI.Pages
                 new InputField("Deposit amount",InputFieldType.Normal,24),
                 new InputField("Account Label",InputFieldType.Normal,16),
             ], new Button(createAccountInvoke, "Create", marginTop: 1));
-            grid.AddGridComponent(1, 1, new Panel(_createAccountForm, LayoutBorder.Rounded, "Create New Account", 55, 10, ColourFG.Red))
+            grid.AddGridComponent(1, 1, new Panel(_createAccountForm, LayoutBorder.Rounded, "Create New Account", 55, 10, ColourFG.Green))
                 .SetAlign(Align.Middle)
                 .SetJustify(Justify.Center);
 
