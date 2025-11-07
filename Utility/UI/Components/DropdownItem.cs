@@ -3,12 +3,12 @@
     public struct DropdownItem<T>
     {
         public string Name { get; set; }
-        public T Item { get; set; }
+        public T DropDownItem { get; set; }
 
         public DropdownItem(string name, T item)
         {
             Name = name;
-            Item = item;
+            DropDownItem = item;
         }
     }
 }

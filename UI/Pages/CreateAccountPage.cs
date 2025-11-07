@@ -3,6 +3,7 @@ using bank_app.Models.Users;
 using bank_app.Utility;
 using bank_app.Utility.UI;
 using bank_app.Utility.UI.Components;
+using bank_app.Utility.UI.Invokables;
 using Figgle.Fonts;
 
 
@@ -38,38 +39,39 @@ namespace bank_app.UI.Pages
                 new("Home", PageType.ClientDashboard),
                 new("Transfer", PageType.TransferPage),
                 new("Transactions", PageType.TransactionPage),
-                new("Create Account", PageType.CreateAccountPage),
+                new("Account", PageType.CreateAccountPage),
                 new("Loan", PageType.LoanPage),
                 new NavbarItem("Logout", PageType.LogOut)
                 ]);
 
-            var createAccountInvoke = new Invokable<AccountType, Currency, string>(CreateAccountHandler);
+            var createAccountInvoke = new Invokable<AccountType, Currency, string, string>(CreateAccountHandler);
 
             Grid grid = new(3, 3);
             grid.AddGridComponent(0, 1, navbar)
                 .SetJustify(Justify.Center)
                 .SetAlign(Align.Top);
-            grid.AddGridComponent(0, 1, new AsciiArt(AsciiType.String, FiggleFonts.Small.Render("Create a new account")));
+            grid.AddGridComponent(0, 1, new AsciiArt(AsciiType.String, FiggleFonts.Small.Render("Create a new account"), ColourFG.Green));
 
             _createAccountForm = new Form(
             [
                 new Dropdown<AccountType>(accountTypeItems),
                 new Dropdown<Currency>(currencyItems),
                 new InputField("Deposit amount",InputFieldType.Normal,24),
+                new InputField("Account Label",InputFieldType.Normal,16),
             ], new Button(createAccountInvoke, "Create", marginTop: 1));
-            grid.AddGridComponent(1, 1, new Panel(_createAccountForm, LayoutBorder.Rounded, "Create New Account", 70, 15, ColourFG.Red))
+            grid.AddGridComponent(1, 1, new Panel(_createAccountForm, LayoutBorder.Rounded, "Create New Account", 55, 10, ColourFG.Green))
                 .SetAlign(Align.Middle)
                 .SetJustify(Justify.Center);
 
             return new Panel(grid, LayoutBorder.Heavy);
         }
 
-        private void CreateAccountHandler(AccountType accountType, Currency currency, string stringAmount)
+        private void CreateAccountHandler(AccountType accountType, Currency currency, string stringAmount, string label)
         {
             User? currentUser = PageManager.GetCurrentUser();
             bool canConvert = decimal.TryParse(stringAmount, out decimal decimalAmount);
 
-            AccountManager.CreateAccount(currentUser.UserId, currency, decimalAmount, accountType);
+            AccountManager.CreateAccount(currentUser.UserId, currency, decimalAmount, accountType, label);
 
 
             if (accountType == AccountType.CheckingAcc)
@@ -78,7 +80,7 @@ namespace bank_app.UI.Pages
             }
             else if (accountType == AccountType.SavingsAcc)
             {
-                PageManager.SwitchPage(PageType.SavingsAccountConfirm);
+                PageManager.SwitchPage(PageType.SavingsAccountConfirmPage);
             }
 
 

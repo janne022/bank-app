@@ -14,14 +14,14 @@ using System.Threading.Tasks;
 
 namespace bank_app.UI.Pages
 {
-    internal class SavingsAccountConfirm:Page
+    internal class SavingsAccountConfirmPage : Page
     {
         internal override UIComponent LoadPage()
         {
             Console.CursorVisible = false;
 
 
-          
+
             var createAccountInvoke = new Invokable(ContinueHandler);
 
             string textToDisplayInterest = $"Your interest is {AccountDefaults.SavingsInterestRate} %";
@@ -29,7 +29,9 @@ namespace bank_app.UI.Pages
             // Create new 3x3 grid
             Grid grid = new(3, 3);
 
-            grid.AddGridComponent(0, 1, new AsciiArt(AsciiType.String, FiggleFonts.Small.Render("Checking Account"))).SetAlign(Align.Middle).SetJustify(Justify.Center);
+            grid.AddGridComponent(0, 1, new AsciiArt(AsciiType.String, FiggleFonts.Small.Render("Checking Account"), ColourFG.Red))
+                .SetAlign(Align.Middle)
+                .SetJustify(Justify.Center);
             grid.AddGridComponent(1, 1, new Text("Savings account created")).SetJustify(Justify.Center);
 
             grid.AddGridComponent(1, 1, new Text(textToDisplayInterest)).SetJustify(Justify.Center);

@@ -8,14 +8,21 @@ namespace bank_app.Utility.UI.Components
         private int _index = 0;
         private const string Separator = " · ";
 
+        /// <summary>
+        /// Navbar that takes a list of navbar items and whenever one of those are clicked it will navigate to that page
+        /// </summary>
+        /// <param name="navItems">the list of navbar items</param>
         public Navbar(List<NavbarItem> items, 
             int marginTop = 0, int marginLeft = 0, int marginRight = 0, int marginBottom = 0) 
             : base(marginTop, marginLeft, marginRight, marginBottom)
         {
-            IsInteractable = true;
             IsMultiComponent = true;
-            Items = items;
+            Items = navItems;
             _index = Items.FindIndex(item => item.PageType == PageManager.GetCurrentPageType());
+            if (_index == -1)
+            {
+                _index = 0;
+            }
         }
 
         public void AddNavbarItem(NavbarItem item)
@@ -71,7 +78,7 @@ namespace bank_app.Utility.UI.Components
                     }
                 }
 
-                // Read key and if user presses left/right/up/down, update index. Enter invokes current item.
+                // Read key and if user presses left/right/up/down, update index. Enter runs Pressed that navigates to the website
                 ConsoleKey key = Console.ReadKey(true).Key;
                 switch (key)
                 {

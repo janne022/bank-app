@@ -12,14 +12,14 @@ namespace bank_app.Managers
         /// Creates a new loan connected to a user, identified by their userId. Runs methods
         /// to verify that the user is permitted to take a loan, and creates a new loan object. 
         /// </summary>
-        public Loan DisburseLoan(string userId, decimal principal, Currency currency)
+        public Loan DisburseLoan(string userId, decimal principal)
         {
             if (!ValidateLoanLimit(userId, principal))
             {
                 throw new InvalidOperationException("Loan denied: exceeds allowed limit.");
             }
 
-            var loanAccount = GetOrCreateLoanAccount(userId, currency);
+            var loanAccount = GetLoanAccount(userId);
             var checkingAccount = AccountManager.GetAllAccounts(userId).OfType<CheckingAccount>().FirstOrDefault();
 
             if (checkingAccount == null)
@@ -29,36 +29,30 @@ namespace bank_app.Managers
 
             var loan = new Loan(userId, principal, AccountDefaults.LoanInterestRate, DateTime.Now);
             _loans.Add(loan);
-           
+
             var transactionLoan = CreateLoanTransaction(loanAccount, principal);
             loanAccount.ApplyTransaction(transactionLoan, principal);
 
             var transactionToChecking = CreateCheckingAccTransaction(checkingAccount, principal, TransactionType.Deposit);
             checkingAccount.ApplyTransaction(transactionToChecking, principal);
             return loan;
-        }
+		}
 
         /// <summary>
         /// Checks if the input user has a loan account. Returns it if true, otherwise
         /// automatically creates a new one and adds it to the users account list. 
         /// </summary>
-        public LoanAccount GetOrCreateLoanAccount(string userId, Currency currency)
+        public LoanAccount GetLoanAccount(string userId)
         {
             var loanAccount = AccountManager.GetAllAccounts(userId)
                 .OfType<LoanAccount>()
                 .FirstOrDefault();
 
-            if (loanAccount == null)
-            {
-                loanAccount = new LoanAccount(
-                    currency,
-                    userId,
-                    AccountDefaults.LoanCreditLimit,
-                    AccountType.LoanAcc
-                    
-                );
-                AccountManager.AddAccount(loanAccount);
-            }
+            if (loanAccount==null)
+			{
+				throw new InvalidOperationException("User must have a checking account to receive loan.");
+			}
+           
             return loanAccount;
         }
 
@@ -120,7 +114,7 @@ namespace bank_app.Managers
                     Status = TransferStatus.Completed,
                 };
                 loanAccount.ApplyTransaction(transaction, paymentAmount);
-            }      
+            }
             return true;
         }
 

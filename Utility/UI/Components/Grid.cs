@@ -74,6 +74,8 @@
         {
             return _grid[rowIndex, colIndex];
         }
+
+        // Finds cloesest gridcell/flexbox by checking directions.
         private Flexbox FindClosestGridCell(List<Flexbox> gridCells, Flexbox currentCell, int dX, int dY)
         {
             var candidates = gridCells.Where(cell =>
@@ -111,6 +113,7 @@
                 return false;
             });
 
+            // Sorts list by euclidean distance squared so that they are order from closest to furthest. Then returns the closest flexbox
             var closest = candidates.OrderBy(cell =>
             {
                 int dx = cell.X - currentCell.X;

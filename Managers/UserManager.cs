@@ -23,6 +23,10 @@ namespace bank_app.Managers
             {
                 var client = new Client(userId, userPassword, email, phoneNumber, legalName, twoFactorEnabled);
                 Users.Add(client);
+                AccountManager.CreateAccount(client.UserId, Currency.SEK, 20000, AccountType.CheckingAcc, "My transaction acc.");
+                AccountManager.CreateAccount(client.UserId, Currency.SEK, 100000, AccountType.CheckingAcc, "Emergency savings acc.");
+                AccountManager.CreateAccount(client.UserId, Currency.SEK, 0, AccountType.LoanAcc, "My Loan acc.");
+
                 return client;
             }
             return null;
@@ -106,7 +110,7 @@ namespace bank_app.Managers
 
         private static string GenerateAuthCode(User u)
         {
-            int code =  new Random().Next(100000,1000000);
+            int code = new Random().Next(100000, 1000000);
             var message = new MimeMessage();
             message.From.Add(new MailboxAddress("Slava Bank", Environment.GetEnvironmentVariable("EMAIL")));
             message.To.Add(new MailboxAddress(u.LegalName, u.Email));
@@ -129,6 +133,7 @@ namespace bank_app.Managers
         internal static void UnlockAccount(User user)
         {
             user.UpdateAccountStatus(AccountStatus.Unlocked);
+            user.UpdateLoginAttempts(0);
         }
 
         internal static void Logout()

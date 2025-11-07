@@ -20,10 +20,11 @@ namespace bank_app.UI
             {PageType.TransactionLogPage, new TransactionLogPage()},
             {PageType.LoanConfirmPage, new LoanConfirmPage()},
             {PageType.CheckingAccountPageConfirm, new CheckingAccountPageConfirm()},
-            {PageType.SavingsAccountConfirm, new SavingsAccountConfirm()},
+            {PageType.SavingsAccountConfirmPage, new SavingsAccountConfirmPage()},
             {PageType.UpdateRatePage, new UpdateRatePage()},
             {PageType.TwoFactorPage, new TwoFactorPage()},
-            {PageType.LogOut, new LoginPage()}
+            {PageType.LogOut, new LoginPage()},
+            {PageType.UnlockUserPage, new UnlockUserPage()},
         };
         private static bool _isRunning = true;
         private static Page? _nextPage;

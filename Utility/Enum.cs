@@ -92,7 +92,8 @@
         LogOut,
         CheckingAccountPageConfirm,
         LoanConfirmPage,
-        SavingsAccountConfirm
+        SavingsAccountConfirmPage,
+        UnlockUserPage
     }
 
     public enum LayoutBorder

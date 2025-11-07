@@ -19,12 +19,12 @@ namespace bank_app.UI.Pages
 
             // Gets all checking accounts and saving accounts, then returns them as a DropdownItem with account id as name
             var accounts = AccountManager.GetAllAccounts(CurrentUser.UserId).Where(account => account is CheckingAccount || account is SavingsAccount);
-            var accountsNavbarItems = accounts.Select(account => new DropdownItem<Models.Accounts.Account>(account.AccountID.ToString(), account)).ToList();
+            var accountsNavbarItems = accounts.Select(account => new DropdownItem<Account>(account.AccountID.ToString(), account)).ToList();
             var transferInvokable = new Invokable<Account, string, string>(TransferMoney);
-            
+
             var accountDropdown = new Dropdown<Models.Accounts.Account>(accountsNavbarItems);
             accountDropdown.OnSelectionChanged = UpdateBalanceDisplay;
-     
+
             var navbar = new Navbar(
             [
                 new NavbarItem("Home", PageType.ClientDashboard),
@@ -42,7 +42,7 @@ namespace bank_app.UI.Pages
                     new InputField("Amount", InputFieldType.Number, 24)
                 ], new Button(transferInvokable, "Send", Justify.Center, marginTop: 1));
 
-            balanceText = new Text($"Available balance: {accountsNavbarItems[0].Item.Balance:C}", marginBottom: 1);
+            balanceText = new Text($"Available balance: {accountsNavbarItems[0].DropDownItem.Balance:C}", marginBottom: 1);
 
             Flexbox transferGrid = new Flexbox(Justify.Center, Align.Top)
             .AddFlexComponent(balanceText)
@@ -53,8 +53,8 @@ namespace bank_app.UI.Pages
             grid.AddGridComponent(0, 1, navbar)
                 .SetJustify(Justify.Center)
                 .SetAlign(Align.Top);
-            grid.AddGridComponent(0, 1, new AsciiArt(AsciiType.String, FiggleFonts.Small.Render("Transfer")));
-            grid.AddGridComponent(1, 1, new Panel(transferGrid, LayoutBorder.Rounded, width: 60, height: 10))
+            grid.AddGridComponent(0, 1, new AsciiArt(AsciiType.String, FiggleFonts.Small.Render("Transfer"), ColourFG.Green));
+            grid.AddGridComponent(1, 1, new Panel(transferGrid, LayoutBorder.Rounded, width: 60, height: 10, borderColour: ColourFG.Green))
                 .SetAlign(Align.Middle)
                 .SetJustify(Justify.Center);
             return new Panel(grid, LayoutBorder.Heavy);

@@ -10,16 +10,17 @@ namespace bank_app.Models.Accounts
         public string OwnerId { get; private set; }
         private readonly List<Transaction> _transactions = new List<Transaction>();
         public IReadOnlyList<Transaction> Transactions => _transactions;
-
+        public string Label { get; private set; }
         public AccountType AccountType { get; private set; }
 
-        protected Account(Currency currency, decimal balance, string ownerId, AccountType accountType)
+        protected Account(Currency currency, decimal balance, string ownerId, AccountType accountType, string label)
         {
             AccountID = Guid.NewGuid();
             AccountCurrency = currency;
             Balance = balance < 0 ? 0 : balance;
             OwnerId = ownerId;
             AccountType = accountType;
+            Label = label;
         }
         /// <summary>
         /// Method that adds or subtracts balance in accounts local currency, while also saving all transactions made into a List. 
