@@ -7,6 +7,7 @@ using bank_app.Utility.UI;
 using bank_app.Utility.UI.Components;
 using bank_app.Utility.UI.Invokables;
 using Figgle.Fonts;
+using Org.BouncyCastle.Bcpg;
 
 namespace bank_app.UI.Pages
 {
@@ -20,7 +21,8 @@ namespace bank_app.UI.Pages
             var monthlyPayment = LoanManager.CalcculateMonthlyPayment(CurrentUser!.UserId, AccountDefaults.MonthsToPay);
 
             string displayInterestText = $"Your interest is: {AccountDefaults.LoanInterestRate}%";
-            string displayPaymentText = $"Your monthly payment is: {monthlyPayment:F2} SEK";
+            string displayPaymentText1 = $"Your monthly payment is";
+            string displayPaymentText2 = $"(installment + interest): { monthlyPayment:F2} SEK";
 
             var continueInvoke = new Invokable(NavigationHandler);
 
@@ -29,7 +31,9 @@ namespace bank_app.UI.Pages
                 .SetJustify(Justify.Center);
             grid.AddGridComponent(1, 1, new Text(displayInterestText))
                 .SetJustify(Justify.Center);
-            grid.AddGridComponent(1, 1, new Text(displayPaymentText))
+            grid.AddGridComponent(1, 1, new Text(displayPaymentText1))
+                .SetJustify(Justify.Center);
+            grid.AddGridComponent(1, 1, new Text(displayPaymentText2))
                 .SetJustify(Justify.Center);
             grid.AddGridComponent(2, 1, new Button(continueInvoke, "Continue"))
                 .SetAlign(Align.Middle);

@@ -25,7 +25,7 @@ namespace bank_app.UI.Pages
             var createAccountInvoke = new Invokable(ContinueHandler);
 
             string textToDisplayInterest = $"Your interest is {AccountDefaults.SavingsInterestRate} %";
-            string textToDisplayMinimalBalance = $"Minimum balance is {AccountDefaults.SavingsMinimumBalance} kr";
+            string textToDisplayMinimalBalance = $"Minimum withdrawal is {AccountDefaults.SavingsMinimumBalance} kr";
             // Create new 3x3 grid
             Grid grid = new(3, 3);
 

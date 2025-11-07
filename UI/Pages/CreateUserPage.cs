@@ -57,7 +57,7 @@ namespace bank_app.UI.Pages
                 new InputField("Username",InputFieldType.Normal,24),
                 new InputField("Legal Name", InputFieldType.Normal, 24),
                 new InputField("Password", InputFieldType.Password,24),
-                new InputField("E-mail",InputFieldType.Normal, 24),
+                new InputField("E-mail",InputFieldType.Normal, 54),
                 new InputField("Phone number",InputFieldType.Number, 15),
                 new Dropdown<bool>(authTypeItems),
             ], new Button(loginInvoke, "Create User", marginTop: 1));

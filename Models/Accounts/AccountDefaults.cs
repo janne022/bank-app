@@ -16,7 +16,7 @@
         //Loan Account
         public const decimal LoanInterestRate = 6m;
         public const decimal LoanCreditLimit = 10000000m;
-        public const int MonthsToPay = 12;
+        public const int MonthsToPay = 24;
 
     }
 }

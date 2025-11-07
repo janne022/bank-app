@@ -65,7 +65,7 @@ namespace bank_app.Managers
                 throw new InvalidOperationException("User must have a checking account to receive loan.");
             }
 
-            decimal monthlyRate = loan.AnnualRate / 100m / months;
+            decimal monthlyRate = loan.AnnualRate / 100m / 12m;
             if (monthlyRate == 0)
             {
                 return loan.Principal / months;
