@@ -30,7 +30,9 @@ namespace bank_app.Utility.UI.Components
 
 
         public Feed(int linesToDisplay, bool renderHeader, bool renderFooter, ColourFG textColour = ColourFG.None,
-            ColourBG backgroundColour = ColourBG.None, ColourFG focusColour = ColourFG.Black, int marginTop = 0, int marginLeft = 0, int marginRight = 0, int marginBottom = 0) : base(marginTop, marginLeft, marginRight, marginBottom)
+            ColourBG backgroundColour = ColourBG.None, ColourFG focusColour = ColourFG.Black, 
+            int marginTop = 0, int marginLeft = 0, int marginRight = 0, int marginBottom = 0) 
+            : base(marginTop, marginLeft, marginRight, marginBottom)
         {
             FeedColumns = new List<FeedColumn>();
             IsMultiComponent = true;

@@ -14,7 +14,8 @@
         /// <summary>
         /// One dimensional layout component.
         /// </summary>
-        public Flexbox(Justify justify = Justify.Start, Align align = Align.Top, OrderBy orderBy = OrderBy.Column, ColourFG selectionFG = ColourFG.Black, ColourBG selectionBG = ColourBG.White)
+        public Flexbox(Justify justify = Justify.Start, Align align = Align.Top, OrderBy orderBy = OrderBy.Column,
+            ColourFG selectionFG = ColourFG.Black, ColourBG selectionBG = ColourBG.White)
         {
             Justify = justify;
             Align = align;

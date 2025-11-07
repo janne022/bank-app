@@ -23,7 +23,10 @@ namespace bank_app.Utility.UI.Components
         /// <param name="justify">Whether the button should be displayed aligned left, right or center.</param>
         /// <param name="textColour">Colour of text. Default to the terminal's default.</param>
         /// <param name="buttonColour">Colour of the button itself. Default to the terminal's default.</param>
-        public Button(IInvokable invokable, string text, Justify justify = Justify.Center, ColourFG textColour = ColourFG.None, ColourBG buttonColour = ColourBG.None, int marginTop = 0, int marginLeft = 0, int marginRight = 0, int marginBottom = 0) : base(marginTop, marginLeft, marginRight, marginBottom)
+        public Button(IInvokable invokable, string text, Justify justify = Justify.Center, 
+            ColourFG textColour = ColourFG.None, ColourBG buttonColour = ColourBG.None, 
+            int marginTop = 0, int marginLeft = 0, int marginRight = 0, int marginBottom = 0) 
+            : base(marginTop, marginLeft, marginRight, marginBottom)
         {
             Text = text;
             _invokable = invokable;

@@ -12,7 +12,9 @@ namespace bank_app.Utility.UI.Components
         /// Navbar that takes a list of navbar items and whenever one of those are clicked it will navigate to that page
         /// </summary>
         /// <param name="navItems">the list of navbar items</param>
-        public Navbar(List<NavbarItem> navItems, int marginTop = 0, int marginLeft = 0, int marginRight = 0, int marginBottom = 0) : base(marginTop, marginLeft, marginRight, marginBottom)
+        public Navbar(List<NavbarItem> navItems, 
+            int marginTop = 0, int marginLeft = 0, int marginRight = 0, int marginBottom = 0) 
+            : base(marginTop, marginLeft, marginRight, marginBottom)
         {
             IsMultiComponent = true;
             Items = navItems;
