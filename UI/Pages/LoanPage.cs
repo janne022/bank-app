@@ -35,7 +35,7 @@ namespace bank_app.UI.Pages
 
             _createLoanForm = new Form(
             [
-                accountDropdown,
+               
                 new InputField("Loan Amount",InputFieldType.Number,24),
 
             ], new Button(createAccountInvoke, "Take Loan", marginTop: 2));
@@ -53,7 +53,7 @@ namespace bank_app.UI.Pages
             
             try
             {
-                loanManager.DisburseLoan(CurrentUser.UserId, loanAmount, Currency.SEK, label);
+                loanManager.DisburseLoan(CurrentUser.UserId, loanAmount);
                 PageManager.SwitchPage(PageType.LoanConfirmPage);
             }
             catch (InvalidOperationException)
