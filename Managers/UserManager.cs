@@ -136,9 +136,14 @@ namespace bank_app.Managers
             user.UpdateLoginAttempts(0);
         }
 
-        public static void ChangeUserInfo(User user, string typeOfChange, string change)
+        internal static void Logout()
         {
-            user.UpdateUserInfo(typeOfChange, change);
+            // UI needed to develop - change page to login page
+        }
+
+        public static void ChangeUserInfo(User user, string fullName, string username, string email, string phoneNumer, string password)
+        {
+            user.UpdateUserInfo(fullName, username, email, phoneNumer, password);
         }
     }
 }

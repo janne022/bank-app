@@ -25,6 +25,7 @@ namespace bank_app.UI
             {PageType.TwoFactorPage, new TwoFactorPage()},
             {PageType.LogOut, new LoginPage()},
             {PageType.UnlockUserPage, new UnlockUserPage()},
+            {PageType.ChangeUserInfoPage, new ChangeUserInfoPage()}
         };
         private static bool _isRunning = true;
         private static Page? _nextPage;

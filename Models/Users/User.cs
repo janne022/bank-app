@@ -1,4 +1,5 @@
 ﻿using bank_app.Managers;
+using bank_app.Models.Accounts;
 using bank_app.Utility;
 using System.Text.RegularExpressions;
 
@@ -152,29 +153,38 @@ namespace bank_app.Models.Users
             }
         }
 
-        public void UpdateUserInfo(string type, string change)
+        public void UpdateUserInfo(string fullName, string username, string email, string phoneNumber, string password)
         {
-            switch (type)
+            if (!string.IsNullOrEmpty(fullName) && fullName != LegalName)
             {
-                case "id":
-                    UpdateUserId(change);
-                    break;
+                SetLegalName(fullName);
+            }
 
-                case "password":
-                    SetPassword(change);
-                    break;
+            if (!string.IsNullOrEmpty(username) && username != UserId)
+            {
+                List<Account> accountList = AccountManager.GetAllAccounts(UserId);
 
-                case "email":
-                    SetEmail(change);
-                    break;
+                UpdateUserId(username);
+                foreach(var accounts in accountList)
+                {
+                    accounts.UpdateOwnerId(UserId);
+                }
+                
+            }
 
-                case "number":
-                    SetPhoneNumber(change);
-                    break;
+            if (!string.IsNullOrEmpty(email) && email != Email)
+            {
+                SetEmail(email);
+            }
 
-                case "name":
-                    SetLegalName(change);
-                    break;
+            if (!string.IsNullOrEmpty(phoneNumber) && phoneNumber != PhoneNumber)
+            {
+                SetPhoneNumber(phoneNumber);
+            }
+
+            if (!string.IsNullOrEmpty(password))
+            {
+                SetPassword(password);
             }
         }
 
