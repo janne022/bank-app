@@ -15,18 +15,18 @@ namespace bank_app.UI.Pages
         {
             Console.CursorVisible = false;
             List<DropdownItem<UserType>> userTypeItems =
-                [
+            [
                 new DropdownItem<UserType>("Admin", UserType.Admin),
                 new DropdownItem<UserType>("Client", UserType.Client)
-                ];
+            ];
             var navbar = new Navbar(
-                [
+            [
                 new("Home", PageType.AdminDashboard),
                 new("Create User", PageType.CreateUserPage),
                 new("Transactions", PageType.TransactionLogPage),
                 new("Rates", PageType.UpdateRatePage),
                 new NavbarItem("Logout", PageType.LogOut)
-                ]);
+            ]);
 
             var loginInvoke = new Invokable<UserType, string, string, string, string, string>(CreateUserHandler);
 
@@ -66,7 +66,6 @@ namespace bank_app.UI.Pages
                         UserManager.CreateUser(userName, password, userType, email, phone, legalName);
                         PageManager.SwitchPage(PageType.AdminDashboard);
                     }
-
                     catch (Exception)
                     {
                         _createUserForm?.UpdateErrorMessage("An error occured");

@@ -32,17 +32,17 @@ namespace bank_app.UI.Pages
                 .SetAlign(Align.Top);
 
             if (CurrentUser != null)
-            { 
-            grid.AddGridComponent(
-                0,
-                1,
-                new AsciiArt(
-                    AsciiType.String,
-                    FiggleFonts
-                    .Small
-                    .Render($"Welcome back, {CurrentUser.LegalName}")
-                    )
-                );
+            {
+                grid.AddGridComponent(
+                    0,
+                    1,
+                    new AsciiArt(
+                        AsciiType.String,
+                        FiggleFonts
+                        .Small
+                        .Render($"Welcome back, {CurrentUser.LegalName}")
+                        )
+                    );
             }
 
             // --------------------------------------- ACCOUNT TABLE SECTION -------------------------------- //
@@ -90,7 +90,8 @@ namespace bank_app.UI.Pages
 
 
             // adds border around the feed
-            grid.AddGridComponent(
+            grid.AddGridComponent
+            (
                 1,
                 1,
                 new Panel
@@ -98,12 +99,12 @@ namespace bank_app.UI.Pages
                     flexbox,
                     LayoutBorder.Rounded,
                     "",
-                    55,
+                    65,
                     8,
                     ColourFG.GreenBright)
-                    )
-                    .SetAlign(Align.Middle)
-                    .SetJustify(Justify.Center);
+            )
+            .SetAlign(Align.Middle)
+            .SetJustify(Justify.Center);
 
 
             // Add grid to layout and set rounded border style
