@@ -80,7 +80,7 @@ namespace bank_app.UI.Pages
             }
             else if (accountType == AccountType.SavingsAcc)
             {
-                PageManager.SwitchPage(PageType.SavingsAccountConfirm);
+                PageManager.SwitchPage(PageType.SavingsAccountConfirmPage);
             }
 
 
