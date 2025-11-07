@@ -20,10 +20,10 @@ namespace bank_app.Utility
             // gives each user three accounts; two checking accounts and one saving account
             foreach (var user in UserManager.Users)
             {
-                AccountManager.CreateAccount(user.UserId, Currency.SEK, 100000m, AccountType.CheckingAcc);
-                AccountManager.CreateAccount(user.UserId, Currency.SLC, 0.00005m, AccountType.CheckingAcc);
-                AccountManager.CreateAccount(user.UserId, Currency.SEK, 60000m, AccountType.SavingsAcc);
-                AccountManager.CreateAccount(user.UserId, Currency.SEK, 0m, AccountType.LoanAcc);
+                AccountManager.CreateAccount(user.UserId, Currency.SEK, 100000m, AccountType.CheckingAcc,"Checking Account");
+                AccountManager.CreateAccount(user.UserId, Currency.SLC, 0.00005m, AccountType.CheckingAcc, "Checking Account");
+                AccountManager.CreateAccount(user.UserId, Currency.SEK, 60000m, AccountType.SavingsAcc, "Savings Account");
+                AccountManager.CreateAccount(user.UserId, Currency.SEK, 0m, AccountType.LoanAcc, "Loan Account");
             }
 
             // -------------------------------------- some transactions ------------------------ //

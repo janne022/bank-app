@@ -64,10 +64,8 @@ namespace bank_app.UI.Pages
             {
                 // adds info about the accounts first in first column, then second...
                 column1[i] =
-                    $"Account {i + 1} <{currentUsersAccounts[i]
-                    .GetType()
-                    .Name
-                    .Substring(0, currentUsersAccounts[i].GetType().Name.Length - 7)}>: ";
+                    $"Account {i + 1} <{currentUsersAccounts[i].Label}>: ";
+
 
                 if (currentUsersAccounts[i].AccountCurrency != Currency.SLC)
                 {

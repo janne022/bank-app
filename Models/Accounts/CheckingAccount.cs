@@ -9,7 +9,8 @@ namespace bank_app.Models.Accounts
         //Overdrat limist is the maximum negative balance allowed 
         public decimal OverdraftLimit { get; private set; }
 
-        public CheckingAccount(Currency currency, decimal balance, string ownerId, decimal overdraftLimit, decimal monthlyFee, AccountType accountType) : base(currency, balance, ownerId, accountType)
+        public CheckingAccount(Currency currency, decimal balance, string ownerId, decimal overdraftLimit, decimal monthlyFee, AccountType accountType, string label) 
+            : base(currency, balance, ownerId, accountType, label)
         {
             OverdraftLimit = overdraftLimit > 0 ? 0 : overdraftLimit;
             MonthlyFee = monthlyFee < 0 ? 0 : monthlyFee;

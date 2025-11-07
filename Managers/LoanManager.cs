@@ -12,14 +12,14 @@ namespace bank_app.Managers
         /// Creates a new loan connected to a user, identified by their userId. Runs methods
         /// to verify that the user is permitted to take a loan, and creates a new loan object. 
         /// </summary>
-        public Loan DisburseLoan(string userId, decimal principal, Currency currency)
+        public Loan DisburseLoan(string userId, decimal principal, Currency currency, string label)
         {
             if (!ValidateLoanLimit(userId, principal))
             {
                 throw new InvalidOperationException("Loan denied: exceeds allowed limit.");
             }
 
-            var loanAccount = GetOrCreateLoanAccount(userId, currency);
+            var loanAccount = GetOrCreateLoanAccount(userId, currency, label);
             var checkingAccount = AccountManager.GetAllAccounts(userId).OfType<CheckingAccount>().FirstOrDefault();
 
             if (checkingAccount == null)
@@ -42,7 +42,7 @@ namespace bank_app.Managers
         /// Checks if the input user has a loan account. Returns it if true, otherwise
         /// automatically creates a new one and adds it to the users account list. 
         /// </summary>
-        public LoanAccount GetOrCreateLoanAccount(string userId, Currency currency)
+        public LoanAccount GetOrCreateLoanAccount(string userId, Currency currency, string label)
         {
             var loanAccount = AccountManager.GetAllAccounts(userId)
                 .OfType<LoanAccount>()
@@ -54,7 +54,8 @@ namespace bank_app.Managers
                     currency,
                     userId,
                     AccountDefaults.LoanCreditLimit,
-                    AccountType.LoanAcc
+                    AccountType.LoanAcc,
+                    label
 
                 );
                 AccountManager.AddAccount(loanAccount);

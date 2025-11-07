@@ -52,7 +52,7 @@ namespace bank_app.Managers
         /// Creates an account of the specified type, registers it internally, and returns it.
         /// Throws ArgumentException for invalid inputs.
         /// </summary>
-        public static bool CreateAccount(string ownerID, Currency currency, decimal balance, AccountType accountType)
+        public static bool CreateAccount(string ownerID, Currency currency, decimal balance, AccountType accountType, string label)
         {
             Account newAccount = accountType switch
             {
@@ -62,7 +62,8 @@ namespace bank_app.Managers
                     ownerID,
                     AccountDefaults.CheckingMonthlyFee,
                     AccountDefaults.CheckingOverdraftLimit,
-                    AccountType.CheckingAcc),
+                    AccountType.CheckingAcc,
+                    label),
 
                 AccountType.SavingsAcc => new SavingsAccount(
                     currency,
@@ -71,14 +72,16 @@ namespace bank_app.Managers
                     AccountDefaults.SavingsInterestRate,
                     AccountDefaults.SavingsMinimumBalance,
                     DateTime.Now,
-                    AccountDefaults.SavingsAllowWithdraws
-                    , AccountType.SavingsAcc),
+                    AccountDefaults.SavingsAllowWithdraws,
+                    AccountType.SavingsAcc,
+                    label),
 
                 AccountType.LoanAcc => new LoanAccount(
                     currency,
                     ownerID,
                     AccountDefaults.LoanCreditLimit,
-                    AccountType.LoanAcc
+                    AccountType.LoanAcc,
+                    label
                     ),
 
                 _ => throw new ArgumentException("Invalid account type.", nameof(accountType))
