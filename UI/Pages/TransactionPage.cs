@@ -44,6 +44,8 @@ namespace bank_app.UI.Pages
             {
                 var allTransactions = new List<bank_app.Models.Transaction>();
 
+                allTransactions.AddRange(bank_app.Managers.TransactionManager.GetAllTransactions(_currentUser.UserId));
+
                 if (allTransactions.Count == 0)
                 {
                     var errorText = new Text("There are no transactions to be displayed yet.", TextAlign.Center);
@@ -52,8 +54,6 @@ namespace bank_app.UI.Pages
                     .SetAlign(Align.Middle);
                     return new Panel(grid, LayoutBorder.Heavy);
                 }
-
-                allTransactions.AddRange(bank_app.Managers.TransactionManager.GetAllTransactions(_currentUser.UserId));
 
                 string[] _transactionIDs = new string[allTransactions.Count];
                 string[] _senderIDs = new string[allTransactions.Count];
