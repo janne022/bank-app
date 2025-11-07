@@ -33,6 +33,15 @@ namespace bank_app.UI.Pages
 
             var allTransactions = TransactionManager.GetAllTransactions();
 
+            if (allTransactions.Count == 0)
+            {
+                var errorText = new Text("There are no transactions to be displayed yet.", TextAlign.Center);
+                grid.AddGridComponent(1, 1, errorText)
+                .SetJustify(Justify.Center)
+                .SetAlign(Align.Middle);
+                return new Panel(grid, LayoutBorder.Heavy);
+            }
+
             string[] _transactionIDs = new string[allTransactions.Count];
             string[] _senderIDs = new string[allTransactions.Count];
             string[] _receiverIDs = new string[allTransactions.Count];
