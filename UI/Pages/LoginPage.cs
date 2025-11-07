@@ -1,0 +1,59 @@
+﻿using bank_app.Managers;
+using bank_app.Models.Users;
+using bank_app.Utility;
+using bank_app.Utility.UI;
+using bank_app.Utility.UI.Components;
+using bank_app.Utility.UI.Invokables;
+
+namespace bank_app.UI.Pages
+{
+    public class LoginPage : Page
+    {
+        private Form? _loginForm;
+        internal override UIComponent LoadPage()
+        {
+            var loginInvoke = new Invokable<string, string>(LoginHandler);
+            Grid grid = new(2, 1);
+
+            _loginForm = new Form(
+                [
+                new InputField("Username",InputFieldType.Normal, 24),
+                new InputField("Password",InputFieldType.Password,24),
+                ], new Button(loginInvoke, "Login", marginTop: 2));
+            grid.AddGridComponent(1, 0, new Panel(_loginForm, LayoutBorder.Rounded, "Login", 40, 10, ColourFG.Yellow))
+                .SetAlign(Align.Top).SetJustify(Justify.Center);
+            grid.AddGridComponent(0, 0, new AsciiArt(AsciiType.File,"Assets/Ascii/bank.txt")).SetJustify(Justify.Center);
+            return new Panel(grid, LayoutBorder.Heavy);
+        }
+
+        private void LoginHandler(string userId, string password)
+        {
+            User? u = UserManager.Login(userId, password);
+            if (u != null)
+            {
+                PageManager.SwitchUser(u);
+                // Login successful, switch page and give feedback
+                if (u.TwoFactorEnabled)
+                {
+                    PageManager.SwitchPage(PageType.TwoFactorPage);
+                }
+                else if (u is Client)
+                {
+                    PageManager.SwitchPage(PageType.ClientDashboard);
+                }
+                else if (u is Admin)
+                {
+                    PageManager.SwitchPage(PageType.AdminDashboard);
+                }
+            }
+            else if (UserManager.GetUser(userId) != null && UserManager.GetUser(userId).CurrentAccountStatus == AccountStatus.Locked)
+            {
+                _loginForm?.UpdateErrorMessage("Account is locked");
+            }
+            else
+            {
+                _loginForm?.UpdateErrorMessage("Wrong username or password");
+            }
+        }
+    }
+}
