@@ -19,7 +19,7 @@ namespace bank_app.UI.Pages
 
             // Gets all checking accounts and saving accounts, then returns them as a DropdownItem with account id as name
             var accounts = AccountManager.GetAllAccounts(CurrentUser.UserId).Where(account => account is CheckingAccount || account is SavingsAccount);
-            var accountsNavbarItems = accounts.Select(account => new DropdownItem<Account>(account.AccountID.ToString(), account)).ToList();
+            var accountsNavbarItems = accounts.Select(account => new DropdownItem<Account>(account.Label, account)).ToList();
             var transferInvokable = new Invokable<Account, string, string>(TransferMoney);
 
             var accountDropdown = new Dropdown<Models.Accounts.Account>(accountsNavbarItems);
