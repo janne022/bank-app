@@ -198,6 +198,8 @@ namespace bank_app.Utility.UI.Components
                                     }
                                     else
                                     {
+                                        userInput = userInput.Substring(0, userInput.Length - 1);
+                                        characters--;
                                         Console.Beep();
                                     }
                                 }
