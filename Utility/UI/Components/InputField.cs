@@ -180,15 +180,12 @@ namespace bank_app.Utility.UI.Components
 
                     default:
                         // Only allow lowercase, UPPERCASE, numbers, Nordic extra characters and normal special characters which only
-                        // require a single key press.
+                        // require a single key press on any keymap which can write them.
                         if (Regex.IsMatch(pressed.KeyChar.ToString(), @"[a-zA-Z0-9åäöæøðþÅÄÖÆØÐÞ!@#$%&*()\-_=\+\[\]{}\\|;:',.<>/?¤€£]"))
                         {
                             if (characters <= MaxLength || MaxLength == 0)
                             {
                                 bool shouldDraw = false;
-
-                                userInput += pressed.KeyChar;
-                                characters++;
 
                                 if (_allowedCharacters == InputFieldType.Number)
                                 {
@@ -198,8 +195,6 @@ namespace bank_app.Utility.UI.Components
                                     }
                                     else
                                     {
-                                        userInput = userInput.Substring(0, userInput.Length - 1);
-                                        characters--;
                                         Console.Beep();
                                     }
                                 }
@@ -212,8 +207,6 @@ namespace bank_app.Utility.UI.Components
                                     }
                                     else
                                     {
-                                        userInput = userInput.Substring(0, userInput.Length - 1);
-                                        characters--;
                                         Console.Beep();
                                     }
                                 }
@@ -225,12 +218,18 @@ namespace bank_app.Utility.UI.Components
 
                                 if (shouldDraw && userInput.Length > _inputBoxWidth)
                                 {
+                                    userInput += pressed.KeyChar;
+                                    characters++;
+
                                     scrollOffset = userInput.Length - _inputBoxWidth;
 
                                     RedrawInputBox(userInput, _inputBoxWidth, scrollOffset);
                                 }
                                 else if (shouldDraw && userInput.Length <= _inputBoxWidth)
                                 {
+                                    userInput += pressed.KeyChar;
+                                    characters++;
+
                                     scrollOffset = 0;
 
                                     RedrawInputBox(userInput, _inputBoxWidth, scrollOffset);
