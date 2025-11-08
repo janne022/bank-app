@@ -192,6 +192,20 @@ namespace bank_app.Utility.UI.Components
 
                                 if (_allowedCharacters == InputFieldType.Number)
                                 {
+                                    if (Regex.IsMatch(pressed.KeyChar.ToString(), @"[0-9]"))
+                                    {
+                                        shouldDraw = true;
+                                    }
+                                    else
+                                    {
+                                        userInput = userInput.Substring(0, userInput.Length - 1);
+                                        characters--;
+                                        Console.Beep();
+                                    }
+                                }
+
+                                if (_allowedCharacters == InputFieldType.Decimal)
+                                {
                                     if (Regex.IsMatch(pressed.KeyChar.ToString(), @"[0-9,.]"))
                                     {
                                         shouldDraw = true;
