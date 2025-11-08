@@ -57,7 +57,7 @@ namespace bank_app.UI.Pages
             [
                 new Dropdown<AccountType>(accountTypeItems),
                 new Dropdown<Currency>(currencyItems),
-                new InputField("Deposit amount",InputFieldType.Number,24),
+                new InputField("Deposit amount",InputFieldType.Decimal,24),
                 new InputField("Account Label",InputFieldType.Normal,16),
             ], new Button(createAccountInvoke, "Create", marginTop: 1));
             grid.AddGridComponent(1, 1, new Panel(_createAccountForm, LayoutBorder.Rounded, "Create New Account", 55, 10, ColourFG.Green))
