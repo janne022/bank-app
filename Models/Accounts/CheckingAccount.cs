@@ -33,7 +33,7 @@ namespace bank_app.Models.Accounts
 
             if (transaction.TransactionType == TransactionType.Withdrawal)
             {
-                return Balance - transaction.TransferAmount /*This will be change with transaction.Amount later */ >= -OverdraftLimit;
+                return Balance - transaction.TransferAmount >= -OverdraftLimit;
             }
             return false;
         }
