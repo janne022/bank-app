@@ -73,6 +73,7 @@
     {
         Normal,
         Number,
+        Decimal,
         Password
     }
 
