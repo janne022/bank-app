@@ -49,14 +49,14 @@ namespace bank_app.UI.Pages
             var accountFeed = new Feed(4, false, false);
             string[] column1 = new string[currentUsersAccounts.Count];
             string[] column2 = new string[currentUsersAccounts.Count];
-
+            string[] column3 = new string[currentUsersAccounts.Count];
 
             // loops as many times as there are accounts...
             for (int i = 0; i < AccountManager.GetAllAccounts(CurrentUser.UserId).Count; i++)
             {
                 // adds info about the accounts first in first column, then second...
                 column1[i] =
-                    $"Account {i + 1} <{currentUsersAccounts[i].Label}>: ";
+                    $"<{currentUsersAccounts[i].Label}>: ";
 
 
                 if (currentUsersAccounts[i].AccountCurrency != Currency.SLC)
@@ -68,15 +68,19 @@ namespace bank_app.UI.Pages
                     column2[i] = $"{currentUsersAccounts[i].Balance} {currentUsersAccounts[i].AccountCurrency}";
                 }
 
+                column3[i] = $"<{currentUsersAccounts[i].AccountID}>";
+
             }
 
             // ... then adds those columns into a left and right column...
             FeedColumn leftColumn = new FeedColumn(column1, "Vira was here >:3", false, false);
             FeedColumn rightColumn = new FeedColumn(column2, "Vira was also here, hehe c:", false, false);
+            FeedColumn rightMostColumn = new FeedColumn(column3, "Emma was also here", false, false);
 
             //...and finally adds the columns into the table
             accountFeed.AddColumn(leftColumn);
             accountFeed.AddColumn(rightColumn);
+            accountFeed.AddColumn(rightMostColumn);
 
             var flexbox = new Flexbox(Justify.Center, Align.Top).AddFlexComponent(availableAmount).AddFlexComponent(accountFeed);
 
@@ -91,8 +95,8 @@ namespace bank_app.UI.Pages
                     flexbox,
                     LayoutBorder.Rounded,
                     "",
-                    65,
-                    8,
+                    100,
+                    12,
                     ColourFG.GreenBright)
             )
             .SetAlign(Align.Middle)
